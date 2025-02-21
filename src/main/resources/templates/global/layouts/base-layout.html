@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <th:block th:replace="~{global/fragments/config-fragment :: configFragment}"></th:block>
+  <link rel="stylesheet" th:href="@{'/global/layouts/css/base-layout.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+  <title layout:title-pattern="$CONTENT_TITLE"></title>
+</head>
+
+<body>
+    <!--header fragment-->
+    <th:block th:replace="~{global/fragments/header-fragment :: headerFragment}"></th:block>
+
+    <!--content-->
+    <th:block layout:fragment="Content"></th:block>
+</body>
+
+</html>
