@@ -1,3 +1,22 @@
-span {
-    color: red;
+:root{
+    --main-header-height : 60px;
+    --layout-wrapper-width : 1280px;
+    --signature-color : #E5D9F2;
+}
+
+html, body{
+    min-height: 100vh;
+    height: auto;
+    margin : 0;
+}
+
+.layout-container{
+    width: 100%;
+    margin-top : var(--main-header-height);
+}
+
+.layout-container > .wrapper{
+    width: 100%;
+    max-width: var(--layout-wrapper-width);
+    margin : 0 auto;
 }
