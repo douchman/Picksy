@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" th:fragment="headerFragment">
 
-<header>
-    <h1>Global Fragments :: header</h1>
-    <span>테스트 ㅋㅋ</span>
+<head>
+    <link rel="stylesheet" th:href="@{'/global/fragments/css/header-fragment.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+
+<header id="main-header" class="main-header">
+    <img id="header-logo" class="header-logo" src="https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/vs-logo.png" alt="logo">
 </header>
 
 </html>
