@@ -7,9 +7,26 @@
     padding : 8px;
     box-sizing: border-box;
     background-color: var(--signature-color);
+    display: flex;
+    align-items: center;
 }
 
-.header-logo {
-    height: 100%;
-    width: auto;
+.header-title {
+    color : #FFF;
+    position: relative;
+    font-size: 20px;
+    font-weight: 500;
+    padding-left : 30px;
 }
+
+.header-title:after{
+    content : '⚔️';
+    font-size: 20px;
+    font-weight: 500;
+    position: absolute;
+    top : 50%;
+    left : 0;
+    transform : translateY(-50%);
+}
+
+
