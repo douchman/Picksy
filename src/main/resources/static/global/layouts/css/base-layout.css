@@ -5,14 +5,12 @@
 }
 
 html, body{
-    min-height: 100vh;
-    height: auto;
+    height : 100%;
     margin : 0;
 }
 
 .layout-container{
     width: 100%;
-    margin-top : var(--main-header-height);
 }
 
 .layout-container > .wrapper{
@@ -20,3 +18,8 @@ html, body{
     max-width: var(--layout-wrapper-width);
     margin : 0 auto;
 }
+
+/*
+body{
+    background-color: #F5F5F7;
+}*/
