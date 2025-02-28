@@ -1,1 +1,7 @@
 @import "filter-section.css";
+@import "contents-section.css";
+
+.home{
+    padding : 0 16px;
+    background-color : #F5F5F7;
+}
