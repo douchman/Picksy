@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{global/layouts/base-layout.html}"
-      layout:fragment="Content">
-<head>
-    <title>index</title>
-</head>
+      layout:decorate="~{global/layouts/base-layout.html}">
 
-<body>
-</body>
+<head>
+    <link rel="stylesheet" th:href="@{'/home/css/home.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="home" class="home">
+            <div class="topic-search-filter-section">
+                <div class="search-filter-group group-order-filter">
+                    <div class="order-filter-item">
+                        <input type="radio" id="order-latest" name="topic-search-order" value="latest" checked="checked">
+                        <label for="order-latest" class="lbl-radio">최신순</label>
+                    </div>
+                    <div class="order-filter-item">
+                        <input type="radio" id="order-popular" name="topic-search-order" value="popular">
+                        <label for="order-popular" class="lbl-radio">인기순</label>
+                    </div>
+                </div>
+                
+                <div class="search-filter-group group-keyword">
+                    <input id="keyword-search" class="keyword-search" type="text" placeholder="대결주제 제목 또는 엔트리 명 검색"/>
+                    <button id="btn-search-topic" class="btn-search-topic" type="button" >검색</button>
+                </div>
+            </div>
+
+            <div class="topic-contents-section">
+            </div>
+        </div>
+    </body>
+</th:block>
 </html>
