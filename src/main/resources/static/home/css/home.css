@@ -1,5 +1,6 @@
 @import "filter-section.css";
 @import "contents-section.css";
+@import "tournament-select-dialog.css";
 
 .home{
     padding : 0 16px;
