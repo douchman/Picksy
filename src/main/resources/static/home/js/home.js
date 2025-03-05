@@ -1,10 +1,24 @@
 import {apiGetRequest} from '../../global/js/api.js';
+import {addDialogEvents, renderDialog, displayDialog} from "./tournament-select-dialog.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     await renderTopics();
+    addTopicCardEvents();
+    renderDialog();
+    addDialogEvents();
+
 });
 
-async function getTopics( ){
+function addTopicCardEvents(){
+    // 랜더링 된 대결 주제 카드 이벤트 -> 토너먼트 선택기 오픈
+    document.body.addEventListener('click', function(event) {
+        if (event.target.closest('.topic-content-card')) {
+            displayDialog(true); // show
+        }
+    });
+}
+
+async function getTopics(){
     return await apiGetRequest('topics', {} , false);
 }
 
