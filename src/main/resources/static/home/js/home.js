@@ -1,17 +1,11 @@
+import {apiGetRequest} from '../../global/js/api.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
     await renderTopics();
 });
 
 async function getTopics( ){
-    const response = await fetch( 'http://localhost:8080/topics',{
-        method : 'GET',
-        cache : 'no-cache',
-        credentials : 'include'
-    });
-
-    const {data} = await response.json();
-
-    return data;
+    return await apiGetRequest('topics', {} , false);
 }
 
 async function renderTopics(){
