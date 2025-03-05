@@ -32,24 +32,7 @@
             </div>
         </div>
 
-        <div id="tournament-select-dialog" class="tournament-select-dialog">
-            <div class="bg"></div>
-            <div class="dialog-body">
-                <button id="btn-close-tournament-select-dialog" class="btn-close-tournament-select-dialog"  type="button"></button>
-                <div class="topic-desc-box">
-                    <p id="topic-title" class="topic-title">대결 주제의 제목</p>
-                    <p id="topic-desc" class="topic-desc">대결 주제 설명</p>
-                </div>
-                <div id="tournament-select" class="tournament-select">
-                    <div id="selected-tournament" class="selected-tournament">선택된 토너먼트</div>
-                    <ul id="tournament-items" class="tournament-items">
-                        <li class="tournament-item">4강</li>
-                        <li class="tournament-item">8강</li>
-                    </ul>
-                </div>
-                <p id="tournament-desc" class="tournament-desc">선택된 토너먼트 설명</p>
-            </div>
-        </div>
+
     </body>
 
     <script type="module" th:src="@{'/home/js/home.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
