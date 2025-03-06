@@ -43,8 +43,8 @@ export async function openTournamentSelectDialog(topicId){
 
     clearDialogData(dialog);
 
-    dialog.querySelector('#topic-title').texxtContent= `${topic.title}`;
-    dialog.querySelector('#topic-desc').texxtContent = `${topic.description}`;
+    dialog.querySelector('#topic-title').textContent= `${topic.title}`;
+    dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
     dialog.classList.add('show');
 }
 
