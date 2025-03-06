@@ -1,3 +1,5 @@
+import {apiGetRequest} from "../../global/js/api.js";
+
 export function renderDialog(){
     const documentBody = document.querySelector('body');
     const tournamentSelectDialog = `<div id="tournament-select-dialog" class="tournament-select-dialog">
@@ -30,23 +32,55 @@ export function addDialogEvents() {
     });
 
     // dialog 외부 배경화면 -> dialog 닫힘
-    document.querySelector('#tournament-select-dialog .bg').addEventListener('click',() => displayDialog(false));
+    document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
     // dialog 닫기 버튼 -> dialog 닫힘
-    document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', () => displayDialog(false));
+    document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
+
+    // tournament select 토너먼트 선택기 -> 토너먼트 선택 시
+    document.body.addEventListener('click', async function(event) {
+        const tournamentItem = event.target.closest('.tournament-item');
+        if (tournamentItem) {
+            const tournamentSelect = document.querySelector('#tournament-select');
+            const selectedTournament = document.querySelector('#selected-tournament');
+            selectedTournament.textContent = tournamentItem.textContent;
+            tournamentSelect.classList.remove('active');
+        }
+    });
 }
 
-
-export function displayDialog(show = false) {
+export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
-    const topicTitle = dialog.querySelector('#topic-title');
-    const topicDesc = dialog.querySelector('#topic-desc');
-    const selectedTournament = dialog.querySelector('#selected-tournament');
-    if (show) {
-        dialog.classList.add('show');
-    } else {
-        topicTitle.innerHTML = '';
-        topicDesc.innerHTML = '';
-        selectedTournament.innerHTML = '토너먼트를 선택해 주세요.';
-        dialog.classList.remove('show');
-    }
+    const {topic, tournamentList } = await getTopicDetail(topicId);
+
+    clearDialogData(dialog);
+
+    dialog.querySelector('#topic-title').textContent= `${topic.title}`;
+    dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
+    setTournamentSelector(tournamentList);
+    dialog.classList.add('show');
+}
+
+function closeTournamentSelectDialog(){
+    const dialog = document.querySelector('#tournament-select-dialog');
+    dialog.classList.remove('show');
+}
+
+function clearDialogData(dialog){
+    dialog.querySelector('#topic-title').textContent = '';
+    dialog.querySelector('#topic-desc').textContent = '';
+    dialog.querySelector('#tournament-select').classList.remove('active');
+    dialog.querySelector('#selected-tournament').textContent = '토너먼트를 선택해 주세요.';
+    dialog.querySelector('#tournament-desc').textContent = '';
+}
+
+function setTournamentSelector(tournamentList){
+    const tournamentItems = document.querySelector('#tournament-items');
+    tournamentItems.replaceChildren();
+    tournamentList.forEach( tournament => {
+        tournamentItems.insertAdjacentHTML('beforeend',`<li data-tournamentStage="${tournament.tournamentStage}" class="tournament-item">${tournament.tournamentName}</li>`);
+    });
+}
+
+async function getTopicDetail(topicId){
+    return await apiGetRequest('topics/' +topicId, {}, false);
 }
