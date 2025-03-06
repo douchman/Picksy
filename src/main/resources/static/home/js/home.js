@@ -1,5 +1,5 @@
 import {apiGetRequest} from '../../global/js/api.js';
-import {addDialogEvents, renderDialog, displayDialog} from "./tournament-select-dialog.js";
+import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     await renderTopics();
@@ -11,9 +11,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function addTopicCardEvents(){
     // 랜더링 된 대결 주제 카드 이벤트 -> 토너먼트 선택기 오픈
-    document.body.addEventListener('click', function(event) {
-        if (event.target.closest('.topic-content-card')) {
-            displayDialog(true); // show
+    document.body.addEventListener('click', async function(event) {
+        const topicCard = event.target.closest('.topic-content-card');
+        if (topicCard) {
+            const topicId = topicCard.dataset.id;
+            await openTournamentSelectDialog(topicId);
         }
     });
 }
