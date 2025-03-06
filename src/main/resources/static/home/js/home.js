@@ -31,7 +31,7 @@ async function renderTopics(){
     topicList.forEach( topic => {
         const topicContentCard =
             `
-            <div class="topic-content-card">
+            <div class="topic-content-card" data-id="${topic.id}">
                         <div class="topic-thumb-group"></div>
                         <div class="topic-desc-group">
                             <p class="topic-title">${topic.title}</p>
