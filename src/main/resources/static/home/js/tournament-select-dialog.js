@@ -1,3 +1,5 @@
+import {apiGetRequest} from "../../global/js/api.js";
+
 export function renderDialog(){
     const documentBody = document.querySelector('body');
     const tournamentSelectDialog = `<div id="tournament-select-dialog" class="tournament-select-dialog">
@@ -35,7 +37,8 @@ export function addDialogEvents() {
     document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
 }
 
-export async function openTournamentSelectDialog(){
+export async function openTournamentSelectDialog(topicId){
+    const {topic, tournamentList } = await getTopicDetail(topicId);
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.classList.add('show');
 }
@@ -50,4 +53,9 @@ function closeTournamentSelectDialog(){
     topicDesc.innerHTML = '';
     selectedTournament.innerHTML = '토너먼트를 선택해 주세요.';
     dialog.classList.remove('show');
+}
+
+
+async function getTopicDetail(topicId){
+    return await apiGetRequest('topics/' +topicId, {}, false);
 }
