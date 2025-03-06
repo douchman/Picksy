@@ -28,7 +28,7 @@ export function addDialogEvents() {
 
     // dialog 내부 커스텀 선택박스 -> 선택기 보임
     document.querySelector('#tournament-select').addEventListener('click', function () {
-        this.classList.add('active');
+        toggleTournamentSelect(true);
     });
 
     // dialog 외부 배경화면 -> dialog 닫힘
@@ -41,10 +41,9 @@ export function addDialogEvents() {
         const tournamentItem = event.target.closest('.tournament-item');
         if (tournamentItem) {
             event.stopPropagation(); // 부모 이벤트 버블 방지
-            const tournamentSelect = document.querySelector('#tournament-select');
             const selectedTournament = document.querySelector('#selected-tournament');
             selectedTournament.textContent = tournamentItem.textContent;
-            tournamentSelect.classList.remove('active');
+            toggleTournamentSelect(false);
         }
     });
 }
@@ -80,6 +79,10 @@ function setTournamentSelector(tournamentList){
     tournamentList.forEach( tournament => {
         tournamentItems.insertAdjacentHTML('beforeend',`<li data-tournamentStage="${tournament.tournamentStage}" class="tournament-item">${tournament.tournamentName}</li>`);
     });
+}
+
+function toggleTournamentSelect(isOpen){
+    document.querySelector('#tournament-select').classList.toggle('active', isOpen);
 }
 
 async function getTopicDetail(topicId){
