@@ -45,6 +45,7 @@ export async function openTournamentSelectDialog(topicId){
 
     dialog.querySelector('#topic-title').textContent= `${topic.title}`;
     dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
+    setTournamentSelector(tournamentList);
     dialog.classList.add('show');
 }
 
@@ -56,7 +57,17 @@ function closeTournamentSelectDialog(){
 function clearDialogData(dialog){
     dialog.querySelector('#topic-title').textContent = '';
     dialog.querySelector('#topic-desc').textContent = '';
+    dialog.querySelector('#tournament-select').classList.remove('active');
     dialog.querySelector('#selected-tournament').textContent = '토너먼트를 선택해 주세요.';
+    dialog.querySelector('#tournament-desc').textContent = '';
+}
+
+function setTournamentSelector(tournamentList){
+    const tournamentItems = document.querySelector('#tournament-items');
+    tournamentItems.replaceChildren();
+    tournamentList.forEach( tournament => {
+        tournamentItems.insertAdjacentHTML('beforeend',`<li data-tournamentStage="${tournament.tournamentStage}" class="tournament-item">${tournament.tournamentName}</li>`);
+    });
 }
 
 async function getTopicDetail(topicId){
