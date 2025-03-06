@@ -38,28 +38,26 @@ export function addDialogEvents() {
 }
 
 export async function openTournamentSelectDialog(topicId){
-    const {topic, tournamentList } = await getTopicDetail(topicId);
     const dialog = document.querySelector('#tournament-select-dialog');
-    const topicTitle = dialog.querySelector('#topic-title');
-    const topicDesc = dialog.querySelector('#topic-desc');
+    const {topic, tournamentList } = await getTopicDetail(topicId);
 
-    topicTitle.innerHTML = `${topic.title}`;
-    topicDesc.innerHTML = `${topic.description}`;
+    clearDialogData(dialog);
+
+    dialog.querySelector('#topic-title').texxtContent= `${topic.title}`;
+    dialog.querySelector('#topic-desc').texxtContent = `${topic.description}`;
     dialog.classList.add('show');
 }
 
 function closeTournamentSelectDialog(){
     const dialog = document.querySelector('#tournament-select-dialog');
-    const topicTitle = dialog.querySelector('#topic-title');
-    const topicDesc = dialog.querySelector('#topic-desc');
-    const selectedTournament = dialog.querySelector('#selected-tournament');
-
-    topicTitle.innerHTML = '';
-    topicDesc.innerHTML = '';
-    selectedTournament.innerHTML = '토너먼트를 선택해 주세요.';
     dialog.classList.remove('show');
 }
 
+function clearDialogData(dialog){
+    dialog.querySelector('#topic-title').textContent = '';
+    dialog.querySelector('#topic-desc').textContent = '';
+    dialog.querySelector('#selected-tournament').textContent = '토너먼트를 선택해 주세요.';
+}
 
 async function getTopicDetail(topicId){
     return await apiGetRequest('topics/' +topicId, {}, false);
