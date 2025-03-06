@@ -40,6 +40,11 @@ export function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const {topic, tournamentList } = await getTopicDetail(topicId);
     const dialog = document.querySelector('#tournament-select-dialog');
+    const topicTitle = dialog.querySelector('#topic-title');
+    const topicDesc = dialog.querySelector('#topic-desc');
+
+    topicTitle.innerHTML = `${topic.title}`;
+    topicDesc.innerHTML = `${topic.description}`;
     dialog.classList.add('show');
 }
 
