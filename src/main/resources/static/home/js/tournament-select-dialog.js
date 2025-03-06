@@ -35,22 +35,6 @@ export function addDialogEvents() {
     document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
 }
 
-
-export function displayDialog(show = false) {
-    const dialog = document.querySelector('#tournament-select-dialog');
-    const topicTitle = dialog.querySelector('#topic-title');
-    const topicDesc = dialog.querySelector('#topic-desc');
-    const selectedTournament = dialog.querySelector('#selected-tournament');
-    if (show) {
-        dialog.classList.add('show');
-    } else {
-        topicTitle.innerHTML = '';
-        topicDesc.innerHTML = '';
-        selectedTournament.innerHTML = '토너먼트를 선택해 주세요.';
-        dialog.classList.remove('show');
-    }
-}
-
 export async function openTournamentSelectDialog(){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.classList.add('show');
