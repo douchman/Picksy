@@ -35,6 +35,17 @@ export function addDialogEvents() {
     document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
     // dialog 닫기 버튼 -> dialog 닫힘
     document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
+
+    // tournament select 토너먼트 선택기 -> 토너먼트 선택 시
+    document.body.addEventListener('click', async function(event) {
+        const tournamentItem = event.target.closest('.tournament-item');
+        if (tournamentItem) {
+            const tournamentSelect = document.querySelector('#tournament-select');
+            const selectedTournament = document.querySelector('#selected-tournament');
+            selectedTournament.textContent = tournamentItem.textContent;
+            tournamentSelect.classList.remove('active');
+        }
+    });
 }
 
 export async function openTournamentSelectDialog(topicId){
