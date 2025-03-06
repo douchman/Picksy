@@ -1,3 +1,4 @@
+import {TOURNAMENT_DESC} from "./const.js";
 import {apiGetRequest} from "../../global/js/api.js";
 
 export function renderDialog(){
@@ -41,8 +42,12 @@ export function addDialogEvents() {
         const tournamentItem = event.target.closest('.tournament-item');
         if (tournamentItem) {
             event.stopPropagation(); // 부모 이벤트 버블 방지
+            const tournamentStage = tournamentItem.dataset.tournamentstage;
             const selectedTournament = document.querySelector('#selected-tournament');
+            const tournamentDesc = document.querySelector('#tournament-desc');
+
             selectedTournament.textContent = tournamentItem.textContent;
+            tournamentDesc.textContent = TOURNAMENT_DESC[tournamentStage];
             toggleTournamentSelect(false);
         }
     });
@@ -77,7 +82,7 @@ function setTournamentSelector(tournamentList){
     const tournamentItems = document.querySelector('#tournament-items');
     tournamentItems.replaceChildren();
     tournamentList.forEach( tournament => {
-        tournamentItems.insertAdjacentHTML('beforeend',`<li data-tournamentStage="${tournament.tournamentStage}" class="tournament-item">${tournament.tournamentName}</li>`);
+        tournamentItems.insertAdjacentHTML('beforeend',`<li data-tournamentstage="${tournament.tournamentStage}" class="tournament-item">${tournament.tournamentName}</li>`);
     });
 }
 
