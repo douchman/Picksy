@@ -40,6 +40,8 @@ export function addDialogEvents() {
     document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
     // dialog 닫기 버튼 -> dialog 닫힘
     document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
+    // dialog 취소 버튼 -> dialog 닫힘
+    document.querySelector('#btn-cancel-dialog').addEventListener('click', closeTournamentSelectDialog);
 
     // dialog 내부 토너먼트 선택기 이벤트
     document.querySelector('#tournament-items').addEventListener('click', function(event){
