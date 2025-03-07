@@ -49,9 +49,11 @@ export function addDialogEvents() {
             const tournamentStage = tournamentItem.dataset.tournamentstage;
             const selectedTournament = document.querySelector('#selected-tournament');
             const tournamentDesc = document.querySelector('#tournament-desc');
+            const btnStartMatch = document.querySelector('#btn-start-match');
 
             selectedTournament.textContent = tournamentItem.textContent;
             tournamentDesc.textContent = TOURNAMENT_DESC[tournamentStage];
+            btnStartMatch.disabled = false;
             toggleTournamentSelect(false);
         }
     });
