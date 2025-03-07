@@ -108,6 +108,7 @@
     transform: translateY(100%);
     box-sizing: border-box;
     box-shadow: rgba(0, 0, 0, 0.16) 0 10px 36px 0, rgba(0, 0, 0, 0.06) 0 0 0 1px;
+    z-index: 100;
 }
 
 /* 토너먼트 선택기 on active */
@@ -127,6 +128,7 @@
 }
 
 .dialog-body .tournament-desc{
+    margin-bottom: 15px;
 }
 
 .dialog-body .tournament-desc:before{
@@ -135,8 +137,34 @@
     margin-right: 4px;
 }
 
+.dialog-body .btn-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 12px;
+}
 
+.dialog-body .btn-group button{
+    background-color: var(--btn-color);
+    padding : 6px 14px;
+    border-radius: 4px;
+}
 
+.dialog-body .btn-group button:before{
+    content : var(--btn-text);
+    color : #FFF;
+    font-size: 16px;
+}
+
+.dialog-body .btn-group button.btn-start-match{
+    --btn-text : '시작';
+    --btn-color : rgb(172, 225, 175);
+}
+
+.dialog-body .btn-group button.btn-cancel{
+    --btn-text : '취소';
+    --btn-color : rgb(201, 104, 104);
+}
 
 @-webkit-keyframes dialog-show {
     from{

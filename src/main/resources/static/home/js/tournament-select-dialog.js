@@ -19,6 +19,10 @@ export function renderDialog(){
                     </ul>
                 </div>
                 <p id="tournament-desc" class="tournament-desc">선택된 토너먼트 설명</p>
+                <div class="btn-group">
+                    <button class="btn-start-match" type="button" disabled></button>
+                    <button class="btn-cancel" type="button"></button>
+                </div>
             </div>
         </div>`;
 
