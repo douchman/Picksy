@@ -82,6 +82,7 @@ function clearDialogData(dialog){
     dialog.querySelector('#tournament-select').classList.remove('active');
     dialog.querySelector('#selected-tournament').textContent = '토너먼트를 선택해 주세요.';
     dialog.querySelector('#tournament-desc').textContent = '';
+    dialog.querySelector('#btn-start-match').disabled = true;
 }
 
 function setTournamentSelector(tournamentList){
