@@ -161,7 +161,7 @@
     --btn-color : rgb(172, 225, 175);
 }
 
-.dialog-body .btn-group button.btn-cancel{
+.dialog-body .btn-group button.btn-cancel-dialog{
     --btn-text : '취소';
     --btn-color : rgb(201, 104, 104);
 }
