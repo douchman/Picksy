@@ -15,4 +15,9 @@ public class PageController {
     public String index(){
         return "home/home";
     }
+
+    @GetMapping("login")
+    public String login(){
+        return "member/login/login";
+    }
 }
