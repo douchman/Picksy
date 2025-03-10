@@ -16,11 +16,11 @@
                 <p class="d-b">아이디와 비밀번호로 <b>간편하게 가입</b>하고,<br>개성있는 대결주제를 만들어 보세요</p>
             </div>
             <div class="member-login-form">
-                <div class="form-item member-id">
-                    <input placeholder="아이디" type="text"/>
+                <div class="form-item">
+                    <input id="id" placeholder="아이디" type="text"/>
                 </div>
-                <div class="form-item password">
-                    <input placeholder="비밀번호" type="password"/>
+                <div class="form-item">
+                    <input id="password" placeholder="비밀번호" type="password"/>
                 </div>
             </div>
 
@@ -29,13 +29,11 @@
             </div>
 
             <div class="btn-group">
-                <button type="button" class="btn-login">로그인</button>
+                <button id="btn-login" class="btn-login" type="button" >로그인</button>
                 <button type="button" class="btn-register">계정생성</button>
             </div>
         </div>
-
-
     </body>
-
+    <script type="module" th:src="@{'/member/login/js/login.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>
