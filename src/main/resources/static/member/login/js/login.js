@@ -3,7 +3,7 @@ import {apiPostRequest} from "../../../global/js/api.js";
 document.addEventListener("DOMContentLoaded", async () => {
 
 
-    document.querySelector('#btn-login').addEventListener('click', async function(event){
+    document.querySelector('#btn-login').addEventListener('click', async function(){
         const id = document.querySelector('#id').value;
         const password = document.querySelector('#password').value;
 
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const {status, data: loginResult } = await memberLogin({id, password});
 
             if( status !== 200 ) {
-                showMessage('아이디 또는 비밀번호를 확인해주세요');
+                showMessage(loginResult.message);
             } else {
                 // TODO 로그인 성공 후 처리
             }
