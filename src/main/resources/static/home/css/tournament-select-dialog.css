@@ -128,7 +128,12 @@
 }
 
 .dialog-body .tournament-desc{
+    visibility: hidden;
     margin-bottom: 15px;
+}
+
+.dialog-body .tournament-desc.show{
+    visibility: visible;
 }
 
 .dialog-body .tournament-desc:before{
