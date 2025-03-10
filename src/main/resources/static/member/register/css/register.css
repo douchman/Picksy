@@ -1,0 +1,115 @@
+.register{
+    max-width: 640px;
+    margin : 20px auto 0 auto;
+    width: 360px;
+    padding : 70px 14px 14px;
+    background-color: #FFF;
+    border-radius: 6px;
+}
+
+.register-icon{
+    width: 100%;
+    height: 80px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/person-add.svg");
+    background-size: 80px 80px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+}
+
+.register .desc{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap : 8px;
+    margin-bottom: 25px;
+}
+
+.register .desc p{
+    text-align: center;
+}
+
+.register .desc p.d-a{
+    color : #7D7D7D;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.register .desc p.d-b{
+    color : #838383;
+    font-size: 14px;
+}
+
+.member-register-form{
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+    margin-bottom: 5px;
+}
+
+.member-register-form input{
+    flex : 1;
+    border-radius: 4px;
+    border : 1px solid #A6AEBF;
+    font-size: 14px;
+    padding : 6px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.member-register-form input:focus{
+    border-color : #CDC1FF;
+}
+
+.message-box{
+    color: #FF8A8A;
+    font-size: 14px;
+    min-height: 20px;
+    visibility: hidden;
+    margin-bottom: 10px;
+}
+
+.message-box.show{
+    visibility: visible;
+}
+
+.btn-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 10px;
+    margin-bottom: 25px;
+}
+
+.btn-group button.btn-register{
+    color : #FFF;
+    font-size: 16px;
+    background-color: #B7B7B7;
+    padding : 8px 14px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.for-member {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap : 8px;
+}
+
+.for-member .for-member-message{
+    color: #838383;
+    font-size: 12px;
+}
+
+.for-member button.btn-back-to-login{
+    color : #FFF;
+    font-size: 16px;
+    background-color: #B7B1F2;
+    padding : 8px 14px;
+    border-radius: 4px;
+    flex : 1;
+    width: 100%;
+}
