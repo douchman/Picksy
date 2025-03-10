@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if( status !== 200 ) {
                 showMessage(loginResult.message);
             } else {
-                // TODO 로그인 성공 후 처리
+                location.href = '/index';
             }
         }
     });
