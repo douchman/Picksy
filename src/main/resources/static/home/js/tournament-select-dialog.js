@@ -19,6 +19,10 @@ export function renderDialog(){
                     </ul>
                 </div>
                 <p id="tournament-desc" class="tournament-desc">선택된 토너먼트 설명</p>
+                <div class="btn-group">
+                    <button id="btn-start-match" class="btn-start-match" type="button" disabled></button>
+                    <button id="btn-cancel-dialog" class="btn-cancel-dialog" type="button"></button>
+                </div>
             </div>
         </div>`;
 
@@ -36,6 +40,8 @@ export function addDialogEvents() {
     document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
     // dialog 닫기 버튼 -> dialog 닫힘
     document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
+    // dialog 취소 버튼 -> dialog 닫힘
+    document.querySelector('#btn-cancel-dialog').addEventListener('click', closeTournamentSelectDialog);
 
     // dialog 내부 토너먼트 선택기 이벤트
     document.querySelector('#tournament-items').addEventListener('click', function(event){
@@ -45,9 +51,11 @@ export function addDialogEvents() {
             const tournamentStage = tournamentItem.dataset.tournamentstage;
             const selectedTournament = document.querySelector('#selected-tournament');
             const tournamentDesc = document.querySelector('#tournament-desc');
+            const btnStartMatch = document.querySelector('#btn-start-match');
 
             selectedTournament.textContent = tournamentItem.textContent;
             tournamentDesc.textContent = TOURNAMENT_DESC[tournamentStage];
+            btnStartMatch.disabled = false;
             toggleTournamentSelect(false);
         }
     });
@@ -76,6 +84,7 @@ function clearDialogData(dialog){
     dialog.querySelector('#tournament-select').classList.remove('active');
     dialog.querySelector('#selected-tournament').textContent = '토너먼트를 선택해 주세요.';
     dialog.querySelector('#tournament-desc').textContent = '';
+    dialog.querySelector('#btn-start-match').disabled = true;
 }
 
 function setTournamentSelector(tournamentList){
