@@ -21,7 +21,7 @@ function addTopicCardEvents(){
 }
 
 async function getTopics(){
-    return await apiGetRequest('topics', {} , false);
+    return await apiGetRequest('topics', {}, {});
 }
 
 async function renderTopics(){
