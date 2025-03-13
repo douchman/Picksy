@@ -48,5 +48,6 @@
             </div>
         </div>
     </body>s
+    <script type="module" th:src="@{'/member/register/js/register.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>
