@@ -1,13 +1,14 @@
 import { API_URL } from './const.js';
 
-export async function apiGetRequest( endpoint, options = {}, withAuth = true) {
+export async function apiGetRequest( endpoint, options = {}, body, withAuth = true) {
     const baseOptions = {
         method : 'GET',
         cache : 'no-cache',
         credentials : 'include',
         headers : withAuth
             ? { "Authorization" : "{jwt}"}
-            : {}
+            : {},
+        body : body ? body : {}
     }
 
     const mergedOptions = { ... baseOptions, ... options}
@@ -24,14 +25,16 @@ export async function apiGetRequest( endpoint, options = {}, withAuth = true) {
     }
 }
 
-export async function apiPostRequest( endpoint, options = {}, withAuth = true) {
+export async function apiPostRequest( endpoint, options = {}, body, withAuth = true) {
     const baseOptions = {
         method : 'POST',
         cache : 'no-cache',
         credentials : 'include',
-        headers : withAuth
-            ? { "Authorization" : "{jwt}"}
-            : {}
+        headers : {
+            'Content-Type' : 'application/json',
+            ...( withAuth && { "Authorization" : "{jwt}"})
+            },
+        body : body ? JSON.stringify(body) : {}
     }
 
     const mergedOptions = { ... baseOptions, ... options}
@@ -39,8 +42,9 @@ export async function apiPostRequest( endpoint, options = {}, withAuth = true) {
     try {
 
         const response = await fetch(API_URL + endpoint, mergedOptions);
+        const status = response.status;
         const jsonResponse = await response.json();
-        return jsonResponse?.data ?? jsonResponse;
+        return {status : status, data : jsonResponse?.data ?? jsonResponse};
 
     } catch (error){
         console.error('API Request Error :' , error);
