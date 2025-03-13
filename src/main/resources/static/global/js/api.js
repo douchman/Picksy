@@ -1,21 +1,21 @@
 import { API_URL } from './const.js';
 
-export async function apiGetRequest( endpoint, options = {}, body, withAuth = true) {
+export async function apiGetRequest( endpoint, options = {}, params = {}) {
     const baseOptions = {
         method : 'GET',
         cache : 'no-cache',
-        credentials : 'include',
-        headers : withAuth
-            ? { "Authorization" : "{jwt}"}
-            : {},
-        body : body ? body : {}
+        credentials : 'include'
     }
+
+    const queryString = new URLSearchParams(params).toString();
+
+    const fullUrl = queryString ? `${API_URL + endpoint}?${queryString}` : `${API_URL + endpoint}`;
 
     const mergedOptions = { ... baseOptions, ... options}
 
     try {
 
-        const response = await fetch(API_URL + endpoint, mergedOptions);
+        const response = await fetch(fullUrl, mergedOptions);
         const jsonResponse = await response.json();
         return jsonResponse?.data ?? jsonResponse;
 
@@ -25,14 +25,13 @@ export async function apiGetRequest( endpoint, options = {}, body, withAuth = tr
     }
 }
 
-export async function apiPostRequest( endpoint, options = {}, body, withAuth = true) {
+export async function apiPostRequest( endpoint, options = {}, body) {
     const baseOptions = {
         method : 'POST',
         cache : 'no-cache',
         credentials : 'include',
         headers : {
-            'Content-Type' : 'application/json',
-            ...( withAuth && { "Authorization" : "{jwt}"})
+            'Content-Type' : 'application/json'
             },
         body : body ? JSON.stringify(body) : {}
     }

@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function memberLogin(requestBody){
-    return await apiPostRequest('member/login', {}, requestBody, false);
+    return await apiPostRequest('member/login', {}, requestBody);
 }
 
 function validateLoginForm(id, password){
