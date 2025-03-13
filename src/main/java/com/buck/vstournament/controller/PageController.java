@@ -20,4 +20,9 @@ public class PageController {
     public String login(){
         return "member/login/login";
     }
+
+    @GetMapping("register")
+    public String register(){
+        return "member/register/register";
+    }
 }

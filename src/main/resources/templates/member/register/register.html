@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/member/register/css/register.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="register" class="register">
+            <div class="register-icon"></div>
+            <div class="desc">
+                <p class="d-a">안녕하세요. VsMatch 입니다.</p>
+                <p class="d-b"><b>아이디와 비밀번호</b>로<br>간편하게 <b>계정을 생성</b>하고</p>
+                <p class="d-b">개성있는 대결주제를 만들어 보세요</p>
+            </div>
+
+            <div class="member-register-form">
+                <div class="form-item register-id">
+                    <input id="register-id" class="register-id" type="text" placeholder="아이디">
+                </div>
+
+                <div class="form-item password">
+                    <input id="password" class="password" type="text" placeholder="비밀번호">
+                </div>
+
+                <div class="form-item password-confirm">
+                    <input id="password-confirm" class="password-confirm" type="text" placeholder="비밀번호 재입력">
+                </div>
+            </div>
+
+            <div id="message-box" class="message-box">
+                <p id="alert-message" class="alert-message"></p>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn-register">계정생성</button>
+            </div>
+
+            <div class="for-member">
+                <p class="for-member-message">가입한 계정이 있나요?</p>
+                <button id="btn-back-to-login" class="btn-back-to-login" type="button">로그인</button>
+            </div>
+        </div>
+    </body>
+</th:block>
+</html>
