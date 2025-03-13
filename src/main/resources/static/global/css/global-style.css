@@ -30,3 +30,11 @@ li{
 input{
     outline: none;
 }
+
+a{
+    text-decoration: none;
+}
+
+a:visited{
+    color : #000;
+}
