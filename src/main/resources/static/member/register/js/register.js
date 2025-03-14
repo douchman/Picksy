@@ -56,7 +56,7 @@ function validateRegisterForm(){
         return {validationResult : false, form :{} };
     }
 
-    else if(!validatePassword(password, passwordConfirm)){
+    else if(!validatePassword(password)){
         showRegisterMessage(passwordValidationMessage);
         return {validationResult : false, form :{} };
     }

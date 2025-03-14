@@ -9,7 +9,6 @@ export const passwordValidationMessage = '비밀번호는 영어(대/소문자),
 
 
 export function validateId(id){
-    console.log('id');
     return idRegex.test(id);
 }
 
