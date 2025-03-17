@@ -1,0 +1,75 @@
+.common-alert-message{
+    position: fixed;
+    top : 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.common-alert-message .bg{
+    position: absolute;
+    top : 0;
+    left : 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+}
+
+.common-alert-message .message-body{
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    min-width: 360px;
+    padding : 40px 24px 24px 24px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #FFF;
+    animation: common-message-show .4s ease forwards;
+}
+
+.common-alert-message .message-body .message-title{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.common-alert-message .message-body .message-title:before{
+    content : '⚠️';
+    font-size: 18px;
+}
+
+.common-alert-message .message-body .message-content{
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.common-alert-message .message-body .btn-group{
+    text-align: center;
+}
+
+.common-alert-message .message-body .btn-group button.btn-close-alert-message{
+    padding : 8px 14px;
+    background-color: var(--signature-color);
+    border-radius: 4px;
+}
+
+.common-alert-message .message-body .btn-group button.btn-close-alert-message:before{
+    content : '확인';
+    font-size: 14px;
+    color : #FFF;
+}
+
+
+@-webkit-keyframes common-message-show {
+    from{
+        opacity: 0;
+        transform : translate(-50% , -100%);
+
+    }
+
+    to{
+        opacity: 1;
+        transform : translate(-50% ,-50%);
+    }
+}
