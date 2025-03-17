@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
+    document.querySelector('#btn-register').addEventListener('click', () =>{
+       location.href='/register';
+    });
+
 });
 
 async function memberLogin(requestBody){
