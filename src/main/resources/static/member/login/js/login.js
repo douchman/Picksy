@@ -22,6 +22,14 @@ document.addEventListener("DOMContentLoaded", async () => {
        location.href='/register';
     });
 
+    document.querySelector('#password').addEventListener('keydown', function(event){
+        const keyEvent = event.key;
+
+        if( keyEvent === 'Enter'){
+            document.querySelector('#btn-login').click();
+        }
+    });
+
 });
 
 async function memberLogin(requestBody){
