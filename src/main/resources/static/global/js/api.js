@@ -17,22 +17,24 @@ export async function apiGetRequest( endpoint, options = {}, params = {}) {
     const mergedOptions = { ... baseOptions, ... options}
 
     let response;
-    let status;
-    let jsonResponse;
+    let status = 500;
+    let jsonResponse = {};
 
     try {
         response = await fetch(fullUrl, mergedOptions);
         status = response.status;
         jsonResponse = await response.json();
+
+        if( !response.ok && isAuthException(status, jsonResponse.errorCode)) {
+            handleAuthException(status);
+            return;
+        }
     } catch (error){
         console.error('API Request Error :' , error);
         renderCommonAlertMessage('네트워트 연결 오류', defaultErrorMessage);
+        jsonResponse = {}; // 안전하게 기본 값 재설정
     }
 
-    if( !response.ok && isAuthException(status, jsonResponse.errorCode)) {
-        handleAuthException(status);
-        return;
-    }
 
     return {status : status, data : jsonResponse?.data ?? jsonResponse};
 }
@@ -53,21 +55,21 @@ export async function apiPostRequest( endpoint, options = {}, body) {
     const mergedOptions = { ... baseOptions, ... options}
 
     let response;
-    let status;
-    let jsonResponse;
+    let status = 500;
+    let jsonResponse = {};
 
     try {
         response = await fetch(API_URL + endpoint, mergedOptions);
         status = response.status;
         jsonResponse = await response.json();
+
+        if( !response.ok && isAuthException(status, jsonResponse.errorCode)) {
+            handleAuthException(status);
+        }
     } catch (error){
         console.error('API Request Error :' , error);
         renderCommonAlertMessage("네트워크 연결 오류", defaultErrorMessage);
-    }
-
-    if( !response.ok && isAuthException(status, jsonResponse.errorCode)) {
-        handleAuthException(status);
-        return;
+        jsonResponse = {}; // 안전하게 기본 값 재설정
     }
 
     return {status : status, data : jsonResponse?.data ?? jsonResponse};
