@@ -26,7 +26,7 @@ async function getTopics(){
 
 async function renderTopics(){
     const topicContentCards = document.querySelector('#topic-content-cards');
-    const {topicList} = await getTopics();
+    const {status, data : {topicList, pagination}} = await getTopics();
 
     clearTopicContentCards();
 

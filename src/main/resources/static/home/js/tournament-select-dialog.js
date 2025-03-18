@@ -64,7 +64,7 @@ export function addDialogEvents() {
 
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
-    const {topic, tournamentList } = await getTopicDetail(topicId);
+    const {status, data : {topic ,tournamentList}} = await getTopicDetail(topicId);
 
     clearDialogData(dialog);
 
