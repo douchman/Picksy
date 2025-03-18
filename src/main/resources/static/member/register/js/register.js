@@ -26,11 +26,11 @@ async function registerMember(){
     if( validationResult ){
         const {status, data } = await postMember(requestBody);
 
-        if ( status !== 200 ){
-            showRegisterMessage(data.message);
-        } else {
+        if ( status === 200 ){
             alert('가입이 완료되었습니다.') // 임시
             location.href = '/login';
+        } else {
+            showRegisterMessage(data.message);
         }
     }
 }
