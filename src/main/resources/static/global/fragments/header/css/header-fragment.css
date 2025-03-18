@@ -75,3 +75,14 @@
     color : #333;
 }
 
+
+.right-nav-group .btn-logout{
+    padding-left : 30px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/box-arrow-left.svg");
+    background-position: 0 50%;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    font-size: 14px;
+    color : #FF8A8A;
+}
+

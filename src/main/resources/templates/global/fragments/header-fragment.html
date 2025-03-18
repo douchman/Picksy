@@ -2,7 +2,8 @@
 <html lang="ko" th:fragment="headerFragment">
 
 <head>
-    <link rel="stylesheet" th:href="@{'/global/fragments/css/header-fragment.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <link rel="stylesheet" th:href="@{'/global/fragments/header/css/header-fragment.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <script type="module" th:src="@{'/global/fragments/header/js/header-fragment.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </head>
 
 <header id="main-header" class="main-header">
@@ -11,8 +12,9 @@
         <a class="nav" href="/">대결주제</a>
         <a class="nav">대결주제 만들기</a>
     </div>
-    <div class="right-nav-group">
-        <a class="move-login-page" href="/login">로그인</a>
+
+    <div id="right-nav-group" class="right-nav-group">
+        <a id="move-login-page" class="move-login-page" href="/login">로그인</a>
     </div>
 </header>
 
