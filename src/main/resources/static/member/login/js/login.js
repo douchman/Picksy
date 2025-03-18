@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         if( validateLoginForm(id, password)){
             const {status, data: loginResult } = await memberLogin({id, password});
 
-            if( status !== 200 ) {
-                showMessage(loginResult.message);
-            } else {
+            if( status === 200 ) {
                 location.href = '/index';
+            } else {
+                showMessage(loginResult.message);
             }
         }
     });
