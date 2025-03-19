@@ -25,4 +25,9 @@ public class PageController {
     public String register(){
         return "member/register/register";
     }
+
+    @GetMapping("topic/create")
+    public String createTopic(){
+        return "topic/create/topic-create";
+    }
 }
