@@ -1,0 +1,36 @@
+@import "./l-topic-create.css";
+@import "./r-entry-create.css";
+
+input[type="file"] {
+    display: none;
+}
+
+.layout-container{
+    height: calc( 100% - var(--main-header-height));
+}
+
+.wrapper{
+    height: 100%;
+}
+
+.topic-create{
+    height: 100%;
+    display: flex;
+    gap : 10px;
+    padding : 10px;
+    box-sizing: border-box;
+}
+
+.separate-section{
+    max-height: 100%;
+    overflow-y: auto;
+    padding : 20px 15px;
+    border-radius: 6px;
+    background-color: #FFF;
+}
+
+.separate-section .section-header{
+    color : #333;
+    font-size: 24px;
+    font-weight: 600;
+}
