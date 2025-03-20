@@ -23,11 +23,14 @@
     height: 360px;
     max-height: 360px;
     border : 3px dashed #7D7D7D;
-    border-radius: 6px;
+    border-radius: 12px;
     position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.topic-thumb:not(.uploaded) .topic-thumbnail-preview:before{
+.topic-thumb .topic-thumbnail-preview:not(.uploaded):before{
     content : '클릭 또는 파일을 드래그 하여 업로드 해주세요';
     color : #7D7D7D;
     font-size: 18px;
@@ -50,6 +53,11 @@
     background-repeat: no-repeat;
     background-size: 60px 60px;
     padding-top: 45px; /* 이미지 위 공간 확보 */
+}
+
+.topic-thumb .topic-thumbnail-preview.drag-over{
+    border-color: #4CAF50; /* 녹색으로 강조 */
+    background-color: rgba(76, 175, 80, 0.1); /* 살짝 녹색 배경 */
 }
 
 .topic-desc-group .input-group{
