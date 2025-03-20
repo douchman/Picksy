@@ -49,11 +49,11 @@
     font-weight: 600;
 }
 
-.entries{
+.entry-form{
     padding : 20px 0;
 }
 
-.entries .entry{
+.entry-form .entry-item{
     display: flex;
     gap : 15px;
     height: 120px;
@@ -64,15 +64,15 @@
     box-sizing: border-box;
 }
 
-.entries .entry:nth-child(odd){
+.entry-form .entry-item:nth-child(odd){
     background-color: rgba(238, 238, 238, 0.7);
 }
 
-.entries .entry:nth-child(even){
+.entry-form .entry-item:nth-child(even){
     background-color: rgba(238, 238, 238, 0.3);
 }
 
-.entry .entry-thumb{
+.entry-item .entry-thumb{
     width: 120px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -80,15 +80,15 @@
     background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-01.jpeg");
 }
 
-.entry .entry-desc{
+.entry-item .entry-desc{
     flex : 1;
 }
 
-.entry .tool-box{
+.entry-item .tool-box{
     flex : 1;
 }
 
-.entry-desc .entry-desc-input-group{
+.entry-item .entry-desc-input-group{
     display: flex;
     align-items: center;
     gap : 15px;
