@@ -72,6 +72,10 @@
     background-color: rgba(238, 238, 238, 0.3);
 }
 
+.entry-item{
+    animation: newItemBlink .5s ease;
+}
+
 .entry-item .entry-thumb{
     width: 120px;
     background-repeat: no-repeat;
@@ -118,7 +122,7 @@
 }
 
 
-.entry .btn-remove-entry{
+.entry-item .btn-remove-entry{
     position: absolute;
     top :0;
     right: 0;
@@ -135,14 +139,13 @@
     transition: .2s ease opacity;
 }
 
-.entry:hover .btn-remove-entry{
+.entry-item:hover .btn-remove-entry{
     visibility: visible;
     opacity: 1;
 }
 
-
-
-
-
-
-
+@keyframes newItemBlink {
+    50%{
+    background-color: rgba(191, 236, 255, .7);
+    }
+}
