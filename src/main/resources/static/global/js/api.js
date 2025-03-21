@@ -75,6 +75,46 @@ export async function apiPostRequest( endpoint, options = {}, body) {
     return {status : status, data : jsonResponse?.data ?? jsonResponse};
 }
 
+
+export async function apiFormDataRequest( endpoint, options = {}, body) {
+
+    const baseOptions = {
+        method : 'POST',
+        cache : 'no-cache',
+        credentials : 'include'
+    }
+    let requestBody ;
+
+    requestBody = body; // must formData
+
+    const mergedOptions = {
+        ...baseOptions,
+        ...options,
+        body: requestBody,
+    };
+
+    let response;
+    let status = 500;
+    let jsonResponse = {};
+
+    try {
+        response = await fetch(API_URL + endpoint, mergedOptions);
+        status = response.status;
+        jsonResponse = await response.json();
+
+        if( !response.ok && isAuthException(status, jsonResponse.errorCode)) {
+            handleAuthException(status);
+        }
+    } catch (error){
+        console.error('API Request Error :' , error);
+        renderCommonAlertMessage("네트워크 연결 오류", defaultErrorMessage);
+        jsonResponse = {}; // 안전하게 기본 값 재설정
+    }
+
+    return {status : status, data : jsonResponse?.data ?? jsonResponse};
+}
+
+
 function isAuthException(status = 200, errorCode){
     return ((status === 401 && errorCode === 'UNAUTHORIZED') || status === 403);
 }
