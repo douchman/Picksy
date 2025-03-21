@@ -1,4 +1,5 @@
 import {generateFilePreviewURL} from "../../../global/js/file.js";
+const stagedEntryThumbFiles = {};
 
 export function addEntryCreateEvents(){
 
@@ -16,23 +17,15 @@ export function addEntryCreateEvents(){
 
     document.querySelector('#add-entry').addEventListener('drop', function(e){
         e.preventDefault();
-        const dataTransfer = new DataTransfer();
+
         const files = e.dataTransfer.files;
-        const entryFile = document.querySelector('#entry-image');
-
-        for(const file of files){
-            dataTransfer.items.add(file);
-        }
-
-        entryFile.files = dataTransfer.files;
 
         requestAnimationFrame(() => {
-            Array.from(entryFile.files).forEach(file => {
-                generateFilePreviewURL(file, (url) =>{
-                    renderEmptyEntryItem(url);
-                })
-            });
+            for(const file of files){
+                addFileToStagedEntryThumbFiles(file);
+            }
         });
+
         this.classList.remove('drag-over');
     });
 
@@ -53,11 +46,11 @@ export function addEntryCreateEvents(){
 
 }
 
-function renderEmptyEntryItem(thumbnail){
+function renderEmptyEntryItem(thumbnail, fileId){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item">
-            <div class="entry-thumb" style="background-image: url(${thumbnail})"></div>
+            <div class="entry-thumb" ${fileId ? `id="${fileId}" ` : ''} ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
                         <span class="input-index">엔트리 명</span>
@@ -77,6 +70,25 @@ function renderEmptyEntryItem(thumbnail){
 function removeEntryItem(target){
     const entryItem = target.closest('.entry-item');
     if( entryItem ){
+        const thumbId = entryItem.querySelector('.entry-thumb').id;
         entryItem.remove();
+        thumbId && removeStagedEntryThumbFiles(thumbId)
     }
+}
+
+function generateFileId(file){
+    return `${file.name}-${file.size}-${file.lastModified}`;
+}
+
+function addFileToStagedEntryThumbFiles(file){
+    const fileId = generateFileId(file);
+    stagedEntryThumbFiles[fileId] = file;
+
+    generateFilePreviewURL(file, (url) =>{
+        renderEmptyEntryItem(url, fileId);
+    });
+}
+
+function removeStagedEntryThumbFiles(fileId){
+    delete stagedEntryThumbFiles[fileId];
 }
