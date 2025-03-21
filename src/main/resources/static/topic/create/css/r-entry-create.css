@@ -10,8 +10,12 @@
     height: 130px;
     box-sizing: border-box;
     position: relative;
-
     cursor: pointer;
+}
+
+.add-entry.drag-over{
+    border-color: #4CAF50; /* 녹색으로 강조 */
+    background-color: rgba(76, 175, 80, 0.1); /* 살짝 녹색 배경 */
 }
 
 .add-entry:before{
