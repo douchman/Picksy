@@ -17,8 +17,9 @@ input[type="file"] {
     height: 100%;
     display: flex;
     gap : 10px;
-    padding : 10px;
+    padding : 10px 10px 80px 10px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .separate-section{
@@ -33,4 +34,31 @@ input[type="file"] {
     color : #333;
     font-size: 24px;
     font-weight: 600;
+}
+
+.bottom-btn-group{
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    bottom : 0;
+    left : 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 25px;
+}
+
+.bottom-btn-group button{
+    padding : 6px 12px;
+    border-radius: 4px;
+    color : #FFF;
+    font-size: 24px;
+}
+
+.bottom-btn-group .btn-save{
+    background-color: #4CAF50;
+}
+
+.bottom-btn-group .btn-cancel{
+    background-color: #FF8A8A;
 }
