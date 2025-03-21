@@ -1,4 +1,7 @@
 import {generateFilePreviewURL} from "../../../global/js/file.js";
+import {apiFormDataRequest} from "../../../global/js/api.js";
+import {getTopicId} from "./const.js";
+
 const stagedEntryThumbFiles = {};
 
 export function addEntryCreateEvents(){
@@ -90,4 +93,42 @@ function addFileToStagedEntryThumbFiles(file){
 
 function removeStagedEntryThumbFiles(fileId){
     delete stagedEntryThumbFiles[fileId];
+}
+
+export async function registerEntries(){
+    const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
+
+    if( validationResult ){
+        const { status, formData } = await postEntries(entryFormData);
+    }
+
+}
+
+async function validateAndGenerateEntryFormData(){
+    const entryFormData = new FormData();
+    const entryForm = document.querySelector('#entry-form');
+    const entryItems = entryForm.querySelectorAll('.entry-item');
+
+    entryFormData.append('topicId', getTopicId());
+
+    entryItems.forEach((entryItem, index) => {
+        const entryItemId = entryItem.id;
+        const entryName = entryItem.querySelector('.entry-name').value;
+        const entryDesc = entryItem.querySelector('.entry-desc').value;
+        const entryThumbFile = stagedEntryThumbFiles[entryItemId]
+
+        // TODO : 엔트리 아이템 유효성 검사 필요
+
+        entryFormData.append(`entries[${index}].entryName`, entryName)
+        entryFormData.append(`entries[${index}].description`, entryDesc)
+        entryFormData.append(`entries[${index}].file`, entryThumbFile)
+
+    });
+
+    return { validationResult : true, formData : entryFormData };
+
+}
+
+async function postEntries(requestBody){
+    return apiFormDataRequest(`topics/${getTopicId()}/entries`, {}, requestBody);
 }
