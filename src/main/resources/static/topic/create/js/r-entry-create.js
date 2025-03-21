@@ -53,11 +53,11 @@ function renderEntryItem(thumbnail, fileId){
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
                         <span class="input-index">엔트리 명</span>
-                        <input class="entry-name" type="text">
+                        <input class="entry-name" type="text" maxlength="30">
                     </div>
                      <div class="entry-desc-input-group">
                          <span class="input-index">엔트리 설명</span>
-                         <input class="entry-desc" type="text">
+                         <input class="entry-desc" type="text" maxlength="200">
                      </div>
                 </div>
                 <button class="btn-remove-entry"></button>
