@@ -4,7 +4,7 @@ const stagedEntryThumbFiles = {};
 export function addEntryCreateEvents(){
 
     document.querySelector('#add-entry').addEventListener('click', function(){
-        renderEmptyEntryItem();
+        renderEntryItem();
     });
     document.querySelector('#add-entry').addEventListener('dragover', function(e){
         e.preventDefault();
@@ -43,10 +43,9 @@ export function addEntryCreateEvents(){
             }
         }
     });
-
 }
 
-function renderEmptyEntryItem(thumbnail, fileId){
+function renderEntryItem(thumbnail, fileId){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item">
@@ -85,7 +84,7 @@ function addFileToStagedEntryThumbFiles(file){
     stagedEntryThumbFiles[fileId] = file;
 
     generateFilePreviewURL(file, (url) =>{
-        renderEmptyEntryItem(url, fileId);
+        renderEntryItem(url, fileId);
     });
 }
 
