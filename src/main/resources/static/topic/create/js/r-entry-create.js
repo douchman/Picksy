@@ -45,11 +45,11 @@ export function addEntryCreateEvents(){
     });
 }
 
-function renderEntryItem(thumbnail, fileId){
+function renderEntryItem(thumbnail, entryId = generateEntryId()){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
-        `<div class="entry-item">
-            <div class="entry-thumb" ${fileId ? `id="${fileId}" ` : ''} ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
+        `<div class="entry-item" id="${entryId}">
+            <div class="entry-thumb" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
                         <span class="input-index">엔트리 명</span>
@@ -75,16 +75,16 @@ function removeEntryItem(target){
     }
 }
 
-function generateFileId(file){
-    return `${file.name}-${file.size}-${file.lastModified}`;
+function generateEntryId(){
+    return crypto.randomUUID();
 }
 
 function addFileToStagedEntryThumbFiles(file){
-    const fileId = generateFileId(file);
-    stagedEntryThumbFiles[fileId] = file;
+    const entryId = generateEntryId();
+    stagedEntryThumbFiles[entryId] = file;
 
     generateFilePreviewURL(file, (url) =>{
-        renderEntryItem(url, fileId);
+        renderEntryItem(url, entryId);
     });
 }
 
