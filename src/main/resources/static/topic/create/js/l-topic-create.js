@@ -60,10 +60,10 @@ export async function registerTopic(){
 
         if( status === 200){
             setTopicId(registerResult.topicId);
+            return true;
         }
-
     }
-
+    return false;
 }
 
 function validateAndGenerateTopicFormData(){
