@@ -96,12 +96,21 @@ function removeStagedEntryThumbFiles(fileId){
 }
 
 export async function registerEntries(){
-    const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
+    if( isEntryCreated()){
+        const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
 
-    if( validationResult ){
-        const { status, formData } = await postEntries(entryFormData);
+        if( validationResult ){
+            const { status, data : registerResult } = await postEntries(entryFormData);
+
+            if( status === 200){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else {
+        return true;
     }
-
 }
 
 async function validateAndGenerateEntryFormData(){
@@ -131,4 +140,10 @@ async function validateAndGenerateEntryFormData(){
 
 async function postEntries(requestBody){
     return apiFormDataRequest(`topics/${getTopicId()}/entries`, {}, requestBody);
+}
+
+function isEntryCreated(){
+    const entryForm = document.querySelector('#entry-form');
+
+    return entryForm.querySelector('.entry-item') !== null;
 }
