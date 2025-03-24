@@ -72,7 +72,7 @@ function renderEntryItem(thumbnail, entryId = generateEntryId()){
                     </div>
                      <div class="entry-desc-input-group">
                          <span class="input-index">엔트리 설명</span>
-                         <input class="entry-desc" type="text" maxlength="200">
+                         <input class="entry-description" type="text" maxlength="200">
                      </div>
                 </div>
                 <button class="btn-remove-entry"></button>
@@ -137,13 +137,13 @@ async function validateAndGenerateEntryFormData(){
     entryItems.forEach((entryItem, index) => {
         const entryItemId = entryItem.id;
         const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDesc = entryItem.querySelector('.entry-desc').value;
+        const entryDescription = entryItem.querySelector('.entry-description').value;
         const entryThumbFile = stagedEntryThumbFiles[entryItemId]
 
         // TODO : 엔트리 아이템 유효성 검사 필요
 
         entryFormData.append(`entries[${index}].entryName`, entryName)
-        entryFormData.append(`entries[${index}].description`, entryDesc)
+        entryFormData.append(`entries[${index}].description`, entryDescription)
         entryFormData.append(`entries[${index}].file`, entryThumbFile)
 
     });
