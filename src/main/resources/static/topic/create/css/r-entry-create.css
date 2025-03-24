@@ -80,6 +80,10 @@
     animation: newItemBlink .5s ease;
 }
 
+.entry-item input[type="file"]{
+    display: none;
+}
+
 .entry-item .entry-thumb{
     width: 120px;
     background-repeat: no-repeat;

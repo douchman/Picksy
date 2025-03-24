@@ -37,7 +37,8 @@ export function addEntryCreateEvents(){
         const eventTarget = event.target;
 
         const handlers = {
-            'btn-remove-entry' : removeEntryItem
+            'btn-remove-entry' : removeEntryItem,
+            'entry-thumb' : triggerEntryThumbUpload,
         }
 
         for (const key in handlers) {
@@ -47,12 +48,22 @@ export function addEntryCreateEvents(){
             }
         }
     });
+
+    document.querySelector('#entry-form').addEventListener('change', function(event){
+        const eventTarget = event.target;
+
+        if (eventTarget.matches('.entry-thumb-upload')) {
+            updateEntryThumb(eventTarget);
+        }
+    });
+
 }
 
 function renderEntryItem(thumbnail, entryId = generateEntryId()){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item" id="${entryId}">
+            <input class="entry-thumb-upload" type="file" accept="image/*">
             <div class="entry-thumb ${!thumbnail && `empty`}" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
@@ -83,13 +94,17 @@ function generateEntryId(){
     return crypto.randomUUID();
 }
 
-function addFileToStagedEntryThumbFiles(file){
-    const entryId = generateEntryId();
+function addFileToStagedEntryThumbFiles(file, entryId = generateEntryId(), isRender = true){
     stagedEntryThumbFiles[entryId] = file;
 
-    generateFilePreviewURL(file, (url) =>{
-        renderEntryItem(url, entryId);
-    });
+    if( isRender ){
+        generateFilePreviewURL(file, (url) =>{
+            renderEntryItem(url, entryId);
+        });
+
+    }
+
+    console.log(' idididididi -> ' , stagedEntryThumbFiles);
 }
 
 function removeStagedEntryThumbFiles(fileId){
@@ -147,9 +162,27 @@ function isEntryCreated(){
     return entryForm.querySelector('.entry-item') !== null;
 }
 
-
 function handleEntryRegisterException(isAuthOrNetworkError, registerResult){
     if( !isAuthOrNetworkError ){
         showToastMessage(registerResult.message, 'error', 2000);
     }
+}
+
+function triggerEntryThumbUpload(entryThumb){
+    entryThumb.closest('.entry-item').querySelector('.entry-thumb-upload').click();
+}
+
+function updateEntryThumb(entryThumbUpload){
+    const entryItem = entryThumbUpload.closest('.entry-item');
+    const tempEntryThumb = entryItem.querySelector('.entry-thumb');
+    const entryId = entryItem.id;
+    const file = entryThumbUpload.files[0];
+
+    generateFilePreviewURL(file, (url) =>{
+        if(url){
+            tempEntryThumb.style.backgroundImage = `url(${url})`;
+            tempEntryThumb.classList.remove('empty');
+            addFileToStagedEntryThumbFiles(file, entryId, false);
+        }
+    });
 }
