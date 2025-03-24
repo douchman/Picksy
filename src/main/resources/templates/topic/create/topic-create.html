@@ -41,11 +41,11 @@
                     <div class="topic-item topic-visibility">
                         <span class="item-index">공개 범위 설정</span>
                         <div class="visibility-group">
-                            <input id="private" type="radio" name="visibility" checked>
+                            <input id="private" type="radio" name="visibility" value="PRIVATE" checked>
                             <label for="private" class="private">비공개</label>
-                            <input id="public" type="radio" name="visibility">
+                            <input id="public" type="radio" name="visibility" value="PUBLIC">
                             <label for="public" class="public">전체공개</label>
-                            <input id="link" type="radio" name="visibility">
+                            <input id="link" type="radio" name="visibility" value="UNLISTED">
                             <label for="link" class="link">링크</label>
                         </div>
                     </div>
@@ -60,6 +60,12 @@
                     <div id="entry-form" class="entry-form"></div>
                 </div>
             </section>
+
+            <div class="bottom-btn-group">
+                <button id="btn-save" class="btn-save" type="button">저장</button>
+                <button id="btn-cancel" class="btn-cancel" type="button">취소</button>
+
+            </div>
         </div>
     </body>
     <script type="module" th:src="@{'/topic/create/js/topic-create.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
