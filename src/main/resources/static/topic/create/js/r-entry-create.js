@@ -53,7 +53,7 @@ function renderEntryItem(thumbnail, entryId = generateEntryId()){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item" id="${entryId}">
-            <div class="entry-thumb" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
+            <div class="entry-thumb ${!thumbnail && `empty`}" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
                         <span class="input-index">엔트리 명</span>
