@@ -1,6 +1,7 @@
 import {generateFilePreviewURL} from "../../../global/js/file.js";
 import {apiFormDataRequest} from "../../../global/js/api.js";
 import {setTopicId} from "./const.js";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 export function addTopicCreateEvents(){
 
@@ -56,14 +57,16 @@ export async function registerTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const {status, data : registerResult } = await postTopic(requestBody);
+        const {status,isAuthOrNetworkError, data : registerResult } = await postTopic(requestBody);
 
         if( status === 200){
             setTopicId(registerResult.topicId);
-            return true;
+        } else {
+            handleTopicRegisterException(isAuthOrNetworkError, registerResult);
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
 function validateAndGenerateTopicFormData(){
@@ -108,4 +111,10 @@ function validateAndGenerateTopicFormData(){
 
 async function postTopic(requestBody){
     return apiFormDataRequest('topics', {}, requestBody);
+}
+
+function handleTopicRegisterException(isAuthOrNetworkError, registerResult){
+    if( !isAuthOrNetworkError ){
+        showToastMessage(registerResult.message, 'error', 2000);
+    }
 }

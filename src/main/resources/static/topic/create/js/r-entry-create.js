@@ -1,6 +1,7 @@
 import {generateFilePreviewURL} from "../../../global/js/file.js";
 import {apiFormDataRequest} from "../../../global/js/api.js";
 import {getTopicId} from "./const.js";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 const stagedEntryThumbFiles = {};
 
@@ -100,17 +101,15 @@ export async function registerEntries(){
         const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
 
         if( validationResult ){
-            const { status, data : registerResult } = await postEntries(entryFormData);
+            const { status,isAuthOrNetworkError,  data : registerResult } = await postEntries(entryFormData);
 
-            if( status === 200){
-                return true;
-            } else {
+            if( status !== 200){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
+                handleEntryRegisterException(isAuthOrNetworkError, registerResult);
                 return false;
             }
         }
-    } else {
-        return true;
     }
+    return true;
 }
 
 async function validateAndGenerateEntryFormData(){
@@ -146,4 +145,11 @@ function isEntryCreated(){
     const entryForm = document.querySelector('#entry-form');
 
     return entryForm.querySelector('.entry-item') !== null;
+}
+
+
+function handleEntryRegisterException(isAuthOrNetworkError, registerResult){
+    if( !isAuthOrNetworkError ){
+        showToastMessage(registerResult.message, 'error', 2000);
+    }
 }
