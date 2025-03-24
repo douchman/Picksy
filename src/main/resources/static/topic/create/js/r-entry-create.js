@@ -103,8 +103,6 @@ function addFileToStagedEntryThumbFiles(file, entryId = generateEntryId(), isRen
         });
 
     }
-
-    console.log(' idididididi -> ' , stagedEntryThumbFiles);
 }
 
 function removeStagedEntryThumbFiles(fileId){
