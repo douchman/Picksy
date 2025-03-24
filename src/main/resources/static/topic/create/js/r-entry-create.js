@@ -132,19 +132,21 @@ async function validateAndGenerateEntryFormData(){
 
     entryFormData.append('topicId', getTopicId());
 
-    entryItems.forEach((entryItem, index) => {
+    for ( const [index, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
-        const entryThumbFile = stagedEntryThumbFiles[entryItemId]
+        const entryThumbFile = stagedEntryThumbFiles[entryItemId];
 
-        // TODO : 엔트리 아이템 유효성 검사 필요
-
+        if(!entryThumbFile) {
+            showToastMessage('이미지가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
+            return { validationResult : false, formData : {}};
+        }
         entryFormData.append(`entries[${index}].entryName`, entryName)
         entryFormData.append(`entries[${index}].description`, entryDescription)
         entryFormData.append(`entries[${index}].file`, entryThumbFile)
 
-    });
+    }
 
     return { validationResult : true, formData : entryFormData };
 
