@@ -80,12 +80,35 @@
     animation: newItemBlink .5s ease;
 }
 
+.entry-item input[type="file"]{
+    display: none;
+}
+
 .entry-item .entry-thumb{
     width: 120px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-01.jpeg");
+    cursor: pointer;
+    position: relative;
+}
+
+.entry-item .entry-thumb.empty{
+    border : 2px dashed #FF8080;
+    background-color: #FFF;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.entry-item .entry-thumb.empty:after{
+    content : '썸네일 없음';
+    font-size: 14px;
+    color : #FF8080;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50% ,-50%);
+    width: max-content;
 }
 
 .entry-item .entry-desc{

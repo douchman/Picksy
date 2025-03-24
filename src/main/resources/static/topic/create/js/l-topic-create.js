@@ -61,12 +61,13 @@ export async function registerTopic(){
 
         if( status === 200){
             setTopicId(registerResult.topicId);
+            return true;
         } else {
             handleTopicRegisterException(isAuthOrNetworkError, registerResult);
             return false;
         }
     }
-    return true;
+    return false;
 }
 
 function validateAndGenerateTopicFormData(){
@@ -77,22 +78,22 @@ function validateAndGenerateTopicFormData(){
     const visibility = document.querySelector('input[name="visibility"]:checked')?.value;
 
     if(!topicTitle || topicTitle === ''){
-        alert('대결 제목을 입력해주세요'); // 임시
+        showToastMessage('대결 제목을 입력해주세요', 'alert');
         return {validationResult : false, formData : {}}
     }
 
     if(!topicSubject || topicSubject === ''){
-        alert('주요개념을 입력해주세요'); // 임시
+        showToastMessage('주요개념을 입력해주세요', 'alert');
         return {validationResult : false, formData : {}}
     }
 
     if(!topicDesc || topicDesc === ''){
-        alert('대결 설명을 입력해주세요'); // 임시
+        showToastMessage('대결 설명을 입력해주세요', 'alert');
         return {validationResult : false, formData : {}}
     }
 
     if(!topicThumb){
-        alert('대표이미지를 등록해주세요.'); // 임시
+        showToastMessage('대표이미지를 등록해주세요', 'alert');
         return {validationResult : false, formData : {}}
     }
 

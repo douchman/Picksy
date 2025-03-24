@@ -37,7 +37,8 @@ export function addEntryCreateEvents(){
         const eventTarget = event.target;
 
         const handlers = {
-            'btn-remove-entry' : removeEntryItem
+            'btn-remove-entry' : removeEntryItem,
+            'entry-thumb' : triggerEntryThumbUpload,
         }
 
         for (const key in handlers) {
@@ -47,13 +48,23 @@ export function addEntryCreateEvents(){
             }
         }
     });
+
+    document.querySelector('#entry-form').addEventListener('change', function(event){
+        const eventTarget = event.target;
+
+        if (eventTarget.matches('.entry-thumb-upload')) {
+            updateEntryThumb(eventTarget);
+        }
+    });
+
 }
 
 function renderEntryItem(thumbnail, entryId = generateEntryId()){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item" id="${entryId}">
-            <div class="entry-thumb" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
+            <input class="entry-thumb-upload" type="file" accept="image/*">
+            <div class="entry-thumb ${!thumbnail && `empty`}" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
                         <span class="input-index">엔트리 명</span>
@@ -61,7 +72,7 @@ function renderEntryItem(thumbnail, entryId = generateEntryId()){
                     </div>
                      <div class="entry-desc-input-group">
                          <span class="input-index">엔트리 설명</span>
-                         <input class="entry-desc" type="text" maxlength="200">
+                         <input class="entry-description" type="text" maxlength="200">
                      </div>
                 </div>
                 <button class="btn-remove-entry"></button>
@@ -83,13 +94,15 @@ function generateEntryId(){
     return crypto.randomUUID();
 }
 
-function addFileToStagedEntryThumbFiles(file){
-    const entryId = generateEntryId();
+function addFileToStagedEntryThumbFiles(file, entryId = generateEntryId(), isRender = true){
     stagedEntryThumbFiles[entryId] = file;
 
-    generateFilePreviewURL(file, (url) =>{
-        renderEntryItem(url, entryId);
-    });
+    if( isRender ){
+        generateFilePreviewURL(file, (url) =>{
+            renderEntryItem(url, entryId);
+        });
+
+    }
 }
 
 function removeStagedEntryThumbFiles(fileId){
@@ -119,19 +132,21 @@ async function validateAndGenerateEntryFormData(){
 
     entryFormData.append('topicId', getTopicId());
 
-    entryItems.forEach((entryItem, index) => {
+    for ( const [index, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;
         const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDesc = entryItem.querySelector('.entry-desc').value;
-        const entryThumbFile = stagedEntryThumbFiles[entryItemId]
+        const entryDescription = entryItem.querySelector('.entry-description').value;
+        const entryThumbFile = stagedEntryThumbFiles[entryItemId];
 
-        // TODO : 엔트리 아이템 유효성 검사 필요
-
+        if(!entryThumbFile) {
+            showToastMessage('이미지가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
+            return { validationResult : false, formData : {}};
+        }
         entryFormData.append(`entries[${index}].entryName`, entryName)
-        entryFormData.append(`entries[${index}].description`, entryDesc)
+        entryFormData.append(`entries[${index}].description`, entryDescription)
         entryFormData.append(`entries[${index}].file`, entryThumbFile)
 
-    });
+    }
 
     return { validationResult : true, formData : entryFormData };
 
@@ -147,9 +162,27 @@ function isEntryCreated(){
     return entryForm.querySelector('.entry-item') !== null;
 }
 
-
 function handleEntryRegisterException(isAuthOrNetworkError, registerResult){
     if( !isAuthOrNetworkError ){
         showToastMessage(registerResult.message, 'error', 2000);
     }
+}
+
+function triggerEntryThumbUpload(entryThumb){
+    entryThumb.closest('.entry-item').querySelector('.entry-thumb-upload').click();
+}
+
+function updateEntryThumb(entryThumbUpload){
+    const entryItem = entryThumbUpload.closest('.entry-item');
+    const tempEntryThumb = entryItem.querySelector('.entry-thumb');
+    const entryId = entryItem.id;
+    const file = entryThumbUpload.files[0];
+
+    generateFilePreviewURL(file, (url) =>{
+        if(url){
+            tempEntryThumb.style.backgroundImage = `url(${url})`;
+            tempEntryThumb.classList.remove('empty');
+            addFileToStagedEntryThumbFiles(file, entryId, false);
+        }
+    });
 }
