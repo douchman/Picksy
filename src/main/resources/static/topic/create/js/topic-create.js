@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function addTopicCrateEvents(){
     document.querySelector('#btn-save').addEventListener('click' , async () => {
 
-        registerTopic().then(() =>{
-            registerEntries();
-        })
+        const topicRegisterSuccess = await registerTopic()
+        const entryRegisterSuccess =  topicRegisterSuccess && await registerEntries();
+
+        entryRegisterSuccess && alert('등록 완료'); // 임시
 
     });
 
