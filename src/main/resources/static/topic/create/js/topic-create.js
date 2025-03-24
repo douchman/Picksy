@@ -14,8 +14,10 @@ function addTopicCrateEvents(){
         const topicRegisterSuccess = await registerTopic()
         const entryRegisterSuccess =  topicRegisterSuccess && await registerEntries();
 
-        entryRegisterSuccess && alert('등록 완료'); // 임시
-
+        if( entryRegisterSuccess ){
+            alert('등록이 완료되었습니다.');
+            location.href = '/';
+        }
     });
 
     document.querySelector('#btn-cancel').addEventListener('click' , async () => {
