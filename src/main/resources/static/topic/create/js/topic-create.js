@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function addTopicCrateEvents(){
     document.querySelector('#btn-save').addEventListener('click' , async () => {
         toggleBtnSaveBlock(true);
+        displayLoadingMask();
         const topicRegisterSuccess = await registerTopic()
         const entryRegisterSuccess =  topicRegisterSuccess && await registerEntries();
 
@@ -19,6 +20,7 @@ function addTopicCrateEvents(){
             location.href = '/';
         } else{
             toggleBtnSaveBlock(false);
+            removeLoadingMask();
         }
     });
 
@@ -29,4 +31,13 @@ function addTopicCrateEvents(){
 
 function toggleBtnSaveBlock(isBlock){
     document.querySelector('#btn-save').disabled = isBlock;
+}
+
+function displayLoadingMask(){
+    const loadingMask = `<div class="loading-mask"></div>`;
+    document.querySelector('body').insertAdjacentHTML('beforeend', loadingMask);
+}
+
+function removeLoadingMask(){
+    document.querySelector('.loading-mask').remove();
 }
