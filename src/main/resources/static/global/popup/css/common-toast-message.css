@@ -9,6 +9,7 @@
     --toast-message-color : #1D4ED8;
     --toast-icon : '👉';
     box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    z-index: var(--common-toast-z-index);
 }
 
 .common-toast .toast-message{

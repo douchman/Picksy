@@ -1,3 +1,8 @@
+:root{
+    --loading-mask-z-index : 6666;
+    --common-toast-z-index : 8888;
+}
+
 p{
     margin : 0;
     padding : 0;
