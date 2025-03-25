@@ -1,5 +1,8 @@
-import {addTopicCreateEvents, registerTopic} from "./l-topic-create.js";
+import {addTopicCreateEvents, modifyTopic, registerTopic} from "./l-topic-create.js";
 import {addEntryCreateEvents, registerEntries} from "./r-entry-create.js";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+
+let isTopicCreated = false; // 이미 생성된 주제 존재여부 플래그
 
 document.addEventListener('DOMContentLoaded', () => {
     addTopicCreateEvents();
@@ -10,14 +13,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function addTopicCrateEvents(){
     document.querySelector('#btn-save').addEventListener('click' , async () => {
+        let topicRegisterSuccess;
+
         toggleBtnSaveBlock(true);
         displayLoadingMask();
-        const topicRegisterSuccess = await registerTopic()
+
+        if( isTopicCreated ){
+            topicRegisterSuccess = await modifyTopic();
+        } else {
+            topicRegisterSuccess = await registerTopic();
+            isTopicCreated = topicRegisterSuccess;
+        }
+
         const entryRegisterSuccess =  topicRegisterSuccess && await registerEntries();
 
         if( topicRegisterSuccess && entryRegisterSuccess ){
-            alert('등록이 완료되었습니다.');
-            location.href = '/';
+            showToastMessage('성공적으로 저장되었습니다. :)');
+            setTimeout(() =>{
+                location.href = '/';
+            }, 2000);
         } else{
             toggleBtnSaveBlock(false);
             removeLoadingMask();

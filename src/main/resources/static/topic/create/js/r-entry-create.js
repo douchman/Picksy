@@ -110,6 +110,7 @@ function removeStagedEntryThumbFiles(fileId){
 }
 
 export async function registerEntries(){
+    let entryRegisterResult = true;
     if( isEntryCreated()){
         const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
 
@@ -118,11 +119,13 @@ export async function registerEntries(){
 
             if( status !== 200){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
                 handleEntryRegisterException(isAuthOrNetworkError, registerResult);
-                return false;
+                entryRegisterResult = false;
             }
+        } else {
+            entryRegisterResult = false;
         }
     }
-    return true;
+    return entryRegisterResult;
 }
 
 async function validateAndGenerateEntryFormData(){
