@@ -1,6 +1,6 @@
 import {generateFilePreviewURL} from "../../../global/js/file.js";
-import {apiFormDataRequest} from "../../../global/js/api.js";
-import {setTopicId} from "./const.js";
+import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../global/js/api.js";
+import {getTopicId, setTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 export function addTopicCreateEvents(){
@@ -70,6 +70,29 @@ export async function registerTopic(){
     return false;
 }
 
+export async function modifyTopic(){
+    const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = validateAndGenerateTopicFormData();
+
+    if( validationResult ){
+        const requestBody = new FormData();
+        requestBody.append('title', topicTitle);
+        requestBody.append('subject', topicSubject);
+        requestBody.append('description', topicDesc);
+        requestBody.append('thumbnail', topicThumb);
+        requestBody.append('visibility', visibility);
+
+        const {status,isAuthOrNetworkError, data : registerResult } = await patchTopic(requestBody);
+
+        if( status === 200){
+            return true;
+        } else {
+            handleTopicRegisterException(isAuthOrNetworkError, registerResult);
+            return false;
+        }
+    }
+    return false;
+}
+
 function validateAndGenerateTopicFormData(){
     const topicTitle = document.querySelector('#topic-title').value;
     const topicSubject = document.querySelector('#topic-subject').value;
@@ -112,6 +135,10 @@ function validateAndGenerateTopicFormData(){
 
 async function postTopic(requestBody){
     return apiFormDataRequest('topics', {}, requestBody);
+}
+
+async function patchTopic(requestBody){
+    return apiFormDataPatchRequest(`topics/${getTopicId()}`, {}, requestBody);
 }
 
 function handleTopicRegisterException(isAuthOrNetworkError, registerResult){
