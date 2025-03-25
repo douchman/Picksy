@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{'/topic/create/css/topic-create.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
 </head>
 <th:block layout:fragment="Content">
-    <body>
+    <body data-require-auth="true">
         <div id="topic-create" class="topic-create">
             <section class="separate-section l-topic-create">
                 <p class="section-header">대결주제 설정</p>

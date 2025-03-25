@@ -8,5 +8,7 @@
     <link rel="stylesheet" th:href="@{'/global/css/global-style.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
     <link rel="stylesheet" th:href="@{'/global/alert/css/common-alert-message.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
     <link rel="stylesheet" th:href="@{'/global/popup/css/common-toast-message.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+
+    <script type="module" th:src="@{'/global/js/global.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </head>
 </html>
