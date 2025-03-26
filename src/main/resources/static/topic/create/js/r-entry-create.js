@@ -2,8 +2,11 @@ import {generateFilePreviewURL} from "../../../global/js/file.js";
 import {apiFormDataRequest} from "../../../global/js/api.js";
 import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {getYouTubeInfoFromUrl} from "./youtube.js";
 
 const stagedEntryMedia = {};
+
+let youtubeLinkDebounceTimer = null;
 
 export function addEntryCreateEvents(){
 
@@ -57,6 +60,22 @@ export function addEntryCreateEvents(){
         }
     });
 
+    document.querySelector('#entry-form').addEventListener('input', async function(event){
+        const eventTarget = event.target;
+
+        if (eventTarget.matches('.youtube-link')) {
+            getThumbnailFromUrl(eventTarget);
+        }
+    });
+
+    document.querySelector('#entry-form').addEventListener('paste', async function(event){
+        const eventTarget = event.target;
+
+        if (eventTarget.matches('.youtube-link')) {
+            getThumbnailFromUrl(eventTarget);
+        }
+    });
+
 }
 
 function renderEntryItem(thumbnail, entryId = generateEntryId()){
@@ -73,6 +92,10 @@ function renderEntryItem(thumbnail, entryId = generateEntryId()){
                     <div class="entry-desc-input-group">
                          <span class="input-index">엔트리 설명</span>
                          <input class="entry-description" type="text" maxlength="200">
+                    </div>
+                    <div class="entry-desc-input-group">
+                         <span class="input-index">유튜브 링크</span>
+                         <input class="youtube-link" type="text" maxlength="200" placeholder="유튜브 링크를 넣어주세요">
                     </div>
                 </div>
                 <button class="btn-remove-entry"></button>
@@ -191,4 +214,27 @@ function updateEntryThumb(entryThumbUpload){
             addStagedEntryMedia('file', file, entryId, false);
         }
     });
+}
+
+function getThumbnailFromUrl(youtubeLinkInput){
+    const entryId = youtubeLinkInput.closest('.entry-item').id;
+    const entryThumb = youtubeLinkInput.closest('.entry-item').querySelector('.entry-thumb');
+    const url = youtubeLinkInput.value;
+
+    clearTimeout(youtubeLinkDebounceTimer);
+    youtubeLinkDebounceTimer = setTimeout( async () => { // 일정시간 지연 후 동작
+        const {result, message, thumbNail} = await getYouTubeInfoFromUrl(url);
+
+        if( result ){
+            entryThumb.style.backgroundImage = `url(${thumbNail})`;
+            entryThumb.classList.add('youtube');
+            entryThumb.classList.remove('empty');
+            addStagedEntryMedia('youtube', url, entryId, false );
+        } else {
+            showToastMessage(`${message}`, 'error', 2500);
+            entryThumb.style.backgroundImage = '';
+            entryThumb.classList.add('empty');
+            entryThumb.classList.remove('youtube');
+        }
+    }, 300);
 }
