@@ -2,8 +2,11 @@ import {generateFilePreviewURL} from "../../../global/js/file.js";
 import {apiFormDataRequest} from "../../../global/js/api.js";
 import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {getYouTubeInfoFromUrl} from "./youtube.js";
 
-const stagedEntryThumbFiles = {};
+const stagedEntryMedia = {};
+
+let youtubeLinkDebounceTimer = null;
 
 export function addEntryCreateEvents(){
 
@@ -26,7 +29,7 @@ export function addEntryCreateEvents(){
 
         requestAnimationFrame(() => {
             for(const file of files){
-                addFileToStagedEntryThumbFiles(file);
+                addStagedEntryMedia('file', file, );
             }
         });
 
@@ -57,6 +60,21 @@ export function addEntryCreateEvents(){
         }
     });
 
+    document.querySelector('#entry-form').addEventListener('input', async function(event){
+        const eventTarget = event.target;
+
+        if (eventTarget.matches('.youtube-link')) {
+            getThumbnailFromUrl(eventTarget);
+        }
+    });
+
+    document.querySelector('#entry-form').addEventListener('paste', async function(event){
+        const eventTarget = event.target;
+
+        if (eventTarget.matches('.youtube-link')) {
+            getThumbnailFromUrl(eventTarget);
+        }
+    });
 }
 
 function renderEntryItem(thumbnail, entryId = generateEntryId()){
@@ -70,10 +88,14 @@ function renderEntryItem(thumbnail, entryId = generateEntryId()){
                         <span class="input-index">엔트리 명</span>
                         <input class="entry-name" type="text" maxlength="30">
                     </div>
-                     <div class="entry-desc-input-group">
+                    <div class="entry-desc-input-group">
                          <span class="input-index">엔트리 설명</span>
                          <input class="entry-description" type="text" maxlength="200">
-                     </div>
+                    </div>
+                    <div class="entry-desc-input-group">
+                         <span class="input-index">유튜브 링크</span>
+                         <input class="youtube-link" type="text" maxlength="200" placeholder="유튜브 링크를 입력해주세요">
+                    </div>
                 </div>
                 <button class="btn-remove-entry"></button>
         </div>`;
@@ -86,7 +108,7 @@ function removeEntryItem(target){
     if( entryItem ){
         const thumbId = entryItem.querySelector('.entry-thumb').id;
         entryItem.remove();
-        thumbId && removeStagedEntryThumbFiles(thumbId)
+        thumbId && removeStagedEntryMedia(thumbId)
     }
 }
 
@@ -94,19 +116,19 @@ function generateEntryId(){
     return crypto.randomUUID();
 }
 
-function addFileToStagedEntryThumbFiles(file, entryId = generateEntryId(), isRender = true){
-    stagedEntryThumbFiles[entryId] = file;
+function addStagedEntryMedia(type, media, entryId = generateEntryId(), isRender = true){
 
-    if( isRender ){
-        generateFilePreviewURL(file, (url) =>{
+    stagedEntryMedia[entryId] = {type : type, media : media};
+
+    if( type ==='file' && isRender ){
+        generateFilePreviewURL(media, (url) =>{
             renderEntryItem(url, entryId);
         });
-
     }
 }
 
-function removeStagedEntryThumbFiles(fileId){
-    delete stagedEntryThumbFiles[fileId];
+function removeStagedEntryMedia(fileId){
+    delete stagedEntryMedia[fileId];
 }
 
 export async function registerEntries(){
@@ -139,16 +161,19 @@ async function validateAndGenerateEntryFormData(){
         const entryItemId = entryItem.id;
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
-        const entryThumbFile = stagedEntryThumbFiles[entryItemId];
+        const entryMediaType = stagedEntryMedia[entryItemId].type;
+        const entryMedia = stagedEntryMedia[entryItemId].media;
 
-        if(!entryThumbFile) {
-            showToastMessage('이미지가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
+        if(!entryMedia) {
+            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
             return { validationResult : false, formData : {}};
         }
-        entryFormData.append(`entries[${index}].entryName`, entryName)
-        entryFormData.append(`entries[${index}].description`, entryDescription)
-        entryFormData.append(`entries[${index}].file`, entryThumbFile)
 
+        entryFormData.append(`entries[${index}].entryName`, entryName);
+        entryFormData.append(`entries[${index}].description`, entryDescription);
+        entryMediaType === 'file' ?
+            entryFormData.append(`entries[${index}].file`, entryMedia)
+            : entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
     }
 
     return { validationResult : true, formData : entryFormData };
@@ -180,12 +205,37 @@ function updateEntryThumb(entryThumbUpload){
     const tempEntryThumb = entryItem.querySelector('.entry-thumb');
     const entryId = entryItem.id;
     const file = entryThumbUpload.files[0];
+    const youtubeLink = entryItem.querySelector('.youtube-link');
 
     generateFilePreviewURL(file, (url) =>{
         if(url){
             tempEntryThumb.style.backgroundImage = `url(${url})`;
             tempEntryThumb.classList.remove('empty');
-            addFileToStagedEntryThumbFiles(file, entryId, false);
+            addStagedEntryMedia('file', file, entryId, false);
+            youtubeLink.value = '';
         }
     });
+}
+
+function getThumbnailFromUrl(youtubeLinkInput){
+    const entryId = youtubeLinkInput.closest('.entry-item').id;
+    const entryThumb = youtubeLinkInput.closest('.entry-item').querySelector('.entry-thumb');
+    const url = youtubeLinkInput.value;
+
+    clearTimeout(youtubeLinkDebounceTimer);
+    youtubeLinkDebounceTimer = setTimeout( async () => { // 일정시간 지연 후 동작
+        const {result, message, thumbNail} = await getYouTubeInfoFromUrl(url);
+
+        if( result ){
+            entryThumb.style.backgroundImage = `url(${thumbNail})`;
+            entryThumb.classList.add('youtube');
+            entryThumb.classList.remove('empty');
+            addStagedEntryMedia('youtube', url, entryId, false );
+        } else {
+            showToastMessage(`${message}`, 'error', 2500);
+            entryThumb.style.backgroundImage = '';
+            entryThumb.classList.add('empty');
+            entryThumb.classList.remove('youtube');
+        }
+    }, 300);
 }
