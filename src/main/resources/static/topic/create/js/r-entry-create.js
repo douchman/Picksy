@@ -75,7 +75,6 @@ export function addEntryCreateEvents(){
             getThumbnailFromUrl(eventTarget);
         }
     });
-
 }
 
 function renderEntryItem(thumbnail, entryId = generateEntryId()){
@@ -95,7 +94,7 @@ function renderEntryItem(thumbnail, entryId = generateEntryId()){
                     </div>
                     <div class="entry-desc-input-group">
                          <span class="input-index">유튜브 링크</span>
-                         <input class="youtube-link" type="text" maxlength="200" placeholder="유튜브 링크를 넣어주세요">
+                         <input class="youtube-link" type="text" maxlength="200" placeholder="유튜브 링크를 입력해주세요">
                     </div>
                 </div>
                 <button class="btn-remove-entry"></button>
@@ -206,12 +205,14 @@ function updateEntryThumb(entryThumbUpload){
     const tempEntryThumb = entryItem.querySelector('.entry-thumb');
     const entryId = entryItem.id;
     const file = entryThumbUpload.files[0];
+    const youtubeLink = entryItem.querySelector('.youtube-link');
 
     generateFilePreviewURL(file, (url) =>{
         if(url){
             tempEntryThumb.style.backgroundImage = `url(${url})`;
             tempEntryThumb.classList.remove('empty');
             addStagedEntryMedia('file', file, entryId, false);
+            youtubeLink.value = '';
         }
     });
 }
