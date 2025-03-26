@@ -60,12 +60,12 @@
 .entry-form .entry-item{
     display: flex;
     gap : 15px;
-    height: 120px;
-    max-height: 120px;
+    height: 150px;
+    max-height: 150px;
     padding : 10px 55px 10px 10px;
     border-radius: 6px;
     position: relative;
-    box-sizing: border-box;
+    align-items: center;
 }
 
 .entry-form .entry-item:nth-child(odd){
@@ -85,12 +85,17 @@
 }
 
 .entry-item .entry-thumb{
-    width: 120px;
+    width: 150px;
+    height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     cursor: pointer;
     position: relative;
+}
+
+.entry-item .entry-thumb.youtube{
+    background-size: contain;
 }
 
 .entry-item .entry-thumb.empty{
