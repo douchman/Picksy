@@ -1,0 +1,119 @@
+html, body{
+    height: 100%;
+}
+
+.layout-container{
+    height: 100%;
+}
+
+.wrapper{
+    height: 100%;
+}
+
+.topic-play{
+    --topic-header-height : 50px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.topic-header{
+    height: var(--topic-header-height);
+    background-color: rgba(255, 255, 255, .15);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding : 0 65px;
+}
+
+.topic-header .btn-back{
+    position: absolute;
+    top : 50%;
+    left : 20px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/arrow-left.svg");
+}
+
+.topic-header .topic-title{
+    color : #FFF;
+    font-size: 24px;
+    letter-spacing: -2px;
+}
+
+.match-stage{
+    position: relative;
+    display: flex;
+    height: calc(100% - var(--topic-header-height));
+    box-sizing: border-box;
+    padding: 20px 0 60px 0;
+}
+
+.match-stage:after{
+    content : '';
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    width : 90px;
+    height: 90px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/vs-icon.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.match-stage:before{
+    content : '';
+    position: absolute;
+    top : 0;
+    left : 50%;
+    width : 0.01rem;
+    height: 100%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255 ,255, .4);
+    pointer-events: none;
+}
+
+.entry-slot{
+    flex : 1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.entry-slot.entry-b{
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-02.jpg");
+}
+
+.entry-slot .entry-name{
+    padding : 6px;
+    color : #FFF;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, .65);
+    display: inline-block;
+    width: max-content;
+    border-radius: 4px;
+    position: absolute;
+    bottom : 5%;
+    left : 50%;
+    transform: translate(-50% , 0);
+    max-width: 85%;
+}
+
+.entry-slot .video-background{
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50% , -50%);
+}
