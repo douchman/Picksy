@@ -19,8 +19,9 @@ export async function loadEntryMatchInfo() {
 
 /* 각 대결 엔트리 랜더링 */
 function renderEntriesFromEntryMatch(entryMatch){
-    const entryTargetA = document.querySelector('#entry-a');
-    const entryTargetB = document.querySelector('#entry-b');
+    const entryTargetA = createEntrySlot('entry-a', 'entry-slot');
+    const entryTargetB = createEntrySlot('entry-b', 'entry-slot');
+
     const entryA = entryMatch.entryA;
     const entryB = entryMatch.entryB;
 
@@ -28,12 +29,17 @@ function renderEntriesFromEntryMatch(entryMatch){
     determineRenderingHandler(entryTargetB, entryB);
 }
 
+function createEntrySlot(id, ...classNames){
+    const entrySlot = document.createElement('div');
+    entrySlot.id = id;
+    entrySlot.classList.add(...classNames);
+    return entrySlot;
+}
+
 /* 엔트리 미디어 타입 별 핸들러 분기 */
 function determineRenderingHandler(renderTarget, entry){
     const mediaType = entry.mediaType;
 
-    clearEntrySlot(renderTarget); // 자식요소 모두 제거
-    
     switch(mediaType) {
         case 'IMAGE' :
             handleImageTypeEntry(renderTarget, entry);
@@ -50,7 +56,8 @@ function determineRenderingHandler(renderTarget, entry){
 // 이미지 유형 엔트리 랜더 핸들링
 function handleImageTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
-    renderTarget.style.backgroundImage = `url(${entry.mediaUrl})`
+    renderTarget.style.backgroundImage = `url(${entry.mediaUrl})`;
+    document.querySelector('#match-stage').appendChild(renderTarget);
 }
 
 // 비디오 유형 엔트리 랜더 핸들링
@@ -62,6 +69,7 @@ function handleVideoTypeEntry(renderTarget, entry){
             <source src="${entry.mediaUrl}" type="video/mp4">
         </video>`;
     renderTarget.insertAdjacentHTML('beforeend', videoBackground);
+    document.querySelector('#match-stage').appendChild(renderTarget);
 }
 
 // 유튜브 유형 엔트리 랜더 핸들링
@@ -69,6 +77,8 @@ function handleYoutubeTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
     const youtubeVideo = document.createElement('div');
     renderTarget.appendChild(youtubeVideo);
+
+    document.querySelector('#match-stage').appendChild(renderTarget);
 
     const videoId = extractYoutubeVideoIdFromUrl(entry.mediaUrl);
 
@@ -84,10 +94,6 @@ function handleYoutubeTypeEntry(renderTarget, entry){
             'playsinline': 1
         },
     });
-}
-
-function clearEntrySlot(entrySlot){
-    entrySlot.replaceChildren();
 }
 
 function renderEntryName(renderTarget, entryName) {
