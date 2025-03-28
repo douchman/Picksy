@@ -14,10 +14,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 유튜브 API 로드 후 호출되는 전역 함수
     window.onYouTubeIframeAPIReady = async () => {
         if( topicSuccess && playRecordSuccess){
+            addTopicPlayEvents();
             await loadEntryMatchInfo();
         }
     };
 });
+
+function addTopicPlayEvents(){
+
+    document.querySelector('#btn-back').addEventListener('click', () =>{
+        location.href = '/';
+    });
+}
 
 async function setTopic(){
     const path = window.location.pathname;
