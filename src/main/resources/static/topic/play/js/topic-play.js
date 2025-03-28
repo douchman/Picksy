@@ -22,7 +22,7 @@ async function setTopic(){
     const { status, data : topicDetail } = await getTopicDetail();
     if ( status === 200){
         topic.setTitle(topicDetail.topic.title);
-        setTopicTitle();
+        renderTopicTitle();
     } else {
         handleSetTopicFailed();
         return false;
@@ -50,7 +50,7 @@ function setPlayRecordId(){
     return true;
 }
 
-function setTopicTitle(){
+function renderTopicTitle(){
     document.querySelector('title').textContent = topic.getTitle();
     document.querySelector('#topic-title').textContent = topic.getTitle();
 }
