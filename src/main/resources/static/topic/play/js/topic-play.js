@@ -1,7 +1,7 @@
 import {topic, playRecord} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {loadEntryMatchInfo} from "./playRecord.js";
-import {apiGetRequest} from "../../../global/js/api";
+import {apiGetRequest} from "../../../global/js/api.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const topicSuccess  = await setTopic(); // 대결주제 식별자 변수화
@@ -22,8 +22,10 @@ async function setTopic(){
     const { status, data : topicDetail } = await getTopicDetail();
     if ( status === 200){
         topic.setTitle(topicDetail.topic.title);
+        setTopicTitle();
     } else {
         handleSetTopicFailed();
+        return false;
     }
 
     return true;
@@ -46,6 +48,11 @@ function setPlayRecordId(){
     }
 
     return true;
+}
+
+function setTopicTitle(){
+    document.querySelector('title').textContent = topic.getTitle();
+    document.querySelector('#topic-title').textContent = topic.getTitle();
 }
 
 async function getTopicDetail(){
