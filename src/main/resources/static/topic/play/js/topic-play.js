@@ -43,8 +43,7 @@ function setPlayRecordId(){
         }
     } catch(error) {
         handleSetPlayRecordIdFailed();
-    } finally { // 처리 후 스토리지는 제거
-        localStorage.removeItem(storedPlayRecordIdName);
+    } finally {
     }
 
     return true;
