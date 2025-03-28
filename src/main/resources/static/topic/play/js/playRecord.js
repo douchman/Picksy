@@ -7,8 +7,8 @@ export async function loadEntryMatchInfo() {
 
     if (status === 200) {
 
-        const topicTitle = topic - title
-
+        const currentTournament = matchInfo.currentTournament;
+        renderCurrentTournament(currentTournament);
     } else {
         showToastMessage('대결 정보 조회 중 문제가 생겼어요<br> 잠시 후 다시 시도해주세요', 'alert', 3000);
         setTimeout(() => {
@@ -17,6 +17,9 @@ export async function loadEntryMatchInfo() {
     }
 }
 
+function renderCurrentTournament(currentTournament){
+    document.querySelector('#current-tournament').textContent = `<${currentTournament}>`;
+}
 
 async function getMatch(){
     return await apiGetRequest(`topics/play-records/${playRecord.getId()}/matches`);
