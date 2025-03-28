@@ -8,8 +8,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const playRecordSuccess = setPlayRecordId(); // 대결진행기록 식별자 변수화
 
     if( topicSuccess && playRecordSuccess){
-        await loadEntryMatchInfo();
+        loadYoutubeIframeAPI();
     }
+
+    // 유튜브 API 로드 후 호출되는 전역 함수
+    window.onYouTubeIframeAPIReady = async () => {
+        if( topicSuccess && playRecordSuccess){
+            await loadEntryMatchInfo();
+        }
+    };
 });
 
 async function setTopic(){
@@ -70,4 +77,11 @@ function handleSetTopicFailed(){
     setTimeout(()=> {
         location.href = '/';
     }, 2500);
+}
+
+function loadYoutubeIframeAPI(){
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
