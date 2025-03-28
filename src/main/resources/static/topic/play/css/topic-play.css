@@ -97,10 +97,6 @@ html, body{
     overflow: hidden;
 }
 
-.entry-slot.entry-b{
-    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-02.jpg");
-}
-
 .entry-slot .entry-name{
     padding : 6px;
     color : #FFF;
