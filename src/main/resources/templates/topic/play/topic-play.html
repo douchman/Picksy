@@ -15,10 +15,7 @@
                 <p id="current-tournament" class="current-tournament"></p>
             </div>
 
-            <div id="match-stage" class="match-stage">
-                <div id="entry-a" class="entry-slot entry-a"></div>
-                <div id="entry-b" class="entry-slot entry-b"></div>
-            </div>
+            <div id="match-stage" class="match-stage"></div>
         </div>
     </body>
     <script type="module" th:src="@{'/topic/play/js/topic-play.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
