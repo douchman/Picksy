@@ -1,5 +1,5 @@
 /* 각 대결 엔트리 랜더링 */
-export function renderEntries(entryMatch){
+export function renderEntriesAndAddEvents(entryMatch){
     const entryTargetA = createEntrySlot('entry-a', 'entry-slot');
     const entryTargetB = createEntrySlot('entry-b', 'entry-slot');
 
@@ -8,6 +8,9 @@ export function renderEntries(entryMatch){
 
     determineRenderingHandler(entryTargetA, entryA);
     determineRenderingHandler(entryTargetB, entryB);
+
+    addEntrySlotClickEvents(entryTargetA);
+    addEntrySlotClickEvents(entryTargetB);
 }
 
 function createEntrySlot(id, ...classNames){
@@ -97,4 +100,47 @@ function extractYoutubeVideoIdFromUrl(url) {
     const regExp = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/;
     const match = url.match(regExp);
     return match ? match[1] : null;
+}
+
+function addEntrySlotClickEvents(entrySlot){
+    const btnSelectEntry = entrySlot.querySelector('.btn-select-entry');
+
+    entrySlot.addEventListener('click', function(event){
+        handleEntrySelectEvent(this);
+    });
+
+    btnSelectEntry.addEventListener('click', function(event){
+        event.stopPropagation(); // 부모 요소 이벤트 버블 방지
+        handleEntrySelectEvent(entrySlot);
+    });
+}
+
+function handleEntrySelectEvent(selectedEntry){
+    toggleMatchStageStatus(true);
+    handleEntrySlotClickBlock(true);
+    const allEntries = selectedEntry.parentElement.querySelectorAll('.entry-slot');
+    const winnerEntry = selectedEntry;
+    const loserEntry = [...allEntries].find(entry => entry !== winnerEntry);
+
+    winnerEntry.classList.add('winner');
+    loserEntry.classList.add('loser');
+}
+
+function toggleMatchStageStatus(isMatchDone){
+    const matchStage = document.querySelector('#match-stage');
+
+    isMatchDone ?
+        matchStage.classList.add('match-done')
+        : matchStage.classList.remove('match-done');
+}
+
+function handleEntrySlotClickBlock(isBlock){
+    const allEntries = document.querySelector('#match-stage').querySelectorAll('.entry-slot');
+
+    allEntries.forEach((entrySlot) =>{
+        isBlock ?
+            entrySlot.classList.add('blocked')
+            : entrySlot.classList.remove('blocked');
+
+    });
 }
