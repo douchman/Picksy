@@ -151,6 +151,7 @@ html, body{
     bottom : 0;
     left : 50%;
     transform: translate(-50%, 0);
+    transition: opacity .2s ease;
 }
 
 .entry-slot .btn-select-entry:before{
@@ -168,4 +169,74 @@ html, body{
     background-color: #FF7878;
 }
 
+
+/* winner & loser entry styles and animations a */
+.match-stage.match-done:before,
+.match-stage.match-done:after{
+    display: none;
+}
+
+.entry-slot.winner .btn-select-entry,
+.entry-slot.loser .btn-select-entry{
+    opacity: 0;
+}
+
+
+.entry-slot#entry-a.winner{
+    animation: entry-a-win .4s ease forwards;
+}
+
+.entry-slot#entry-a.loser{
+    animation: entry-a-lose .4s ease forwards;
+}
+
+.entry-slot#entry-b.winner{
+    animation: entry-b-win .4s ease forwards;
+}
+
+.entry-slot#entry-b.loser{
+    animation: entry-b-lose .4s ease forwards;
+}
+
+
+@keyframes entry-a-win {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(50%);
+    }
+}
+
+
+@keyframes entry-a-lose {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes entry-b-win {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes entry-b-lose {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(100%);
+    }
+}
 
