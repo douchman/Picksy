@@ -90,33 +90,47 @@ html, body{
 
 .entry-slot{
     flex : 1;
+    position: relative;
+}
+
+.entry-slot .entry-image{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     position: relative;
     overflow: hidden;
+    height: 80%;
+    max-height: 80%;
 }
 
 .entry-slot .entry-name{
     padding : 6px;
     color : #FFF;
     font-size: 24px;
-    background-color: rgba(0, 0, 0, .65);
+    background-color: rgba(0, 0, 0, .75);
     display: inline-block;
     width: max-content;
     border-radius: 4px;
     position: absolute;
-    bottom : 5%;
+    bottom : 25%;
     left : 50%;
     transform: translate(-50% , 0);
     max-width: 85%;
+    z-index: 100;
+    pointer-events: none;
 }
 
-.entry-slot .video-background{
+.entry-slot .you-tube-video {
+    position: absolute;
+    top : 50%;
+    transform: translateY(-50%);
+}
+
+.entry-slot .video-background {
     object-fit: cover;
     width: 100%;
     position: absolute;
-    top : 50%;
-    left : 50%;
-    transform: translate(-50% , -50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
