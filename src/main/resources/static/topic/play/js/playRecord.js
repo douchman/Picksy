@@ -56,14 +56,17 @@ function determineRenderingHandler(renderTarget, entry){
 // 이미지 유형 엔트리 랜더 핸들링
 function handleImageTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
-    renderTarget.style.backgroundImage = `url(${entry.mediaUrl})`;
+    const entryImage = document.createElement('div')
+    entryImage.classList.add('entry-image');
+    entryImage.style.backgroundImage = `url(${entry.mediaUrl})`;
+
+    renderTarget.appendChild(entryImage);
     document.querySelector('#match-stage').appendChild(renderTarget);
 }
 
 // 비디오 유형 엔트리 랜더 핸들링
 function handleVideoTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
-
     const videoBackground =
         `<video class="video-background" autoplay muted loop playsinline>
             <source src="${entry.mediaUrl}" type="video/mp4">
