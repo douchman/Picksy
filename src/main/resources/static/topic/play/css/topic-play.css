@@ -93,6 +93,10 @@ html, body{
     position: relative;
 }
 
+.entry-slot.blocked{
+    pointer-events: none;
+}
+
 .entry-slot .entry-image{
     background-repeat: no-repeat;
     background-position: center;
