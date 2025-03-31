@@ -1,6 +1,19 @@
-import {apiGetRequest} from "../../../global/js/api.js";
-import {playRecord} from "./const.js";
+import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
+import {match, playRecord} from "./const.js";
 
 export async function getMatch(){
     return await apiGetRequest(`topics/play-records/${playRecord.getId()}/matches`);
+}
+
+export async function submitEntryMatchResult(winnerEntryId, loserEntryId){
+    const requestBody = {
+        winnerEntryId : winnerEntryId,
+        loserEntryId : loserEntryId
+    }
+
+    return patchEntryMatch(requestBody);
+}
+
+async function patchEntryMatch(requestBody){
+    return await apiPatchRequest(`topics/play-records/${playRecord.getId()}/${match.getId()}`, {}, requestBody)
 }
