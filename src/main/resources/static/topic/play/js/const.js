@@ -7,7 +7,7 @@ export const topic = {
     },
 
     getId() {
-        return this.id
+        return this.id;
     },
 
     setTitle(title) {
@@ -27,6 +27,18 @@ export const playRecord = {
     },
 
     getId() {
-        return this.id
+        return this.id;
+    }
+}
+
+export const match = {
+    id : null,
+
+    setId(id){
+        this.id = id;
+    },
+
+    getId(){
+        return this.id;
     }
 }
