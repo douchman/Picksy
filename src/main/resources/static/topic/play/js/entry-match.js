@@ -11,9 +11,9 @@ export async function submitEntryMatchResult(winnerEntryId, loserEntryId){
         loserEntryId : loserEntryId
     }
 
-    return patchEntryMatch(requestBody);
+    return await patchEntryMatch(requestBody);
 }
 
 async function patchEntryMatch(requestBody){
-    return await apiPatchRequest(`topics/play-records/${playRecord.getId()}/${match.getId()}`, {}, requestBody)
+    return await apiPatchRequest(`topics/play-records/${playRecord.getId()}/matches/${match.getId()}`, {}, requestBody)
 }
