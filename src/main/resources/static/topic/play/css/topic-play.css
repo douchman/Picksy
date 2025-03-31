@@ -134,3 +134,34 @@ html, body{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.entry-slot .btn-select-entry{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    bottom : 0;
+    left : 50%;
+    transform: translate(-50%, 0);
+}
+
+.entry-slot .btn-select-entry:before{
+    content : '선택';
+    font-weight: 600;
+    color : #FFF;
+    font-size: 30px;
+}
+
+.entry-slot#entry-a .btn-select-entry{
+    background-color: #7BD3EA;
+}
+
+.entry-slot#entry-b .btn-select-entry{
+    background-color: #FF7878;
+}
+
+
