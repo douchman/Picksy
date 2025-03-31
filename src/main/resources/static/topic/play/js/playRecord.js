@@ -56,6 +56,7 @@ function determineRenderingHandler(renderTarget, entry){
 // 이미지 유형 엔트리 랜더 핸들링
 function handleImageTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
+    renderSelectEntryButton(renderTarget);
     const entryImage = document.createElement('div')
     entryImage.classList.add('entry-image');
     entryImage.style.backgroundImage = `url(${entry.mediaUrl})`;
@@ -67,6 +68,7 @@ function handleImageTypeEntry(renderTarget, entry){
 // 비디오 유형 엔트리 랜더 핸들링
 function handleVideoTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
+    renderSelectEntryButton(renderTarget);
     const videoBackground =
         `<video class="video-background" autoplay muted loop playsinline>
             <source src="${entry.mediaUrl}" type="video/mp4">
@@ -78,7 +80,9 @@ function handleVideoTypeEntry(renderTarget, entry){
 // 유튜브 유형 엔트리 랜더 핸들링
 function handleYoutubeTypeEntry(renderTarget, entry){
     renderEntryName(renderTarget, entry.entryName);
+    renderSelectEntryButton(renderTarget);
     const youtubeVideo = document.createElement('div');
+    youtubeVideo.classList.add('you-tube-video');
     renderTarget.appendChild(youtubeVideo);
 
     document.querySelector('#match-stage').appendChild(renderTarget);
@@ -101,6 +105,11 @@ function handleYoutubeTypeEntry(renderTarget, entry){
 
 function renderEntryName(renderTarget, entryName) {
     renderTarget.insertAdjacentHTML('beforeend', `<p class="entry-name">${entryName}</p>`)
+}
+
+function renderSelectEntryButton(renderTarget){
+    const selectButton = `<button class="btn-select-entry" type="button"></button>`;
+    renderTarget.insertAdjacentHTML('beforeend', selectButton);
 }
 
 function extractYoutubeVideoIdFromUrl(url) {
