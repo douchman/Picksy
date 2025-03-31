@@ -6,9 +6,15 @@ export function renderEntriesAndAddEvents(entryMatch){
     const entryA = entryMatch.entryA;
     const entryB = entryMatch.entryB;
 
+    // ID 설정
+    entryTargetA.dataset.id = entryA.id;
+    entryTargetB.dataset.id = entryB.id;
+
+    // 엔트리 미디어 타입에 따라 썸네일 랜더링
     determineRenderingHandler(entryTargetA, entryA);
     determineRenderingHandler(entryTargetB, entryB);
 
+    // 각 엔트리 별 이벤트 등록
     addEntrySlotClickEvents(entryTargetA);
     addEntrySlotClickEvents(entryTargetB);
 }
