@@ -1,7 +1,7 @@
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {renderEntriesAndAddEvents} from "./entry-renderer.js";
 import {getMatch} from "./entry-match.js";
 import {match} from "./const.js";
+import {handleTopicPlayException} from "./exceptionHandler.js";
 
 export async function loadEntryMatchInfo() {
     const {status, data: matchInfo} = await getMatch();
@@ -15,20 +15,10 @@ export async function loadEntryMatchInfo() {
         renderCurrentTournament(currentTournament);
         renderEntriesAndAddEvents(entryMatch);
     } else {
-        handleEntryMatchInfoException(matchInfo);
+        handleTopicPlayException(matchInfo);
     }
 }
 
 function renderCurrentTournament(currentTournament){
     document.querySelector('#current-tournament').textContent = `<${currentTournament}>`;
-}
-
-function handleEntryMatchInfoException(matchInfo){
-    const errorCode = matchInfo.errorCode;
-    const message = matchInfo.message;
-
-    showToastMessage(`${message}`, 'alert', 3000);
-    setTimeout(() => {
-        location.href = '/';
-    }, 2000);
 }

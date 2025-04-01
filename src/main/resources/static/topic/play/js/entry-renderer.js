@@ -1,5 +1,6 @@
 import {submitEntryMatchResult} from "./entry-match.js";
 import {loadEntryMatchInfo} from "./play-record.js";
+import {handleTopicPlayException} from "./exceptionHandler.js";
 
 /* 각 대결 엔트리 랜더링 */
 export function renderEntriesAndAddEvents(entryMatch){
@@ -150,7 +151,7 @@ async function handleEntrySelectEvent(selectedEntry){
             }
         }, 2000)
     } else {
-        // TODO : 대결결과 제출 예외 처리
+        handleTopicPlayException(submitResult);
     }
 }
 
