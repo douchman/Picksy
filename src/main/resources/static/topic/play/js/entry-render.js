@@ -1,4 +1,5 @@
 import {addEntrySlotClickEvents} from "./entry-event-handle.js";
+import {extractYoutubeVideoIdFromUrl} from "./topic-play-youtube.js";
 
 /* 각 대결 엔트리 랜더링 */
 export function renderEntriesAndAddEvents(entryMatch){
@@ -104,13 +105,6 @@ function renderSelectEntryButton(renderTarget){
     const selectButton = `<button class="btn-select-entry" type="button"></button>`;
     renderTarget.insertAdjacentHTML('beforeend', selectButton);
 }
-
-function extractYoutubeVideoIdFromUrl(url) {
-    const regExp = /(?:youtube\.com\/.*[?&]v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/;
-    const match = url.match(regExp);
-    return match ? match[1] : null;
-}
-
 
 // 매치 스테이지 내 랜더링 요소 초기화
 function clearMatchStage(){
