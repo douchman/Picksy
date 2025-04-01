@@ -1,6 +1,6 @@
 import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
 import {match, playRecord} from "./const.js";
-import {renderEntriesAndAddEvents} from "./entry-renderer.js";
+import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
 
 // 엔트리 대진표 조회
@@ -18,18 +18,39 @@ export async function loadEntryMatchInfo() {
     } else {
         handleTopicPlayException(matchInfo);
     }
-
-    return  await getMatch();
 }
 
 // 엔트리 대결 결과 제출
-export async function submitEntryMatchResult(winnerEntryId, loserEntryId){
+export async function submitEntryMatchResult(winnerEntry, loserEntry, callBack){
+
+    const winnerEntryId = winnerEntry.dataset.id;
+    const loserEntryId = loserEntry.dataset.id;
+
     const requestBody = {
         winnerEntryId : winnerEntryId,
         loserEntryId : loserEntryId
     }
 
-    return await patchEntryMatch(requestBody);
+    const { status, data : submitResult } = await patchEntryMatch(requestBody);
+
+    if( status === 200){
+        const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
+
+        // 처리 완료 시 승리/패배 엔트리 애니메이션 시작
+        winnerEntry.classList.add('winner');
+        loserEntry.classList.add('loser');
+
+        setTimeout(async () =>{
+            if( !isAllMatchedCompleted ){
+                    typeof callBack === 'function' && callBack();
+                    await loadEntryMatchInfo();
+            } else {
+                   location.href = '/';
+            }
+        }, 2500)
+    } else {
+        handleTopicPlayException(submitResult);
+    }
 }
 
 function displayCurrentTournament(currentTournament){
