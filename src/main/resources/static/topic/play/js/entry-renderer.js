@@ -1,5 +1,5 @@
 import {submitEntryMatchResult} from "./entry-match.js";
-import {loadEntryMatchInfo} from "./play-record.js";
+import {loadEntryMatchInfo} from "./entry-match.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
 
 /* 각 대결 엔트리 랜더링 */

@@ -1,7 +1,7 @@
 import {topic, playRecord} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {loadEntryMatchInfo} from "./play-record.js";
 import {apiGetRequest} from "../../../global/js/api.js";
+import {loadEntryMatchInfo} from "./entry-match.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const topicSuccess  = await saveTopicInfo(); // 대결주제 식별자 변수화
