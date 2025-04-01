@@ -1,0 +1,17 @@
+:root{
+    --signature-color : #CDC1FF;
+}
+
+html, body{
+    height : 100%;
+    margin : 0;
+}
+
+.layout-container{
+    width: 100%;
+}
+
+.layout-container > .wrapper{
+    width: 100%;
+    margin : 0 auto;
+}
