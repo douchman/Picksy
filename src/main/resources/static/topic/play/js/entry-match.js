@@ -2,7 +2,7 @@ import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
 import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
@@ -63,10 +63,14 @@ function nextEntryMatch(){
 }
 
 function finishEntryMatch(){
-    showToastMessage('모든 대결이 종료되었습니다. :)' , '', 2500);
+
+    setTimeout(() =>{
+        showToastMessage('모든 대결이 종료되었습니다. :)' , '', 2500);
+    }, 1000);
+
     setTimeout(() =>{
         location.href = '/';
-    }, 2500)
+    }, 3000)
 }
 
 function toggleMatchStageStatus(isMatchDone){
