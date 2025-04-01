@@ -2,6 +2,7 @@ import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
 import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message";
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
@@ -21,7 +22,10 @@ export async function loadEntryMatchInfo() {
 }
 
 // 엔트리 대결 결과 제출
-export async function submitEntryMatchResult(winnerEntry, loserEntry, callBack){
+export async function submitEntryMatchResult(winnerEntry, loserEntry){
+
+    toggleMatchStageStatus(true);
+    toggleEntrySlotClickBlock(true);
 
     const winnerEntryId = winnerEntry.dataset.id;
     const loserEntryId = loserEntry.dataset.id;
@@ -36,21 +40,52 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry, callBack){
     if( status === 200){
         const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
 
-        // 처리 완료 시 승리/패배 엔트리 애니메이션 시작
+        // 처리 완료 시 -> 승리/패배 엔트리 애니메이션 시작
         winnerEntry.classList.add('winner');
         loserEntry.classList.add('loser');
 
-        setTimeout(async () =>{
-            if( !isAllMatchedCompleted ){
-                    typeof callBack === 'function' && callBack();
-                    await loadEntryMatchInfo();
-            } else {
-                   location.href = '/';
-            }
-        }, 2500)
+        if( !isAllMatchedCompleted ){
+            nextEntryMatch();
+        } else {
+            finishEntryMatch();
+        }
     } else {
         handleTopicPlayException(submitResult);
     }
+}
+
+function nextEntryMatch(){
+    toggleMatchStageStatus(false);
+    toggleEntrySlotClickBlock(false);
+    setTimeout(async () =>{
+        await loadEntryMatchInfo();
+    }, 2500);
+}
+
+function finishEntryMatch(){
+    showToastMessage('모든 대결이 종료되었습니다. :)' , '', 2500);
+    setTimeout(() =>{
+        location.href = '/';
+    }, 2500)
+}
+
+function toggleMatchStageStatus(isMatchDone){
+    const matchStage = document.querySelector('#match-stage');
+
+    isMatchDone ?
+        matchStage.classList.add('match-done')
+        : matchStage.classList.remove('match-done');
+}
+
+function toggleEntrySlotClickBlock(isBlock){
+    const allEntries = document.querySelector('#match-stage').querySelectorAll('.entry-slot');
+
+    allEntries.forEach((entrySlot) =>{
+        isBlock ?
+            entrySlot.classList.add('blocked')
+            : entrySlot.classList.remove('blocked');
+
+    });
 }
 
 function displayCurrentTournament(currentTournament){

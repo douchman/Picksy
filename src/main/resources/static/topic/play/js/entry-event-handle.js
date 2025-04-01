@@ -14,33 +14,9 @@ export function addEntrySlotClickEvents(entrySlot){
 }
 
 async function handleEntrySelectEvent(selectedEntry){
-    toggleMatchStageStatus(true);
-    handleEntrySlotClickBlock(true);
     const allEntries = selectedEntry.parentElement.querySelectorAll('.entry-slot');
     const winnerEntry = selectedEntry;
     const loserEntry = [...allEntries].find(entry => entry !== winnerEntry);
 
-    await submitEntryMatchResult(winnerEntry, loserEntry, () => {
-        toggleMatchStageStatus(false);
-        handleEntrySlotClickBlock(false);
-    });
-}
-
-function toggleMatchStageStatus(isMatchDone){
-    const matchStage = document.querySelector('#match-stage');
-
-    isMatchDone ?
-        matchStage.classList.add('match-done')
-        : matchStage.classList.remove('match-done');
-}
-
-function handleEntrySlotClickBlock(isBlock){
-    const allEntries = document.querySelector('#match-stage').querySelectorAll('.entry-slot');
-
-    allEntries.forEach((entrySlot) =>{
-        isBlock ?
-            entrySlot.classList.add('blocked')
-            : entrySlot.classList.remove('blocked');
-
-    });
+    await submitEntryMatchResult(winnerEntry, loserEntry);
 }
