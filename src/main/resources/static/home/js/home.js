@@ -32,7 +32,7 @@ function addTopicSearchFilterEvents(){
     btnSearchTopic.addEventListener('click', async () => {
         initCurrentPage();
         clearTopicContentCards();
-        await renderTopics()
+        startInfiniteScrollObserver();
     });
 }
 
@@ -136,6 +136,11 @@ function setupInfiniteScrollObserver(){
 function stopInfiniteScrollObserver(){
     const scrollObserverTarget = document.querySelector('#scroll-observer-target');
     scrollObserver.unobserve(scrollObserverTarget);
+}
+
+function startInfiniteScrollObserver(){
+    const scrollObserverTarget = document.querySelector('#scroll-observer-target');
+    scrollObserver.observe(scrollObserverTarget);
 }
 
 function renderScrollObserverTarget(){
