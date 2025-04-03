@@ -1,6 +1,6 @@
 .tournament-select-dialog{
     display: none;
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top : 0;
@@ -30,7 +30,7 @@
 }
 
 .tournament-select-dialog .dialog-body{
-    position: absolute;
+    position: fixed;
     top : 50%;
     left : 50%;
     padding: 45px 20px 35px 20px;
