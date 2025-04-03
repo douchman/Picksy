@@ -19,3 +19,7 @@ html, body{
     max-width: var(--layout-wrapper-width);
     margin : 0 auto;
 }
+
+.scroll-block{
+    overflow: hidden;
+}
