@@ -36,7 +36,7 @@ async function renderTopics(){
         const topicContentCard =
             `
             <div class="topic-content-card" data-id="${topic.id}">
-                        <div class="topic-thumb-group"></div>
+                        <div class="topic-thumb-group" style="background-image: url('${topic.thumbnail}')"></div>
                         <div class="topic-desc-group">
                             <p class="topic-title">${topic.title}</p>
                             <p class="topic-subject">${topic.subject}</p>

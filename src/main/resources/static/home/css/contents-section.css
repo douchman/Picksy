@@ -27,7 +27,6 @@
     background-size: cover;
     background-position: center;
     height: 200px;
-    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-01.jpeg");
 }
 
 .topic-desc-group{
