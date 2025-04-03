@@ -2,7 +2,10 @@ import {apiGetRequest} from '../../global/js/api.js';
 import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
 
+let scrollObserver;
+
 document.addEventListener('DOMContentLoaded', async () => {
+    initObserver();
     flushPlayRecordIdsFromLocalStorage();
     await renderTopics();
     addTopicCardEvents();
@@ -58,4 +61,39 @@ async function renderTopics(){
 function clearTopicContentCards(){
     const topicContentCards = document.querySelector('#topic-content-cards');
     topicContentCards.replaceChildren();
+}
+
+function hasNextPage(currentPage = 1 , totalPages = 1 ){
+    return currentPage < totalPages;
+}
+
+function initObserver(){
+    renderScrollObserverTarget(); // 스크롤 옵저버 랜더링
+
+    const scrollObserverTarget = document.querySelector('#scroll-observer-target');
+    scrollObserver = new IntersectionObserver(async ([entry]) => {
+       if(entry.isIntersecting){
+           //await renderTopics();
+           console.log(' ### 옵저버를 감지했어요 ###');
+           await renderTopics();
+       }
+    }, {
+        root : null,
+        rootMargin : '0px',
+        threshold: 1.0
+    });
+
+    scrollObserver.observe(scrollObserverTarget);
+}
+
+function unObserve(){
+    const scrollObserverTarget = document.querySelector('#scroll-observer-target');
+    scrollObserver.unobserve(scrollObserverTarget);
+}
+
+function renderScrollObserverTarget(){
+    const topicContentsSection = document.querySelector('#topic-contents-section');
+
+    const scrollObserverTarget = `<div id="scroll-observer-target" class="scroll-observer-target"></div>`;
+    topicContentsSection.insertAdjacentHTML('beforeend',scrollObserverTarget);
 }
