@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <th:block th:replace="~{global/fragments/config-fragment :: configFragment}"></th:block>
-  <link rel="stylesheet" th:href="@{'/global/layouts/css/base-layout.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+  <link rel="stylesheet" th:href="@{'/global/layouts/css/topic-play-layout.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
   <title>VS 엔트리</title>
 </head>
 
