@@ -97,7 +97,7 @@ async function renderTopics(){
         });
     } else {
         stopInfiniteScrollObserver();
-        handleTopicRenderException();
+        handleTopicRenderException(topicResult);
     }
 
     isLoading = false;
