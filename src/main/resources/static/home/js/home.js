@@ -3,11 +3,13 @@ import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tourn
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
 
 let scrollObserver;
+const pageSize = 16;
+let currentPage = 1;
+let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     initObserver();
     flushPlayRecordIdsFromLocalStorage();
-    await renderTopics();
     addTopicCardEvents();
     renderDialog();
     addDialogEvents();
@@ -25,15 +27,29 @@ function addTopicCardEvents(){
     });
 }
 
-async function getTopics(){
-    return await apiGetRequest('topics', {}, {});
+async function getTopics(requestParams){
+    return await apiGetRequest('topics', {}, requestParams);
 }
 
 async function renderTopics(){
-    const topicContentCards = document.querySelector('#topic-content-cards');
-    const {status, data : {topicList, pagination}} = await getTopics();
+    if ( isLoading ) return;
+    isLoading = true;
 
-    clearTopicContentCards();
+    const requestParams = {
+        page : currentPage,
+        size : pageSize
+    }
+
+    const topicContentCards = document.querySelector('#topic-content-cards');
+
+    const {status, data : {topicList, pagination}} = await getTopics(requestParams);
+
+    if(hasNextPage(pagination.currentPage, pagination.totalPages)){
+        currentPage++;
+    }else{
+        unObserve();
+    }
+
 
     topicList.forEach( topic => {
         const topicContentCard =
@@ -53,14 +69,8 @@ async function renderTopics(){
             `;
         topicContentCards.insertAdjacentHTML('beforeend', topicContentCard);
     });
-}
 
-/**
- * 대결주제 카드가 랜더링 대상(topic-content-cards) 비우기
- */
-function clearTopicContentCards(){
-    const topicContentCards = document.querySelector('#topic-content-cards');
-    topicContentCards.replaceChildren();
+    isLoading = false;
 }
 
 function hasNextPage(currentPage = 1 , totalPages = 1 ){
