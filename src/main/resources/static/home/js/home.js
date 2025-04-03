@@ -9,7 +9,7 @@ let currentPage = 1;
 let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
-    initObserver();
+    setupInfiniteScrollObserver();
     flushPlayRecordIdsFromLocalStorage();
     addTopicCardEvents();
     renderDialog();
@@ -52,7 +52,7 @@ async function renderTopics(){
         if(hasNextPage(pagination.currentPage, pagination.totalPages)){
             currentPage++;
         }else{
-            unObserve();
+            stopInfiniteScrollObserver();
         }
 
 
@@ -75,7 +75,7 @@ async function renderTopics(){
             topicContentCards.insertAdjacentHTML('beforeend', topicContentCard);
         });
     } else {
-        unObserve();
+        stopInfiniteScrollObserver();
         handleTopicRenderException();
     }
 
@@ -86,7 +86,7 @@ function hasNextPage(currentPage = 1 , totalPages = 1 ){
     return currentPage < totalPages;
 }
 
-function initObserver(){
+function setupInfiniteScrollObserver(){
     renderScrollObserverTarget(); // 스크롤 옵저버 랜더링
 
     const scrollObserverTarget = document.querySelector('#scroll-observer-target');
@@ -104,7 +104,7 @@ function initObserver(){
     scrollObserver.observe(scrollObserverTarget);
 }
 
-function unObserve(){
+function stopInfiniteScrollObserver(){
     const scrollObserverTarget = document.querySelector('#scroll-observer-target');
     scrollObserver.unobserve(scrollObserverTarget);
 }
