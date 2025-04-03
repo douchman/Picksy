@@ -80,11 +80,14 @@ export async function openTournamentSelectDialog(topicId){
     dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
     setTournamentSelector(tournamentList);
     dialog.classList.add('show');
+
+    toggleBodyScrollBlocked(true);
 }
 
 function closeTournamentSelectDialog(){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.classList.remove('show');
+    toggleBodyScrollBlocked(false);
 }
 
 function clearDialogData(dialog){
@@ -131,4 +134,16 @@ async function getPlayRecordIdAndStart(){
 
 async function postPlayRecord(topicId, tournamentStage){
     return await apiPostRequest(`topics/${topicId}/play-records`, {}, {tournamentStage});
+}
+
+/**
+ * 메인 레이아웃 스크롤 제어
+ * @param {boolean} isBlock
+ */
+function toggleBodyScrollBlocked(isBlock = false){
+    const body = document.querySelector('body');
+
+    isBlock ?
+        body.classList.add('scroll-block')
+        : body.classList.remove('scroll-block');
 }
