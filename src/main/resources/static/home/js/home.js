@@ -31,6 +31,7 @@ function addTopicSearchFilterEvents(){
 
     btnSearchTopic.addEventListener('click', async () => {
         initCurrentPage();
+        clearTopicContentCards();
         await renderTopics()
     });
 }
@@ -142,4 +143,13 @@ function renderScrollObserverTarget(){
 
     const scrollObserverTarget = `<div id="scroll-observer-target" class="scroll-observer-target"></div>`;
     topicContentsSection.insertAdjacentHTML('beforeend',scrollObserverTarget);
+}
+
+/**
+ * 대결주제 카드 랜더링 대상(topic-content-cards) 비우기
+ */
+function clearTopicContentCards(){
+    const topicContentCards = document.querySelector('#topic-content-cards');
+    topicContentCards.replaceChildren();
+    isLoading = false;
 }
