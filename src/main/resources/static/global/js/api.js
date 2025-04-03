@@ -79,6 +79,45 @@ export async function apiPostRequest( endpoint, options = {}, body) {
     return {status, isAuthOrNetworkError, data : jsonResponse?.data ?? jsonResponse};
 }
 
+export async function apiPatchRequest( endpoint, options = {}, body) {
+
+
+    const baseOptions = {
+        method : 'PATCH',
+        cache : 'no-cache',
+        credentials : 'include',
+        headers : {
+            'Content-Type' : 'application/json'
+            },
+        body : body ? JSON.stringify(body) : {}
+    }
+
+    const mergedOptions = { ... baseOptions, ... options}
+
+    let response;
+    let status = 500;
+    let jsonResponse = {};
+    let isAuthOrNetworkError = false;
+
+    try {
+        response = await fetch(API_URL + endpoint, mergedOptions);
+        status = response.status;
+        jsonResponse = await response.json();
+
+        if( !response.ok && isAuthException(status, jsonResponse.errorCode)) {
+            isAuthOrNetworkError = true;
+            handleAuthException(status);
+        }
+    } catch (error){
+        console.error('API Request Error :' , error);
+        renderCommonAlertMessage("네트워크 연결 오류", defaultErrorMessage);
+        jsonResponse = {}; // 안전하게 기본 값 재설정
+        isAuthOrNetworkError = true;
+    }
+
+    return {status, isAuthOrNetworkError, data : jsonResponse?.data ?? jsonResponse};
+}
+
 
 export async function apiFormDataRequest( endpoint, options = {}, body) {
 

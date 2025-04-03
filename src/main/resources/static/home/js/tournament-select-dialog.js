@@ -1,5 +1,6 @@
 import {TOURNAMENT_DESC} from "./const.js";
-import {apiGetRequest} from "../../global/js/api.js";
+import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
+import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
 
 export function renderDialog(){
     const documentBody = document.querySelector('body');
@@ -54,16 +55,23 @@ export function addDialogEvents() {
             const btnStartMatch = document.querySelector('#btn-start-match');
 
             selectedTournament.textContent = tournamentItem.textContent;
+            selectedTournament.dataset.tournamentStage = tournamentStage;
             tournamentDesc.classList.add('show');
             tournamentDesc.textContent = TOURNAMENT_DESC[tournamentStage];
             btnStartMatch.disabled = false;
             toggleTournamentSelect(false);
         }
     });
+
+    // dialog 내부 시작 버튼
+    document.querySelector('#btn-start-match').addEventListener('click', async () =>{
+        await getPlayRecordIdAndStart();
+    });
 }
 
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
+    dialog.setAttribute('data-topic-id', topicId);
     const {status, data : {topic ,tournamentList}} = await getTopicDetail(topicId);
 
     clearDialogData(dialog);
@@ -103,4 +111,24 @@ function toggleTournamentSelect(isOpen){
 
 async function getTopicDetail(topicId){
     return await apiGetRequest('topics/' +topicId, {}, false);
+}
+
+
+async function getPlayRecordIdAndStart(){
+    const dialog = document.querySelector('#tournament-select-dialog');
+    const tournamentStage = dialog.querySelector('#selected-tournament').dataset.tournamentStage;
+    const topicId = dialog.getAttribute('data-topic-id');
+
+    const { status, data : playRecordResult } = await postPlayRecord(topicId, tournamentStage);
+
+    if( status === 200){
+        localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
+        location.href = `/topic/play/${topicId}`;
+    } else {
+        showToastMessage(playRecordResult.message, 'error', 2500);
+    }
+}
+
+async function postPlayRecord(topicId, tournamentStage){
+    return await apiPostRequest(`topics/${topicId}/play-records`, {}, {tournamentStage});
 }
