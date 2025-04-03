@@ -1,4 +1,20 @@
-.topic-contents-section{
+.topic-contents-section.empty{
+    position: relative;
+    height: 700px;
+}
+
+.topic-contents-section.empty *{
+    display: none;
+}
+
+.topic-contents-section.empty:after{
+    content : '조회된 대결주제가 없어요 :(';
+    font-size: 30px;
+    font-weight: 500;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform :  translate(-50% , -50%);
 
 }
 
