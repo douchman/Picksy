@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/topic-play-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/topic/play/css/topic-play.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="topic-play" class="topic-play">
+            <div id="topic-header" class="topic-header">
+                <button id="btn-back" class="btn-back" type="button"></button>
+                <p id="topic-title" class="topic-title">대결 주제 제목이 오는 영역입니다.</p>
+            </div>
+
+            <div id="match-stage" class="match-stage">
+                <div id="entry-a" class="entry-slot entry-a">
+                    <video class="video-background" autoplay muted loop playsinline>
+                        <source src="https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/2f61f01faec8a43a5e24440e60d6d0b6.mp4" type="video/mp4">
+                    </video>
+                    <p class="entry-name">동영상 자료(개발자랑 상관없음 자료입니다.)</p>
+                </div>
+                <div id="entry-b" class="entry-slot entry-b">
+                    <p class="entry-name">너무 귀여운 고양이</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="module" th:src="@{'/topic/play/js/topic-play.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</th:block>
+</html>
