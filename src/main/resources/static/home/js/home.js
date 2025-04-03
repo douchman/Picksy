@@ -10,11 +10,30 @@ let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
+    addTopicSearchFilterEvents();
     addTopicCardEvents();
     renderDialog();
     addDialogEvents();
     setupInfiniteScrollObserver();
 });
+
+function addTopicSearchFilterEvents(){
+
+    const keywordSearch = document.querySelector('#keyword-search');
+    const btnSearchTopic = document.querySelector('#btn-search-topic');
+
+    keywordSearch.addEventListener('keydown', function(event) {
+        const keyEvent = event.key;
+        if( keyEvent === 'Enter'){
+            btnSearchTopic.click();
+        }
+    });
+
+    btnSearchTopic.addEventListener('click', async () => {
+        initCurrentPage();
+        await renderTopics()
+    });
+}
 
 function addTopicCardEvents(){
     // 랜더링 된 대결 주제 카드 이벤트 -> 토너먼트 선택기 오픈
@@ -79,6 +98,14 @@ async function renderTopics(){
     }
 
     isLoading = false;
+}
+
+/**
+ * 현 페이지 초기화
+ * @param {number} page
+ */
+function initCurrentPage(page = 1) {
+    currentPage = page;
 }
 
 function hasNextPage(currentPage = 1 , totalPages = 1 ){
