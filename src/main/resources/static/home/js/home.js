@@ -76,11 +76,13 @@ async function renderTopics(){
             stopInfiniteScrollObserver();
         }
 
-
-        topicList.forEach( topic => {
-            const topicContentCard =
-                `
-            <div class="topic-content-card" data-id="${topic.id}">
+        const isTopicListEmpty = (!topicList || topicList.length === 0);
+        if ( !isTopicListEmpty ){
+            toggleTopicContentsSectionEmpty(false);
+            topicList.forEach( topic => {
+                const topicContentCard =
+                    `
+                    <div class="topic-content-card" data-id="${topic.id}">
                         <div class="topic-thumb-group" style="background-image: url('${topic.thumbnail}')"></div>
                         <div class="topic-desc-group">
                             <p class="topic-title">${topic.title}</p>
@@ -93,8 +95,11 @@ async function renderTopics(){
                         </div>
                     </div>
             `;
-            topicContentCards.insertAdjacentHTML('beforeend', topicContentCard);
-        });
+                topicContentCards.insertAdjacentHTML('beforeend', topicContentCard);
+            });
+        } else {
+            toggleTopicContentsSectionEmpty(true);
+        }
     } else {
         stopInfiniteScrollObserver();
         handleTopicRenderException(topicResult);
@@ -150,6 +155,12 @@ function renderScrollObserverTarget(){
     topicContentsSection.insertAdjacentHTML('beforeend',scrollObserverTarget);
 }
 
+function toggleTopicContentsSectionEmpty(isEmpty = false){
+    const topicContentsSection = document.querySelector('#topic-contents-section');
+    isEmpty ?
+        topicContentsSection.classList.add('empty')
+        : topicContentsSection.classList.remove('empty');
+}
 /**
  * 대결주제 카드 랜더링 대상(topic-content-cards) 비우기
  */
