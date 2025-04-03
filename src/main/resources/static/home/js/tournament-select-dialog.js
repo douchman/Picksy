@@ -1,6 +1,7 @@
 import {TOURNAMENT_DESC} from "./const.js";
 import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
+import {handleTopicTournamentException} from "./exception";
 
 export function renderDialog(){
     const documentBody = document.querySelector('body');
@@ -72,19 +73,31 @@ export function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.setAttribute('data-topic-id', topicId);
-    const {status, data : {topic ,tournamentList}} = await getTopicDetail(topicId);
+    const {status, data : tournamentData } = await getTopicDetail(topicId);
 
-    clearDialogData(dialog);
+    const topic = tournamentData.topic;
+    const tournamentList = tournamentData.tournamentList;
 
-    dialog.querySelector('#topic-title').textContent= `${topic.title}`;
-    dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
-    setTournamentSelector(tournamentList);
-    dialog.classList.add('show');
+
+    if( status === 200 ){
+        clearDialogData(dialog);
+
+        dialog.querySelector('#topic-title').textContent= `${topic.title}`;
+        dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
+        setTournamentSelector(tournamentList);
+        dialog.classList.add('show');
+
+        toggleBodyScrollBlocked(true);
+    } else {
+        handleTopicTournamentException(tournamentData);
+    }
+
 }
 
 function closeTournamentSelectDialog(){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.classList.remove('show');
+    toggleBodyScrollBlocked(false);
 }
 
 function clearDialogData(dialog){
@@ -131,4 +144,16 @@ async function getPlayRecordIdAndStart(){
 
 async function postPlayRecord(topicId, tournamentStage){
     return await apiPostRequest(`topics/${topicId}/play-records`, {}, {tournamentStage});
+}
+
+/**
+ * 메인 레이아웃 스크롤 제어
+ * @param {boolean} isBlock
+ */
+function toggleBodyScrollBlocked(isBlock = false){
+    const body = document.querySelector('body');
+
+    isBlock ?
+        body.classList.add('scroll-block')
+        : body.classList.remove('scroll-block');
 }
