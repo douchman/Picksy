@@ -1,4 +1,4 @@
-import {showToastMessage} from "../../global/popup/js/common-toast-message";
+import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
 
 export function handleTopicRenderException(error){
     const errorCode = error.errorCode;
