@@ -1,7 +1,9 @@
 import {apiGetRequest} from '../../global/js/api.js';
 import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
+import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
+    flushPlayRecordIdsFromLocalStorage();
     await renderTopics();
     addTopicCardEvents();
     renderDialog();
