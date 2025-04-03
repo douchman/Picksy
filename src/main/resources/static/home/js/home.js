@@ -1,6 +1,7 @@
 import {apiGetRequest} from '../../global/js/api.js';
 import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
+import {handleTopicRenderException} from "./exception.js";
 
 let scrollObserver;
 const pageSize = 16;
@@ -42,18 +43,22 @@ async function renderTopics(){
 
     const topicContentCards = document.querySelector('#topic-content-cards');
 
-    const {status, data : {topicList, pagination}} = await getTopics(requestParams);
+    const {status, data : topicResult} = await getTopics(requestParams);
 
-    if(hasNextPage(pagination.currentPage, pagination.totalPages)){
-        currentPage++;
-    }else{
-        unObserve();
-    }
+    const topicList = topicResult.topicList;
+    const pagination = topicResult.pagination;
+
+    if( status === 200 ){
+        if(hasNextPage(pagination.currentPage, pagination.totalPages)){
+            currentPage++;
+        }else{
+            unObserve();
+        }
 
 
-    topicList.forEach( topic => {
-        const topicContentCard =
-            `
+        topicList.forEach( topic => {
+            const topicContentCard =
+                `
             <div class="topic-content-card" data-id="${topic.id}">
                         <div class="topic-thumb-group" style="background-image: url('${topic.thumbnail}')"></div>
                         <div class="topic-desc-group">
@@ -67,8 +72,12 @@ async function renderTopics(){
                         </div>
                     </div>
             `;
-        topicContentCards.insertAdjacentHTML('beforeend', topicContentCard);
-    });
+            topicContentCards.insertAdjacentHTML('beforeend', topicContentCard);
+        });
+    } else {
+        unObserve();
+        handleTopicRenderException();
+    }
 
     isLoading = false;
 }
