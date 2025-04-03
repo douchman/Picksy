@@ -84,7 +84,6 @@ function initObserver(){
     scrollObserver = new IntersectionObserver(async ([entry]) => {
        if(entry.isIntersecting){
            //await renderTopics();
-           console.log(' ### 옵저버를 감지했어요 ###');
            await renderTopics();
        }
     }, {
