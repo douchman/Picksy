@@ -9,12 +9,11 @@ let currentPage = 1;
 let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
-    setupInfiniteScrollObserver();
     flushPlayRecordIdsFromLocalStorage();
     addTopicCardEvents();
     renderDialog();
     addDialogEvents();
-
+    setupInfiniteScrollObserver();
 });
 
 function addTopicCardEvents(){
