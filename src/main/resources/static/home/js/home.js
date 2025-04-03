@@ -10,11 +10,31 @@ let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
+    addTopicSearchFilterEvents();
     addTopicCardEvents();
     renderDialog();
     addDialogEvents();
     setupInfiniteScrollObserver();
 });
+
+function addTopicSearchFilterEvents(){
+
+    const keywordSearch = document.querySelector('#keyword-search');
+    const btnSearchTopic = document.querySelector('#btn-search-topic');
+
+    keywordSearch.addEventListener('keydown', function(event) {
+        const keyEvent = event.key;
+        if( keyEvent === 'Enter'){
+            btnSearchTopic.click();
+        }
+    });
+
+    btnSearchTopic.addEventListener('click', async () => {
+        initCurrentPage();
+        clearTopicContentCards();
+        startInfiniteScrollObserver();
+    });
+}
 
 function addTopicCardEvents(){
     // 랜더링 된 대결 주제 카드 이벤트 -> 토너먼트 선택기 오픈
@@ -35,7 +55,9 @@ async function renderTopics(){
     if ( isLoading ) return;
     isLoading = true;
 
+    const keyword = document.querySelector('#keyword-search').value;
     const requestParams = {
+        keyword : keyword,
         page : currentPage,
         size : pageSize
     }
@@ -81,6 +103,14 @@ async function renderTopics(){
     isLoading = false;
 }
 
+/**
+ * 현 페이지 초기화
+ * @param {number} page
+ */
+function initCurrentPage(page = 1) {
+    currentPage = page;
+}
+
 function hasNextPage(currentPage = 1 , totalPages = 1 ){
     return currentPage < totalPages;
 }
@@ -108,9 +138,23 @@ function stopInfiniteScrollObserver(){
     scrollObserver.unobserve(scrollObserverTarget);
 }
 
+function startInfiniteScrollObserver(){
+    const scrollObserverTarget = document.querySelector('#scroll-observer-target');
+    scrollObserver.observe(scrollObserverTarget);
+}
+
 function renderScrollObserverTarget(){
     const topicContentsSection = document.querySelector('#topic-contents-section');
 
     const scrollObserverTarget = `<div id="scroll-observer-target" class="scroll-observer-target"></div>`;
     topicContentsSection.insertAdjacentHTML('beforeend',scrollObserverTarget);
+}
+
+/**
+ * 대결주제 카드 랜더링 대상(topic-content-cards) 비우기
+ */
+function clearTopicContentCards(){
+    const topicContentCards = document.querySelector('#topic-content-cards');
+    topicContentCards.replaceChildren();
+    isLoading = false;
 }
