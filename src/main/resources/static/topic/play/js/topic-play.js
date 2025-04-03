@@ -1,11 +1,11 @@
 import {topic, playRecord} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {loadEntryMatchInfo} from "./play-record.js";
 import {apiGetRequest} from "../../../global/js/api.js";
+import {loadEntryMatchInfo} from "./entry-match.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const topicSuccess  = await setTopic(); // 대결주제 식별자 변수화
-    const playRecordSuccess = setPlayRecordId(); // 대결진행기록 식별자 변수화
+    const topicSuccess  = await saveTopicInfo(); // 대결주제 식별자 변수화
+    const playRecordSuccess = savePlayRecordInfo(); // 대결진행기록 식별자 변수화
 
     if( topicSuccess && playRecordSuccess){
         loadYoutubeIframeAPI();
@@ -27,7 +27,7 @@ function addTopicPlayEvents(){
     });
 }
 
-async function setTopic(){
+async function saveTopicInfo(){
     const path = window.location.pathname;
     const segments = path.split('/');
     const topicId = segments[segments.length - 1];
@@ -46,7 +46,7 @@ async function setTopic(){
     return true;
 }
 
-function setPlayRecordId(){
+function savePlayRecordInfo(){
     const storedPlayRecordIdName = `topic-${topic.getId()}-playRecord-id`;
     try {
         const playRecordId = localStorage.getItem(storedPlayRecordIdName);
