@@ -1,6 +1,7 @@
 import {TOURNAMENT_DESC} from "./const.js";
 import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
+import {handleTopicTournamentException} from "./exception";
 
 export function renderDialog(){
     const documentBody = document.querySelector('body');
@@ -72,16 +73,25 @@ export function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.setAttribute('data-topic-id', topicId);
-    const {status, data : {topic ,tournamentList}} = await getTopicDetail(topicId);
+    const {status, data : tournamentData } = await getTopicDetail(topicId);
 
-    clearDialogData(dialog);
+    const topic = tournamentData.topic;
+    const tournamentList = tournamentData.tournamentList;
 
-    dialog.querySelector('#topic-title').textContent= `${topic.title}`;
-    dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
-    setTournamentSelector(tournamentList);
-    dialog.classList.add('show');
 
-    toggleBodyScrollBlocked(true);
+    if( status === 200 ){
+        clearDialogData(dialog);
+
+        dialog.querySelector('#topic-title').textContent= `${topic.title}`;
+        dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
+        setTournamentSelector(tournamentList);
+        dialog.classList.add('show');
+
+        toggleBodyScrollBlocked(true);
+    } else {
+        handleTopicTournamentException(tournamentData);
+    }
+
 }
 
 function closeTournamentSelectDialog(){

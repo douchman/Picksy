@@ -9,3 +9,13 @@ export function handleTopicRenderException(error){
             showToastMessage(`${message}`, error, 3000);
     }
 }
+
+export function handleTopicTournamentException(error){
+    const errorCode = error.errorCode;
+    const message = error.message;
+
+    switch (errorCode){
+        default:
+            showToastMessage(`${message}`, error, 3000);
+    }
+}
