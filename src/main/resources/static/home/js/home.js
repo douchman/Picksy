@@ -54,7 +54,9 @@ async function renderTopics(){
     if ( isLoading ) return;
     isLoading = true;
 
+    const keyword = document.querySelector('#keyword-search').value;
     const requestParams = {
+        keyword : keyword,
         page : currentPage,
         size : pageSize
     }
