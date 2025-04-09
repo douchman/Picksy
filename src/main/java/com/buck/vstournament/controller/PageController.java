@@ -32,10 +32,15 @@ public class PageController {
         return "topic/create/topic-create";
     }
 
-
     @GetMapping("topic/play/{id}")
     public String playTopic(@PathVariable Integer id){
         // 직관적인 URL 을 위해 PathVariable 사용
         return "topic/play/topic-play";
+    }
+
+    @GetMapping("statistics/topic/{id}")
+    public String topicStatistics(@PathVariable Integer id){
+        // 직관적인 URL 을 위해 PathVariable 사용
+        return "statistics/topic/topic-statistics";
     }
 }
