@@ -140,18 +140,19 @@
 }
 
 /* td entry-thumb */
-.entries-stats-table thead tr .entry-thumb{
+.entries-stats-table tbody tr .entry-thumb{
     width: var(--thead-entry-thumb-size);
+    height: var(--thead-entry-thumb-size);
 }
 
-.entries-stats-table thead tr .entry-thumb img{
+.entries-stats-table tbody tr .entry-thumb img{
     object-fit: cover;
     width: 100%;
     height: 100%;
 }
 
 /* td highest-tournament */
-.entries-stats-table thead tr .highest-tournament{
+.entries-stats-table tbody tr .highest-tournament{
     width: var(--thead-highest-tournament-width);
 }
 
