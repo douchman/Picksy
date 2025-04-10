@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const topicIdSuccess = saveTopicId();
 
     if( topicIdSuccess ){
-        await renderTopicStatistics();
+        const topicStatsSuccess = await renderTopicStatistics();
     }
 });
 
@@ -31,7 +31,10 @@ async function renderTopicStatistics(){
         renderTotalMatches(topicStatistics.totalMatches);
     } else {
         // TODO : api fail exception handle
+        return false;
     }
+
+    return true;
 
 }
 
