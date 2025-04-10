@@ -197,8 +197,27 @@
     top : 0;
     height: 100%;
     width: var(--win-rate);
-    background-color: var(--progress-bar-fill-color-60);
     border-radius: 6px;
+}
+
+.win-rate-bar.color-20:after{
+    background-color: var(--progress-bar-fill-color-20);
+}
+
+.win-rate-bar.color-40:after{
+    background-color: var(--progress-bar-fill-color-40);
+}
+
+.win-rate-bar.color-60:after{
+    background-color: var(--progress-bar-fill-color-60);
+}
+
+.win-rate-bar.color-80:after{
+    background-color: var(--progress-bar-fill-color-80);
+}
+
+.win-rate-bar.color-100:after{
+    background-color: var(--progress-bar-fill-color-100);
 }
 
 
