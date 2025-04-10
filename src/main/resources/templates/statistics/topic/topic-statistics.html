@@ -11,7 +11,7 @@
         <div id="topic-statistics" class="topic-statistics">
             <div class="topic-stats-group">
                 <p id="topic-title" class="topic-title">대결 주제 제목</p>
-                <p id="total-played" class="total-played">이 대결은 총<span>182번</span>플레이 되었어요!</p>
+                <p id="total-matches" class="total-matches"></p>
             </div>
 
             <div class="entries-stats-group">
@@ -61,5 +61,6 @@
             </div>
         </div>
     </body>
+    <script type="module" th:src="@{'/statistics/topic/js/topic-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>

@@ -25,13 +25,13 @@
     font-size: 30px;
 }
 
-.total-played{
+.total-matches{
     color : #7D7D7D;
     font-weight: 500;
     font-size: 16px;
 }
 
-.total-played span{
+.total-matches span{
     color : #9B7EBD;
     font-weight: 600;
     font-size: 20px;
