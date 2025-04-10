@@ -1,5 +1,7 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
+import {addEntryStatisticsTableEvents} from "./entry-statistics-table.js";
+
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -7,6 +9,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if( topicIdSuccess ){
         const topicStatsSuccess = await renderTopicStatistics();
+
+        if(topicStatsSuccess) {
+            addEntryStatisticsTableEvents();
+        }
     }
 });
 
