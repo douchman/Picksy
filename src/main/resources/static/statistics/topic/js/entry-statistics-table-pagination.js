@@ -1,4 +1,5 @@
 import {tableQuery} from "./enry-statistics-table-const.js";
+import {renderEntryStatistics} from "./entry-statistics.js";
 
 let isSyncingPagination = false; // 상단&하단 페이지네이션 동기화 제어 변수
 let tableTopPagination;
@@ -34,18 +35,18 @@ export function synchronizeCurrentPage(currentPage = 1){
 function addTuiPaginationEvent(){
 
     // 상단 페이지네이션 -> 현재 페이지 변경
-    tableTopPagination.on('afterMove', function(eventData) {
+    tableTopPagination.on('afterMove', async function(eventData) {
         if(isSyncingPagination) return;
         tableQuery.setCurrentPage(eventData.page);
         synchronizeCurrentPage(eventData.page);
-        // TODO : 페이지에 맞추어
+        await renderEntryStatistics();
     });
 
     // 하단 페이지네이션 -> 현재 페이지 변경
-    tableBottomPagination.on('afterMove', function(eventData) {
+    tableBottomPagination.on('afterMove', async function(eventData) {
         if(isSyncingPagination) return;
         tableQuery.setCurrentPage(eventData.page);
-        synchronizeCurrentPage(eventData.page);
+        await synchronizeCurrentPage(eventData.page);
     });
 
 }
