@@ -3,7 +3,7 @@ const OrderType = {
     DESC: 'DESC',
 };
 
-const tableQuery = {
+export const tableQuery = {
     currentPage : 1,
     pageSize : 10,
     rankOrder : OrderType.ASC,
