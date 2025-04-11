@@ -1,6 +1,7 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {tableQuery} from "./enry-statistics-table-const.js"
+
 const PROGRESS_BAR_COLOR_CLASS = {
     20 : 'color-20',
     40 : 'color-40',
@@ -12,9 +13,6 @@ const PROGRESS_BAR_COLOR_CLASS = {
 export async function renderEntryStatistics(){
     const { status, data : {entriesStatistics, pagination}  } = await getEntryStatistics();
 
-    console.log('renderEntryStatistics status -> ', status)
-    //console.log('renderEntryStatistics entriesStatistics -> ', entriesStatistics);
-
     if( status === 200){
         const isEntriesStatisticsEmpty = (!entriesStatistics || entriesStatistics.length === 0);
         if( !isEntriesStatisticsEmpty){
@@ -23,7 +21,6 @@ export async function renderEntryStatistics(){
             entriesStatistics.forEach( entryStats =>{
                 const entry = entryStats.entry;
                 const statistics = entryStats.statistics;
-                console.log('entryStats => ' ,entryStats);
                 const roundedWinRate = roundToNDecimal(statistics.winRate , 2);
                 const winRateBarColorClass = determineProgressBarColorByWinRate(roundedWinRate);
                 const entryStatsRow =
