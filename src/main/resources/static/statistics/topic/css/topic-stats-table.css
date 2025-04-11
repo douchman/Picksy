@@ -164,9 +164,6 @@
 
 /* td win-rate */
 .entries-stats-table tbody tr .win-rate{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding : 15px;
 }
 
