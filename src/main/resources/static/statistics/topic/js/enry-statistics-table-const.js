@@ -7,7 +7,7 @@ export const tableQuery = {
     totalItems : 0,
     totalPages : 0,
     currentPage : 1,
-    pageSize : 10,
+    pageSize : 1,
     rankOrder : OrderType.ASC,
     totalMatchesOrder : OrderType.DESC,
     totalWinsOrder : OrderType.DESC,
@@ -43,6 +43,19 @@ export const tableQuery = {
 
     getPageSize(){
         return this.pageSize;
+    },
+
+    getRankOrder(){
+        return this.rankOrder;
+    },
+    getTotalMatchesOrder(){
+        return this.totalMatchesOrder;
+    },
+    getTotalWinsOrder(){
+        return this.totalWinsOrder;
+    },
+    getWinRateOrder(){
+        return this.winRateOrder;
     },
 
     setRankOrder(orderType){
