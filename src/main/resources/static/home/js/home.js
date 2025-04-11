@@ -40,8 +40,11 @@ function addTopicCardEvents(){
     // 랜더링 된 대결 주제 카드 이벤트 -> 토너먼트 선택기 오픈
     document.querySelector('#topic-content-cards').addEventListener('click' , async function(event){
         const topicCard = event.target.closest('.topic-content-card');
-        if (topicCard) {
-            const topicId = topicCard.dataset.id;
+        const btnTopicStats = event.target.closest('.btn-topic-stats');
+        const topicId = topicCard.dataset.id;
+        if (btnTopicStats) {
+            window.open(`/statistics/topic/${topicId}`, '_blank'); // 통계페이지 이동(새 탭 열기)
+        } else if (topicCard) {
             await openTournamentSelectDialog(topicId);
         }
     });
