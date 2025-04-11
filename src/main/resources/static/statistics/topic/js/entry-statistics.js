@@ -40,10 +40,13 @@ export async function renderEntryStatistics(){
                 entriesStatsTbody.insertAdjacentHTML('beforeend', entryStatsRow);
             });
         }
+
+        return true;
     } else{
         // TODO : handle getEntriesStats Exception
-    }
 
+        return false;
+    }
 }
 
 // 소수 점 줄이기
