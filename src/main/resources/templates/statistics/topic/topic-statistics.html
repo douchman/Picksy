@@ -4,7 +4,9 @@
       layout:decorate="~{global/layouts/base-layout.html}">
 
 <head>
+    <link rel="stylesheet" href="/statistics/topic/css/tui-pagination.min.css" />
     <link rel="stylesheet" th:href="@{'/statistics/topic/css/topic-statistics.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <script src="/statistics/topic/js/tui-pagination.min.js"></script>
 </head>
 <th:block layout:fragment="Content">
     <body>
@@ -25,6 +27,7 @@
                             <li class="item-count" data-count="30">30개</li>
                         </ul>
                     </div>
+                    <div id="table-top-pagination" class="table-top-pagination tui-pagination"></div>
                 </div>
                 <table id="entries-stats-table" class="entries-stats-table">
                     <thead>
@@ -38,6 +41,7 @@
                     </thead>
                     <tbody id="entries-stats-tbody" class="entries-stats-tbody"></tbody>
                 </table>
+                <div id="table-bottom-pagination" class="table-bottom-pagination tui-pagination"></div>
             </div>
         </div>
     </body>
