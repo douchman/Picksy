@@ -1,5 +1,6 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
+import {tableQuery} from "./enry-statistics-table-const.js"
 
 const PROGRESS_BAR_COLOR_CLASS = {
     20 : 'color-20',
@@ -9,11 +10,11 @@ const PROGRESS_BAR_COLOR_CLASS = {
     100 : 'color-100'
 }
 
-export async function renderEntryStatistics(){
-    const { status, data : {entriesStatistics, pagination}  } = await getEntryStatistics();
+export async function renderEntryStatistics(isClearBody = true){
 
-    console.log('renderEntryStatistics status -> ', status)
-    //console.log('renderEntryStatistics entriesStatistics -> ', entriesStatistics);
+    isClearBody && clearEntriesStatsTbody();
+
+    const { status, data : {entriesStatistics, pagination}  } = await getEntryStatistics();
 
     if( status === 200){
         const isEntriesStatisticsEmpty = (!entriesStatistics || entriesStatistics.length === 0);
@@ -23,7 +24,6 @@ export async function renderEntryStatistics(){
             entriesStatistics.forEach( entryStats =>{
                 const entry = entryStats.entry;
                 const statistics = entryStats.statistics;
-                console.log('entryStats => ' ,entryStats);
                 const roundedWinRate = roundToNDecimal(statistics.winRate , 2);
                 const winRateBarColorClass = determineProgressBarColorByWinRate(roundedWinRate);
                 const entryStatsRow =
@@ -40,6 +40,7 @@ export async function renderEntryStatistics(){
                 entriesStatsTbody.insertAdjacentHTML('beforeend', entryStatsRow);
             });
         }
+        updateTableQueryPagination(pagination);
 
         return true;
     } else{
@@ -47,6 +48,19 @@ export async function renderEntryStatistics(){
 
         return false;
     }
+}
+
+// 테이블 body 내 랜더링 된 기존 컨텐츠 비우기
+function clearEntriesStatsTbody(){
+    document.querySelector('#entries-stats-tbody').replaceChildren();
+}
+
+// 테이블 쿼리 페이지네이션 최신화
+function updateTableQueryPagination(pagination){
+    tableQuery.setTotalPages(pagination.totalPages);
+    tableQuery.setTotalItems(pagination.totalItems)
+    tableQuery.setCurrentPage(pagination.currentPage);
+
 }
 
 // 소수 점 줄이기
@@ -78,5 +92,11 @@ function determineProgressBarColorByWinRate(winRate){
 }
 
 async function getEntryStatistics(){
-    return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`)
+    const requestBody = {
+        rankOrderType : tableQuery.getRankOrder(),
+        page : tableQuery.getCurrentPage(),
+        pageSize : tableQuery.getPageSize()
+    }
+
+    return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
 }
