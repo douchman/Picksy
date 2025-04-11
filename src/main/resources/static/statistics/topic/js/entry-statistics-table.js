@@ -1,4 +1,6 @@
 import {entryStatsTable} from "./const.js";
+import {tableQuery} from "./enry-statistics-table-const.js";
+import {renderEntryStatistics} from "./entry-statistics.js";
 
 // 엔트리 통계 테이블 관련 이벤트 등록
 export function addEntryStatisticsTableEvents(){
@@ -27,7 +29,7 @@ function addItemCountListEvent(){
     const itemPerPage = document.querySelector('#item-per-page');
     const itemCountList = document.querySelector('#item-count-list');
 
-    itemCountList.addEventListener('click', function(event){
+    itemCountList.addEventListener('click', async function(event){
         const itemCount = event.target.closest('.item-count');
         const itemPerPageCount = itemCount.dataset.count;
         const countText = itemCount.innerText;
@@ -37,8 +39,9 @@ function addItemCountListEvent(){
 
         entryStatsTable.setItemPerPage(itemPerPageCount);
         toggleFilterItemCountActive(false);
-        
-        // TODO : 변경된 갯수대로 엔트리 통계 랜더링
+
+        tableQuery.setPageSize(itemPerPageCount); // 표시 갯수 변경
+        await renderEntryStatistics(true, true); // 표기 갯수에 맞추어 랜더링
     });
 }
 
