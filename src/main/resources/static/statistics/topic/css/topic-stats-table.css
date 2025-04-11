@@ -98,12 +98,12 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    cursor: pointer;
 }
 
 .entries-stats-table thead tr th.order{
     position: relative;
     padding-right: 25px;
+    cursor: pointer;
 }
 
 .entries-stats-table thead tr th.order:after{
