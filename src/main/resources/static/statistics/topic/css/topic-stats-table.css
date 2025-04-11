@@ -12,6 +12,8 @@
 
 /* entries-stats-filter */
 .entries-stats-filter{
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
