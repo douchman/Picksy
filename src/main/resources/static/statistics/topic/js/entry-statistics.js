@@ -1,6 +1,6 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
-
+import {tableQuery} from "./enry-statistics-table-const.js"
 const PROGRESS_BAR_COLOR_CLASS = {
     20 : 'color-20',
     40 : 'color-40',
@@ -40,6 +40,7 @@ export async function renderEntryStatistics(){
                 entriesStatsTbody.insertAdjacentHTML('beforeend', entryStatsRow);
             });
         }
+        updateTableQueryPagination(pagination);
 
         return true;
     } else{
@@ -47,6 +48,15 @@ export async function renderEntryStatistics(){
 
         return false;
     }
+}
+
+
+// 테이블 쿼리 페이지네이션 최신화
+function updateTableQueryPagination(pagination){
+    tableQuery.setTotalPages(pagination.totalPages);
+    tableQuery.setTotalItems(pagination.totalItems)
+    tableQuery.setCurrentPage(pagination.currentPage);
+
 }
 
 // 소수 점 줄이기
