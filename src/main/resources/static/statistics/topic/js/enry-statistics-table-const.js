@@ -4,6 +4,8 @@ const OrderType = {
 };
 
 export const tableQuery = {
+    totalItems : 0,
+    totalPages : 0,
     currentPage : 1,
     pageSize : 10,
     rankOrder : OrderType.ASC,
@@ -11,6 +13,21 @@ export const tableQuery = {
     totalWinsOrder : OrderType.DESC,
     winRateOrder : OrderType.DESC,
 
+    setTotalItems(totalItems){
+        this.totalItems = totalItems;
+    },
+
+    getTotalItems(){
+        return this.totalItems;
+    },
+
+    setTotalPages(totalPages){
+        this.totalPages = totalPages;
+    },
+
+    getTotalPages(){
+        return this.totalPages;
+    },
 
     setCurrentPage(currentPage){
         this.currentPage = currentPage;
