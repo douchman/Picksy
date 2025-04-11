@@ -1,0 +1,203 @@
+.entries-stats-table{
+    --thead-rank-width : 6%;
+    --thead-td-height : 120px;
+    --thead-entry-thumb-size : 120px;
+    --thead-highest-tournament-width : 8%;
+    --progress-bar-fill-color-20 :#F8C8DC;
+    --progress-bar-fill-color-40 :#FFD8A9;
+    --progress-bar-fill-color-60 :#FFF5BA;
+    --progress-bar-fill-color-80 :#CFF5E7;
+    --progress-bar-fill-color-100 :#A0E7E5;
+}
+
+/* entries-stats-filter */
+.entries-stats-filter{
+    margin-bottom: 20px;
+}
+
+/* filter-item-count */
+.filter-item-count{
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap : 5px;
+}
+
+.filter-item-count .page-count-index{
+    color : #333;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filter-item-count .item-per-page{
+    position: relative;
+    border-radius: 6px;
+    border : 1px solid #838383;
+    padding : 6px 20px 6px 12px
+}
+
+.filter-item-count .item-per-page:after{
+    content : '';
+    position: absolute;
+    top : 50%;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    transform-origin: 50% 50%;
+    transform: translateY(-50%);
+    background-image: url(https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.filter-item-count .item-count-list{
+    display: none;
+    position: absolute;
+    bottom : 0;
+    left : 0;
+    transform: translateY(105%);
+    z-index: 100;
+    padding: 6px;
+    background-color: #FFF;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.filter-item-count .item-count-list .item-count{
+    width: max-content;
+    padding : 6px 12px;
+    background-color: #FFF;
+    border-radius: 6px;
+}
+
+.filter-item-count .item-count-list .item-count:hover{
+    color : #FFF;
+    background-color: var(--signature-color);
+}
+
+/* filter-item-count -> show */
+.filter-item-count.active .item-count-list{
+    display: block;
+}
+
+
+/* entries-stats-table */
+.entries-stats-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.entries-stats-table thead tr th{
+    padding : 8px 16px;
+    background-color: rgba(234, 234, 234, 7);
+    border : 1px solid #CECECE;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
+}
+
+.entries-stats-table thead tr th.order{
+    position: relative;
+    padding-right: 25px;
+}
+
+.entries-stats-table thead tr th.order:after{
+    content : '';
+    position: absolute;
+    top :50%;
+    right: 10px;
+    width: 12px;
+    height: 12px;
+    transform-origin: center;
+    transform : translateY(-50%) rotate(180deg);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill-red.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.entries-stats-table thead tr th.order.asc:after{
+    transform : translateY(-50%);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill-blue.svg");
+}
+
+.entries-stats-table tbody tr td{
+    border : 1px solid rgba(234, 234, 234, 7);
+    text-align: center;
+    box-sizing: border-box;
+    height: var(--thead-td-height);
+    max-height: var(--thead-td-height);
+}
+
+/* td rank */
+.entries-stats-table thead tr .rank{
+    width: var(--thead-rank-width);
+}
+
+/* td entry-thumb */
+.entries-stats-table thead tr .entry-thumb{
+    width: var(--thead-entry-thumb-size);
+}
+
+.entries-stats-table thead tr .entry-thumb img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* td highest-tournament */
+.entries-stats-table thead tr .highest-tournament{
+    width: var(--thead-highest-tournament-width);
+}
+
+/* td entry-name */
+.entries-stats-table tbody tr .entry-name{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* td win-rate */
+.entries-stats-table tbody tr .win-rate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding : 15px;
+}
+
+.win-rate-bar{
+    position: relative;
+    width: 100%;
+    height: 30px;
+    border-radius: 6px;
+    background-color: #DEE2E6;
+}
+
+.win-rate-bar:before{
+    content : var(--win-rate-text);
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    transform: translate(-50% , -50%);
+    color : #444444;
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 100;
+}
+
+.win-rate-bar:after{
+    content : '';
+    position: absolute;
+    left : 0;
+    top : 0;
+    height: 100%;
+    width: var(--win-rate);
+    background-color: var(--progress-bar-fill-color-60);
+    border-radius: 6px;
+}
+
+
