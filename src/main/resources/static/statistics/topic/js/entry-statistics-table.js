@@ -9,6 +9,14 @@ export function addEntryStatisticsTableEvents(){
 // 테이블 컨텐츠 표기 갯수 선택기 이벤트
 function addItemPerPageEvent(){
     const itemPerPage = document.querySelector('#item-per-page');
+
+    // 표시기 외 영역 선택시 닫기
+    window.addEventListener('click', function(event){
+        const hasItemPerPageClass = ['item-per-page', 'item-count'].some(cls =>
+            event.target.classList.contains(cls));
+        !hasItemPerPageClass && toggleFilterItemCountActive(false);
+    });
+
     itemPerPage.addEventListener('click', () =>{
         toggleFilterItemCountActive(true);
     });
