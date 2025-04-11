@@ -10,7 +10,10 @@ const PROGRESS_BAR_COLOR_CLASS = {
     100 : 'color-100'
 }
 
-export async function renderEntryStatistics(){
+export async function renderEntryStatistics(isClearBody = true){
+
+    isClearBody && clearEntriesStatsTbody();
+
     const { status, data : {entriesStatistics, pagination}  } = await getEntryStatistics();
 
     if( status === 200){
@@ -47,6 +50,10 @@ export async function renderEntryStatistics(){
     }
 }
 
+// 테이블 body 내 랜더링 된 기존 컨텐츠 비우기
+function clearEntriesStatsTbody(){
+    document.querySelector('#entries-stats-tbody').replaceChildren();
+}
 
 // 테이블 쿼리 페이지네이션 최신화
 function updateTableQueryPagination(pagination){
