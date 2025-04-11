@@ -45,8 +45,9 @@ function addTuiPaginationEvent(){
     // 하단 페이지네이션 -> 현재 페이지 변경
     tableBottomPagination.on('afterMove', async function(eventData) {
         if(isSyncingPagination) return;
-        tableQuery.setCurrentPage(eventData.page);
-        await synchronizeCurrentPage(eventData.page);
+        tableQuery.setCurrentPage(eventData.page)
+        synchronizeCurrentPage(eventData.page);
+        await renderEntryStatistics();
     });
 
 }
