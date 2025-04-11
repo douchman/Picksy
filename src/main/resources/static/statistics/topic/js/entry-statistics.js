@@ -2,6 +2,7 @@ import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {tableQuery} from "./enry-statistics-table-const.js"
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
+import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
 
 const PROGRESS_BAR_COLOR_CLASS = {
     20 : 'color-20',
@@ -11,7 +12,7 @@ const PROGRESS_BAR_COLOR_CLASS = {
     100 : 'color-100'
 }
 
-export async function renderEntryStatistics(isClearBody = true){
+export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
     isClearBody && clearEntriesStatsTbody();
 
@@ -42,6 +43,7 @@ export async function renderEntryStatistics(isClearBody = true){
             });
         }
         updateTableQueryPagination(pagination);
+        isUpdatePaginationUi && updatePaginationSetting();
 
         return true;
     } else{
@@ -93,6 +95,8 @@ async function getEntryStatistics(){
         page : tableQuery.getCurrentPage(),
         pageSize : tableQuery.getPageSize()
     }
+
+    console.log('requestBody -> ', requestBody );
 
     return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
 }
