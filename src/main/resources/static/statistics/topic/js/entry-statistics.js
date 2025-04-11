@@ -85,5 +85,11 @@ function determineProgressBarColorByWinRate(winRate){
 }
 
 async function getEntryStatistics(){
-    return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`)
+    const requestBody = {
+        rankOrderType : tableQuery.getRankOrder(),
+        page : tableQuery.getCurrentPage(),
+        pageSize : tableQuery.getPageSize()
+    }
+
+    return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
 }
