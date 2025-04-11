@@ -32,6 +32,19 @@ export function synchronizeCurrentPage(currentPage = 1){
     isSyncingPagination = false;
 }
 
+// 페이지네이션 설정 변경 후 다시 랜더링
+export function updatePaginationSetting(){
+    tableTopPagination.setTotalItems(tableQuery.getTotalItems());
+    tableTopPagination.setItemsPerPage(tableQuery.getPageSize());
+    tableTopPagination.reset();
+
+    tableBottomPagination.setTotalItems(tableQuery.getTotalItems());
+    tableBottomPagination.setItemsPerPage(tableQuery.getPageSize());
+    tableBottomPagination.reset();
+
+    synchronizeCurrentPage(tableQuery.currentPage);
+}
+
 function addTuiPaginationEvent(){
 
     // 상단 페이지네이션 -> 현재 페이지 변경
@@ -49,5 +62,4 @@ function addTuiPaginationEvent(){
         synchronizeCurrentPage(eventData.page);
         await renderEntryStatistics();
     });
-
 }
