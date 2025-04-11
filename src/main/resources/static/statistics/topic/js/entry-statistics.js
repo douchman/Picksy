@@ -1,6 +1,8 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {tableQuery} from "./enry-statistics-table-const.js"
+import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
+import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
 
 const PROGRESS_BAR_COLOR_CLASS = {
     20 : 'color-20',
@@ -10,7 +12,7 @@ const PROGRESS_BAR_COLOR_CLASS = {
     100 : 'color-100'
 }
 
-export async function renderEntryStatistics(isClearBody = true){
+export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
     isClearBody && clearEntriesStatsTbody();
 
@@ -41,6 +43,7 @@ export async function renderEntryStatistics(isClearBody = true){
             });
         }
         updateTableQueryPagination(pagination);
+        isUpdatePaginationUi && updatePaginationSetting();
 
         return true;
     } else{
@@ -50,17 +53,12 @@ export async function renderEntryStatistics(isClearBody = true){
     }
 }
 
-// 테이블 body 내 랜더링 된 기존 컨텐츠 비우기
-function clearEntriesStatsTbody(){
-    document.querySelector('#entries-stats-tbody').replaceChildren();
-}
 
 // 테이블 쿼리 페이지네이션 최신화
 function updateTableQueryPagination(pagination){
     tableQuery.setTotalPages(pagination.totalPages);
     tableQuery.setTotalItems(pagination.totalItems)
     tableQuery.setCurrentPage(pagination.currentPage);
-
 }
 
 // 소수 점 줄이기
@@ -97,6 +95,8 @@ async function getEntryStatistics(){
         page : tableQuery.getCurrentPage(),
         pageSize : tableQuery.getPageSize()
     }
+
+    console.log('requestBody -> ', requestBody );
 
     return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
 }
