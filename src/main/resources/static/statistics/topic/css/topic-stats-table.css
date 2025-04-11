@@ -98,12 +98,12 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    cursor: pointer;
 }
 
 .entries-stats-table thead tr th.order{
     position: relative;
     padding-right: 25px;
+    cursor: pointer;
 }
 
 .entries-stats-table thead tr th.order:after{
@@ -140,18 +140,19 @@
 }
 
 /* td entry-thumb */
-.entries-stats-table thead tr .entry-thumb{
+.entries-stats-table tbody tr .entry-thumb{
     width: var(--thead-entry-thumb-size);
+    height: var(--thead-entry-thumb-size);
 }
 
-.entries-stats-table thead tr .entry-thumb img{
+.entries-stats-table tbody tr .entry-thumb img{
     object-fit: cover;
     width: 100%;
     height: 100%;
 }
 
 /* td highest-tournament */
-.entries-stats-table thead tr .highest-tournament{
+.entries-stats-table tbody tr .highest-tournament{
     width: var(--thead-highest-tournament-width);
 }
 
@@ -163,9 +164,6 @@
 
 /* td win-rate */
 .entries-stats-table tbody tr .win-rate{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding : 15px;
 }
 
@@ -196,8 +194,27 @@
     top : 0;
     height: 100%;
     width: var(--win-rate);
-    background-color: var(--progress-bar-fill-color-60);
     border-radius: 6px;
+}
+
+.win-rate-bar.color-20:after{
+    background-color: var(--progress-bar-fill-color-20);
+}
+
+.win-rate-bar.color-40:after{
+    background-color: var(--progress-bar-fill-color-40);
+}
+
+.win-rate-bar.color-60:after{
+    background-color: var(--progress-bar-fill-color-60);
+}
+
+.win-rate-bar.color-80:after{
+    background-color: var(--progress-bar-fill-color-80);
+}
+
+.win-rate-bar.color-100:after{
+    background-color: var(--progress-bar-fill-color-100);
 }
 
 

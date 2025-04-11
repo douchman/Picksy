@@ -11,13 +11,13 @@
         <div id="topic-statistics" class="topic-statistics">
             <div class="topic-stats-group">
                 <p id="topic-title" class="topic-title">대결 주제 제목</p>
-                <p id="total-played" class="total-played">이 대결은 총<span>182번</span>플레이 되었어요!</p>
+                <p id="total-matches" class="total-matches"></p>
             </div>
 
             <div class="entries-stats-group">
                 <div class="entries-stats-filter">
-                    <div class="filter-item-count">
-                        <button id="item-per-page" class="item-per-page" type="button" value="10">100개</button>
+                    <div id="filter-item-count" class="filter-item-count">
+                        <button id="item-per-page" class="item-per-page" type="button" value="10">10개</button>
                         <p class="page-count-index">씩 보기</p>
                         <ul id="item-count-list" class="item-count-list">
                             <li class="item-count" data-count="10">10개</li>
@@ -36,30 +36,11 @@
                             <th class="win-rate order">승률</th>
                         </tr>
                     </thead>
-                    <tbody id="entries-stats-tbody" class="entries-stats-tbody">
-                        <tr style="--win-rate : 55%; --win-rate-text : '55%'">
-                            <td class="rank">1</td>
-                            <td class="entry-thumb"><img src="" alt=""></td>
-                            <td class="entry-name">날아가는 오릭스</td>
-                            <td class="highest-tournament">8강</td>
-                            <td class="win-rate">
-                                <div class="win-rate-bar"></div>
-                            </td>
-                        </tr>
-
-                        <tr style="--win-rate : 33%; --win-rate-text : '33%'">
-                            <td class="rank">2</td>
-                            <td class="entry-thumb"><img src="" alt=""></td>
-                            <td class="entry-name">날아가는 오릭스</td>
-                            <td class="highest-tournament">8강</td>
-                            <td class="win-rate">
-                                <div class="win-rate-bar"></div>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="entries-stats-tbody" class="entries-stats-tbody"></tbody>
                 </table>
             </div>
         </div>
     </body>
+    <script type="module" th:src="@{'/statistics/topic/js/topic-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>
