@@ -2,6 +2,7 @@ import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {addEntryStatisticsTableEvents} from "./entry-statistics-table.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
+import {renderPagination} from "./entry-statistics-table-pagination.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const topicStatsSuccess = await renderTopicStatistics();
         const entriesStatsSuccess = await renderEntryStatistics();
         if(topicStatsSuccess && entriesStatsSuccess) {
+            renderPagination();
             addEntryStatisticsTableEvents();
         }
     }
