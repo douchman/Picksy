@@ -9,6 +9,7 @@ export const ScoreSort = {
 };
 
 export const tableQuery = {
+    keyword : '',
     totalItems : 0,
     totalPages : 0,
     currentPage : 1,
