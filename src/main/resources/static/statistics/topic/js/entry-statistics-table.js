@@ -2,10 +2,13 @@ import {entryStatsTable} from "./const.js";
 import {RankSort, ScoreSort, tableQuery} from "./enry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 
+let keywordSearchDebounceTimer;
+
 // 엔트리 통계 테이블 관련 이벤트 등록
 export function addEntryStatisticsTableEvents(){
     addItemPerPageEvent();
     addItemCountListEvent();
+    addSearchFilterEvent();
     addTableHeaderOrderEvent();
 }
 
@@ -46,6 +49,13 @@ function addItemCountListEvent(){
     });
 }
 
+// 검색어 필터 이벤트
+function addSearchFilterEvent(){
+    document.querySelector('#search-keyword').addEventListener('keydown', async function(){
+        await searchEntryWithKeyword();
+    });
+}
+
 // 테이블 헤더 항목 정렬 이벤트
 function addTableHeaderOrderEvent(){
     document.querySelectorAll('th.order').forEach(orderHead => {
@@ -69,6 +79,15 @@ function addTableHeaderOrderEvent(){
             await renderEntryStatistics(true, false);
         });
     });
+}
+
+async function searchEntryWithKeyword(){
+    if( keywordSearchDebounceTimer ) clearTimeout(keywordSearchDebounceTimer);
+
+    keywordSearchDebounceTimer = setTimeout(async () => {
+        tableQuery.keyword = document.querySelector('#search-keyword').value;
+        await renderEntryStatistics(true, false);
+    }, 600);
 }
 
 // 테이블 body 내 랜더링 된 기존 컨텐츠 비우기
