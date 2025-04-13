@@ -1,6 +1,11 @@
-export const OrderType = {
-    ASC: 'ASC',
-    DESC: 'DESC',
+export const RankSort = {
+    LOWEST_FIRST: 'ASC',
+    HIGHEST_FIRST: 'DESC',
+};
+
+export const ScoreSort = {
+    HIGHEST_FIRST: 'DESC',
+    LOWEST_FIRST: 'ASC',
 };
 
 export const tableQuery = {
@@ -8,8 +13,8 @@ export const tableQuery = {
     totalPages : 0,
     currentPage : 1,
     pageSize : 10,
-    rankOrder : OrderType.ASC,
-    totalMatchesOrder : OrderType.DESC,
-    totalWinsOrder : OrderType.DESC,
-    winRateOrder : OrderType.DESC
+    rankOrder : RankSort.LOWEST_FIRST,
+    totalMatchesOrder : ScoreSort.HIGHEST_FIRST,
+    totalWinsOrder : ScoreSort.HIGHEST_FIRST,
+    winRateOrder : ScoreSort.HIGHEST_FIRST
 }
