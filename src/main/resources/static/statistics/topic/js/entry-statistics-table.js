@@ -41,7 +41,7 @@ function addItemCountListEvent(){
         entryStatsTable.setItemPerPage(itemPerPageCount);
         toggleFilterItemCountActive(false);
 
-        tableQuery.setPageSize(itemPerPageCount); // 표시 갯수 변경
+        tableQuery.pageSize = itemPerPageCount; // 표시 갯수 변경
         await renderEntryStatistics(true, true); // 표기 갯수에 맞추어 랜더링
     });
 }

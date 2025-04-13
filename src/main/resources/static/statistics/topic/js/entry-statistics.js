@@ -56,9 +56,9 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
 
 // 테이블 쿼리 페이지네이션 최신화
 function updateTableQueryPagination(pagination){
-    tableQuery.setTotalPages(pagination.totalPages);
-    tableQuery.setTotalItems(pagination.totalItems)
-    tableQuery.setCurrentPage(pagination.currentPage);
+    tableQuery.totalPages = pagination.totalPages;
+    tableQuery.totalItems = pagination.totalItems;
+    tableQuery.currentPage = pagination.currentPage;
 }
 
 // 소수 점 줄이기
@@ -91,9 +91,9 @@ function determineProgressBarColorByWinRate(winRate){
 
 async function getEntryStatistics(){
     const requestBody = {
-        rankOrderType : tableQuery.getRankOrder(),
-        page : tableQuery.getCurrentPage(),
-        pageSize : tableQuery.getPageSize()
+        rankOrderType : tableQuery.rankOrder,
+        page : tableQuery.currentPage,
+        pageSize : tableQuery.pageSize
     }
 
     console.log('requestBody -> ', requestBody );
