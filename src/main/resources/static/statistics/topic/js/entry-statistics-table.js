@@ -1,11 +1,12 @@
 import {entryStatsTable} from "./const.js";
-import {tableQuery} from "./enry-statistics-table-const.js";
+import {RankSort, ScoreSort, tableQuery} from "./enry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 
 // 엔트리 통계 테이블 관련 이벤트 등록
 export function addEntryStatisticsTableEvents(){
     addItemPerPageEvent();
     addItemCountListEvent();
+    addTableHeaderOrderEvent();
 }
 
 // 테이블 컨텐츠 표기 갯수 선택기 이벤트
@@ -40,8 +41,33 @@ function addItemCountListEvent(){
         entryStatsTable.setItemPerPage(itemPerPageCount);
         toggleFilterItemCountActive(false);
 
-        tableQuery.setPageSize(itemPerPageCount); // 표시 갯수 변경
+        tableQuery.pageSize = itemPerPageCount; // 표시 갯수 변경
         await renderEntryStatistics(true, true); // 표기 갯수에 맞추어 랜더링
+    });
+}
+
+// 테이블 헤더 항목 정렬 이벤트
+function addTableHeaderOrderEvent(){
+    document.querySelectorAll('th.order').forEach(orderHead => {
+
+        orderHead.addEventListener('click', async function(){
+            const isDown = this.classList.contains('down');
+            const orderType = this.dataset.ordertype;
+
+            if( isDown ){ // 높은 순서 정렬로 변경
+                this.classList.remove('down');
+                orderType === 'rankOrder' ?
+                    tableQuery[orderType] = RankSort.LOWEST_FIRST
+                    : tableQuery[orderType] = ScoreSort.HIGHEST_FIRST;
+            } else { // 낮은 순서 정렬로 변경
+                this.classList.add('down');
+                orderType === 'rankOrder' ?
+                    tableQuery[orderType] = RankSort.HIGHEST_FIRST
+                    : tableQuery[orderType] = ScoreSort.LOWEST_FIRST;
+            }
+
+            await renderEntryStatistics(true, false);
+        });
     });
 }
 
@@ -49,6 +75,7 @@ function addItemCountListEvent(){
 export function clearEntriesStatsTbody(){
     document.querySelector('#entries-stats-tbody').replaceChildren();
 }
+
 // 테이블 컨텐츠 표기 갯수 선택기 보임/숨김 토글
 function toggleFilterItemCountActive(active = false){
     const filterItemCount = document.querySelector('#filter-item-count');

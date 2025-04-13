@@ -8,15 +8,15 @@ let tableBottomPagination;
 export function renderPagination(){
 
     tableTopPagination = new tui.Pagination(document.querySelector('#table-top-pagination'), {
-        totalItems: tableQuery.getTotalItems(),
-        itemsPerPage: tableQuery.getPageSize(),
+        totalItems: tableQuery.totalItems,
+        itemsPerPage: tableQuery.pageSize,
         visiblePages: 5,
         centerAlign: true
     });
 
     tableBottomPagination = new tui.Pagination(document.querySelector('#table-bottom-pagination'), {
-        totalItems: tableQuery.getTotalItems(),
-        itemsPerPage: tableQuery.getPageSize(),
+        totalItems: tableQuery.totalItems,
+        itemsPerPage: tableQuery.pageSize,
         visiblePages: 5,
         centerAlign: true
     });
@@ -34,12 +34,12 @@ export function synchronizeCurrentPage(currentPage = 1){
 
 // 페이지네이션 설정 변경 후 다시 랜더링
 export function updatePaginationSetting(){
-    tableTopPagination.setTotalItems(tableQuery.getTotalItems());
-    tableTopPagination.setItemsPerPage(tableQuery.getPageSize());
+    tableTopPagination.setTotalItems(tableQuery.totalItems);
+    tableTopPagination.setItemsPerPage(tableQuery.pageSize);
     tableTopPagination.reset();
 
-    tableBottomPagination.setTotalItems(tableQuery.getTotalItems());
-    tableBottomPagination.setItemsPerPage(tableQuery.getPageSize());
+    tableBottomPagination.setTotalItems(tableQuery.totalItems);
+    tableBottomPagination.setItemsPerPage(tableQuery.pageSize);
     tableBottomPagination.reset();
 
     synchronizeCurrentPage(tableQuery.currentPage);
@@ -50,7 +50,7 @@ function addTuiPaginationEvent(){
     // 상단 페이지네이션 -> 현재 페이지 변경
     tableTopPagination.on('afterMove', async function(eventData) {
         if(isSyncingPagination) return;
-        tableQuery.setCurrentPage(eventData.page);
+        tableQuery.currentPage = eventData.page;
         synchronizeCurrentPage(eventData.page);
         await renderEntryStatistics();
     });
@@ -58,7 +58,7 @@ function addTuiPaginationEvent(){
     // 하단 페이지네이션 -> 현재 페이지 변경
     tableBottomPagination.on('afterMove', async function(eventData) {
         if(isSyncingPagination) return;
-        tableQuery.setCurrentPage(eventData.page)
+        tableQuery.currentPage = eventData.page;
         synchronizeCurrentPage(eventData.page);
         await renderEntryStatistics();
     });
