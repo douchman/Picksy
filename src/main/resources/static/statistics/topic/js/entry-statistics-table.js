@@ -1,5 +1,5 @@
 import {entryStatsTable} from "./const.js";
-import {OrderType, tableQuery} from "./enry-statistics-table-const.js";
+import {RankSort, ScoreSort, tableQuery} from "./enry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 
 // 엔트리 통계 테이블 관련 이벤트 등록
@@ -50,17 +50,23 @@ function addItemCountListEvent(){
 function addTableHeaderOrderEvent(){
     document.querySelectorAll('th.order').forEach(orderHead => {
 
-        orderHead.addEventListener('click', function(){
-            const isAsc = this.classList.contains('asc');
+        orderHead.addEventListener('click', async function(){
+            const isDown = this.classList.contains('down');
             const orderType = this.dataset.ordertype;
 
-            if( isAsc ){ // 내림차순
-                this.classList.remove('asc');
-                tableQuery[orderType] = OrderType.DESC;
-            } else { // 오름차순
-                this.classList.add('asc');
-                tableQuery[orderType] = OrderType.ASC;
+            if( isDown ){ // 높은 순서 정렬로 변경
+                this.classList.remove('down');
+                orderType === 'rankOrder' ?
+                    tableQuery[orderType] = RankSort.LOWEST_FIRST
+                    : tableQuery[orderType] = ScoreSort.HIGHEST_FIRST;
+            } else { // 낮은 순서 정렬로 변경
+                this.classList.add('down');
+                orderType === 'rankOrder' ?
+                    tableQuery[orderType] = RankSort.HIGHEST_FIRST
+                    : tableQuery[orderType] = ScoreSort.LOWEST_FIRST;
             }
+
+            await renderEntryStatistics(true, false);
         });
     });
 }
