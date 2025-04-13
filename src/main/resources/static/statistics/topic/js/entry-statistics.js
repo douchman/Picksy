@@ -96,7 +96,5 @@ async function getEntryStatistics(){
         pageSize : tableQuery.pageSize
     }
 
-    console.log('requestBody -> ', requestBody );
-
     return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
 }
