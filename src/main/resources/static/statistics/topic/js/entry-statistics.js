@@ -92,6 +92,7 @@ function determineProgressBarColorByWinRate(winRate){
 async function getEntryStatistics(){
     const requestBody = {
         rankOrderType : tableQuery.rankOrder,
+        winRateOrderType : tableQuery.winRateOrder,
         page : tableQuery.currentPage,
         pageSize : tableQuery.pageSize
     }
