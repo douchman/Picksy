@@ -100,16 +100,9 @@
     border: 2px solid #7D7D7D;
     transition: border-color .2s ease;
 }
+
 .filter-keyword input[type="text"]:focus{
     border-color: var(--signature-color);
-}
-
-.filter-keyword .btn-search-entry{
-    padding : 6px 14px;
-    border-radius: 4px;
-    background-color: var(--signature-color);
-    color : #FFF;
-    font-size: 14px;
 }
 
 /* entries-stats-table */
