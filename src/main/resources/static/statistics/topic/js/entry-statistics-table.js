@@ -6,6 +6,7 @@ import {renderEntryStatistics} from "./entry-statistics.js";
 export function addEntryStatisticsTableEvents(){
     addItemPerPageEvent();
     addItemCountListEvent();
+    addTableHeaderOrderEvent();
 }
 
 // 테이블 컨텐츠 표기 갯수 선택기 이벤트
@@ -45,10 +46,30 @@ function addItemCountListEvent(){
     });
 }
 
+// 테이블 헤더 항목 정렬 이벤트
+function addTableHeaderOrderEvent(){
+    document.querySelectorAll('th.order').forEach(orderHead => {
+
+        orderHead.addEventListener('click', function(){
+            const isAsc = this.classList.contains('asc');
+            const orderType = this.dataset.ordertype;
+
+            // TODO : 테이블 쿼리 수정
+            if( isAsc ){
+                this.classList.remove('asc');
+            } else {
+                this.classList.add('asc');
+            }
+        });
+
+    });
+}
+
 // 테이블 body 내 랜더링 된 기존 컨텐츠 비우기
 export function clearEntriesStatsTbody(){
     document.querySelector('#entries-stats-tbody').replaceChildren();
 }
+
 // 테이블 컨텐츠 표기 갯수 선택기 보임/숨김 토글
 function toggleFilterItemCountActive(active = false){
     const filterItemCount = document.querySelector('#filter-item-count');
