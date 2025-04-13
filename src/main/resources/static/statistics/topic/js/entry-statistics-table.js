@@ -1,5 +1,5 @@
 import {entryStatsTable} from "./const.js";
-import {tableQuery} from "./enry-statistics-table-const.js";
+import {OrderType, tableQuery} from "./enry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 
 // 엔트리 통계 테이블 관련 이벤트 등록
@@ -54,14 +54,14 @@ function addTableHeaderOrderEvent(){
             const isAsc = this.classList.contains('asc');
             const orderType = this.dataset.ordertype;
 
-            // TODO : 테이블 쿼리 수정
-            if( isAsc ){
+            if( isAsc ){ // 내림차순
                 this.classList.remove('asc');
-            } else {
+                tableQuery[orderType] = OrderType.DESC;
+            } else { // 오름차순
                 this.classList.add('asc');
+                tableQuery[orderType] = OrderType.ASC;
             }
         });
-
     });
 }
 
