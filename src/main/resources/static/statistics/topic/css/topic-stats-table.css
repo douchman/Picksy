@@ -123,7 +123,7 @@
     background-size: 100% 100%;
 }
 
-.entries-stats-table thead tr th.order.asc:after{
+.entries-stats-table thead tr th.down:after{
     transform : translateY(-50%);
     background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill-blue.svg");
 }
