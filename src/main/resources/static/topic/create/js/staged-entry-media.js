@@ -4,6 +4,11 @@ import {renderEntryItem} from "./entry-item-render.js";
 
 export const stagedEntryMedia = {};
 
+// 별도 동작 없이 파일만 업로드 대기 파일 목록에 저장
+export function addStagedEntryMedia(type, media, entryId){
+    stagedEntryMedia[entryId] = {type : type, media : media};
+}
+
 // 엔트리 아이템 랜더링과 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = generateRandomEntryId()){
 
