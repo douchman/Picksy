@@ -20,17 +20,3 @@ export function addStagedEntryMedia(type, media, entryId = generateRandomEntryId
 export function removeStagedEntryMedia(fileId){
     delete stagedEntryMedia[fileId];
 }
-
-
-
-/*
-function addStagedEntryMedia(type, media, entryId = generateRandomEntryId(), isRender = true){
-
-    stagedEntryMedia[entryId] = {type : type, media : media};
-
-    if( type ==='file' && isRender ){
-        generateFilePreviewURL(media, (url) =>{
-            renderEntryItem(url, entryId);
-        });
-    }
-}*/
