@@ -1,3 +1,5 @@
+import {blobToFile} from "../../../global/js/file.js";
+
 const thumbName = {
     'hqdefault' : 'hqdefault.jpg',
     'mqdefault' : 'mqdefault.jpg',
@@ -42,3 +44,11 @@ async function validateThumbnail(url) {
         return false;
     }
 }
+
+// 썸네일 링크로부터 blob -> file 변환
+export async function getThumbNailFileFromYoutubeUrl(imageUrl) {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return blobToFile(blob);
+}
+

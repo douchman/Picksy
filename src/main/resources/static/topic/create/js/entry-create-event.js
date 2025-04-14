@@ -1,14 +1,18 @@
 import {renderEntryItem} from "./entry-item-render.js";
 import {generateRandomEntryId} from "./util.js";
-import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
-import {generateFilePreviewURL} from "../../../global/js/file.js";
+import {
+    addStagedEntryMediaForYoutube,
+    addStagedEntryMediaWithRenderEntryItem,
+    addStagedEntryMediaWithUpdateEntryItemThumb,
+    removeStagedEntryMedia
+} from "./staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "./youtube.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
 // 엔트리 추가 버튼 이벤트 등록
-export function addAddEntryEvent(){
+export function addEntryAddEvent(){
 
     // 클릭 -> 빈 엔트리 슬롯
     document.querySelector('#add-entry').addEventListener('click', function(){
@@ -25,6 +29,7 @@ export function addAddEntryEvent(){
         this.classList.remove('drag-over');
     });
 
+    // 드래그 & 드롭 으로 엔트리 등록
     document.querySelector('#add-entry').addEventListener('drop', function(e){
         e.preventDefault();
 
@@ -33,7 +38,7 @@ export function addAddEntryEvent(){
         requestAnimationFrame(() => {
             for(const file of files){
                 const entryId = generateRandomEntryId();
-                addStagedEntryMedia('file', file, entryId, true);
+                addStagedEntryMediaWithRenderEntryItem('file', file, entryId);
             }
         });
 
@@ -100,19 +105,9 @@ function entryYouTubeLinkEvent(){
 // 엔트리 썸네일 업데이트
 function updateEntryThumb(entryThumbUpload){
     const entryItem = entryThumbUpload.closest('.entry-item');
-    const tempEntryThumb = entryItem.querySelector('.entry-thumb');
     const entryId = entryItem.id;
     const file = entryThumbUpload.files[0];
-    const youtubeLink = entryItem.querySelector('.youtube-link');
-
-    generateFilePreviewURL(file, (url) =>{
-        if(url){
-            tempEntryThumb.style.backgroundImage = `url(${url})`;
-            tempEntryThumb.classList.remove('empty');
-            addStagedEntryMedia('file', file, entryId, false);
-            youtubeLink.value = '';
-        }
-    });
+    addStagedEntryMediaWithUpdateEntryItemThumb('file', file, entryId);
 }
 
 // 생성한 엔트리 등록 슬롯 제거 -> stagedThumb 도 함께 삭제
@@ -144,7 +139,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            addStagedEntryMedia('youtube', url, entryId, false);
+            await addStagedEntryMediaForYoutube('youtube', url, entryId, thumbNail );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
