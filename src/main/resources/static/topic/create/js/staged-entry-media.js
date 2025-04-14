@@ -29,24 +29,23 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
 export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId){
 
     stagedEntryMedia[entryId] = {type : type, media : media};
+    const entryItem = document.getElementById(entryId);
+    const entryThumb = entryItem.querySelector('.entry-thumb');
+    const youtubeLink = entryItem.querySelector('.youtube-link');
 
     if( type ==='file'){
-        const entryItem = document.getElementById(entryId);
-        const tempEntryThumb = entryItem.querySelector('.entry-thumb');
-        const youtubeLink = entryItem.querySelector('.youtube-link');
-
         const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
         if ( mediaType === 'IMAGE'){ // 이미지 업로드
             generateFilePreviewURL(media, (url) =>{
-                tempEntryThumb.style.backgroundImage = `url(${url})`;
-                tempEntryThumb.classList.remove('empty');
+                entryThumb.style.backgroundImage = `url(${url})`;
+                entryThumb.classList.remove('empty');
                 youtubeLink.value = '';
                 delete stagedEntryMedia[entryId].thumbnail; // 이미지는 thumbnail 필요 없음
             });
         } else { // 비디오 업로드
             generateVideoPreviewRL(media, (url) =>{
-                tempEntryThumb.style.backgroundImage = `url(${url})`;
-                tempEntryThumb.classList.remove('empty');
+                entryThumb.style.backgroundImage = `url(${url})`;
+                entryThumb.classList.remove('empty');
                 youtubeLink.value = '';
                 stagedEntryMedia[entryId].thumnail = getThumbBlobFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
             });
