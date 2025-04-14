@@ -7,6 +7,7 @@ import {generateRandomEntryId} from "./util.js";
 import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
 import {handleEntryRegisterException} from "./exception.js";
 import {renderEntryItem} from "./entry-item-render.js";
+import {addAddEntryEvent} from "./entry-create-event.js";
 
 const stagedEntryMedia = {};
 
@@ -14,32 +15,7 @@ let youtubeLinkDebounceTimer = null;
 
 export function addEntryCreateEvents(){
 
-    document.querySelector('#add-entry').addEventListener('click', function(){
-        renderEntryItem();
-    });
-    document.querySelector('#add-entry').addEventListener('dragover', function(e){
-        e.preventDefault();
-        this.classList.add('drag-over');
-    });
-    document.querySelector('#add-entry').addEventListener('dragleave', function(e){
-        e.preventDefault();
-        this.classList.remove('drag-over');
-    });
-
-    document.querySelector('#add-entry').addEventListener('drop', function(e){
-        e.preventDefault();
-
-        const files = e.dataTransfer.files;
-
-        requestAnimationFrame(() => {
-            for(const file of files){
-                const entryId = generateRandomEntryId();
-                addStagedEntryMedia('file', file, entryId, true);
-            }
-        });
-
-        this.classList.remove('drag-over');
-    });
+    addAddEntryEvent(); // 엔트리 추가 버튼 이벤트
 
     document.querySelector('#entry-form').addEventListener('click', function(event){
         const eventTarget = event.target;
