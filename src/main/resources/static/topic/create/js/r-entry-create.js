@@ -7,64 +7,13 @@ import {generateRandomEntryId} from "./util.js";
 import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
 import {handleEntryRegisterException} from "./exception.js";
 import {renderEntryItem} from "./entry-item-render.js";
-import {addAddEntryEvent} from "./entry-create-event.js";
+import {addAddEntryEvent, entryFormEvents} from "./entry-create-event.js";
 
 const stagedEntryMedia = {};
 
-let youtubeLinkDebounceTimer = null;
-
 export function addEntryCreateEvents(){
-
     addAddEntryEvent(); // 엔트리 추가 버튼 이벤트
-
-    document.querySelector('#entry-form').addEventListener('click', function(event){
-        const eventTarget = event.target;
-
-        const handlers = {
-            'btn-remove-entry' : removeEntryItem,
-            'entry-thumb' : triggerEntryThumbUpload,
-        }
-
-        for (const key in handlers) {
-            if (eventTarget.matches(`.${key}`)) {
-                handlers[key](eventTarget);
-                return;
-            }
-        }
-    });
-
-    document.querySelector('#entry-form').addEventListener('change', function(event){
-        const eventTarget = event.target;
-
-        if (eventTarget.matches('.entry-thumb-upload')) {
-            updateEntryThumb(eventTarget);
-        }
-    });
-
-    document.querySelector('#entry-form').addEventListener('input', async function(event){
-        const eventTarget = event.target;
-
-        if (eventTarget.matches('.youtube-link')) {
-            getThumbnailFromUrl(eventTarget);
-        }
-    });
-
-    document.querySelector('#entry-form').addEventListener('paste', async function(event){
-        const eventTarget = event.target;
-
-        if (eventTarget.matches('.youtube-link')) {
-            getThumbnailFromUrl(eventTarget);
-        }
-    });
-}
-
-function removeEntryItem(target){
-    const entryItem = target.closest('.entry-item');
-    if( entryItem ){
-        const thumbId = entryItem.querySelector('.entry-thumb').id;
-        entryItem.remove();
-        thumbId && removeStagedEntryMedia(thumbId)
-    }
+    entryFormEvents(); // 엔트리 등록 form 관련 이벤트
 }
 
 export async function registerEntries(){
@@ -124,49 +73,4 @@ function isEntryCreated(){
     const entryForm = document.querySelector('#entry-form');
 
     return entryForm.querySelector('.entry-item') !== null;
-}
-
-
-function triggerEntryThumbUpload(entryThumb){
-    entryThumb.closest('.entry-item').querySelector('.entry-thumb-upload').click();
-}
-
-function updateEntryThumb(entryThumbUpload){
-    const entryItem = entryThumbUpload.closest('.entry-item');
-    const tempEntryThumb = entryItem.querySelector('.entry-thumb');
-    const entryId = entryItem.id;
-    const file = entryThumbUpload.files[0];
-    const youtubeLink = entryItem.querySelector('.youtube-link');
-
-    generateFilePreviewURL(file, (url) =>{
-        if(url){
-            tempEntryThumb.style.backgroundImage = `url(${url})`;
-            tempEntryThumb.classList.remove('empty');
-            addStagedEntryMedia('file', file, entryId, false);
-            youtubeLink.value = '';
-        }
-    });
-}
-
-function getThumbnailFromUrl(youtubeLinkInput){
-    const entryId = youtubeLinkInput.closest('.entry-item').id;
-    const entryThumb = youtubeLinkInput.closest('.entry-item').querySelector('.entry-thumb');
-    const url = youtubeLinkInput.value;
-
-    clearTimeout(youtubeLinkDebounceTimer);
-    youtubeLinkDebounceTimer = setTimeout( async () => { // 일정시간 지연 후 동작
-        const {result, message, thumbNail} = await getYouTubeInfoFromUrl(url);
-
-        if( result ){
-            entryThumb.style.backgroundImage = `url(${thumbNail})`;
-            entryThumb.classList.add('youtube');
-            entryThumb.classList.remove('empty');
-            addStagedEntryMedia('youtube', url, entryId, false);
-        } else {
-            showToastMessage(`${message}`, 'error', 2500);
-            entryThumb.style.backgroundImage = '';
-            entryThumb.classList.add('empty');
-            entryThumb.classList.remove('youtube');
-        }
-    }, 300);
 }
