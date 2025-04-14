@@ -5,6 +5,7 @@ import {showToastMessage} from "../../../global/popup/js/common-toast-message.js
 import {getYouTubeInfoFromUrl} from "./youtube.js";
 import {generateRandomEntryId} from "./util.js";
 import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
+import {handleEntryRegisterException} from "./exception.js";
 
 const stagedEntryMedia = {};
 
@@ -176,11 +177,6 @@ function isEntryCreated(){
     return entryForm.querySelector('.entry-item') !== null;
 }
 
-function handleEntryRegisterException(isAuthOrNetworkError, registerResult){
-    if( !isAuthOrNetworkError ){
-        showToastMessage(registerResult.message, 'error', 2000);
-    }
-}
 
 function triggerEntryThumbUpload(entryThumb){
     entryThumb.closest('.entry-item').querySelector('.entry-thumb-upload').click();
