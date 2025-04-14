@@ -1,0 +1,42 @@
+.entry-thumb-viewer{
+    display: none;
+    position: fixed;
+    top: 0;
+    left :0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+}
+
+.entry-thumb-viewer.show{
+    display: block;
+}
+
+.entry-thumb-viewer .bg{
+    position: fixed;
+    top : 0;
+    left : 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .65);
+}
+
+.entry-thumb-viewer .viewer-body{
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    width: 640px;
+    height: 480px;
+    max-width: 80%;
+    max-height: 60%;
+    transform: translate(-50%, -50%);
+}
+
+.entry-thumb-viewer .viewer-body .btn-close-thumb-viewer{
+    position: absolute;
+    top : 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    transform: translate(100%, -100%);
+}
