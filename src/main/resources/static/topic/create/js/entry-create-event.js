@@ -1,7 +1,7 @@
 import {renderEntryItem} from "./entry-item-render.js";
 import {generateRandomEntryId} from "./util.js";
 import {
-    addStagedEntryMedia,
+    addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb,
     removeStagedEntryMedia
@@ -139,7 +139,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            addStagedEntryMedia('youtube', url, entryId);
+            await addStagedEntryMediaForYoutube('youtube', url, entryId, thumbNail );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
