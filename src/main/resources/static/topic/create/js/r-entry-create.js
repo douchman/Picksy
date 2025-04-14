@@ -3,6 +3,7 @@ import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {handleEntryRegisterException} from "./exception.js";
 import {addEntryAddEvent, entryFormEvents} from "./entry-create-event.js";
+import {stagedEntryMedia} from "./staged-entry-media.js";
 
 export function addEntryCreateEvents(){
     addEntryAddEvent(); // 엔트리 추가 버튼 이벤트
@@ -14,7 +15,7 @@ export async function registerEntries(){
     if( isEntryCreated()){
         const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
 
-        if( validationResult ){
+       if( validationResult ){
             const { status,isAuthOrNetworkError,  data : registerResult } = await postEntries(entryFormData);
 
             if( status !== 200){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
@@ -41,6 +42,7 @@ async function validateAndGenerateEntryFormData(){
         const entryDescription = entryItem.querySelector('.entry-description').value;
         const entryMediaType = stagedEntryMedia[entryItemId].type;
         const entryMedia = stagedEntryMedia[entryItemId].media;
+        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
 
         if(!entryMedia) {
             showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
@@ -49,9 +51,16 @@ async function validateAndGenerateEntryFormData(){
 
         entryFormData.append(`entries[${index}].entryName`, entryName);
         entryFormData.append(`entries[${index}].description`, entryDescription);
-        entryMediaType === 'file' ?
-            entryFormData.append(`entries[${index}].file`, entryMedia)
-            : entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
+        if ( entryMediaType === 'file' ) { // 파일 업로드 방식 엔트리
+            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
+        } else { // 유튜브 링크 방식 엔트리
+            entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
+        }
+
+        if( entryThumbnail ){
+            entryFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
+        }
+
     }
 
     return { validationResult : true, formData : entryFormData };
