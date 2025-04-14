@@ -1,17 +1,16 @@
 import {generateFilePreviewURL} from "../../../global/js/file.js";
 import {generateRandomEntryId} from "./util.js";
+import {renderEntryItem} from "./entry-item-render.js";
 
 export const stagedEntryMedia = {};
 
-export function addStagedEntryMedia(type, media, entryId = generateRandomEntryId(), callBackFunc){
+export function addStagedEntryMedia(type, media, entryId = generateRandomEntryId(), isRender = false){
 
     stagedEntryMedia[entryId] = {type : type, media : media};
 
-    if( type ==='file' && callBackFunc ){
+    if( type ==='file' && isRender ){
         generateFilePreviewURL(media, (url) =>{
-            if(typeof callBackFunc === 'function'){
-                callBackFunc(url, entryId);
-            }
+            renderEntryItem(url, entryId);
         });
     }
 }

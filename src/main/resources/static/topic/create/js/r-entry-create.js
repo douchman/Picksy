@@ -34,9 +34,7 @@ export function addEntryCreateEvents(){
         requestAnimationFrame(() => {
             for(const file of files){
                 const entryId = generateRandomEntryId();
-                addStagedEntryMedia('file', file, entryId, (url, entryId) => {
-                    renderEntryItem(url, entryId);
-                });
+                addStagedEntryMedia('file', file, entryId, true);
             }
         });
 
@@ -168,7 +166,7 @@ function updateEntryThumb(entryThumbUpload){
         if(url){
             tempEntryThumb.style.backgroundImage = `url(${url})`;
             tempEntryThumb.classList.remove('empty');
-            addStagedEntryMedia('file', file, entryId);
+            addStagedEntryMedia('file', file, entryId, false);
             youtubeLink.value = '';
         }
     });
@@ -187,7 +185,7 @@ function getThumbnailFromUrl(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            addStagedEntryMedia('youtube', url, entryId );
+            addStagedEntryMedia('youtube', url, entryId, false);
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
