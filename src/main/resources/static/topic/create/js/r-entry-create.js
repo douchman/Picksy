@@ -3,6 +3,7 @@ import {apiFormDataRequest} from "../../../global/js/api.js";
 import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {getYouTubeInfoFromUrl} from "./youtube.js";
+import {generateRandomEntryId} from "./util.js";
 
 const stagedEntryMedia = {};
 
@@ -77,7 +78,7 @@ export function addEntryCreateEvents(){
     });
 }
 
-function renderEntryItem(thumbnail, entryId = generateEntryId()){
+function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item" id="${entryId}">
@@ -112,11 +113,7 @@ function removeEntryItem(target){
     }
 }
 
-function generateEntryId(){
-    return crypto.randomUUID();
-}
-
-function addStagedEntryMedia(type, media, entryId = generateEntryId(), isRender = true){
+function addStagedEntryMedia(type, media, entryId = generateRandomEntryId(), isRender = true){
 
     stagedEntryMedia[entryId] = {type : type, media : media};
 
