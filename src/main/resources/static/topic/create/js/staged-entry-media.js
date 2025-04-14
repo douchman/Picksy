@@ -1,4 +1,4 @@
-import {generateFilePreviewURL, generateVideoPreviewRL, getThumbBlobFromVideoUrl} from "../../../global/js/file.js";
+import {generateFilePreviewURL, generateVideoPreviewRL, getThumbFileFromVideoUrl} from "../../../global/js/file.js";
 import {generateRandomEntryId} from "./util.js";
 import {renderEntryItem} from "./entry-item-render.js";
 import {getThumbNailFileFromYoutubeUrl} from "./youtube.js";
@@ -25,7 +25,7 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
         } else { // 비디오 업로드
             generateVideoPreviewRL(media, (url) =>{
                 renderEntryItem(url, entryId);
-                stagedEntryMedia[entryId].thumnail = getThumbBlobFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
+                stagedEntryMedia[entryId].thumnail = getThumbFileFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
             });
         }
     }
@@ -53,7 +53,7 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
                 entryThumb.style.backgroundImage = `url(${url})`;
                 entryThumb.classList.remove('empty');
                 youtubeLink.value = '';
-                stagedEntryMedia[entryId].thumnail = getThumbBlobFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
+                stagedEntryMedia[entryId].thumnail = getThumbFileFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
             });
         }
     }

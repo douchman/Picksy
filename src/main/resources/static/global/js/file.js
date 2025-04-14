@@ -56,13 +56,13 @@ async function getThumbnailForVideo(videoFile) {
     return canvas.toDataURL("image/png");
 }
 
-// 생성된 미리보기 이미지를 파일로 생성
-export function getThumbBlobFromVideoUrl(videoUrl) {
+// 생성된 미리보기 이미지를 파일로 생성 ( blob -> file )
+export function getThumbFileFromVideoUrl(videoUrl) {
     const [meta, base64] = videoUrl.split(',');
     const mime = meta.match(/:(.*?);/)[1];
     const binary = atob(base64);
     const array = Uint8Array.from(binary, c => c.charCodeAt(0));
-    return new Blob([array], { type: mime });
+    return blobToFile(new Blob([array], { type: mime }));
 }
 
 // blob -> file 변환
