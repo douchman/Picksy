@@ -4,7 +4,7 @@ export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item" id="${entryId}">
-            <input class="entry-thumb-upload" type="file" accept="image/*">
+            <input class="entry-thumb-upload" type="file" accept="image/*, video/*">
             <div class="entry-thumb ${!thumbnail && `empty`}" ${thumbnail ? `style="background-image : url(${thumbnail})"` : ''}></div>
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
