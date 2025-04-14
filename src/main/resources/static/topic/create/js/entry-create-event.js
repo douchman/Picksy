@@ -8,7 +8,7 @@ import {showToastMessage} from "../../../global/popup/js/common-toast-message.js
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
 // 엔트리 추가 버튼 이벤트 등록
-export function addAddEntryEvent(){
+export function addEntryAddEvent(){
 
     // 클릭 -> 빈 엔트리 슬롯
     document.querySelector('#add-entry').addEventListener('click', function(){

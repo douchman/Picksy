@@ -2,10 +2,10 @@ import {apiFormDataRequest} from "../../../global/js/api.js";
 import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {handleEntryRegisterException} from "./exception.js";
-import {addAddEntryEvent, entryFormEvents} from "./entry-create-event.js";
+import {addEntryAddEvent, entryFormEvents} from "./entry-create-event.js";
 
 export function addEntryCreateEvents(){
-    addAddEntryEvent(); // 엔트리 추가 버튼 이벤트
+    addEntryAddEvent(); // 엔트리 추가 버튼 이벤트
     entryFormEvents(); // 엔트리 등록 form 관련 이벤트
 }
 
