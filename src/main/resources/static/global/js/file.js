@@ -64,3 +64,11 @@ export function getThumbBlobFromVideoUrl(videoUrl) {
     const array = Uint8Array.from(binary, c => c.charCodeAt(0));
     return new Blob([array], { type: mime });
 }
+
+// blob -> file 변환
+export function blobToFile(blob){
+    return new File([blob], "thumbnail.jpg", {
+        type: blob.type,
+        lastModified: Date.now(),
+    });
+}
