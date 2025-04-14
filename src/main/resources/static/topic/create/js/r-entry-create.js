@@ -1,15 +1,8 @@
-import {generateFilePreviewURL} from "../../../global/js/file.js";
 import {apiFormDataRequest} from "../../../global/js/api.js";
 import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {getYouTubeInfoFromUrl} from "./youtube.js";
-import {generateRandomEntryId} from "./util.js";
-import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
 import {handleEntryRegisterException} from "./exception.js";
-import {renderEntryItem} from "./entry-item-render.js";
 import {addAddEntryEvent, entryFormEvents} from "./entry-create-event.js";
-
-const stagedEntryMedia = {};
 
 export function addEntryCreateEvents(){
     addAddEntryEvent(); // 엔트리 추가 버튼 이벤트
