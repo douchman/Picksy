@@ -3,6 +3,7 @@ import {apiGetRequest} from "../../../global/js/api.js";
 import {addEntryStatisticsTableEvents} from "./entry-statistics-table.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 import {renderPagination} from "./entry-statistics-table-pagination.js";
+import {renderEntryThumbViewer} from "./entry-thumb-viewer.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const entriesStatsSuccess = await renderEntryStatistics();
         if(topicStatsSuccess && entriesStatsSuccess) {
             renderPagination();
+            renderEntryThumbViewer();
             addEntryStatisticsTableEvents();
         }
     }
