@@ -4,6 +4,7 @@ import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {getYouTubeInfoFromUrl} from "./youtube.js";
 import {generateRandomEntryId} from "./util.js";
+import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
 
 const stagedEntryMedia = {};
 
@@ -30,7 +31,10 @@ export function addEntryCreateEvents(){
 
         requestAnimationFrame(() => {
             for(const file of files){
-                addStagedEntryMedia('file', file, );
+                const entryId = generateRandomEntryId();
+                addStagedEntryMedia('file', file, entryId, (url, entryId) => {
+                    renderEntryItem(url, entryId);
+                });
             }
         });
 
@@ -113,21 +117,6 @@ function removeEntryItem(target){
     }
 }
 
-function addStagedEntryMedia(type, media, entryId = generateRandomEntryId(), isRender = true){
-
-    stagedEntryMedia[entryId] = {type : type, media : media};
-
-    if( type ==='file' && isRender ){
-        generateFilePreviewURL(media, (url) =>{
-            renderEntryItem(url, entryId);
-        });
-    }
-}
-
-function removeStagedEntryMedia(fileId){
-    delete stagedEntryMedia[fileId];
-}
-
 export async function registerEntries(){
     let entryRegisterResult = true;
     if( isEntryCreated()){
@@ -208,7 +197,7 @@ function updateEntryThumb(entryThumbUpload){
         if(url){
             tempEntryThumb.style.backgroundImage = `url(${url})`;
             tempEntryThumb.classList.remove('empty');
-            addStagedEntryMedia('file', file, entryId, false);
+            addStagedEntryMedia('file', file, entryId);
             youtubeLink.value = '';
         }
     });
@@ -227,7 +216,7 @@ function getThumbnailFromUrl(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            addStagedEntryMedia('youtube', url, entryId, false );
+            addStagedEntryMedia('youtube', url, entryId );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
