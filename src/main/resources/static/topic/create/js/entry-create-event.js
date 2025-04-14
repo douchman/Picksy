@@ -1,7 +1,9 @@
 import {renderEntryItem} from "./entry-item-render.js";
 import {generateRandomEntryId} from "./util.js";
-import {addStagedEntryMedia, removeStagedEntryMedia} from "./staged-entry-media.js";
-import {generateFilePreviewURL} from "../../../global/js/file.js";
+import {
+    addStagedEntryMediaWithRenderEntryItem, addStagedEntryMediaWithUpdateEntryItemThumb,
+    removeStagedEntryMedia
+} from "./staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "./youtube.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
@@ -25,6 +27,7 @@ export function addEntryAddEvent(){
         this.classList.remove('drag-over');
     });
 
+    // 드래그 & 드롭 으로 엔트리 등록
     document.querySelector('#add-entry').addEventListener('drop', function(e){
         e.preventDefault();
 
@@ -33,7 +36,7 @@ export function addEntryAddEvent(){
         requestAnimationFrame(() => {
             for(const file of files){
                 const entryId = generateRandomEntryId();
-                addStagedEntryMedia('file', file, entryId, true);
+                addStagedEntryMediaWithRenderEntryItem('file', file, entryId);
             }
         });
 
@@ -100,19 +103,9 @@ function entryYouTubeLinkEvent(){
 // 엔트리 썸네일 업데이트
 function updateEntryThumb(entryThumbUpload){
     const entryItem = entryThumbUpload.closest('.entry-item');
-    const tempEntryThumb = entryItem.querySelector('.entry-thumb');
     const entryId = entryItem.id;
     const file = entryThumbUpload.files[0];
-    const youtubeLink = entryItem.querySelector('.youtube-link');
-
-    generateFilePreviewURL(file, (url) =>{
-        if(url){
-            tempEntryThumb.style.backgroundImage = `url(${url})`;
-            tempEntryThumb.classList.remove('empty');
-            addStagedEntryMedia('file', file, entryId, false);
-            youtubeLink.value = '';
-        }
-    });
+    addStagedEntryMediaWithUpdateEntryItemThumb('file', file, entryId);
 }
 
 // 생성한 엔트리 등록 슬롯 제거 -> stagedThumb 도 함께 삭제
