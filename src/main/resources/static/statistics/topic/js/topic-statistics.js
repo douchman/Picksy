@@ -4,6 +4,7 @@ import {addEntryStatisticsTableEvents} from "./entry-statistics-table.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 import {renderPagination} from "./entry-statistics-table-pagination.js";
 import {renderEntryMediaViewer} from "./entry-thumb-viewer.js";
+import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -13,11 +14,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if( topicIdSuccess ){
         const topicStatsSuccess = await renderTopicStatistics();
         const entriesStatsSuccess = await renderEntryStatistics();
-        if(topicStatsSuccess && entriesStatsSuccess) {
-            renderPagination();
-            renderEntryMediaViewer();
-            addEntryStatisticsTableEvents();
-        }
+        loadYoutubeIframeAPI();
+        onYouTubeIframeApiReady(() => {
+            if(topicStatsSuccess && entriesStatsSuccess) {
+                renderPagination();
+                renderEntryMediaViewer();
+                addEntryStatisticsTableEvents();
+            }
+        });
     }
 });
 
