@@ -50,7 +50,7 @@ function renderPreviewByMediaType(mediaType, mediaUrl){
             renderVideoPreviewWithEvents(mediaUrl);
             break;
         case 'YOUTUBE':
-            renderYoutubePreview(mediaUrl);
+            renderYoutubePreviewWithErrorHandle(mediaUrl);
             break;
     }
 }
@@ -94,7 +94,7 @@ function renderVideoPreviewWithEvents(videoUrl){
 }
 
 // 유튜브 타입 프리뷰 랜더링
-function renderYoutubePreview(youtubeUrl){
+function renderYoutubePreviewWithErrorHandle(youtubeUrl){
     const viewerBody = document.querySelector('#viewer-body');
 
     const youtubeVideo = document.createElement('div');
@@ -115,7 +115,37 @@ function renderYoutubePreview(youtubeUrl){
             rel : 0,
             'playsinline': 1
         },
+        events : {
+            'onError' : handleYoutubeError,
+            'onReady' : handleYoutubeVideoReady
+        }
     });
+}
+
+function handleYoutubeVideoReady(){
+    toggleViewerLoadingStatus(false);
+}
+
+function handleYoutubeError(event){
+    const errorCode = event.data;
+    let message = '알 수 없는 오류가 발생했습니다.';
+    switch (errorCode) {
+        case 2:
+            message = '잘못된 영상 주소입니다.';
+            break;
+        case 5:
+            message = '이 브라우저에서 영상을 재생할 수 없습니다.';
+            break;
+        case 100:
+            message = '삭제되었거나 비공개로 설정된 영상입니다.';
+            break;
+        case 101:
+        case 150:
+            message = '이 영상은 임베드 재생이 제한되어 있습니다.';
+            break;
+    }
+
+    showToastMessage(message,'error' , 2500);
 }
 
 // 미디어 뷰어 로딩 상태 제어
