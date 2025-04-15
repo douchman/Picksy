@@ -164,6 +164,7 @@
 .entries-stats-table tbody tr .entry-thumb{
     width: var(--thead-entry-thumb-size);
     height: var(--thead-entry-thumb-size);
+    cursor: pointer;
 }
 
 .entries-stats-table tbody tr .entry-thumb img{
