@@ -109,6 +109,7 @@ function toggleViewerLoadingStatus(isLoading){
 
 // viewBody 에 랜더링 된 기존 프리뷰 제거
 function clearPreviewBody(){
+    toggleViewerLoadingStatus(true); // 로딩 상태로 복귀
     const viewerBody = document.querySelector('#viewer-body');
 
     // 제거 대상: 프리뷰 요소들만 정밀 제거
