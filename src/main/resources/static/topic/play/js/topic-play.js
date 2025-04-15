@@ -3,6 +3,7 @@ import {showToastMessage} from "../../../global/popup/js/common-toast-message.js
 import {apiGetRequest} from "../../../global/js/api.js";
 import {loadEntryMatchInfo} from "./entry-match.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../../global/js/vstopic-localstorage.js";
+import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -15,12 +16,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 유튜브 API 로드 후 호출되는 전역 함수
-    window.onYouTubeIframeAPIReady = async () => {
+    onYouTubeIframeApiReady(async () =>{
         if( topicSuccess && playRecordSuccess){
             addTopicPlayEvents();
             await loadEntryMatchInfo();
         }
-    };
+    });
 });
 
 function addTopicPlayEvents(){
@@ -88,13 +89,6 @@ function handleSetTopicFailed(){
     setTimeout(()=> {
         location.href = '/';
     }, 2500);
-}
-
-function loadYoutubeIframeAPI(){
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
 /**
