@@ -32,6 +32,19 @@
     transform: translate(-50%, -50%);
 }
 
+.entry-media-viewer.loading .viewer-body {
+    width: 90px;
+    height: 90px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/loading-spinner-wh.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.entry-media-viewer.loading .viewer-body *{
+    display: none;
+}
+
 .entry-media-viewer .viewer-body .btn-close-media-viewer{
     position: absolute;
     top : 0;

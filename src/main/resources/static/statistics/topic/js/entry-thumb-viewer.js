@@ -2,7 +2,7 @@ import {extractYoutubeVideoIdFromUrl} from "../../../global/js/youtube-iframe-ap
 
 export function renderEntryMediaViewer(){
     const thumbViewer =
-        `<div id="entry-media-viewer" class="entry-media-viewer">
+        `<div id="entry-media-viewer" class="entry-media-viewer loading">
             <div class="bg"></div>
             <div id="viewer-body" class="viewer-body">
                 <button id="btn-close-media-viewer" class="btn-close-media-viewer" type="button"></button>
@@ -97,6 +97,16 @@ function renderYoutubePreview(youtubeUrl){
     });
 }
 
+// 미디어 뷰어 로딩 상태 제어
+function toggleViewerLoadingStatus(isLoading){
+    const entryMediaViewer = document.querySelector('#entry-media-viewer');
+
+    isLoading ?
+        entryMediaViewer.classList.add('loading')
+        : entryMediaViewer.classList.remove('loading');
+
+}
+
 // viewBody 에 랜더링 된 기존 프리뷰 제거
 function clearPreviewBody(){
     const viewerBody = document.querySelector('#viewer-body');
@@ -104,6 +114,7 @@ function clearPreviewBody(){
     // 제거 대상: 프리뷰 요소들만 정밀 제거
     viewerBody.querySelectorAll('img, video, .you-tube-video').forEach(el => el.remove());
 }
+
 
 /**
  * 메인 레이아웃 스크롤 제어
