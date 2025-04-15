@@ -39,4 +39,8 @@
     width: 36px;
     height: 36px;
     transform: translate(100%, -100%);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/x-lg-gr.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
 }
