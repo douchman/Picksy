@@ -1,4 +1,5 @@
 import {extractYoutubeVideoIdFromUrl} from "../../../global/js/youtube-iframe-api.js";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 export function renderEntryMediaViewer(){
     const thumbViewer =
@@ -46,7 +47,7 @@ function renderPreviewByMediaType(mediaType, mediaUrl){
             renderImagePreview(mediaUrl);
             break;
         case 'VIDEO':
-            renderVideoPreview(mediaUrl);
+            renderVideoPreviewWithEvents(mediaUrl);
             break;
         case 'YOUTUBE':
             renderYoutubePreview(mediaUrl);
@@ -63,13 +64,33 @@ function renderImagePreview(imageUrl){
 }
 
 // 비디오 타입 프리뷰 랜더링
-function renderVideoPreview(videoUrl){
+function renderVideoPreviewWithEvents(videoUrl){
     const viewerBody = document.querySelector('#viewer-body');
-    const video =
-        `<video class="video-preview" playsinline controls>
-                <source src="${videoUrl}" type="video/mp4">
-            </video>`;
-    viewerBody.insertAdjacentHTML('beforeend', video);
+
+    const video = document.createElement('video');
+    video.classList.add('video-preview');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('controls', '');
+
+    const videoSource = document.createElement('source');
+    videoSource.src = `${videoUrl}`;
+    videoSource.type = 'video/mp4';
+
+    video.appendChild(videoSource);
+    viewerBody.appendChild(video);
+
+
+    video.addEventListener('canplaythrough', () => {
+        setTimeout(() =>{
+            toggleViewerLoadingStatus(false);
+        }, 500)
+    });
+
+    video.addEventListener('error', (e) => {
+        console.error('video view error :' ,e );
+        showToastMessage('비디오를 불러오지 못했습니다.', 'error', 2500);
+    });
+
 }
 
 // 유튜브 타입 프리뷰 랜더링
