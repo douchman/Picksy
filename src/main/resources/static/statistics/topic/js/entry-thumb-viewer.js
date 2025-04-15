@@ -1,38 +1,38 @@
-export function renderEntryThumbViewer(){
+export function renderEntryMediaViewer(){
     const thumbViewer =
-        `<div id="entry-thumb-viewer" class="entry-thumb-viewer">
+        `<div id="entry-media-viewer" class="entry-media-viewer">
             <div class="bg"></div>
-            <div class="viewer-body">
-                <button id="btn-close-thumb-viewer" class="btn-close-thumb-viewer" type="button"></button>
+            <div id="viewer-body" class="viewer-body">
+                <button id="btn-close-media-viewer" class="btn-close-media-viewer" type="button"></button>
             </div>
         </div>`;
 
     document.querySelector('#topic-statistics').insertAdjacentHTML('beforeend', thumbViewer);
 
-    addEntryThumbViewerEvent();
+    addEntryMediaViewerEvent();
 }
 
-function addEntryThumbViewerEvent(){
+function addEntryMediaViewerEvent(){
     
     // 닫기 버튼 이벤트
-    document.querySelector('#btn-close-thumb-viewer').addEventListener('click', () => {
+    document.querySelector('#btn-close-media-viewer').addEventListener('click', () => {
         hideThumbViewer();
     });
 
     // 배경 클릭 이벤트
-    document.querySelector('#entry-thumb-viewer .bg').addEventListener('click', () => {
+    document.querySelector('#entry-media-viewer .bg').addEventListener('click', () => {
         hideThumbViewer();
     });
 }
 
 export function showThumbViewer(){
     toggleBodyScrollBlocked(true);
-    document.querySelector('#entry-thumb-viewer').classList.add('show');
+    document.querySelector('#entry-media-viewer').classList.add('show');
 }
 
 export function hideThumbViewer(){
     toggleBodyScrollBlocked(false);
-    document.querySelector('#entry-thumb-viewer').classList.remove('show');
+    document.querySelector('#entry-media-viewer').classList.remove('show');
 }
 
 /**

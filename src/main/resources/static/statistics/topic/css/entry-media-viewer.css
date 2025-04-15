@@ -1,4 +1,4 @@
-.entry-thumb-viewer{
+.entry-media-viewer{
     display: none;
     position: fixed;
     top: 0;
@@ -8,11 +8,11 @@
     z-index: 200;
 }
 
-.entry-thumb-viewer.show{
+.entry-media-viewer.show{
     display: block;
 }
 
-.entry-thumb-viewer .bg{
+.entry-media-viewer .bg{
     position: fixed;
     top : 0;
     left : 0;
@@ -21,7 +21,7 @@
     background-color: rgba(0, 0, 0, .65);
 }
 
-.entry-thumb-viewer .viewer-body{
+.entry-media-viewer .viewer-body{
     position: absolute;
     top : 50%;
     left: 50%;
@@ -32,7 +32,7 @@
     transform: translate(-50%, -50%);
 }
 
-.entry-thumb-viewer .viewer-body .btn-close-thumb-viewer{
+.entry-media-viewer .viewer-body .btn-close-media-viewer{
     position: absolute;
     top : 0;
     right: 0;
