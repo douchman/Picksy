@@ -3,12 +3,26 @@ export function renderEntryThumbViewer(){
         `<div id="entry-thumb-viewer" class="entry-thumb-viewer">
             <div class="bg"></div>
             <div class="viewer-body">
-                <button class="btn-close-thumb-viewer" type="button"></button>
+                <button id="btn-close-thumb-viewer" class="btn-close-thumb-viewer" type="button"></button>
             </div>
         </div>`;
 
     document.querySelector('#topic-statistics').insertAdjacentHTML('beforeend', thumbViewer);
 
+    addEntryThumbViewerEvent();
+}
+
+function addEntryThumbViewerEvent(){
+    
+    // 닫기 버튼 이벤트
+    document.querySelector('#btn-close-thumb-viewer').addEventListener('click', () => {
+        hideThumbViewer();
+    });
+
+    // 배경 클릭 이벤트
+    document.querySelector('#entry-thumb-viewer .bg').addEventListener('click', () => {
+        hideThumbViewer();
+    });
 }
 
 export function showThumbViewer(){
