@@ -1,3 +1,5 @@
+import {extractYoutubeVideoIdFromUrl} from "../../../global/js/youtube-iframe-api.js";
+
 export function renderEntryMediaViewer(){
     const thumbViewer =
         `<div id="entry-media-viewer" class="entry-media-viewer">
@@ -25,14 +27,82 @@ function addEntryMediaViewerEvent(){
     });
 }
 
-export function showThumbViewer(){
+export function showThumbViewer(mediaType, mediaUrl){
     toggleBodyScrollBlocked(true);
+    renderPreviewByMediaType(mediaType, mediaUrl); // 타입 분기 프리뷰 랜더링
     document.querySelector('#entry-media-viewer').classList.add('show');
 }
 
-export function hideThumbViewer(){
+function hideThumbViewer(){
+    clearPreviewBody(); // 뷰 바디 비움
     toggleBodyScrollBlocked(false);
     document.querySelector('#entry-media-viewer').classList.remove('show');
+}
+
+// 미디어 타입에 맞는 프리뷰 랜더링
+function renderPreviewByMediaType(mediaType, mediaUrl){
+    switch (mediaType){
+        case 'IMAGE':
+            renderImagePreview(mediaUrl);
+            break;
+        case 'VIDEO':
+            renderVideoPreview(mediaUrl);
+            break;
+        case 'YOUTUBE':
+            renderYoutubePreview(mediaUrl);
+            break;
+    }
+}
+
+// 이미지 타입 프리뷰 랜더링
+function renderImagePreview(imageUrl){
+    const viewerBody = document.querySelector('#viewer-body');
+    const image =
+        `<img src="${imageUrl}" alt="entry-thumb-image" />`
+    viewerBody.insertAdjacentHTML('beforeend', image);
+}
+
+// 비디오 타입 프리뷰 랜더링
+function renderVideoPreview(videoUrl){
+    const viewerBody = document.querySelector('#viewer-body');
+    const video =
+        `<video class="video-preview" playsinline controls>
+                <source src="${videoUrl}" type="video/mp4">
+            </video>`;
+    viewerBody.insertAdjacentHTML('beforeend', video);
+}
+
+// 유튜브 타입 프리뷰 랜더링
+function renderYoutubePreview(youtubeUrl){
+    const viewerBody = document.querySelector('#viewer-body');
+
+    const youtubeVideo = document.createElement('div');
+    youtubeVideo.classList.add('you-tube-video');
+    viewerBody.appendChild(youtubeVideo);
+
+    const videoId = extractYoutubeVideoIdFromUrl(youtubeUrl);
+
+    if(viewerBody._ytPlayer){
+        viewerBody._ytPlayer.destroy();
+    }
+
+    viewerBody._ytPlayer = new YT.Player(youtubeVideo, {
+        width: '640',
+        height: '360',
+        videoId: videoId,
+        playerVars: {
+            rel : 0,
+            'playsinline': 1
+        },
+    });
+}
+
+// viewBody 에 랜더링 된 기존 프리뷰 제거
+function clearPreviewBody(){
+    const viewerBody = document.querySelector('#viewer-body');
+
+    // 제거 대상: 프리뷰 요소들만 정밀 제거
+    viewerBody.querySelectorAll('img, video, .you-tube-video').forEach(el => el.remove());
 }
 
 /**
