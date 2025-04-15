@@ -58,9 +58,12 @@ function renderPreviewByMediaType(mediaType, mediaUrl){
 // 이미지 타입 프리뷰 랜더링
 function renderImagePreview(imageUrl){
     const viewerBody = document.querySelector('#viewer-body');
-    const image =
-        `<img src="${imageUrl}" alt="entry-thumb-image" />`
-    viewerBody.insertAdjacentHTML('beforeend', image);
+    const image = document.createElement('img');
+    image.setAttribute('src' , `${imageUrl}`);
+    image.setAttribute('alt' , 'entry-thumb-image');
+    viewerBody.appendChild(image);
+
+    toggleViewerLoadingStatus(false);
 }
 
 // 비디오 타입 프리뷰 랜더링
