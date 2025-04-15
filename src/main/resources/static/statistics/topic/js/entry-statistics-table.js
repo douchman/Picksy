@@ -1,6 +1,7 @@
 import {entryStatsTable} from "./const.js";
 import {RankSort, ScoreSort, tableQuery} from "./enry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
+import {showThumbViewer} from "./entry-thumb-viewer.js";
 
 let keywordSearchDebounceTimer;
 
@@ -10,6 +11,7 @@ export function addEntryStatisticsTableEvents(){
     addItemCountListEvent();
     addSearchFilterEvent();
     addTableHeaderOrderEvent();
+    addEntryThumbnailEvent();
 }
 
 // 테이블 컨텐츠 표기 갯수 선택기 이벤트
@@ -78,6 +80,18 @@ function addTableHeaderOrderEvent(){
 
             await renderEntryStatistics(true, false);
         });
+    });
+}
+
+// 썸네일 클릭 이벤트
+function addEntryThumbnailEvent(){
+    document.querySelector('#entries-stats-tbody').addEventListener('click', function(event){
+        const entryThumb = event.target.closest('.entry-thumb');
+        if( entryThumb ){
+            const mediaType = entryThumb.dataset.mediatype;
+            const mediaUrl = entryThumb.querySelector('.media-url').value;
+            showThumbViewer(mediaType, mediaUrl);
+        }
     });
 }
 
