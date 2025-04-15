@@ -165,12 +165,9 @@
     width: var(--thead-entry-thumb-size);
     height: var(--thead-entry-thumb-size);
     cursor: pointer;
-}
-
-.entries-stats-table tbody tr .entry-thumb img{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 /* td highest-tournament */
