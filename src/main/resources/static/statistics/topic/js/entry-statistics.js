@@ -26,12 +26,16 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
             entriesStatistics.forEach( entryStats =>{
                 const entry = entryStats.entry;
                 const statistics = entryStats.statistics;
+                const mediaType = entry.mediaType;
+                const entryThumb = (mediaType === 'VIDEO' || mediaType === 'YOUTUBE') ? entry.thumbnail : entry.mediaUrl;
                 const roundedWinRate = roundToNDecimal(statistics.winRate , 2);
                 const winRateBarColorClass = determineProgressBarColorByWinRate(roundedWinRate);
                 const entryStatsRow =
                     `<tr style="--win-rate : ${roundedWinRate}%; --win-rate-text : '${roundedWinRate}%'">
                         <td class="rank">${statistics.rank ? statistics.rank : '-'}</td>
-                        <td class="entry-thumb"><img src="${entry.mediaUrl}" alt="entry-thumb"></td>
+                        <td class="entry-thumb" data-mediatype="${mediaType}" style="background-image: url('${entryThumb}')">
+                            <input class="media-url" type="hidden" value="${entry.mediaUrl}">
+                        </td>
                         <td class="entry-name">${entry.entryName}</td>
                         <td class="highest-tournament">${statistics.highestTournament}강</td>
                         <td class="win-rate">
