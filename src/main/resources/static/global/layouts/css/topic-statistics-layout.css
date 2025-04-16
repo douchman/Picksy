@@ -17,8 +17,6 @@ html, body{
 
 .statistics-layout-container > .wrapper{
     width: 100%;
-    max-width: var(--layout-wrapper-width);
-    min-width: var(--wrapper-min-width);
     margin : 0;
 }
 
