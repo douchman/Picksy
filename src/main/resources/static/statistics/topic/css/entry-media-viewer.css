@@ -57,3 +57,11 @@
     background-position: center;
     background-size: 100% 100%;
 }
+
+
+.entry-media-viewer .viewer-body img{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
