@@ -1,0 +1,17 @@
+.topic-comments{
+    position: fixed;
+    top : 180px;
+    right: 0;
+    width: var(--topic-comments-width);
+    box-sizing: border-box;
+    padding : 20px;
+    z-index: 100;
+}
+
+.topic-comments .comment-wrapper{
+    width: 100%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    border-radius: 6px;
+    background-color: #FFF;
+    height: 500px;
+}
