@@ -31,9 +31,8 @@
     font-size: 20px;
 }
 
-.comment-list{
-    position: relative;
-    padding : 10px 0;
+.comment-list-wrapper{
+    padding-bottom : 15px;
     max-height: 400px; /* 임시 배치 */
     overflow-y: auto;
     margin-bottom: 15px;
