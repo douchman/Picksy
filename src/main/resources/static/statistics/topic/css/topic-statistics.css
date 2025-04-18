@@ -2,7 +2,7 @@
 @import "entry-media-viewer.css";
 
 .topic-statistics{
-    padding : 20px 0;
+    padding : 20px 0 20px 20px;
 }
 
 .topic-stats-group{

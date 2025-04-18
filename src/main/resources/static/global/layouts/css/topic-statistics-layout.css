@@ -1,0 +1,27 @@
+:root{
+    --main-header-height : 60px;
+    --layout-wrapper-width : 1440px;
+    --signature-color : #CDC1FF;
+    --wrapper-min-width : 1240px;
+}
+
+html, body{
+    height : 100%;
+    margin : 0;
+    background-color : #F5F5F7;
+}
+
+.statistics-layout-container{
+    width: 100%;
+}
+
+.statistics-layout-container > .wrapper{
+    width: 100%;
+    max-width: var(--layout-wrapper-width);
+    min-width: var(--wrapper-min-width);
+    margin : 0;
+}
+
+.scroll-block{
+    overflow: hidden;
+}
