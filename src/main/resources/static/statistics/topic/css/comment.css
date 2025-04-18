@@ -52,6 +52,15 @@
     transform: translate(-50%, -50%);
 }
 
+.comment{
+    padding : 5px;
+    border-radius: 4px;
+}
+
+.comment.blink{
+    animation: blink-comment 1s ease;
+}
+
 .comment:not(:last-child){
     margin-bottom: 12px;
 }
@@ -164,4 +173,19 @@
     color : #FFF;
     font-size: 14px;
     margin-left : auto;
+}
+
+@keyframes blink-comment {
+    0%{
+        background-color: #FFF;
+    }
+
+    50%{
+        background-color: #BFECFF;
+    }
+
+    100%{
+        background-color: #FFF;
+    }
+
 }
