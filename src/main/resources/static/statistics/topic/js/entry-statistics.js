@@ -38,6 +38,9 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
                         </td>
                         <td class="entry-name">${entry.entryName}</td>
                         <td class="highest-tournament">${statistics.highestTournament}강</td>
+                        <td class="win-and-lose">
+                            ${renderWinLoseBar(statistics.totalMatches, statistics.totalWins, statistics.totalLosses)}
+                        </td>
                         <td class="win-rate">
                             <div class="win-rate-bar ${winRateBarColorClass}"></div>
                         </td>
@@ -55,6 +58,28 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
 
         return false;
     }
+}
+
+// 승 & 패 그래프
+function renderWinLoseBar(totalMatches, win, lose){
+    let winLoseBar;
+    if(totalMatches > 0){
+        let winRatio = win / totalMatches * 100;
+        let loseRatio = lose / totalMatches * 100;
+
+        const onlyWinOrLose = Math.abs(winRatio - loseRatio) === 100 ? 'only' : '';
+
+
+        winLoseBar =
+            `<div class="win-lose-bar ${onlyWinOrLose}" style="--win-ratio: ${winRatio}%; --lose-ratio: ${loseRatio}%" >
+                <div class="win"></div>
+                <div class="lose"></div>
+            </div>`;
+    } else {
+        winLoseBar = ``
+    }
+
+    return winLoseBar;
 }
 
 
