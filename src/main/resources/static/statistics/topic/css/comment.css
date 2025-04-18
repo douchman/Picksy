@@ -38,6 +38,20 @@
     margin-bottom: 15px;
 }
 
+.comment-list.empty{
+    position: relative;
+    height: 250px;
+}
+
+.comment-list.empty:after{
+    content: '🤔 작성된 코멘트가 없어요.';
+    font-size: 14px;
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .comment:not(:last-child){
     margin-bottom: 12px;
 }
