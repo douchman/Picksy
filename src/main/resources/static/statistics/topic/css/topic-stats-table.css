@@ -175,6 +175,59 @@
     width: var(--thead-highest-tournament-width);
 }
 
+/* td win-and-lose */
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    max-width: 75%;
+    margin : 0 auto;
+    border-radius: 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .win{
+    position: relative;
+    width: var(--win-ratio);
+    height: 100%;
+    background-color: #AEDFF7;
+    border-radius: 6px 0 0 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .win:before{
+    content: '승';
+    font-size: 15px;
+    font-weight: 600;
+    color : #AEDFF7;
+    position: absolute;
+    top : 50%;
+    left : 0;
+    transform: translate(-150% , -50%);
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .lose{
+    position: relative;
+    width: var(--lose-ratio);
+    height: 100%;
+    background-color: #FFB5A7;
+    border-radius: 0 6px 6px 0;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .lose:before{
+    content: '패';
+    font-size: 15px;
+    font-weight: 600;
+    color : #FFB5A7;
+    position: absolute;
+    top : 50%;
+    right: 0;
+    transform: translate(150% , -50%);
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar.only .win,
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar.only .lose{
+    border-radius: 6px;
+}
+
 /* td entry-name */
 .entries-stats-table tbody tr .entry-name{
     font-size: 14px;
