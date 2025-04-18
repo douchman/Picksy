@@ -1,5 +1,6 @@
 import {apiGetRequest} from "../../../global/js/api.js";
 import {topic} from "./const.js";
+import {addCommentRegisterEvent} from "./comment-register.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버
 let isFetchingComments = false; // 데이터 조회 플래그
@@ -45,6 +46,11 @@ export function setupCommentInfiniteScrollObserver(){
     });
 
     commentListScrollObserver.observe(scrollObserverTarget);
+}
+
+// 댓글 이벤트 추가
+export function addCommentsEvents(){
+    addCommentRegisterEvent(); // 댓글 작성 이벤트
 }
 
 // 옵저버 중지

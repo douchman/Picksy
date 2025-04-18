@@ -5,7 +5,7 @@ import {renderEntryStatistics} from "./entry-statistics.js";
 import {renderPagination} from "./entry-statistics-table-pagination.js";
 import {renderEntryMediaViewer} from "./entry-thumb-viewer.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
-import {setupCommentInfiniteScrollObserver} from "./comment.js";
+import {addCommentsEvents, setupCommentInfiniteScrollObserver} from "./comment.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 renderEntryMediaViewer();
                 addEntryStatisticsTableEvents();
                 setupCommentInfiniteScrollObserver();
+                addCommentsEvents();
             }
         });
     }
