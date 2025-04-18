@@ -58,6 +58,7 @@ async function renderComments(){
     const {status, data : {commentList, pagination}} = await getComments(commentsQuery);
 
     if( status === 200 && commentList && commentList.length !== 0){
+        removeCommentListEmpty(); // 비었음 스타일 제거
         savePagination(pagination);
 
         commentList.forEach((comment) =>{
@@ -87,6 +88,11 @@ function savePagination(pagination){
         commentsPagination.currentPage = pagination.currentPage;
         commentsPagination.totalPages = pagination.totalPages;
     }
+}
+
+// 댓글 비었음 스타일 해제
+function removeCommentListEmpty(){
+    document.querySelector('#comment-list').classList.remove('empty');
 }
 
 // 댓글 조회
