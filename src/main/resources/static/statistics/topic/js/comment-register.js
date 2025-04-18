@@ -1,6 +1,12 @@
 import {apiPostRequest} from "../../../global/js/api.js";
 import {topic} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {
+    authorValidationMessage,
+    commentContentValidationMessage,
+    validateAuthor,
+    validateCommentContent
+} from "./comment-register-validate.js";
 
 // 댓글 작성 이벤트
 export function addCommentRegisterEvent(){
@@ -13,23 +19,26 @@ export function addCommentRegisterEvent(){
 async function registerComment(){
     toggleRegisterButtonBlock(true);
 
-    const registerRequestBody = {
-        author : document.querySelector('#author').value,
-        content : document.querySelector('#comment-content').value,
+    if( validateCommentForm()){
+        const registerRequestBody = {
+            author : document.querySelector('#author').value,
+            content : document.querySelector('#comment-content').value,
+        }
+
+        const {status, data : registerResult } = await postComments(registerRequestBody);
+
+        if( status === 200 ){
+            initCommentRegisterForm(); // 코멘트 form 초기화
+            commentListScrollTop(); // 스크롤 최상단
+            setTimeout(() => {
+                renderRegisteredComment(registerResult.author, registerResult.content, registerResult.createdAt);
+            }, 300); // 지연 후 랜더링
+
+        } else{
+            showToastMessage('댓글 작성에 문제가 발생했어요. 잠시 후 다시 시도해 주세요');
+        }
     }
 
-    const {status, data : registerResult } = await postComments(registerRequestBody);
-
-    if( status === 200 ){
-        initCommentRegisterForm(); // 코멘트 form 초기화
-        commentListScrollTop(); // 스크롤 최상단
-        setTimeout(() => {
-            renderRegisteredComment(registerResult.author, registerResult.content, registerResult.createdAt);
-        }, 300); // 지연 후 랜더링
-
-    } else{
-        showToastMessage('댓글 작성에 문제가 발생했어요. 잠시 후 다시 시도해 주세요');
-    }
     toggleRegisterButtonBlock(false);
 }
 
@@ -67,6 +76,25 @@ function commentListScrollTop(){
 function initCommentRegisterForm(){
     document.querySelector('#author').value = '익명';
     document.querySelector('#comment-content').value = '';
+}
+
+function validateCommentForm(){
+
+    // 작성자 명
+    const author = document.querySelector('#author').value;
+    const commentContent = document.querySelector('#comment-content').value;
+
+    if(!validateAuthor(author)){
+        showToastMessage(authorValidationMessage, 'alert', 3500);
+        return false;
+    }
+
+    else if(!validateCommentContent(commentContent)){
+        showToastMessage(commentContentValidationMessage, 'alert', 3500);
+        return false;
+    }
+
+    return true;
 }
 
 // 댓글 작성 api
