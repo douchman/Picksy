@@ -31,12 +31,34 @@
     font-size: 20px;
 }
 
-.comment-list{
-    position: relative;
-    padding : 10px 0;
+.comment-list-wrapper{
+    padding-bottom : 15px;
     max-height: 400px; /* 임시 배치 */
     overflow-y: auto;
     margin-bottom: 15px;
+}
+
+.comment-list.empty{
+    position: relative;
+    height: 250px;
+}
+
+.comment-list.empty:after{
+    content: '🤔 작성된 코멘트가 없어요.';
+    font-size: 14px;
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.comment{
+    padding : 5px;
+    border-radius: 4px;
+}
+
+.comment.blink{
+    animation: blink-comment 1s ease;
 }
 
 .comment:not(:last-child){
@@ -141,4 +163,29 @@
 
 .comment-form .form-item textarea:focus{
     outline-color : var(--signature-color);
+}
+
+.comment-form .btn-register-comment{
+    display: block;
+    padding : 4px 8px;
+    border-radius: 4px;
+    background-color: #9EC6F3;
+    color : #FFF;
+    font-size: 14px;
+    margin-left : auto;
+}
+
+@keyframes blink-comment {
+    0%{
+        background-color: #FFF;
+    }
+
+    50%{
+        background-color: #BFECFF;
+    }
+
+    100%{
+        background-color: #FFF;
+    }
+
 }
