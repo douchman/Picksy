@@ -64,6 +64,7 @@ async function renderComments(){
     const {status, data : {commentList, pagination}} = await getComments(commentsQuery);
 
     if( status === 200 && commentList && commentList.length !== 0){
+        renderTotalCommentCount(pagination.totalItems);
         removeCommentListEmpty(); // 비었음 스타일 제거
         savePagination(pagination);
 
@@ -82,6 +83,12 @@ async function renderComments(){
         });
     }
 }
+
+// 총 코멘트 개수 랜더링
+function renderTotalCommentCount(totalCommentCount){
+    document.querySelector('#comment-count').innerHTML = totalCommentCount;
+}
+
 
 // 다음 페이지 여부 검증
 function hasNextCommentPage(){
