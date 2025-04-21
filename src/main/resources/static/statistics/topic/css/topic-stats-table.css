@@ -139,6 +139,18 @@
     width: max-content;
 }
 
+.entries-stats-table thead tr th .tool-tip .emphasis-a{
+    color : #4FC3F7;
+}
+
+.entries-stats-table thead tr th .tool-tip .emphasis-b{
+
+    color : #CDDC39;
+}
+.entries-stats-table thead tr th .tool-tip .emphasis-c{
+    color : #FFB74D;
+}
+
 .entries-stats-table thead tr th .tool-tip:after{
     content : '';
     position: absolute;
