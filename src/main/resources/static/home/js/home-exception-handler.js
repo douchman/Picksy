@@ -1,21 +1,25 @@
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
 
-export function handleTopicRenderException(error){
-    const errorCode = error.errorCode;
-    const message = error.message;
-
-    switch (errorCode){
-        default:
-            showToastMessage(`${message}`, error, 3000);
+export function handleTopicRenderException(isAuthOrNetworkError, error){
+    if( !isAuthOrNetworkError) {
+        const errorCode = error.errorCode;
+        const message = error.message;
+        switch (errorCode){
+            default:
+                showToastMessage(`${message}`, error, 3000);
+        }
     }
+
 }
 
-export function handleTopicTournamentException(error){
-    const errorCode = error.errorCode;
-    const message = error.message;
+export function handleTopicTournamentException(isAuthOrNetworkError, error){
+    if( !isAuthOrNetworkError ) {
+        const errorCode = error.errorCode;
+        const message = error.message;
 
-    switch (errorCode){
-        default:
-            showToastMessage(`${message}`, error, 3000);
+        switch (errorCode){
+            default:
+                showToastMessage(`${message}`, error, 3000);
+        }
     }
 }

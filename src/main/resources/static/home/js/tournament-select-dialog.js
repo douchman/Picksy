@@ -82,10 +82,10 @@ function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.setAttribute('data-topic-id', topicId);
-    const {status, data : tournamentData } = await getTopicDetail(topicId);
+    const {status, isAuthOrNetworkError, data : topicDetailResult } = await getTopicDetail(topicId);
 
-    const topic = tournamentData.topic;
-    const tournamentList = tournamentData.tournamentList;
+    const topic = topicDetailResult.topic;
+    const tournamentList = topicDetailResult.tournamentList;
 
 
     if( status === 200 ){
@@ -98,7 +98,7 @@ export async function openTournamentSelectDialog(topicId){
 
         toggleBodyScrollBlocked(true);
     } else {
-        handleTopicTournamentException(tournamentData);
+        handleTopicTournamentException(isAuthOrNetworkError, topicDetailResult);
     }
 
 }

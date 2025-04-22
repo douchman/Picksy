@@ -66,7 +66,7 @@ async function renderTopics(){
 
     const topicContentCards = document.querySelector('#topic-content-cards');
 
-    const {status, data : topicResult} = await getTopics(requestParams);
+    const {status, isAuthOrNetworkError, data : topicResult} = await getTopics(requestParams);
 
     const topicList = topicResult.topicList;
     const pagination = topicResult.pagination;
@@ -104,7 +104,7 @@ async function renderTopics(){
         }
     } else {
         stopInfiniteScrollObserver();
-        handleTopicRenderException(topicResult);
+        handleTopicRenderException(isAuthOrNetworkError, istopicResult);
     }
 
     isLoading = false;
