@@ -1,5 +1,6 @@
 import {extractYoutubeVideoIdFromUrl} from "../../../global/js/youtube-iframe-api.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {toggleBodyScrollBlocked} from "../../../global/js/layout-common.js";
 
 
 /* 엔트리 미디어 뷰어 셋업 */
@@ -175,17 +176,4 @@ function clearPreviewBody(){
 
     // 제거 대상: 프리뷰 요소들만 정밀 제거
     viewerBody.querySelectorAll('img, video, .you-tube-video').forEach(el => el.remove());
-}
-
-
-/**
- * 메인 레이아웃 스크롤 제어
- * @param {boolean} isBlock
- */
-function toggleBodyScrollBlocked(isBlock = false){
-    const body = document.querySelector('body');
-
-    isBlock ?
-        body.classList.add('scroll-block')
-        : body.classList.remove('scroll-block');
 }
