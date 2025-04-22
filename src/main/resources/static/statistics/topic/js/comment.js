@@ -16,6 +16,15 @@ let commentsPagination = { // 페이지네이션 전역변수
     totalPages : 0
 }
 
+/* 유저 코멘트 셋업 */
+// 코멘트 무한 스크롤 설정
+// 코멘트 관련 이벤트 등록
+export function setupUserComment(){
+    setupCommentInfiniteScrollObserver();
+    addCommentsEvents();
+}
+
+
 // 코멘트 리스트 무한스크롤 옵저버 타겟 랜더링
 function renderScrollObserverTarget(){
     const scrollObserverTarget = `<div id="scroll-observer-target" class="scroll-observer-target"></div>`
@@ -23,7 +32,7 @@ function renderScrollObserverTarget(){
 }
 
 // 무한스크롤 옵저버 설정
-export function setupCommentInfiniteScrollObserver(){
+function setupCommentInfiniteScrollObserver(){
     renderScrollObserverTarget();
 
     const scrollObserverTarget = document.querySelector('#scroll-observer-target');
@@ -49,7 +58,7 @@ export function setupCommentInfiniteScrollObserver(){
 }
 
 // 댓글 이벤트 추가
-export function addCommentsEvents(){
+function addCommentsEvents(){
     addCommentRegisterEvent(); // 댓글 작성 이벤트
 }
 
