@@ -1,7 +1,7 @@
 import {apiGetRequest} from '../../global/js/api.js';
 import {setupTournamentSelectDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
-import {handleTopicRenderException} from "./exception.js";
+import {handleTopicRenderException} from "./home-exception-handler.js";
 
 let scrollObserver;
 const pageSize = 16;

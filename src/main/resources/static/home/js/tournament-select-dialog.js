@@ -1,7 +1,7 @@
 import {TOURNAMENT_DESC} from "./const.js";
 import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
-import {handleTopicTournamentException} from "./exception.js";
+import {handleTopicTournamentException} from "./home-exception-handler.js";
 
 
 /* 토너먼트 선택기 셋업 */
