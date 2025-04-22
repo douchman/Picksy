@@ -175,6 +175,105 @@
     width: var(--thead-highest-tournament-width);
 }
 
+/* td win-and-lose */
+.entries-stats-table tbody tr .win-and-lose{
+    position: relative;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    max-width: 75%;
+    margin : 0 auto;
+    border-radius: 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .win{
+    position: relative;
+    width: var(--win-ratio);
+    height: 100%;
+    background-color: #AEDFF7;
+    border-radius: 6px 0 0 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .win:before{
+    content: '승';
+    font-size: 15px;
+    font-weight: 600;
+    color : #AEDFF7;
+    position: absolute;
+    top : 50%;
+    left : 0;
+    transform: translate(-150% , -50%);
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .lose{
+    position: relative;
+    width: var(--lose-ratio);
+    height: 100%;
+    background-color: #FFB5A7;
+    border-radius: 0 6px 6px 0;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .lose:before{
+    content: '패';
+    font-size: 15px;
+    font-weight: 600;
+    color : #FFB5A7;
+    position: absolute;
+    top : 50%;
+    right: 0;
+    transform: translate(150% , -50%);
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar.only .win,
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar.only .lose{
+    border-radius: 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon{
+    position: absolute;
+    top : 0;
+    left : 50%;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s ease;
+    transform: translate(-50% , -10%);
+    background-color: #FFF;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.3) 0 3px 7px -3px;
+    padding : 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 10px;
+    width: max-content;
+}
+
+.entries-stats-table tbody tr .win-and-lose:hover .win-lose-balloon{
+    opacity: 1;
+    visibility: visible;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon p{
+    color : #333;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon .t-win span{
+    font-weight: 600;
+    color : #AEDFF7;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon .t-lose span{
+    font-weight: 600;
+    color : #FFB5A7;
+}
+
 /* td entry-name */
 .entries-stats-table tbody tr .entry-name{
     font-size: 14px;
