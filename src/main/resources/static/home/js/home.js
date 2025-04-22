@@ -1,5 +1,5 @@
 import {apiGetRequest} from '../../global/js/api.js';
-import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
+import {setupTournamentSelectDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
 import {handleTopicRenderException} from "./exception.js";
 
@@ -12,8 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
     addTopicSearchFilterEvents();
     addTopicCardEvents();
-    renderDialog();
-    addDialogEvents();
+    setupTournamentSelectDialog(); // 토너먼트 선택기 셋업
     setupInfiniteScrollObserver();
 });
 

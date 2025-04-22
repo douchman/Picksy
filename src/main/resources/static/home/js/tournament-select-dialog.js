@@ -3,7 +3,16 @@ import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
 import {handleTopicTournamentException} from "./exception.js";
 
-export function renderDialog(){
+
+/* 토너먼트 선택기 셋업 */
+// 선택기 랜더링
+// 선택기 이벤트 등록
+export function setupTournamentSelectDialog(){
+    renderDialog();
+    addDialogEvents();
+}
+
+function renderDialog(){
     const documentBody = document.querySelector('body');
     const tournamentSelectDialog = `<div id="tournament-select-dialog" class="tournament-select-dialog">
             <div class="bg"></div>
@@ -31,7 +40,7 @@ export function renderDialog(){
     documentBody.insertAdjacentHTML('beforeend', tournamentSelectDialog);
 }
 
-export function addDialogEvents() {
+function addDialogEvents() {
 
     // dialog 내부 커스텀 선택박스 -> 선택기 보임
     document.querySelector('#tournament-select').addEventListener('click', function () {
