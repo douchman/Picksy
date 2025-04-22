@@ -1,11 +1,8 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
-import {addEntryStatisticsTableEvents} from "./entry-statistics-table.js";
+import {setupEntryStatisticsTable} from "./entry-statistics-table.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
-import {renderTablePagination} from "./entry-statistics-table-pagination.js";
-import {renderEntryMediaViewer} from "./entry-thumb-viewer.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
-import {addCommentsEvents, setupCommentInfiniteScrollObserver} from "./comment.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -16,18 +13,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const topicStatsSuccess = await renderTopicStatistics();
         const entriesStatsSuccess = await renderEntryStatistics();
         loadYoutubeIframeAPI();
-        onYouTubeIframeApiReady(() => {
+        onYouTubeIframeApiReady(() => { // youtube API load success
             if(topicStatsSuccess && entriesStatsSuccess) {
-                renderTablePagination();
-                renderEntryMediaViewer();
-                addEntryStatisticsTableEvents();
-                setupCommentInfiniteScrollObserver();
-                addCommentsEvents();
+                setupEntryStatisticsTable();
             }
         });
     }
 });
 
+// 대결주제 식별자 지역변수로 저장
 function saveTopicId(){
     const path = window.location.pathname;
     const segments = path.split('/');
@@ -41,6 +35,7 @@ function saveTopicId(){
     }
 }
 
+// 대결 주제 통계 랜더링
 async function renderTopicStatistics(){
     const { status, data : {topic , topicStatistics} } = await getTopicStatistics();
 
@@ -56,14 +51,17 @@ async function renderTopicStatistics(){
 
 }
 
+// 대결 제목 랜더링
 function renderTopicTitle(topicTitle){
     document.querySelector('#topic-title').innerHTML = `${topicTitle}`;
 }
 
+// 진행된 총 대결 횟수 랜더링
 function renderTotalMatches(totalMatches){
     document.querySelector('#total-matches').innerHTML = `이 대결은 총<span>${totalMatches}번</span>플레이 되었어요!`;
 }
 
+// 대결 주제 통계 조회
 async function getTopicStatistics(){
     return await apiGetRequest(`statistics/topics/${topic.getId()}`);
 }

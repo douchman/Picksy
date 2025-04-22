@@ -1,12 +1,25 @@
 import {entryStatsTable} from "./const.js";
 import {RankSort, ScoreSort, tableQuery} from "./entry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
-import {showThumbViewer} from "./entry-thumb-viewer.js";
+import {setupEntryMediaViewer, showThumbViewer} from "./entry-thumb-viewer.js";
+import {renderTablePagination} from "./entry-statistics-table-pagination.js";
+import {setupUserComment} from "./comment.js";
 
 let keywordSearchDebounceTimer;
 
+/* 엔트리 통계 테이블 관련 셋업 */
+// 이벤트 등록
+// 페이지 네이션 랜더링
+// 미디어 뷰어 셋업
+export function setupEntryStatisticsTable(){
+    addEntryStatisticsTableEvents(); // 테이블 이벤트 등록
+    renderTablePagination(); // 페이지네이션 랜더링
+    setupEntryMediaViewer(); // 엔트리 미디어 뷰어 셋업
+    setupUserComment(); // 유저 코멘트 셋업
+}
+
 // 엔트리 통계 테이블 관련 이벤트 등록
-export function addEntryStatisticsTableEvents(){
+function addEntryStatisticsTableEvents(){
     addItemPerPageEvent();
     addItemCountListEvent();
     addSearchFilterEvent();
