@@ -19,3 +19,11 @@ export const tableQuery = {
     totalWinsOrder : ScoreSort.HIGHEST_FIRST,
     winRateOrder : ScoreSort.HIGHEST_FIRST
 }
+
+export const PROGRESS_BAR_COLOR_CLASS = {
+    20 : 'color-20',
+    40 : 'color-40',
+    60 : 'color-60',
+    80 : 'color-80',
+    100 : 'color-100'
+}

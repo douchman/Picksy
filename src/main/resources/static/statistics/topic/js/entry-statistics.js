@@ -1,16 +1,8 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
-import {tableQuery} from "./enry-statistics-table-const.js"
+import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./entry-statistics-table-const.js"
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
-
-const PROGRESS_BAR_COLOR_CLASS = {
-    20 : 'color-20',
-    40 : 'color-40',
-    60 : 'color-60',
-    80 : 'color-80',
-    100 : 'color-100'
-}
 
 export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 

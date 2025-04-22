@@ -1,7 +1,16 @@
 import {extractYoutubeVideoIdFromUrl} from "../../../global/js/youtube-iframe-api.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
-export function renderEntryMediaViewer(){
+
+/* 엔트리 미디어 뷰어 셋업 */
+// 미디어 뷰어 랜더링
+// 미디어 뷰어 이벤트 등록
+export function setupEntryMediaViewer(){
+    renderEntryMediaViewer();
+    addEntryMediaViewerEvent();
+}
+
+function renderEntryMediaViewer(){
     const thumbViewer =
         `<div id="entry-media-viewer" class="entry-media-viewer loading">
             <div class="bg"></div>
@@ -11,8 +20,6 @@ export function renderEntryMediaViewer(){
         </div>`;
 
     document.querySelector('#topic-statistics').insertAdjacentHTML('beforeend', thumbViewer);
-
-    addEntryMediaViewerEvent();
 }
 
 function addEntryMediaViewerEvent(){

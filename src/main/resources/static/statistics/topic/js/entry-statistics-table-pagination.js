@@ -1,11 +1,11 @@
-import {tableQuery} from "./enry-statistics-table-const.js";
+import {tableQuery} from "./entry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 
 let isSyncingPagination = false; // 상단&하단 페이지네이션 동기화 제어 변수
 let tableTopPagination;
 let tableBottomPagination;
 
-export function renderPagination(){
+export function renderTablePagination(){
 
     tableTopPagination = new tui.Pagination(document.querySelector('#table-top-pagination'), {
         totalItems: tableQuery.totalItems,
