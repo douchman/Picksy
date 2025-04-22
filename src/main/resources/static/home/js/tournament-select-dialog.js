@@ -1,9 +1,18 @@
 import {TOURNAMENT_DESC} from "./const.js";
 import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
-import {handleTopicTournamentException} from "./exception.js";
+import {handleTopicTournamentException} from "./home-exception-handler.js";
 
-export function renderDialog(){
+
+/* 토너먼트 선택기 셋업 */
+// 선택기 랜더링
+// 선택기 이벤트 등록
+export function setupTournamentSelectDialog(){
+    renderDialog();
+    addDialogEvents();
+}
+
+function renderDialog(){
     const documentBody = document.querySelector('body');
     const tournamentSelectDialog = `<div id="tournament-select-dialog" class="tournament-select-dialog">
             <div class="bg"></div>
@@ -31,7 +40,7 @@ export function renderDialog(){
     documentBody.insertAdjacentHTML('beforeend', tournamentSelectDialog);
 }
 
-export function addDialogEvents() {
+function addDialogEvents() {
 
     // dialog 내부 커스텀 선택박스 -> 선택기 보임
     document.querySelector('#tournament-select').addEventListener('click', function () {
@@ -73,10 +82,10 @@ export function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.setAttribute('data-topic-id', topicId);
-    const {status, data : tournamentData } = await getTopicDetail(topicId);
+    const {status, isAuthOrNetworkError, data : topicDetailResult } = await getTopicDetail(topicId);
 
-    const topic = tournamentData.topic;
-    const tournamentList = tournamentData.tournamentList;
+    const topic = topicDetailResult.topic;
+    const tournamentList = topicDetailResult.tournamentList;
 
 
     if( status === 200 ){
@@ -89,7 +98,7 @@ export async function openTournamentSelectDialog(topicId){
 
         toggleBodyScrollBlocked(true);
     } else {
-        handleTopicTournamentException(tournamentData);
+        handleTopicTournamentException(isAuthOrNetworkError, topicDetailResult);
     }
 
 }

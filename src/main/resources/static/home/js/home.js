@@ -1,7 +1,7 @@
 import {apiGetRequest} from '../../global/js/api.js';
-import {addDialogEvents, renderDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
+import {setupTournamentSelectDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
-import {handleTopicRenderException} from "./exception.js";
+import {handleTopicRenderException} from "./home-exception-handler.js";
 
 let scrollObserver;
 const pageSize = 16;
@@ -10,12 +10,16 @@ let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
+    setupHome();
+    setupTournamentSelectDialog(); // 토너먼트 선택기 셋업
+
+});
+
+function setupHome(){
     addTopicSearchFilterEvents();
     addTopicCardEvents();
-    renderDialog();
-    addDialogEvents();
     setupInfiniteScrollObserver();
-});
+}
 
 function addTopicSearchFilterEvents(){
 
@@ -67,7 +71,7 @@ async function renderTopics(){
 
     const topicContentCards = document.querySelector('#topic-content-cards');
 
-    const {status, data : topicResult} = await getTopics(requestParams);
+    const {status, isAuthOrNetworkError, data : topicResult} = await getTopics(requestParams);
 
     const topicList = topicResult.topicList;
     const pagination = topicResult.pagination;
@@ -105,7 +109,7 @@ async function renderTopics(){
         }
     } else {
         stopInfiniteScrollObserver();
-        handleTopicRenderException(topicResult);
+        handleTopicRenderException(isAuthOrNetworkError, istopicResult);
     }
 
     isLoading = false;
