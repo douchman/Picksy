@@ -2,6 +2,7 @@ import {TOURNAMENT_DESC} from "./const.js";
 import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
 import {handleTopicTournamentException} from "./home-exception-handler.js";
+import {toggleBodyScrollBlocked} from "../../global/js/layout-common.js";
 
 
 /* 토너먼트 선택기 셋업 */
@@ -155,16 +156,4 @@ async function getPlayRecordIdAndStart(){
 // 대결 진행 알림 & playRecordID 식별자 반환
 async function postPlayRecord(topicId, tournamentStage){
     return await apiPostRequest(`topics/${topicId}/play-records`, {}, {tournamentStage});
-}
-
-/**
- * 메인 레이아웃 스크롤 제어
- * @param {boolean} isBlock
- */
-function toggleBodyScrollBlocked(isBlock = false){
-    const body = document.querySelector('body');
-
-    isBlock ?
-        body.classList.add('scroll-block')
-        : body.classList.remove('scroll-block');
 }
