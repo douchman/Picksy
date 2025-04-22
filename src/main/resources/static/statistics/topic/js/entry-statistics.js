@@ -3,14 +3,17 @@ import {apiGetRequest} from "../../../global/js/api.js";
 import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./entry-statistics-table-const.js"
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
+import {handleRenderEntryStatsException} from "./topic-statistics-exception-handler.js";
 
 export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
     isClearBody && clearEntriesStatsTbody();
 
-    const { status, data : {entriesStatistics, pagination}  } = await getEntryStatistics();
+    const { status, isAuthOrNetworkError, data : entryStatisticsResult  } = await getEntryStatistics();
 
     if( status === 200){
+        const entriesStatistics = entryStatisticsResult.entriesStatistics;
+        const pagination = entryStatisticsResult.pagination;
         const isEntriesStatisticsEmpty = (!entriesStatistics || entriesStatistics.length === 0);
         if( !isEntriesStatisticsEmpty){
 
@@ -46,8 +49,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
 
         return true;
     } else{
-        // TODO : handle getEntriesStats Exception
-
+        handleRenderEntryStatsException(isAuthOrNetworkError, entryStatisticsResult);
         return false;
     }
 }

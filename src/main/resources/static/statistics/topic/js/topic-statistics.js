@@ -3,6 +3,7 @@ import {apiGetRequest} from "../../../global/js/api.js";
 import {setupEntryStatisticsTable} from "./entry-statistics-table.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
+import {handleRenderTopicStatsException} from "./topic-statistics-exception-handler.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -37,13 +38,15 @@ function saveTopicId(){
 
 // 대결 주제 통계 랜더링
 async function renderTopicStatistics(){
-    const { status, data : {topic , topicStatistics} } = await getTopicStatistics();
+    const { status, isAuthOrNetworkError, data : topicStatisticsResult } = await getTopicStatistics();
 
     if( status === 200){
+        const topic = topicStatisticsResult.topic;
+        const topicStatistics = topicStatisticsResult.topicStatistics;
         renderTopicTitle(topic.title);
         renderTotalMatches(topicStatistics.totalMatches);
     } else {
-        // TODO : api fail exception handle
+        handleRenderTopicStatsException(isAuthOrNetworkError, topicStatisticsResult);
         return false;
     }
 
