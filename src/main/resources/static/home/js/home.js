@@ -10,11 +10,16 @@ let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
+    setupHome();
+    setupTournamentSelectDialog(); // 토너먼트 선택기 셋업
+
+});
+
+function setupHome(){
     addTopicSearchFilterEvents();
     addTopicCardEvents();
-    setupTournamentSelectDialog(); // 토너먼트 선택기 셋업
     setupInfiniteScrollObserver();
-});
+}
 
 function addTopicSearchFilterEvents(){
 
