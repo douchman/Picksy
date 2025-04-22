@@ -5,7 +5,7 @@ let isSyncingPagination = false; // 상단&하단 페이지네이션 동기화 �
 let tableTopPagination;
 let tableBottomPagination;
 
-export function renderPagination(){
+export function renderTablePagination(){
 
     tableTopPagination = new tui.Pagination(document.querySelector('#table-top-pagination'), {
         totalItems: tableQuery.totalItems,

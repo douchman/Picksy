@@ -2,7 +2,7 @@ import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {addEntryStatisticsTableEvents} from "./entry-statistics-table.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
-import {renderPagination} from "./entry-statistics-table-pagination.js";
+import {renderTablePagination} from "./entry-statistics-table-pagination.js";
 import {renderEntryMediaViewer} from "./entry-thumb-viewer.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 import {addCommentsEvents, setupCommentInfiniteScrollObserver} from "./comment.js";
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadYoutubeIframeAPI();
         onYouTubeIframeApiReady(() => {
             if(topicStatsSuccess && entriesStatsSuccess) {
-                renderPagination();
+                renderTablePagination();
                 renderEntryMediaViewer();
                 addEntryStatisticsTableEvents();
                 setupCommentInfiniteScrollObserver();
