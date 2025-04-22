@@ -1,5 +1,5 @@
 import {entryStatsTable} from "./const.js";
-import {RankSort, ScoreSort, tableQuery} from "./enry-statistics-table-const.js";
+import {RankSort, ScoreSort, tableQuery} from "./entry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 import {showThumbViewer} from "./entry-thumb-viewer.js";
 

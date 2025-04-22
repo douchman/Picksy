@@ -1,6 +1,6 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
-import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./enry-statistics-table-const.js"
+import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./entry-statistics-table-const.js"
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
 
