@@ -126,7 +126,7 @@ async function getTopicDetail(topicId){
     return await apiGetRequest('topics/' +topicId, {}, false);
 }
 
-
+// 대결진행 식별자 조회 및 대결진행 시작
 async function getPlayRecordIdAndStart(){
     const dialog = document.querySelector('#tournament-select-dialog');
     const tournamentStage = dialog.querySelector('#selected-tournament').dataset.tournamentStage;
@@ -136,12 +136,14 @@ async function getPlayRecordIdAndStart(){
 
     if( status === 200){
         localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
-        location.href = `/topic/play/${topicId}`;
+        window.open(`/topic/play/${topicId}`, '_blank'); // 대결 진행페이지 이동 ( 새 탭 열기 )
+        closeTournamentSelectDialog();
     } else {
         showToastMessage(playRecordResult.message, 'error', 2500);
     }
 }
 
+// 대결 진행 알림 & playRecordID 식별자 반환
 async function postPlayRecord(topicId, tournamentStage){
     return await apiPostRequest(`topics/${topicId}/play-records`, {}, {tournamentStage});
 }
