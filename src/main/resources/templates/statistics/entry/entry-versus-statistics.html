@@ -45,9 +45,45 @@
                             <p id="target-entry-highest-tournament" class="target-entry-highest-tournament">결승</p>
                         </div>
                     </div>
-
                 </div>
             </div>
+
+            <div class="opponent-entries-stats">
+                <i class="t-opponent-index">🤼‍♂️ 상대한 엔트리</i>
+                <table id="opponent-entries-table" class="opponent-entries-table">
+                    <thead id="opponent-entries-table-head" class="opponent-entries-table-head">
+                        <tr>
+                            <th class="th-opp-entry-thumbnail">썸네일</th>
+                            <th class="th-opp-entry-info">엔트리 정보</th>
+                            <th class="th-match-record">대결 전적</th>
+                            <th class="th-versus-rate">대결 승률</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="opponent-entries-table-body" class="opp-entries-table-body">
+                        <tr class="opponent-entry">
+                            <td class="opp-entry-thumbnail"></td>
+                            <td class="opp-entry-info">
+                                <div class="info-group">
+                                    <p class="opp-entry-name">상대 엔트리의 이름</p>
+                                    <p class="opp-entry-desc">상대 한 엔트리의 설명</p>
+                                </div>
+                            </td>
+                            <td class="match-record">
+                                <div class="match-result">
+                                    <p class="win higher">12</p>
+                                    <span class="vs-symbol">:</span>
+                                    <p class="lose">6</p>
+                                </div>
+                            </td>
+                            <td class="versus-rate">
+                                <div class="versus-rate-bar" style="--win-rate : 55%; --win-rate-text : '55%';"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </body>
     <script type="module" th:src="@{'/statistics/entry/js/entry-versus-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>

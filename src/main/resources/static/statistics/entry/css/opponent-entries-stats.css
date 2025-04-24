@@ -1,0 +1,16 @@
+@import "opponent-entries-table.css";
+
+.opponent-entries-stats{
+    padding : 20px;
+    border-radius: 6px;
+    background-color: #FFF;
+}
+
+.opponent-entries-stats .t-opponent-index{
+    display: block;
+    color : #7D7D7D;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+    margin-bottom: 15px;
+}
