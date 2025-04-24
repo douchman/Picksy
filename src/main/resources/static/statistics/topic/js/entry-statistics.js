@@ -26,7 +26,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
                 const roundedWinRate = roundToNDecimal(statistics.winRate , 2);
                 const winRateBarColorClass = determineProgressBarColorByWinRate(roundedWinRate);
                 const entryStatsRow =
-                    `<tr style="--win-rate : ${roundedWinRate}%; --win-rate-text : '${roundedWinRate}%'">
+                    `<tr class="entry-row" style="--win-rate : ${roundedWinRate}%; --win-rate-text : '${roundedWinRate}%'" data-id="${entry.id}">
                         <td class="rank">${statistics.rank ? statistics.rank : '-'}</td>
                         <td class="entry-thumb" data-mediatype="${mediaType}" style="background-image: url('${entryThumb}')">
                             <input class="media-url" type="hidden" value="${entry.mediaUrl}">
