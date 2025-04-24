@@ -1,0 +1,91 @@
+.target-entry-stats .stats-item:not(:last-child){
+    margin-bottom: 8px;
+}
+
+.target-entry-stats .stats-item .stats-item-index{
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+    margin-bottom: 5px;
+    color : #7D7D7D;
+}
+
+.target-entry-stats .stats-content{
+    padding-left: 10px;
+}
+
+.target-entry-stats .win-lose-stats{
+    display: flex;
+    align-items: center;
+    gap : 12px;
+}
+
+.target-entry-stats .win-lose-stats .target-entry-win,
+.target-entry-stats .win-lose-stats .target-entry-lose {
+    position: relative;
+    font-size: 16px;
+}
+
+.target-entry-stats .win-lose-stats .target-entry-win:before,
+.target-entry-stats .win-lose-stats .target-entry-lose:before{
+    font-size: 16px;
+}
+
+.target-entry-stats .win-lose-stats .target-entry-win{
+    color : #AEDFF7;
+}
+
+.target-entry-stats .win-lose-stats .target-entry-lose{
+    color : #FFB5A7;
+}
+
+.target-entry-stats .win-lose-stats .target-entry-win:before{
+    content : '승리: ';
+    color : #AEDFF7;
+    font-weight: 600;
+}
+
+.target-entry-stats .win-lose-stats .target-entry-lose:before{
+    content : '패배: ';
+    color : #FFB5A7;
+    font-weight: 600;
+}
+
+.target-entry-stats .win-rate .target-entry-win-rate-bar{
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+    height: 30px;
+    background-color: #C5CED3;
+    border-radius: 6px;
+}
+
+.target-entry-stats .win-rate .target-entry-win-rate-bar:before{
+    content: var(--win-rate-text);
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: 600;
+    color : #FFF;
+    z-index: 100;
+}
+
+.target-entry-stats .win-rate .target-entry-win-rate-bar:after{
+    content: '';
+    position: absolute;
+    top : 0;
+    left : 0;
+    width: var(--win-rate);
+    height: 100%;
+    background-color: #3BA6B7;
+    border-radius: 6px;
+}
+
+.target-entry-stats .highest-tournament .target-entry-highest-tournament{
+    font-size: 16px;
+    font-weight: 600;
+    color : #E1B12C;
+}
