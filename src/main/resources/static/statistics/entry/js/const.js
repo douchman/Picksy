@@ -9,3 +9,12 @@ export const targetEntry = {
     name : null,
     description: null,
 }
+
+export const TournamentStageName = {
+    2 : '결승',
+    4 : '준결승',
+
+    getTournamentStageNameByTournament(tournament){
+        return this[tournament] || `${tournament}강`;
+    }
+}
