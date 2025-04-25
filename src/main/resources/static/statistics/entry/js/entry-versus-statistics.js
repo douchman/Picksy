@@ -1,8 +1,9 @@
 import { targetTopic, targetEntry } from "./const.js";
+import {setupTargetEntry} from "./target-entry.js";
 
 document.addEventListener('DOMContentLoaded', async () =>{
     if(saveTargetTopicIdAndEntryId()){
-
+        await setupTargetEntry();
     }
 });
 
