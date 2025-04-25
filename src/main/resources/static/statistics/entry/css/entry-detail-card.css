@@ -1,6 +1,6 @@
 @import "target-entry-stats.css";
 
-.entry-detail-card{
+.target-entry-detail-card{
     position: relative;
     display: flex;
     gap : 20px;
