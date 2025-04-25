@@ -1,6 +1,6 @@
-import { targetTopic, targetEntry } from "./const";
+import { targetTopic, targetEntry } from "./const.js";
 
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener('DOMContentLoaded', async () =>{
     if(saveTargetTopicIdAndEntryId()){
 
     }
@@ -13,6 +13,7 @@ function saveTargetTopicIdAndEntryId(){
     if( match ) {
         targetTopic.id = match[1];
         targetEntry.id = match[2];
+        return true;
     }
 
     return false;
