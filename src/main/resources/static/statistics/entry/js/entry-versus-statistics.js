@@ -1,12 +1,16 @@
 import { targetTopic, targetEntry } from "./const.js";
 import {setupTargetEntry} from "./target-entry.js";
 import {setupOpponentEntries} from "./opponent-entries.js";
+import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 
 document.addEventListener('DOMContentLoaded', async () =>{
     if(saveTargetTopicIdAndEntryId()){
-        if(await setupTargetEntry()){
-            await setupOpponentEntries();
-        }
+        loadYoutubeIframeAPI();
+        onYouTubeIframeApiReady(async () => {
+            if(await setupTargetEntry()){
+                await setupOpponentEntries();
+            }
+        });
     }
 });
 
