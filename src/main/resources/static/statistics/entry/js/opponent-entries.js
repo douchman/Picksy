@@ -27,7 +27,6 @@ export async function setupOpponentEntries() {
 function renderMatchUpRecords(matchUpRecord){
     const oppEntriesTableBody = document.querySelector('#opponent-entries-table-body');
 
-    console.log('oppEntriesTableBody -> ' , oppEntriesTableBody);
     matchUpRecord.forEach(matchUpRecord => {
         const entryInfo = matchUpRecord.opponentEntry;
         const matchRecord = matchUpRecord.matchRecord;
@@ -35,8 +34,9 @@ function renderMatchUpRecords(matchUpRecord){
         const entryMediaType = entryInfo.mediaType;
 
         const entryThumbnail = MediaType.isMediaTypeImage(entryMediaType) ? entryInfo.mediaUrl : entryInfo.thumbnail;
+
         const opponentEntry =
-            `<tr class="opponent-entry">
+            `<tr class="opponent-entry" data-mediatype="${entryMediaType}" data-mediaurl="${entryInfo.mediaUrl}">
                 <td class="opp-entry-thumbnail" style="background-image: url('${entryThumbnail}')"></td>
                 <td class="opp-entry-info">
                     <div class="info-group">
