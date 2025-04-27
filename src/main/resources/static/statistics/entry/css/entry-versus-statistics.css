@@ -1,6 +1,6 @@
 @import "entry-detail-card.css";
 @import "opponent-entries-stats.css";
-
+@import "../../../global/entry-media-viewer/css/entry-media-viewer.css";
 
 .entry-versus-statistics{
     position: relative;
