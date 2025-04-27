@@ -194,18 +194,28 @@
     background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill-blue.svg");
 }
 
+.entries-stats-table tbody tr{
+    cursor: pointer;
+}
+
 .entries-stats-table tbody tr td{
     border : 1px solid rgba(234, 234, 234, 7);
     text-align: center;
     box-sizing: border-box;
     height: var(--thead-td-height);
     max-height: var(--thead-td-height);
+    transition: background-color .3s ease;
+}
+
+.entries-stats-table tbody tr:hover td{
+    background-color: rgba(197, 211, 232, .4);
 }
 
 /* td rank */
 .entries-stats-table thead tr .rank{
     width: var(--thead-rank-width);
 }
+
 /* td rank -> tool-tip */
 .entries-stats-table thead tr .rank .tool-tip {
     left : 0;

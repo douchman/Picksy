@@ -1,4 +1,4 @@
-import {entryStatsTable} from "./const.js";
+import {entryStatsTable, topic} from "./const.js";
 import {RankSort, ScoreSort, tableQuery} from "./entry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics.js";
 import {setupEntryMediaViewer, showThumbViewer} from "./entry-thumb-viewer.js";
@@ -24,7 +24,7 @@ function addEntryStatisticsTableEvents(){
     addItemCountListEvent();
     addSearchFilterEvent();
     addTableHeaderOrderEvent();
-    addEntryThumbnailEvent();
+    addEntryRowEvents();
 }
 
 // 테이블 컨텐츠 표기 갯수 선택기 이벤트
@@ -96,14 +96,19 @@ function addTableHeaderOrderEvent(){
     });
 }
 
-// 썸네일 클릭 이벤트
-function addEntryThumbnailEvent(){
+function addEntryRowEvents(){
+
     document.querySelector('#entries-stats-tbody').addEventListener('click', function(event){
-        const entryThumb = event.target.closest('.entry-thumb');
-        if( entryThumb ){
+        const entryRow = event.target.closest('.entry-row'); // 엔트리 tr
+        const entryThumb = event.target.closest('.entry-thumb'); // 엔트리 tr > 썸네일
+
+        if( entryThumb ){ // 썸네일 이벤트 처리
             const mediaType = entryThumb.dataset.mediatype;
             const mediaUrl = entryThumb.querySelector('.media-url').value;
             showThumbViewer(mediaType, mediaUrl);
+        } else if ( entryRow) { // 로우 클릭 이벤트 처리
+            const entryId = entryRow.dataset.id;
+            moveToEntryVersusStats(entryId);
         }
     });
 }
@@ -128,4 +133,9 @@ function toggleFilterItemCountActive(active = false){
     active ?
         filterItemCount.classList.add('active')
         : filterItemCount.classList.remove('active');
+}
+
+function moveToEntryVersusStats(entryId){
+    console.log('tableQuery -> ' , tableQuery);
+    location.href = `/statistics/versus/topic/${topic.getId()}/entry/${entryId}`;
 }
