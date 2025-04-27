@@ -1,5 +1,5 @@
 @import "topic-stats-table.css";
-@import "entry-media-viewer.css";
+@import "../../../global/entry-media-viewer/css/entry-media-viewer.css";
 @import "comment.css";
 @import "wrapper.css";
 
