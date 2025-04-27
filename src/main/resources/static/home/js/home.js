@@ -45,8 +45,9 @@ function addTopicCardEvents(){
     document.querySelector('#topic-content-cards').addEventListener('click' , async function(event){
         const topicCard = event.target.closest('.topic-content-card');
         const btnTopicStats = event.target.closest('.btn-topic-stats');
-        const topicId = topicCard.dataset.id;
         if (btnTopicStats) {
+            const topicId = topicCard.dataset.id;
+
             window.open(`/statistics/topic/${topicId}`, '_blank'); // 통계페이지 이동(새 탭 열기)
         } else if (topicCard) {
             await openTournamentSelectDialog(topicId);
