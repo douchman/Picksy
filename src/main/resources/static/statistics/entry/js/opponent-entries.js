@@ -1,11 +1,14 @@
 import {targetEntry, targetTopic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {MediaType} from "../../../global/js/const.js";
+import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-media-viewer/js/entry-media-viewer.js";
 
 /* 상대한 엔트리 셋업 */
 // 상대한 엔트리 매치업 조회
 // 랜더링
+// 엔트리 미디어 뷰어 셋업
 export async function setupOpponentEntries() {
+    setupEntryMediaViewer(); // 미디어 뷰어 셋업
     const {status, data : entryVersusStatisticsResult} = await getEntryVersusStatistics();
 
     if( status === 200) {
@@ -15,13 +18,32 @@ export async function setupOpponentEntries() {
         if( isMatchUpRecordExist(matchUpRecord)){
             renderMatchUpRecords(matchUpRecord);
         }
-
+        addOpponentEntriesEvents();
     } else {
         // TODO : target entry versus statistics exception
         return false;
     }
     return true;
 
+}
+
+// 상대 엔트리 테이블 이벤트 등록
+function addOpponentEntriesEvents(){
+    document.querySelector('#opponent-entries-table-body').addEventListener('click', function(event){
+
+        const opponentEntry = event.target.closest('.opponent-entry');
+        const oppEntryThumbnail = event.target.closest('.opp-entry-thumbnail');
+
+        if (opponentEntry && oppEntryThumbnail){ // 썸네일 -> 미디어 뷰어 오픈
+            const mediaType = opponentEntry.dataset.mediatype;
+            const mediaUrl = opponentEntry.dataset.mediaurl;
+            showThumbViewer(mediaType, mediaUrl);
+        } else if( opponentEntry) { // 엔트리 -> 해당 엔트리 상성 통계로 이동
+            const opponentEntryId = opponentEntry.dataset.id;
+            location.href = `/statistics/versus/topic/${targetTopic.id}/entry/${opponentEntryId}`;
+        }
+
+    });
 }
 
 function renderMatchUpRecords(matchUpRecord){
@@ -36,7 +58,7 @@ function renderMatchUpRecords(matchUpRecord){
         const entryThumbnail = MediaType.isMediaTypeImage(entryMediaType) ? entryInfo.mediaUrl : entryInfo.thumbnail;
 
         const opponentEntry =
-            `<tr class="opponent-entry" data-mediatype="${entryMediaType}" data-mediaurl="${entryInfo.mediaUrl}">
+            `<tr class="opponent-entry" data-id="${entryInfo.id}" data-mediatype="${entryMediaType}" data-mediaurl="${entryInfo.mediaUrl}">
                 <td class="opp-entry-thumbnail" style="background-image: url('${entryThumbnail}')"></td>
                 <td class="opp-entry-info">
                     <div class="info-group">
