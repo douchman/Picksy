@@ -14,6 +14,10 @@
 }
 
 /* table row : opponent-entry */
+.opponent-entry{
+    cursor: pointer;
+}
+
 .opponent-entry td{
     border : 1px solid rgba(234, 234, 234, 7);
 }
@@ -70,18 +74,14 @@
     font-weight: 500;
 }
 
-.opponent-entry .match-record .match-result .win.higher,
-.opponent-entry .match-record .match-result .lose.higher{
-    --font-size : 24px;
+.opponent-entry .match-record .match-result .win{
+    color : #AEDFF7;
+    font-size: 18px;
     font-weight: 600;
 }
 
-.opponent-entry .match-record .match-result .win{
-    color : #AEDFF7;
-}
-
-.opponent-entry .match-record .match-result .win:before{
-    content : '승리 : ';
+.opponent-entry .match-record .match-result .win:after{
+    content : '승';
     font-size: var(--font-size);
 }
 
@@ -89,13 +89,14 @@
     color : #FFB5A7;
 }
 
-.opponent-entry .match-record .match-result .lose:before{
-    content : '패배 : ';
+.opponent-entry .match-record .match-result .lose:after{
+    content : '패';
     font-size: var(--font-size);
 }
 
 .opponent-entry .match-record .match-result .vs-symbol{
-    font-size: 16px;
+    color : #7D7D7D;
+    font-size: 12px;
     font-weight: 600;
 }
 
