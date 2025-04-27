@@ -65,7 +65,7 @@ function renderMatchResult(matchRecord){
 
     return `<div class="match-result">
                 <p class="win ${winHigherClass}">${wins}</p>
-                <span class="vs-symbol">:</span>
+                <span class="vs-symbol">/</span>
                 <p class="lose ${loseHigherClass}">${losses}</p>
             </div>`;
 }
