@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/statistics/entry/css/entry-versus-statistics.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="entry-versus-statistics" class="entry-versus-statistics">
+            <div class="h-txt-group">
+                <p class="txt-h">📈 엔트리 상성 통계</p>
+                <p class="txt-e">엔트리의 상세정보와 대결한 엔트리 별 상성 통계정보를 확인할 수 있습니다</p>
+            </div>
+
+            <div class="entry-detail-card">
+                <div class="entry-thumbnail" style="background-image: url('https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-02.jpg')"></div>
+                <div class="detail-item target-entry-spec">
+                    <i class="t-index">📦엔트리 정보</i>
+                    <p id="target-entry-name" class="entry-name">엔트리 이름</p>
+                    <p id="target-entry-desc" class="entry-desc">엔트리명 엔트리 설명 엔트리 설명 엔 명 엔트리 설명 엔트리 설명 엔 명 엔트리 설명 엔트리 설명 엔 명 엔트리 설명 엔트리 설명 엔 명 엔트리 설명 엔트리 설명 엔 </p>
+                </div>
+
+                <div class="detail-item target-entry-stats">
+                    <i class="t-index">📊엔트리 통계</i>
+                    <div class="stats-item">
+                        <i class="stats-item-index">⚔️승/패</i>
+                        <div class="stats-content win-lose-stats">
+                            <p id="target-entry-win" class="target-entry-win">14</p>/
+                            <p id="target-entry-lose" class="target-entry-lose">3</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-item">
+                        <i class="stats-item-index">🎯승률</i>
+                        <div class="stats-content win-rate">
+                            <div id="target-entry-win-rate-bar" class="target-entry-win-rate-bar" style="--win-rate : 64%; --win-rate-text : '64%'"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-item">
+                        <i class="stats-item-index">🏅가장 높이올라간 토너먼트</i>
+                        <div class="stats-content highest-tournament">
+                            <p id="target-entry-highest-tournament" class="target-entry-highest-tournament">결승</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="opponent-entries-stats">
+                <i class="t-opponent-index">🤼‍♂️ 상대한 엔트리</i>
+                <table id="opponent-entries-table" class="opponent-entries-table">
+                    <thead id="opponent-entries-table-head" class="opponent-entries-table-head">
+                        <tr>
+                            <th class="th-opp-entry-thumbnail">썸네일</th>
+                            <th class="th-opp-entry-info">엔트리 정보</th>
+                            <th class="th-match-record">대결 전적</th>
+                            <th class="th-versus-rate">대결 승률</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="opponent-entries-table-body" class="opp-entries-table-body">
+                        <tr class="opponent-entry">
+                            <td class="opp-entry-thumbnail"></td>
+                            <td class="opp-entry-info">
+                                <div class="info-group">
+                                    <p class="opp-entry-name">상대 엔트리의 이름</p>
+                                    <p class="opp-entry-desc">상대 한 엔트리의 설명</p>
+                                </div>
+                            </td>
+                            <td class="match-record">
+                                <div class="match-result">
+                                    <p class="win higher">12</p>
+                                    <span class="vs-symbol">:</span>
+                                    <p class="lose">6</p>
+                                </div>
+                            </td>
+                            <td class="versus-rate">
+                                <div class="versus-rate-bar" style="--win-rate : 55%; --win-rate-text : '55%';"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </body>
+    <script type="module" th:src="@{'/statistics/entry/js/entry-versus-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</th:block>
+</html>
