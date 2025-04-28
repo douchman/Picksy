@@ -56,9 +56,9 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
 }
 
 function nextEntryMatch(){
-    toggleMatchStageStatus(false);
-    toggleEntrySlotClickBlock(false);
     setTimeout(async () =>{
+        toggleMatchStageStatus(false);
+        toggleEntrySlotClickBlock(false);
         await loadEntryMatchInfo();
     }, 2500);
 }
