@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>찾을 수 없는 페이지</title>
+
+    <link rel="stylesheet" th:href="@{'/error/404/css/404.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<body>
+    <div class="not-found-404 prevent-drag">
+        <i class="emoji">🤔</i>
+        <p class="txt-a">찾을 수 없는 페이지에요 :(</p>
+        <button id="btn-back-to-main" class="btn-back-to-main" type="button">돌아가기</button>
+    </div>
+    <script type="module" th:src="@{'/error/404/js/404.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</body>
+</html>

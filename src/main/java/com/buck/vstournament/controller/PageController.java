@@ -51,4 +51,10 @@ public class PageController {
         // 직관적인 URL 을 위해 PathVariable 사용
         return "statistics/entry/entry-versus-statistics";
     }
+
+    // 404
+    @GetMapping("page-not-found")
+    public String notFound(){
+        return "error/404/404";
+    }
 }
