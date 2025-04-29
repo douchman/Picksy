@@ -1,4 +1,5 @@
 import {setupMatchStageComment} from "./match-stage-comment/match-stage-comment.js";
+import {flushPlayRecordIdsFromLocalStorage} from "../../../global/js/vstopic-localstorage.js";
 
 // 매치 종료
 export function finishEntryMatch(){
@@ -6,6 +7,7 @@ export function finishEntryMatch(){
         removeLoserEntrySlot(); // 패배한 엔트리 슬롯 제거
         setupWinnerEntry(); // 승리한 엔트리 셋업
         setupMatchStageComment(); // 대결주제 유저 코멘트 랜더링
+        flushPlayRecordIdsFromLocalStorage(); // 대결 진행 완료 후 로컬 스토리지 비우기
     }, 2000);
 
 }
