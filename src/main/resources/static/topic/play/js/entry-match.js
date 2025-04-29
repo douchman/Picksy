@@ -2,8 +2,7 @@ import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
 import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {flushPlayRecordIdsFromLocalStorage} from "../../../global/js/vstopic-localstorage.js";
+import {finishEntryMatch} from "./entry-match-finish.js";
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
@@ -55,6 +54,7 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
     }
 }
 
+// 다음 매치업 준비
 function nextEntryMatch(){
     setTimeout(async () =>{
         toggleMatchStageStatus(false);
@@ -63,17 +63,8 @@ function nextEntryMatch(){
     }, 2500);
 }
 
-function finishEntryMatch(){
-    flushPlayRecordIdsFromLocalStorage(); // 로컬스토리지 내 식별자 비우기
-    setTimeout(() =>{
-        showToastMessage('모든 대결이 종료되었습니다. :)' , '', 2500);
-    }, 1000);
 
-    setTimeout(() =>{
-        location.href = '/';
-    }, 3000)
-}
-
+// 매치 스테이지 종료 상태 토글
 function toggleMatchStageStatus(isMatchDone){
     const matchStage = document.querySelector('#match-stage');
 
@@ -82,6 +73,7 @@ function toggleMatchStageStatus(isMatchDone){
         : matchStage.classList.remove('match-done');
 }
 
+// 엔트리 선택 잠금 상태 토글
 function toggleEntrySlotClickBlock(isBlock){
     const allEntries = document.querySelector('#match-stage').querySelectorAll('.entry-slot');
 
@@ -93,14 +85,17 @@ function toggleEntrySlotClickBlock(isBlock){
     });
 }
 
+// 현재 토너먼트 라운드 표시(업데이트)
 function displayCurrentTournament(currentTournament){
     document.querySelector('#current-tournament').textContent = `<${currentTournament}>`;
 }
 
+// 대결 조회
 async function getMatch(){
     return await apiGetRequest(`topics/play-records/${playRecord.getId()}/matches`);
 }
 
+// 대결 결과 제출
 async function patchEntryMatch(requestBody){
     return await apiPatchRequest(`topics/play-records/${playRecord.getId()}/matches/${match.getId()}`, {}, requestBody)
 }
