@@ -7,6 +7,7 @@
     height: calc(100% - var(--topic-header-height));
     box-sizing: border-box;
     padding: 20px 0 60px 0;
+    overflow-x: hidden;
 }
 
 .match-stage:after{
