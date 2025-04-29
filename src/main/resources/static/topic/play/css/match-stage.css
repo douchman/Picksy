@@ -1,4 +1,5 @@
 @import "match-stage-animation.css";
+@import "match-stage-comment.css";
 
 .match-stage{
     position: relative;
@@ -143,4 +144,12 @@
 
 .entry-slot#entry-b.loser{
     animation: entry-b-lose .4s ease forwards;
+}
+
+.entry-slot .winner-entry-index{
+    font-size: 30px;
+    color : #FFF;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 15px;
 }
