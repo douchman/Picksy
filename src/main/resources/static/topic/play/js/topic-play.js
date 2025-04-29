@@ -2,12 +2,10 @@ import {topic, playRecord} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {loadEntryMatchInfo} from "./entry-match.js";
-import {flushPlayRecordIdsFromLocalStorage} from "../../../global/js/vstopic-localstorage.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    addPlayRecordIdFlushEventOnUnload();
     const topicSuccess  = await saveTopicInfo(); // 대결주제 식별자 변수화
     const playRecordSuccess = savePlayRecordInfo(); // 대결진행기록 식별자 변수화
 
@@ -89,18 +87,4 @@ function handleSetTopicFailed(){
     setTimeout(()=> {
         location.href = '/';
     }, 2500);
-}
-
-/**
- * 새로고침을 제외한 페이지 이탈 시 로컬스토리지 비우기
- */
-function addPlayRecordIdFlushEventOnUnload(){
-    window.addEventListener('beforeunload', () => {
-        //event.preventDefault();
-        const navigationType = performance.getEntries()[0].type;
-        const isReload = navigationType === 'reload';
-        if(!isReload){
-            flushPlayRecordIdsFromLocalStorage();
-        }
-    });
 }
