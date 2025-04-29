@@ -1,0 +1,146 @@
+@import "match-stage-animation.css";
+
+.match-stage{
+    position: relative;
+    display: flex;
+    height: calc(100% - var(--topic-header-height));
+    box-sizing: border-box;
+    padding: 20px 0 60px 0;
+}
+
+.match-stage:after{
+    content : '';
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    width : 90px;
+    height: 90px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/vs-icon.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.match-stage:before{
+    content : '';
+    position: absolute;
+    top : 0;
+    left : 50%;
+    width : 0.01rem;
+    height: 100%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255 ,255, .4);
+    pointer-events: none;
+}
+
+.entry-slot{
+    flex : 1;
+    position: relative;
+}
+
+.entry-slot.blocked{
+    pointer-events: none;
+}
+
+.entry-slot .entry-image{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    height: 80%;
+    max-height: 80%;
+}
+
+.entry-slot .entry-name{
+    padding : 6px;
+    color : #FFF;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, .75);
+    display: inline-block;
+    width: max-content;
+    border-radius: 4px;
+    position: absolute;
+    bottom : 25%;
+    left : 50%;
+    transform: translate(-50% , 0);
+    max-width: 85%;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.entry-slot .you-tube-video {
+    position: absolute;
+    top : 50%;
+    transform: translateY(-50%);
+}
+
+.entry-slot .video-background {
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.entry-slot .btn-select-entry{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    bottom : 0;
+    left : 50%;
+    transform: translate(-50%, 0);
+    transition: opacity .2s ease;
+}
+
+.entry-slot .btn-select-entry:before{
+    content : '선택';
+    font-weight: 600;
+    color : #FFF;
+    font-size: 30px;
+}
+
+.entry-slot#entry-a .btn-select-entry{
+    background-color: #7BD3EA;
+}
+
+.entry-slot#entry-b .btn-select-entry{
+    background-color: #FF7878;
+}
+
+
+/* winner & loser entry styles and animations a */
+.match-stage.match-done:before,
+.match-stage.match-done:after{
+    display: none;
+}
+
+.entry-slot.winner .btn-select-entry,
+.entry-slot.loser .btn-select-entry{
+    opacity: 0;
+}
+
+
+.entry-slot#entry-a.winner{
+    animation: entry-a-win .4s ease forwards;
+}
+
+.entry-slot#entry-a.loser{
+    animation: entry-a-lose .4s ease forwards;
+}
+
+.entry-slot#entry-b.winner{
+    animation: entry-b-win .4s ease forwards;
+}
+
+.entry-slot#entry-b.loser{
+    animation: entry-b-lose .4s ease forwards;
+}
