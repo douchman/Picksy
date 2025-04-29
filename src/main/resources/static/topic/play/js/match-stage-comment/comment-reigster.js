@@ -21,7 +21,7 @@ async function registerComment(){
 
     if( validateCommentForm()){
         const registerRequestBody = {
-            author : document.querySelector('#author').value,
+            author : `${document.querySelector('#author').value} <i>(${getWinnerEntryName()})</i>`,
             content : document.querySelector('#comment-content').value,
         }
 
@@ -95,6 +95,11 @@ function validateCommentForm(){
     }
 
     return true;
+}
+
+function getWinnerEntryName(){
+    const winnerEntry = document.querySelector('.winner-entry');
+    return winnerEntry.querySelector('.entry-name').textContent;
 }
 
 // 댓글 작성 api

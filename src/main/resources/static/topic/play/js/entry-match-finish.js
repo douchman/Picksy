@@ -21,6 +21,7 @@ export function finishEntryMatch(){
 function setupWinnerEntry(){
     const winnerEntry = document.querySelector('.entry-slot.winner');
     winnerEntry.classList.remove('winner');
+    winnerEntry.classList.add('winner-entry');
     winnerEntry.querySelector('.btn-select-entry').remove();
 
     renderWinnerEntryIndex(winnerEntry);
