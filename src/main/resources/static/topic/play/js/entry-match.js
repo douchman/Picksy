@@ -2,8 +2,7 @@ import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
 import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {flushPlayRecordIdsFromLocalStorage} from "../../../global/js/vstopic-localstorage.js";
+import {finishEntryMatch} from "./entry-match-finish.js";
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
@@ -64,17 +63,6 @@ function nextEntryMatch(){
     }, 2500);
 }
 
-// 엔트리 매치 종료
-function finishEntryMatch(){
-    flushPlayRecordIdsFromLocalStorage(); // 로컬스토리지 내 식별자 비우기
-    setTimeout(() =>{
-        showToastMessage('모든 대결이 종료되었습니다. :)' , '', 2500);
-    }, 1000);
-
-    setTimeout(() =>{
-        location.href = '/';
-    }, 3000)
-}
 
 // 매치 스테이지 종료 상태 토글
 function toggleMatchStageStatus(isMatchDone){
