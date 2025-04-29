@@ -78,7 +78,13 @@
     word-wrap: break-word;
     word-break: break-all;
     white-space: normal;
+}
 
+.comment .comment-header .author i{
+    color : #92C7CF;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
 }
 
 .comment .comment-header .time-stamp{
