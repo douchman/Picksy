@@ -24,6 +24,7 @@ function addTopicSearchFilterEvents(){
 
     const keywordSearch = document.querySelector('#keyword-search');
     const btnSearchTopic = document.querySelector('#btn-search-topic');
+    const orderFilter = document.querySelector('#order-filter');
 
     keywordSearch.addEventListener('keydown', function(event) {
         const keyEvent = event.key;
@@ -33,6 +34,14 @@ function addTopicSearchFilterEvents(){
     });
 
     btnSearchTopic.addEventListener('click', async () => {
+        updateCurrentPageToFirst();
+        clearTopicContentCards();
+        startInfiniteScrollObserver();
+    });
+
+    orderFilter.addEventListener('change', function(event) {
+        const orderType = event.target.value;
+        updateTopicSearchSortBy(orderType);
         updateCurrentPageToFirst();
         clearTopicContentCards();
         startInfiniteScrollObserver();
@@ -112,6 +121,10 @@ async function renderTopics(){
 
 function updateCurrentPageToFirst(page = 1) {
     topicSearchParams.page = page;
+}
+
+function updateTopicSearchSortBy(searchSortBy){
+    topicSearchParams.searchSortBy = searchSortBy;
 }
 
 function hasNextPage(currentPage = 1 , totalPages = 1 ){
