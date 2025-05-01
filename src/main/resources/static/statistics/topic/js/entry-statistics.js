@@ -12,9 +12,12 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
     const { status, isAuthOrNetworkError, data : entryStatisticsResult  } = await getEntryStatistics();
 
     if( status === 200){
+        const lastUpdatedAt = entryStatisticsResult.lastUpdatedAt;
         const entriesStatistics = entryStatisticsResult.entriesStatistics;
         const pagination = entryStatisticsResult.pagination;
         const isEntriesStatisticsEmpty = (!entriesStatistics || entriesStatistics.length === 0);
+
+        renderLastUpdatedTime(lastUpdatedAt);
         if( !isEntriesStatisticsEmpty){
 
             const entriesStatsTbody = document.querySelector('#entries-stats-tbody');
@@ -52,6 +55,10 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
         handleRenderEntryStatsException(isAuthOrNetworkError, entryStatisticsResult);
         return false;
     }
+}
+
+function renderLastUpdatedTime(lastUpdateAt){
+    document.querySelector('#last-updated-time').textContent = lastUpdateAt;
 }
 
 // 승 & 패 그래프
