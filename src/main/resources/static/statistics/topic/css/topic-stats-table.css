@@ -144,11 +144,13 @@
 }
 
 .entries-stats-table thead tr th .tool-tip .emphasis-b{
-
     color : #CDDC39;
 }
 .entries-stats-table thead tr th .tool-tip .emphasis-c{
     color : #FFB74D;
+}
+.entries-stats-table thead tr th .tool-tip .emphasis-d{
+    color : #BA68C8;
 }
 
 .entries-stats-table thead tr th .tool-tip:after{
@@ -403,10 +405,26 @@
     background-color: var(--progress-bar-fill-color-100);
 }
 
-.rank-info{
+.rank-notice{
+    display: flex;
+    align-items: baseline;
+    gap : 10px;
+}
+
+
+.rank-notice .last-updated-time{
     color : #7D7D7D;
     font-size: 12px;
-    font-style: italic;
-    font-weight: 600;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.rank-notice .last-updated-time:before{
+    content :'🔄최근업데이트: ';
+    color : #7D7D7D;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
     margin-bottom: 10px;
 }
