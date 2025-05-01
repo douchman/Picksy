@@ -7,3 +7,10 @@ export const TOURNAMENT_DESC = {
     64 : '총 64개의 엔트리가 무작위로 선택되어 겨룹니다.',
     128 : '총 128개의 엔트리가 무작위로 선택되어 겨룹니다.',
 }
+
+export const topicSearchParams = {
+    keyword : '',
+    page : 1,
+    size : 16,
+    searchSortBy : 'LATEST'
+}

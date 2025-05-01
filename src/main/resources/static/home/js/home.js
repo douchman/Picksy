@@ -2,10 +2,9 @@ import {apiGetRequest} from '../../global/js/api.js';
 import {setupTournamentSelectDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
 import {handleTopicRenderException} from "./home-exception-handler.js";
+import {topicSearchParams} from "./const.js";
 
 let scrollObserver;
-const pageSize = 16;
-let currentPage = 1;
 let isLoading = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -25,6 +24,7 @@ function addTopicSearchFilterEvents(){
 
     const keywordSearch = document.querySelector('#keyword-search');
     const btnSearchTopic = document.querySelector('#btn-search-topic');
+    const orderFilter = document.querySelector('#order-filter');
 
     keywordSearch.addEventListener('keydown', function(event) {
         const keyEvent = event.key;
@@ -34,7 +34,15 @@ function addTopicSearchFilterEvents(){
     });
 
     btnSearchTopic.addEventListener('click', async () => {
-        initCurrentPage();
+        updateCurrentPageToFirst();
+        clearTopicContentCards();
+        startInfiniteScrollObserver();
+    });
+
+    orderFilter.addEventListener('change', function(event) {
+        const orderType = event.target.value;
+        updateTopicSearchSortBy(orderType);
+        updateCurrentPageToFirst();
         clearTopicContentCards();
         startInfiniteScrollObserver();
     });
@@ -63,23 +71,18 @@ async function renderTopics(){
     if ( isLoading ) return;
     isLoading = true;
 
-    const keyword = document.querySelector('#keyword-search').value;
-    const requestParams = {
-        keyword : keyword,
-        page : currentPage,
-        size : pageSize
-    }
+    topicSearchParams.keyword = document.querySelector('#keyword-search').value
 
     const topicContentCards = document.querySelector('#topic-content-cards');
 
-    const {status, isAuthOrNetworkError, data : topicResult} = await getTopics(requestParams);
+    const {status, isAuthOrNetworkError, data : topicResult} = await getTopics(topicSearchParams);
 
     const topicList = topicResult.topicList;
     const pagination = topicResult.pagination;
 
     if( status === 200 ){
         if(hasNextPage(pagination.currentPage, pagination.totalPages)){
-            currentPage++;
+            topicSearchParams.page = (pagination.currentPage + 1 );
         }else{
             stopInfiniteScrollObserver();
         }
@@ -116,12 +119,12 @@ async function renderTopics(){
     isLoading = false;
 }
 
-/**
- * 현 페이지 초기화
- * @param {number} page
- */
-function initCurrentPage(page = 1) {
-    currentPage = page;
+function updateCurrentPageToFirst(page = 1) {
+    topicSearchParams.page = page;
+}
+
+function updateTopicSearchSortBy(searchSortBy){
+    topicSearchParams.searchSortBy = searchSortBy;
 }
 
 function hasNextPage(currentPage = 1 , totalPages = 1 ){
@@ -134,7 +137,6 @@ function setupInfiniteScrollObserver(){
     const scrollObserverTarget = document.querySelector('#scroll-observer-target');
     scrollObserver = new IntersectionObserver(async ([entry]) => {
        if(entry.isIntersecting){
-           //await renderTopics();
            await renderTopics();
        }
     }, {
