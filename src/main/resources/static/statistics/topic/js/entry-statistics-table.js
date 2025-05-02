@@ -12,6 +12,7 @@ let keywordSearchDebounceTimer;
 // 페이지 네이션 랜더링
 // 미디어 뷰어 셋업
 export function setupEntryStatisticsTable(){
+    checkTableQueryParams();
     addEntryStatisticsTableEvents(); // 테이블 이벤트 등록
     renderTablePagination(); // 페이지네이션 랜더링
     setupEntryMediaViewer(); // 엔트리 미디어 뷰어 셋업
@@ -142,4 +143,31 @@ function moveToEntryVersusStats(entryId){
 
 function saveTableQueryToSessionStorage(){
     sessionStorage.setItem(`tableQuery-${topic.getId()}`, JSON.stringify(tableQuery));
+}
+
+function removeTableQueryFromSessionStorage(){
+    sessionStorage.removeItem(`tableQuery-${topic.getId()}`);
+}
+
+function checkTableQueryParams(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const tableQueryParam  = urlParams.get('tableQuery');
+    const isTableQueryRestore = tableQueryParam === 'Y';
+
+    if( isTableQueryRestore ){ // 테이블 쿼리 파라미터 확인
+        removeTableQueryParam(); // 쿼리 파라미터 제거
+        const saved = sessionStorage.getItem(`tableQuery-${topic.getId()}`);
+        if( saved ){
+            const restoredQuery = JSON.parse(saved);
+            Object.assign(tableQuery, restoredQuery); // 테이블 쿼리 교체
+            removeTableQueryFromSessionStorage(); // 스토리지 비우기
+        }
+    }
+}
+
+// URL 내 파라미터 쿼리 제거
+function removeTableQueryParam(){
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.delete('tableQuery');
+    window.history.replaceState({}, '', newUrl.toString());
 }
