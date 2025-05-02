@@ -120,7 +120,7 @@ async function searchEntryWithKeyword(){
 
     keywordSearchDebounceTimer = setTimeout(async () => {
         tableQuery.keyword = document.querySelector('#search-keyword').value;
-        await renderEntryStatistics(true, false);
+        await renderEntryStatistics(true, true);
     }, 600);
 }
 
