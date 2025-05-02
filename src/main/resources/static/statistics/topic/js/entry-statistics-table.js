@@ -162,6 +162,7 @@ function checkTableQueryParams(){
             const restoredQuery = JSON.parse(saved);
             Object.assign(tableQuery, restoredQuery); // 테이블 쿼리 교체
             removeTableQueryFromSessionStorage(); // 스토리지 비우기
+            syncTableQueryUI(); // 랜더링 UI 싱크
         }
     }
 }
@@ -172,3 +173,21 @@ function removeTableQueryParam(){
     newUrl.searchParams.delete('tableQuery');
     window.history.replaceState({}, '', newUrl.toString());
 }
+
+// 교체된 테이블 쿼리에 맞추어 UI 싱크
+function syncTableQueryUI(){
+    updateItemPerPageUI();
+    updateSearchKeyword();
+}
+
+// 표시갯수 변경
+function updateItemPerPageUI(){
+    const itemPerPage = document.querySelector('#item-per-page');
+    itemPerPage.value = tableQuery.pageSize;
+    itemPerPage.textContent = `${tableQuery.pageSize}개`;
+}
+
+function updateSearchKeyword(){
+    document.querySelector('#search-keyword').value = `${tableQuery.keyword}`;
+}
+
