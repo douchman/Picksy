@@ -12,10 +12,10 @@ let keywordSearchDebounceTimer;
 // 페이지 네이션 랜더링
 // 미디어 뷰어 셋업
 export async function setupEntryStatisticsTable(){
-    checkTableQueryParams();
-    await renderEntryStatistics();
-    addEntryStatisticsTableEvents(); // 테이블 이벤트 등록
     renderTablePagination(); // 페이지네이션 랜더링
+    checkTableQueryParams();
+    await renderEntryStatistics(true, true);
+    addEntryStatisticsTableEvents(); // 테이블 이벤트 등록
     setupEntryMediaViewer(); // 엔트리 미디어 뷰어 셋업
     setupUserComment(); // 유저 코멘트 셋업
 }
