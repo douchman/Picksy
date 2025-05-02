@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
     if(saveTargetTopicIdAndEntryId()){
         loadYoutubeIframeAPI();
         onYouTubeIframeApiReady(async () => {
+            addBackToTopicStatsEvent();
             if(await setupTargetEntry()){
                 await setupOpponentEntries();
             }
@@ -25,4 +26,10 @@ function saveTargetTopicIdAndEntryId(){
     }
 
     return false;
+}
+
+function addBackToTopicStatsEvent(){
+    document.querySelector('#back-to-topic-stats').addEventListener('click', () =>{
+        location.href = `/statistics/topic/${targetTopic.id}?tableQuery=Y`;
+    });
 }
