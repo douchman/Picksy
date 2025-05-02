@@ -7,8 +7,21 @@
     padding : 20px 0;
 }
 
-.h-txt-group{
+.top-h{
+    position: relative;
+    display: flex;
+    align-items: center;
     margin-bottom: 15px;
+}
+
+.back-to-topic-stats{
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/arrow-left.svg");
+    margin-right: 20px;
 }
 
 .txt-h{

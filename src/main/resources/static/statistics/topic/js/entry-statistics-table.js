@@ -11,9 +11,11 @@ let keywordSearchDebounceTimer;
 // 이벤트 등록
 // 페이지 네이션 랜더링
 // 미디어 뷰어 셋업
-export function setupEntryStatisticsTable(){
-    addEntryStatisticsTableEvents(); // 테이블 이벤트 등록
+export async function setupEntryStatisticsTable(){
     renderTablePagination(); // 페이지네이션 랜더링
+    handleTableQueryRestoration();
+    await renderEntryStatistics(true, true);
+    addEntryStatisticsTableEvents(); // 테이블 이벤트 등록
     setupEntryMediaViewer(); // 엔트리 미디어 뷰어 셋업
     setupUserComment(); // 유저 코멘트 셋업
 }
@@ -118,7 +120,7 @@ async function searchEntryWithKeyword(){
 
     keywordSearchDebounceTimer = setTimeout(async () => {
         tableQuery.keyword = document.querySelector('#search-keyword').value;
-        await renderEntryStatistics(true, false);
+        await renderEntryStatistics(true, true);
     }, 600);
 }
 
@@ -136,6 +138,56 @@ function toggleFilterItemCountActive(active = false){
 }
 
 function moveToEntryVersusStats(entryId){
-    console.log('tableQuery -> ' , tableQuery);
+    saveTableQueryToSessionStorage();
     location.href = `/statistics/versus/topic/${topic.getId()}/entry/${entryId}`;
 }
+
+function saveTableQueryToSessionStorage(){
+    sessionStorage.setItem(`tableQuery-${topic.getId()}`, JSON.stringify(tableQuery));
+}
+
+function removeTableQueryFromSessionStorage(){
+    sessionStorage.removeItem(`tableQuery-${topic.getId()}`);
+}
+
+function handleTableQueryRestoration(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const tableQueryParam  = urlParams.get('tableQuery');
+    const isTableQueryRestore = tableQueryParam === 'Y';
+
+    if( isTableQueryRestore ){ // 테이블 쿼리 파라미터 확인
+        clearTableQueryParamFromUrl(); // 쿼리 파라미터 제거
+        const saved = sessionStorage.getItem(`tableQuery-${topic.getId()}`);
+        if( saved ){
+            const restoredQuery = JSON.parse(saved);
+            Object.assign(tableQuery, restoredQuery); // 테이블 쿼리 교체
+            removeTableQueryFromSessionStorage(); // 스토리지 비우기
+            applyRestoredQueryToUI(); // 랜더링 UI 싱크
+        }
+    }
+}
+
+// URL 내 파라미터 쿼리 제거
+function clearTableQueryParamFromUrl(){
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.delete('tableQuery');
+    window.history.replaceState({}, '', newUrl.toString());
+}
+
+// 교체된 테이블 쿼리에 맞추어 UI 싱크
+function applyRestoredQueryToUI(){
+    applyPageSizeToUI();
+    setSearchKeywordInput();
+}
+
+// 표시갯수 변경
+function applyPageSizeToUI(){
+    const itemPerPage = document.querySelector('#item-per-page');
+    itemPerPage.value = tableQuery.pageSize;
+    itemPerPage.textContent = `${tableQuery.pageSize}개`;
+}
+
+function setSearchKeywordInput(){
+    document.querySelector('#search-keyword').value = `${tableQuery.keyword}`;
+}
+

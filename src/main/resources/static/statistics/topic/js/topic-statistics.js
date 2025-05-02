@@ -1,7 +1,6 @@
 import {topic} from "./const.js";
 import {apiGetRequest} from "../../../global/js/api.js";
 import {setupEntryStatisticsTable} from "./entry-statistics-table.js";
-import {renderEntryStatistics} from "./entry-statistics.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 import {handleRenderTopicStatsException} from "./topic-statistics-exception-handler.js";
 
@@ -12,11 +11,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if( topicIdSuccess ){
         const topicStatsSuccess = await renderTopicStatistics();
-        const entriesStatsSuccess = await renderEntryStatistics();
         loadYoutubeIframeAPI();
-        onYouTubeIframeApiReady(() => { // youtube API load success
-            if(topicStatsSuccess && entriesStatsSuccess) {
-                setupEntryStatisticsTable();
+        onYouTubeIframeApiReady(async () => { // youtube API load success
+            if(topicStatsSuccess) {
+                await setupEntryStatisticsTable();
             }
         });
     }
