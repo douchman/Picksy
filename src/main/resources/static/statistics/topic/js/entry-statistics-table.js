@@ -136,6 +136,10 @@ function toggleFilterItemCountActive(active = false){
 }
 
 function moveToEntryVersusStats(entryId){
-    console.log('tableQuery -> ' , tableQuery);
+    saveTableQueryToSessionStorage();
     location.href = `/statistics/versus/topic/${topic.getId()}/entry/${entryId}`;
+}
+
+function saveTableQueryToSessionStorage(){
+    sessionStorage.setItem(`tableQuery-${topic.getId()}`, JSON.stringify(tableQuery));
 }
