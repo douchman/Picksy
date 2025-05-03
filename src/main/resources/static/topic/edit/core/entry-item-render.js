@@ -1,4 +1,4 @@
-import {generateRandomEntryId} from "./util/entry-uuid.js";
+import {generateRandomEntryId} from "./entry-uuid.js";
 
 export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
     const entryForm = document.querySelector('#entry-form');

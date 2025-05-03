@@ -1,12 +1,12 @@
-import {renderEntryItem} from "../../common/entry-item-render.js";
-import {generateRandomEntryId} from "../../common/util/entry-uuid.js";
+import {renderEntryItem} from "../../core/entry-item-render.js";
+import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb,
     removeStagedEntryMedia
 } from "./staged-entry-media.js";
-import {getYouTubeInfoFromUrl} from "../../common/util/youtube.js";
+import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
