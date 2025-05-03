@@ -7,7 +7,7 @@ import {
     removeStagedEntryMedia
 } from "./staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "../../common/util/youtube.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 

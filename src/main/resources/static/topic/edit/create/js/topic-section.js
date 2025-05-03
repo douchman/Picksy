@@ -1,7 +1,7 @@
-import {generateFilePreviewURL} from "../../../global/js/file.js";
-import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../global/js/api.js";
+import {generateFilePreviewURL} from "../../../../global/js/file.js";
+import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../../global/js/api.js";
 import {getTopicId, setTopicId} from "./const.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
 export function setupTopicSection(){
     addTopicSectionEvents();

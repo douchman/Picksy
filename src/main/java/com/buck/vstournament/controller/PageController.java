@@ -29,7 +29,7 @@ public class PageController {
 
     @GetMapping("topic/create")
     public String createTopic(){
-        return "topic/create/topic-create";
+        return "topic/edit/create/topic-create";
     }
 
     @GetMapping("topic/play/{id}")

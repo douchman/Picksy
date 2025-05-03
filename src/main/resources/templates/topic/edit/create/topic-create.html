@@ -4,7 +4,7 @@
       layout:decorate="~{global/layouts/base-layout.html}">
 
 <head>
-    <link rel="stylesheet" th:href="@{'/topic/create/css/topic-create.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <link rel="stylesheet" th:href="@{'/topic/edit/create/css/topic-create.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
 </head>
 <th:block layout:fragment="Content">
     <body data-require-auth="true">
@@ -68,6 +68,6 @@
             </div>
         </div>
     </body>
-    <script type="module" th:src="@{'/topic/create/js/topic-create.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+    <script type="module" th:src="@{'/topic/edit/create/js/topic-create.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>

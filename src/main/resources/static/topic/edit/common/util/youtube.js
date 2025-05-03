@@ -1,4 +1,4 @@
-import {blobToFile} from "../../../global/js/file.js";
+import {blobToFile} from "../../../../global/js/file.js";
 
 const thumbName = {
     'hqdefault' : 'hqdefault.jpg',

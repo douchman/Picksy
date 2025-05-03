@@ -1,6 +1,6 @@
-import {apiFormDataRequest} from "../../../global/js/api.js";
+import {apiFormDataRequest} from "../../../../global/js/api.js";
 import {getTopicId} from "./const.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {handleEntryRegisterException} from "./exception.js";
 import {addEntryAddEvent, entryFormEvents} from "./entry-create-event.js";
 import {stagedEntryMedia} from "./staged-entry-media.js";
