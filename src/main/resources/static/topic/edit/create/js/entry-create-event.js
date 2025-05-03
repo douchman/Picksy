@@ -47,7 +47,7 @@ export function addEntryZoneEvents(){
 }
 
 // 엔트리 등록 form 내 이벤트 등록
-export function entryFormEvents(){
+export function addEntryFormEvents(){
     entryThumbClickEvent(); // 썸네일 영역 클릭 이벤트
     entryThumbChangeEvent(); // 썸네일 변경 이벤트
     entryYouTubeLinkEvent(); // 유튜브 링크 입력 란 이벤트
