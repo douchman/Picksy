@@ -2,14 +2,14 @@ import {apiFormDataRequest} from "../../../../global/js/api.js";
 import {getTopicId} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {handleEntryRegisterException} from "./exception.js";
-import {addEntryAddEvent, entryFormEvents} from "./entry-create-event.js";
+import {addEntryZoneEvents, entryFormEvents} from "./entry-create-event.js";
 import {stagedEntryMedia} from "./staged-entry-media.js";
 
 export function setupEntrySection(){
     addEntrySectionEvents();
 }
 function addEntrySectionEvents(){
-    addEntryAddEvent(); // 엔트리 추가 버튼 이벤트
+    addEntryZoneEvents(); // 엔트리 추가 버튼 이벤트
     entryFormEvents(); // 엔트리 등록 form 관련 이벤트
 }
 

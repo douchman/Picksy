@@ -12,25 +12,25 @@ import {showToastMessage} from "../../../../global/popup/js/common-toast-message
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
 // 엔트리 추가 버튼 이벤트 등록
-export function addEntryAddEvent(){
+export function addEntryZoneEvents(){
 
     // 클릭 -> 빈 엔트리 슬롯
-    document.querySelector('#add-entry-item').addEventListener('click', function(){
+    document.querySelector('#entry-add-zone').addEventListener('click', function(){
         renderEntryItem(null);
     });
 
     // 드래그 & 드롭 이벤트 처리
-    document.querySelector('#add-entry-item').addEventListener('dragover', function(e){
+    document.querySelector('#entry-add-zone').addEventListener('dragover', function(e){
         e.preventDefault();
         this.classList.add('drag-over');
     });
-    document.querySelector('#add-entry-item').addEventListener('dragleave', function(e){
+    document.querySelector('#entry-add-zone').addEventListener('dragleave', function(e){
         e.preventDefault();
         this.classList.remove('drag-over');
     });
 
     // 드래그 & 드롭 으로 엔트리 등록
-    document.querySelector('#add-entry-item').addEventListener('drop', function(e){
+    document.querySelector('#entry-add-zone').addEventListener('drop', function(e){
         e.preventDefault();
 
         const files = e.dataTransfer.files;
