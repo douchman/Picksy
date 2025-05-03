@@ -7,11 +7,11 @@ let isTopicCreated = false; // 이미 생성된 주제 존재여부 플래그
 document.addEventListener('DOMContentLoaded', () => {
     setupTopicSection();
     setupEntrySection();
-    addTopicCrateEvents();
+    addBottomBtnGroupEvents();
 });
 
 
-function addTopicCrateEvents(){
+function addBottomBtnGroupEvents(){
     document.querySelector('#btn-save').addEventListener('click' , async () => {
         let topicRegisterSuccess;
 
