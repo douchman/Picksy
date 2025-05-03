@@ -1,5 +1,5 @@
 import {renderEntryItem} from "./entry-item-render.js";
-import {generateRandomEntryId} from "./util.js";
+import {generateRandomEntryId} from "../../common/util/entry-uuid.js";
 import {
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
