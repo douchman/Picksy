@@ -1,12 +1,12 @@
-import {addTopicCreateEvents, modifyTopic, registerTopic} from "./topic-section.js";
-import {addEntryCreateEvents, registerEntries} from "./entry-section.js";
+import {setupTopicSection, modifyTopic, registerTopic} from "./topic-section.js";
+import {setupEntrySection, registerEntries} from "./entry-section.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 let isTopicCreated = false; // 이미 생성된 주제 존재여부 플래그
 
 document.addEventListener('DOMContentLoaded', () => {
-    addTopicCreateEvents();
-    addEntryCreateEvents();
+    setupTopicSection();
+    setupEntrySection();
     addTopicCrateEvents();
 });
 
