@@ -1,9 +1,13 @@
-import {generateFilePreviewURL} from "../../../global/js/file.js";
-import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../global/js/api.js";
+import {generateFilePreviewURL} from "../../../../global/js/file.js";
+import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../../global/js/api.js";
 import {getTopicId, setTopicId} from "./const.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
-export function addTopicCreateEvents(){
+export function setupTopicSection(){
+    addTopicSectionEvents();
+}
+
+function addTopicSectionEvents(){
 
     document.querySelector('#topic-thumbnail').addEventListener('change', function(e){
         const topicThumbnail = document.querySelector('#topic-thumbnail-preview');

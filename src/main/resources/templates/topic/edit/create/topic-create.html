@@ -4,12 +4,12 @@
       layout:decorate="~{global/layouts/base-layout.html}">
 
 <head>
-    <link rel="stylesheet" th:href="@{'/topic/create/css/topic-create.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <link rel="stylesheet" th:href="@{'/topic/edit/create/css/topic-create.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
 </head>
 <th:block layout:fragment="Content">
     <body data-require-auth="true">
         <div id="topic-create" class="topic-create">
-            <section class="separate-section l-topic-create">
+            <section class="separate-section topic-section">
                 <p class="section-header">대결주제 설정</p>
                 <div id="topic-form" class="topic-group">
                     <div class="topic-item">
@@ -52,9 +52,9 @@
                 </div>
             </section>
 
-            <section class="separate-section r-entry-create">
+            <section class="separate-section entry-section">
                 <p class="section-header">대결 엔트리 등록</p>
-                <div id="add-entry" class="add-entry"></div>
+                <div id="entry-add-zone" class="entry-add-zone"></div>
                 <div class="entry-group">
                     <p class="group-index">엔트리 등록/수정</p>
                     <div id="entry-form" class="entry-form"></div>
@@ -64,10 +64,9 @@
             <div class="bottom-btn-group">
                 <button id="btn-save" class="btn-save" type="button">저장</button>
                 <button id="btn-cancel" class="btn-cancel" type="button">취소</button>
-
             </div>
         </div>
     </body>
-    <script type="module" th:src="@{'/topic/create/js/topic-create.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+    <script type="module" th:src="@{'/topic/edit/create/js/create-main.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>

@@ -1,4 +1,4 @@
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
 export function handleEntryRegisterException(isAuthOrNetworkError, registerResult){
     if( !isAuthOrNetworkError ){

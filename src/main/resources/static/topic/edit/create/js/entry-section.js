@@ -1,36 +1,104 @@
-import {renderEntryItem} from "./entry-item-render.js";
-import {generateRandomEntryId} from "./util.js";
+import {apiFormDataRequest} from "../../../../global/js/api.js";
+import {getTopicId} from "./const.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {handleEntryRegisterException} from "./exception.js";
 import {
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
-    addStagedEntryMediaWithUpdateEntryItemThumb,
-    removeStagedEntryMedia
+    addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
+    stagedEntryMedia
 } from "./staged-entry-media.js";
-import {getYouTubeInfoFromUrl} from "./youtube.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {renderEntryItem} from "../../core/entry-item-render.js";
+import {generateRandomEntryId} from "../../core/entry-uuid.js";
+import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
+export function setupEntrySection(){
+    addEntrySectionEvents();
+}
+function addEntrySectionEvents(){
+    addEntryZoneEvents(); // 엔트리 추가 버튼 이벤트
+    addEntryFormEvents(); // 엔트리 등록 form 관련 이벤트
+}
+
+export async function registerEntries(){
+    let entryRegisterResult = true;
+    if( isEntryCreated()){
+        const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
+
+       if( validationResult ){
+            const { status,isAuthOrNetworkError,  data : registerResult } = await postEntries(entryFormData);
+
+            if( status !== 200){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
+                handleEntryRegisterException(isAuthOrNetworkError, registerResult);
+                entryRegisterResult = false;
+            }
+        } else {
+            entryRegisterResult = false;
+        }
+    }
+    return entryRegisterResult;
+}
+
+async function validateAndGenerateEntryFormData(){
+    const entryFormData = new FormData();
+    const entryForm = document.querySelector('#entry-form');
+    const entryItems = entryForm.querySelectorAll('.entry-item');
+
+    entryFormData.append('topicId', getTopicId());
+
+    for ( const [index, entryItem] of Array.from(entryItems).entries()){
+        const entryItemId = entryItem.id;
+        const entryName = entryItem.querySelector('.entry-name').value;
+        const entryDescription = entryItem.querySelector('.entry-description').value;
+        const entryMediaType = stagedEntryMedia[entryItemId].type;
+        const entryMedia = stagedEntryMedia[entryItemId].media;
+        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
+
+        if(!entryMedia) {
+            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
+            return { validationResult : false, formData : {}};
+        }
+
+        entryFormData.append(`entries[${index}].entryName`, entryName);
+        entryFormData.append(`entries[${index}].description`, entryDescription);
+        if ( entryMediaType === 'file' ) { // 파일 업로드 방식 엔트리
+            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
+        } else { // 유튜브 링크 방식 엔트리
+            entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
+        }
+
+        if( entryThumbnail ){
+            entryFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
+        }
+
+    }
+
+    return { validationResult : true, formData : entryFormData };
+
+}
+
 // 엔트리 추가 버튼 이벤트 등록
-export function addEntryAddEvent(){
+function addEntryZoneEvents(){
 
     // 클릭 -> 빈 엔트리 슬롯
-    document.querySelector('#add-entry').addEventListener('click', function(){
+    document.querySelector('#entry-add-zone').addEventListener('click', function(){
         renderEntryItem(null);
     });
 
     // 드래그 & 드롭 이벤트 처리
-    document.querySelector('#add-entry').addEventListener('dragover', function(e){
+    document.querySelector('#entry-add-zone').addEventListener('dragover', function(e){
         e.preventDefault();
         this.classList.add('drag-over');
     });
-    document.querySelector('#add-entry').addEventListener('dragleave', function(e){
+    document.querySelector('#entry-add-zone').addEventListener('dragleave', function(e){
         e.preventDefault();
         this.classList.remove('drag-over');
     });
 
     // 드래그 & 드롭 으로 엔트리 등록
-    document.querySelector('#add-entry').addEventListener('drop', function(e){
+    document.querySelector('#entry-add-zone').addEventListener('drop', function(e){
         e.preventDefault();
 
         const files = e.dataTransfer.files;
@@ -47,7 +115,7 @@ export function addEntryAddEvent(){
 }
 
 // 엔트리 등록 form 내 이벤트 등록
-export function entryFormEvents(){
+function addEntryFormEvents(){
     entryThumbClickEvent(); // 썸네일 영역 클릭 이벤트
     entryThumbChangeEvent(); // 썸네일 변경 이벤트
     entryYouTubeLinkEvent(); // 유튜브 링크 입력 란 이벤트
@@ -147,4 +215,14 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.classList.remove('youtube');
         }
     }, 300);
+}
+
+async function postEntries(requestBody){
+    return apiFormDataRequest(`topics/${getTopicId()}/entries`, {}, requestBody);
+}
+
+function isEntryCreated(){
+    const entryForm = document.querySelector('#entry-form');
+
+    return entryForm.querySelector('.entry-item') !== null;
 }
