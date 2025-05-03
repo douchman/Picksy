@@ -1,5 +1,5 @@
-import {addTopicCreateEvents, modifyTopic, registerTopic} from "./l-topic-create.js";
-import {addEntryCreateEvents, registerEntries} from "./r-entry-create.js";
+import {addTopicCreateEvents, modifyTopic, registerTopic} from "./topic-section.js";
+import {addEntryCreateEvents, registerEntries} from "./entry-section.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 let isTopicCreated = false; // 이미 생성된 주제 존재여부 플래그
