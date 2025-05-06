@@ -13,18 +13,22 @@ input[type="file"] {
     height: 100%;
 }
 
-.topic-modify .t-i{
-    height: calc(100% - var(--main-header-height));
+.topic-modify{
+    height: 100%;
 }
 
-.topic-modify .t-i{
+.topic-modify .modify-header{
     padding : 10px;
-    font-size : 32px;
+}
+
+.topic-modify .modify-header p{
+    font-size : 25px;
     font-weight: 600;
 }
 
 .topic-modify .sections{
     display: flex;
+    height: calc(100% - 110px);
     gap : 10px;
     padding : 10px;
     box-sizing: border-box;
@@ -46,8 +50,11 @@ input[type="file"] {
 }
 
 .bottom-btn-group{
+    position: absolute;
+    bottom : 5px;
+    left : 0;
     width: 100%;
-    height: 80px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,7 +62,7 @@ input[type="file"] {
 }
 
 .bottom-btn-group button{
-    padding : 6px 12px;
+    padding : 4px 12px;
     border-radius: 4px;
     color : #FFF;
     font-size: 24px;
