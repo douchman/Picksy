@@ -32,6 +32,11 @@ public class PageController {
         return "topic/edit/create/topic-create";
     }
 
+    @GetMapping("topic/modify")
+    public String modifyTopic(){
+        return "topic/edit/modify/topic-modify";
+    }
+
     @GetMapping("topic/play/{id}")
     public String playTopic(@PathVariable Integer id){
         // 직관적인 URL 을 위해 PathVariable 사용
