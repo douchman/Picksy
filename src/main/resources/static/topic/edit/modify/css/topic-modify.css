@@ -1,0 +1,90 @@
+@import "../../core/css/entry-section.css";
+@import "../../core/css/topic-section.css";
+
+input[type="file"] {
+    display: none;
+}
+
+.layout-container{
+    height: calc( 100% - var(--main-header-height));
+}
+
+.wrapper{
+    height: 100%;
+}
+
+.topic-modify{
+    height: 100%;
+}
+
+.topic-modify .modify-header{
+    padding : 10px;
+}
+
+.topic-modify .modify-header p{
+    font-size : 25px;
+    font-weight: 600;
+}
+
+.topic-modify .sections{
+    display: flex;
+    height: calc(100% - 110px);
+    gap : 10px;
+    padding : 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.separate-section{
+    max-height: 100%;
+    overflow-y: auto;
+    padding : 20px 15px;
+    border-radius: 6px;
+    background-color: #FFF;
+}
+
+.separate-section .section-header{
+    color : #333;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.bottom-btn-group{
+    position: absolute;
+    bottom : 5px;
+    left : 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 25px;
+}
+
+.bottom-btn-group button{
+    padding : 4px 12px;
+    border-radius: 4px;
+    color : #FFF;
+    font-size: 24px;
+}
+
+.bottom-btn-group .btn-save{
+    background-color: #4CAF50;
+}
+
+.bottom-btn-group .btn-cancel{
+    background-color: #FF8A8A;
+}
+
+.loading-mask{
+    position: fixed;
+    top : 0;
+    left : 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .85);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/loading-spinner.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: var(--loading-mask-z-index);
+}
