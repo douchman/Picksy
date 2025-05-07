@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function toggleLoginAndLogoutButton() {
-    const {status ,  data : {auth : isAuth}} = await checkAuthMember()
+    const {auth : isAuth} = await checkAuthMember()
 
     if ( isAuth ){
         removeLoginButton();
@@ -20,16 +20,11 @@ function removeLoginButton(){
 
 function renderLogoutButton(){
     const logoutButton = `<button id="btn-logout" class="btn-logout" type="button">로그아웃</button>`;
-
     document.querySelector('#right-nav-group').insertAdjacentHTML('beforeend', logoutButton);
 }
 
 function addLogoutButtonEvent(){
-
     document.querySelector('#btn-logout').addEventListener('click', async () => {
         await memberLogout();
-        location.href = '/login';
-
     });
-
 }

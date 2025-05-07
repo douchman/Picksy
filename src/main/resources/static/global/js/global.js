@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function redirectIfNotAuthenticated(){
-    const {status ,  data : {auth : isAuth}} = await checkAuthMember()
-
-    if( status === 200 && !isAuth ) location.href = '/login';
+    const {auth : isAuth} = await checkAuthMember();
+    if( !isAuth ) location.href = '/login';
 }
