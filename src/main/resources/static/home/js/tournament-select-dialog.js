@@ -1,9 +1,11 @@
 import {TOURNAMENT_DESC} from "./const.js";
-import {apiGetRequest, apiPostRequest} from "../../global/js/api.js";
 import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
-import {handleTopicTournamentException} from "./home-exception-handler.js";
 import {toggleBodyScrollBlocked} from "../../global/js/layout-common.js";
+import {HomeExceptionHandler} from "./exception/home-exception-handler.js";
+import {getTopicDetail, getTopicPlayRecordId} from "./home-api.js";
+import {TournamentException} from "./exception/HomeException.js";
 
+const homeExceptionHandler = new HomeExceptionHandler();
 
 /* 토너먼트 선택기 셋업 */
 // 선택기 랜더링
@@ -83,13 +85,12 @@ function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.setAttribute('data-topic-id', topicId);
-    const {status, isAuthOrNetworkError, data : topicDetailResult } = await getTopicDetail(topicId);
+    const topicDetailResult= await getTopicDetail(topicId);
 
-    const topic = topicDetailResult.topic;
-    const tournamentList = topicDetailResult.tournamentList;
+    if( topicDetailResult ){
+        const topic = topicDetailResult.topic;
+        const tournamentList = topicDetailResult.tournamentList;
 
-
-    if( status === 200 ){
         clearDialogData(dialog);
 
         dialog.querySelector('#topic-title').textContent= `${topic.title}`;
@@ -99,7 +100,7 @@ export async function openTournamentSelectDialog(topicId){
 
         toggleBodyScrollBlocked(true);
     } else {
-        handleTopicTournamentException(isAuthOrNetworkError, topicDetailResult);
+        homeExceptionHandler.handle(new TournamentException(topicDetailResult.message, 500))
     }
 
 }
@@ -132,28 +133,20 @@ function toggleTournamentSelect(isOpen){
     document.querySelector('#tournament-select').classList.toggle('active', isOpen);
 }
 
-async function getTopicDetail(topicId){
-    return await apiGetRequest('topics/' +topicId, {}, false);
-}
-
 // 대결진행 식별자 조회 및 대결진행 시작
 async function getPlayRecordIdAndStart(){
     const dialog = document.querySelector('#tournament-select-dialog');
     const tournamentStage = dialog.querySelector('#selected-tournament').dataset.tournamentStage;
     const topicId = dialog.getAttribute('data-topic-id');
 
-    const { status, data : playRecordResult } = await postPlayRecord(topicId, tournamentStage);
+    const playRecordResult = await getTopicPlayRecordId(topicId, tournamentStage);
 
-    if( status === 200){
+    if( playRecordResult){
         localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
         window.open(`/topic/play/${topicId}`, '_blank'); // 대결 진행페이지 이동 ( 새 탭 열기 )
         closeTournamentSelectDialog();
     } else {
         showToastMessage(playRecordResult.message, 'error', 2500);
+        homeExceptionHandler.handle(new TournamentException(playRecordResult.message, 500));
     }
-}
-
-// 대결 진행 알림 & playRecordID 식별자 반환
-async function postPlayRecord(topicId, tournamentStage){
-    return await apiPostRequest(`topics/${topicId}/play-records`, {}, {tournamentStage});
 }
