@@ -1,11 +1,14 @@
-import {apiGetRequest} from '../../global/js/api.js';
 import {setupTournamentSelectDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
-import {handleTopicRenderException} from "./home-exception-handler.js";
+import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
+import {searchTopics} from "./home-api.js";
+import {TopicSearchException} from "./exception/HomeException.js";
 
 let scrollObserver;
 let isLoading = false;
+
+const homeExceptionHandler = new HomeExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
@@ -63,10 +66,6 @@ function addTopicCardEvents(){
     });
 }
 
-async function getTopics(requestParams){
-    return await apiGetRequest('topics', {}, requestParams);
-}
-
 async function renderTopics(){
     if ( isLoading ) return;
     isLoading = true;
@@ -75,12 +74,13 @@ async function renderTopics(){
 
     const topicContentCards = document.querySelector('#topic-content-cards');
 
-    const {status, isAuthOrNetworkError, data : topicResult} = await getTopics(topicSearchParams);
+    const topicSearchResult = await searchTopics(topicSearchParams);
 
-    const topicList = topicResult.topicList;
-    const pagination = topicResult.pagination;
+    if( topicSearchResult ){
 
-    if( status === 200 ){
+        const topicList = topicSearchResult.topicList;
+        const pagination = topicSearchResult.pagination;
+
         if(hasNextPage(pagination.currentPage, pagination.totalPages)){
             topicSearchParams.page = (pagination.currentPage + 1 );
         }else{
@@ -113,7 +113,7 @@ async function renderTopics(){
         }
     } else {
         stopInfiniteScrollObserver();
-        handleTopicRenderException(isAuthOrNetworkError, istopicResult);
+        homeExceptionHandler.handle( new TopicSearchException(topicSearchResult.message, 500));
     }
 
     isLoading = false;
