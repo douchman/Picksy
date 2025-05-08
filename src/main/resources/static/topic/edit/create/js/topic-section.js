@@ -1,5 +1,5 @@
 import {generateFilePreviewURL} from "../../../../global/js/file.js";
-import {setTopicId} from "./const.js";
+import {createdTopic} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {createTopic, updateTopic} from "./topic-create-api.js";
 import {TopicCreateExceptionHandler} from "./exception/topic-create-exception-handler.js";
@@ -68,7 +68,7 @@ export async function registerTopic(){
         const topicCreateResult = await createTopic(requestBody);
 
         if( topicCreateResult){
-            setTopicId(topicCreateResult.topicId);
+            createdTopic.setId(topicCreateResult.topicId);
             return true;
         } else {
             topicCreateExceptionHandler.handle(new TopicCreateException(validationResult.message, topicCreateExceptionHandler.status));

@@ -1,6 +1,6 @@
 import {apiRequest} from "../../../../global/api/api.js";
 import {ApiMethod} from "../../../../global/api/api-method.js";
-import {getTopicId} from "./const.js";
+import {createdTopic} from "./const.js";
 
 // 대결주제 신규 생성
 export async function createTopic(requestBody){
@@ -29,5 +29,5 @@ async function fetchCreateTopic(requestBody) {
 
 // 대결주제 업데이트 API fetch
 async function fetchUpdateTopic(requestBody){
-    return apiRequest(`topics/${getTopicId()}`, ApiMethod.PATCH, requestBody, true);
+    return apiRequest(`topics/${createdTopic.getId()}`, ApiMethod.PATCH, requestBody, true);
 }

@@ -1,4 +1,4 @@
-import {getTopicId} from "./const.js";
+import {createdTopic} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
     addStagedEntryMediaForYoutube,
@@ -49,7 +49,7 @@ async function validateAndGenerateEntryFormData(){
     const entryForm = document.querySelector('#entry-form');
     const entryItems = entryForm.querySelectorAll('.entry-item');
 
-    entryFormData.append('topicId', getTopicId());
+    entryFormData.append('topicId', createdTopic.getId());
 
     for ( const [index, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;

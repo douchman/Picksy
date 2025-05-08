@@ -1,5 +1,5 @@
 import {apiRequest} from "../../../../global/api/api.js";
-import {getTopicId} from "./const.js";
+import {createdTopic} from "./const.js";
 import {ApiMethod} from "../../../../global/api/api-method.js";
 
 // 대결주제 생성
@@ -15,5 +15,5 @@ export async function createEntries(requestBody){
 
 // 엔트리 생성 API fetch
 async function fetchCreateEntries(requestBody){
-    return await apiRequest(`topics/${getTopicId()}/entries`, ApiMethod.POST, requestBody, true);
+    return await apiRequest(`topics/${createdTopic.getId()}/entries`, ApiMethod.POST, requestBody, true);
 }
