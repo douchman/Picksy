@@ -1,6 +1,8 @@
 import {addCommentRegisterEvent} from "./comment-reigster.js";
-import {apiGetRequest} from "../../../../global/js/api.js";
 import {topic} from "../const.js";
+import {getComments} from "./comment-api.js";
+import {CommentsExceptionHandler} from "../exception/comment-exception-handler.js";
+import {GetCommentsException} from "../exception/CommentException.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버
 let isFetchingComments = false; // 데이터 조회 플래그
@@ -15,6 +17,8 @@ let commentsPagination = { // 페이지네이션 전역변수
     currentPage : 1,
     totalPages : 0
 }
+
+const commentExceptionHandler = new CommentsExceptionHandler();
 
 /* 코멘트 셋업 */
 // 코멘트 창 랜더링
@@ -101,16 +105,20 @@ function stopCommentListScrollObserver(){
 
 // 코멘트 랜더링
 async function renderComments(){
-    const {status, data : {commentList, pagination}} = await getComments(commentsQuery);
+    const commentResult = await getComments(topic.getId(), commentsQuery);
 
-    if( status === 200 && commentList && commentList.length !== 0){
-        renderTotalCommentCount(pagination.totalItems);
-        removeCommentListEmpty(); // 비었음 스타일 제거
-        savePagination(pagination);
+    if( commentResult){
+        const commentList = commentResult.commentList;
+        const pagination = commentResult.pagination;
 
-        commentList.forEach((comment) =>{
-            const commentItem =
-                `<div class="comment">
+        if( commentList && commentList.length !== 0){
+            renderTotalCommentCount(pagination.totalItems);
+            removeCommentListEmpty(); // 비었음 스타일 제거
+            savePagination(pagination);
+
+            commentList.forEach((comment) =>{
+                const commentItem =
+                    `<div class="comment">
                     <div class="comment-header">
                         <p class="author">${comment.author}</p>
                         <span class="time-stamp">${comment.createdAt}</span>
@@ -119,8 +127,11 @@ async function renderComments(){
                     <p class="content">${comment.content}</p>
                 </div>`;
 
-            document.querySelector('#comment-list').insertAdjacentHTML('beforeend', commentItem);
-        });
+                document.querySelector('#comment-list').insertAdjacentHTML('beforeend', commentItem);
+            });
+        }
+    } else {
+        commentExceptionHandler.handle(new GetCommentsException(commentResult.message));
     }
 }
 
@@ -146,9 +157,4 @@ function savePagination(pagination){
 // 댓글 비었음 스타일 해제
 function removeCommentListEmpty(){
     document.querySelector('#comment-list').classList.remove('empty');
-}
-
-// 댓글 조회
-async function getComments(requestParams){
-    return await apiGetRequest(`topics/${topic.getId()}/comments`, {} , requestParams);
 }

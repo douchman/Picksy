@@ -1,8 +1,11 @@
 import {topic, playRecord} from "./const.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {apiGetRequest} from "../../../global/js/api.js";
 import {loadEntryMatchInfo} from "./entry-match.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
+import {getTopicDetail} from "./topic-play-api.js";
+import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
+import {SavePlayRecordInfoException, SetTopicInfoException} from "./exception/TopicPlayException.js";
+
+const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -36,12 +39,12 @@ async function saveTopicInfo(){
 
     topic.setId(topicId);
 
-    const { status, data : topicDetail } = await getTopicDetail();
-    if ( status === 200){
-        topic.setTitle(topicDetail.topic.title);
+    const topicDetailResult = await getTopicDetail(topic.getId());
+    if ( topicDetailResult ){
+        topic.setTitle(topicDetailResult.topic.title);
         renderTopicTitle();
     } else {
-        handleSetTopicFailed();
+        topicPlayExceptionHandler.handle(new SetTopicInfoException(topicDetailResult.message));
         return false;
     }
 
@@ -50,17 +53,13 @@ async function saveTopicInfo(){
 
 function savePlayRecordInfo(){
     const storedPlayRecordIdName = `topic-${topic.getId()}-playRecord-id`;
-    try {
-        const playRecordId = localStorage.getItem(storedPlayRecordIdName);
 
-        if( !playRecordId ){
-            handleSetPlayRecordIdFailed();
-        } else {
-            playRecord.setId(playRecordId);
-        }
-    } catch(error) {
-        handleSetPlayRecordIdFailed();
-    } finally {
+    const playRecordId = localStorage.getItem(storedPlayRecordIdName);
+
+    if( !playRecordId ){
+        topicPlayExceptionHandler.handle(new SavePlayRecordInfoException())
+    } else {
+        playRecord.setId(playRecordId);
     }
 
     return true;
@@ -69,22 +68,4 @@ function savePlayRecordInfo(){
 function renderTopicTitle(){
     document.querySelector('title').textContent = topic.getTitle();
     document.querySelector('#topic-title').textContent = topic.getTitle();
-}
-
-async function getTopicDetail(){
-    return await apiGetRequest(`topics/${topic.getId()}`);
-}
-
-function handleSetPlayRecordIdFailed(){
-    showToastMessage('대결 진행 정보를 확인할 수 없어요 :(' , 'error', 3500);
-    setTimeout(()=> {
-        location.href = '/';
-    }, 2500);
-}
-
-function handleSetTopicFailed(){
-    showToastMessage('대결 정보를 확인할 수 없어요 :(' , 'error', 3500);
-    setTimeout(()=> {
-        location.href = '/';
-    }, 2500);
 }

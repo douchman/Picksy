@@ -8,6 +8,8 @@ export class HomeExceptionHandler extends GlobalExceptionHandler{
             this.handleTopicSearchException(error);
         } else if (error instanceof TournamentException){
             this.handleTournamentException(error);
+        } else{
+            super.handle(error)
         }
 
     }
