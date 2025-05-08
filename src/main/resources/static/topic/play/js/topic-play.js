@@ -1,8 +1,8 @@
 import {topic, playRecord} from "./const.js";
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
-import {apiGetRequest} from "../../../global/js/api.js";
 import {loadEntryMatchInfo} from "./entry-match.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
+import {getTopicDetail} from "./topic-play-api.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -36,9 +36,9 @@ async function saveTopicInfo(){
 
     topic.setId(topicId);
 
-    const { status, data : topicDetail } = await getTopicDetail();
-    if ( status === 200){
-        topic.setTitle(topicDetail.topic.title);
+    const topicDetailResult = await getTopicDetail(topic.getId());
+    if ( topicDetailResult ){
+        topic.setTitle(topicDetailResult.topic.title);
         renderTopicTitle();
     } else {
         handleSetTopicFailed();
@@ -50,6 +50,7 @@ async function saveTopicInfo(){
 
 function savePlayRecordInfo(){
     const storedPlayRecordIdName = `topic-${topic.getId()}-playRecord-id`;
+
     try {
         const playRecordId = localStorage.getItem(storedPlayRecordIdName);
 
@@ -69,10 +70,6 @@ function savePlayRecordInfo(){
 function renderTopicTitle(){
     document.querySelector('title').textContent = topic.getTitle();
     document.querySelector('#topic-title').textContent = topic.getTitle();
-}
-
-async function getTopicDetail(){
-    return await apiGetRequest(`topics/${topic.getId()}`);
 }
 
 function handleSetPlayRecordIdFailed(){
