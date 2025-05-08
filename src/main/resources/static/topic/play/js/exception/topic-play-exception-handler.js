@@ -1,6 +1,6 @@
-import {GlobalExceptionHandler} from "../../../../global/exception/global-exception-handler";
-import {SavePlayRecordInfoException, SetTopicInfoException} from "./TopicPlayException";
-import {showToastMessage} from "../../../../global/popup/js/common-toast-message";
+import {GlobalExceptionHandler} from "../../../../global/exception/global-exception-handler.js";
+import {SavePlayRecordInfoException, SetTopicInfoException} from "./TopicPlayException.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
 export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
     handle(error) {
@@ -8,8 +8,7 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
             this.handleSavePlayRecordInfoException(error);
         } else if(error instanceof SetTopicInfoException){
             this.handleSetTopicInfoException(error);
-        }
-        else {
+        } else {
             super.handle(error);
         }
     }
