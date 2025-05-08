@@ -1,4 +1,3 @@
-import {apiPostRequest} from "../../../../global/js/api.js";
 import {topic} from "../const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
@@ -7,7 +6,11 @@ import {
     validateAuthor,
     validateCommentContent
 } from "./comment-register-validation.js";
+import {CommentsExceptionHandler} from "../exception/comment-exception-handler.js";
+import {createComment} from "./comment-api.js";
+import {RegisterCommentException} from "../exception/CommentException.js";
 
+const commentExceptionHandler = new CommentsExceptionHandler();
 // 댓글 작성 이벤트
 export function addCommentRegisterEvent(){
     document.querySelector('#btn-register-comment').addEventListener('click', async function(){
@@ -25,17 +28,17 @@ async function registerComment(){
             content : document.querySelector('#comment-content').value,
         }
 
-        const {status, data : registerResult } = await postComments(registerRequestBody);
+        const commentCreateResult = await createComment(topic.getId(), registerRequestBody);
 
-        if( status === 200 ){
+        if( commentCreateResult ){
             initCommentRegisterForm(); // 코멘트 form 초기화
             commentListScrollTop(); // 스크롤 최상단
             setTimeout(() => {
-                renderRegisteredComment(registerResult.author, registerResult.content, registerResult.createdAt);
+                renderRegisteredComment(commentCreateResult.author, commentCreateResult.content, commentCreateResult.createdAt);
             }, 300); // 지연 후 랜더링
 
         } else{
-            showToastMessage('댓글 작성에 문제가 발생했어요. 잠시 후 다시 시도해 주세요');
+            commentExceptionHandler.handle(new RegisterCommentException(commentCreateResult.message));
         }
     }
 
@@ -100,9 +103,4 @@ function validateCommentForm(){
 function getWinnerEntryName(){
     const winnerEntry = document.querySelector('.winner-entry');
     return winnerEntry.querySelector('.entry-name').textContent;
-}
-
-// 댓글 작성 api
-async function postComments(requestBody){
-    return await apiPostRequest(`topics/${topic.getId()}/comments`, {}, requestBody)
 }
