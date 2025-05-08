@@ -1,7 +1,7 @@
 import {generateFilePreviewURL} from "../../../../global/js/file.js";
-import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../../global/js/api.js";
-import {getTopicId, setTopicId} from "./const.js";
+import {setTopicId} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {createTopic, updateTopic} from "./topic-create-api.js";
 
 export function setupTopicSection(){
     addTopicSectionEvents();
@@ -61,10 +61,10 @@ export async function registerTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const {status,isAuthOrNetworkError, data : registerResult } = await postTopic(requestBody);
+        const topicCreateResult = await createTopic(requestBody);
 
-        if( status === 200){
-            setTopicId(registerResult.topicId);
+        if( topicCreateResult){
+            setTopicId(topicCreateResult.topicId);
             return true;
         } else {
             handleTopicRegisterException(isAuthOrNetworkError, registerResult);
@@ -85,9 +85,9 @@ export async function modifyTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const {status,isAuthOrNetworkError, data : registerResult } = await patchTopic(requestBody);
+        const topicUpdateResult = await updateTopic(requestBody);
 
-        if( status === 200){
+        if(topicUpdateResult){
             return true;
         } else {
             handleTopicRegisterException(isAuthOrNetworkError, registerResult);
@@ -135,14 +135,6 @@ function validateAndGenerateTopicFormData(){
 
         }
     };
-}
-
-async function postTopic(requestBody){
-    return apiFormDataRequest('topics', {}, requestBody);
-}
-
-async function patchTopic(requestBody){
-    return apiFormDataPatchRequest(`topics/${getTopicId()}`, {}, requestBody);
 }
 
 function handleTopicRegisterException(isAuthOrNetworkError, registerResult){
