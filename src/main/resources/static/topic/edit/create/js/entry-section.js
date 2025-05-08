@@ -1,7 +1,5 @@
-import {apiFormDataRequest} from "../../../../global/js/api.js";
-import {getTopicId} from "./const.js";
+import {createdTopic} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {handleEntryRegisterException} from "./exception.js";
 import {
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
@@ -11,6 +9,11 @@ import {
 import {renderEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
+import {createEntries} from "./entry-create-api.js";
+import {EntryCreateExceptionHandler} from "./exception/entry-create-exception-handler.js";
+import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
+
+const entryCreateExceptionHandler = new EntryCreateExceptionHandler();
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
@@ -28,10 +31,10 @@ export async function registerEntries(){
         const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
 
        if( validationResult ){
-            const { status,isAuthOrNetworkError,  data : registerResult } = await postEntries(entryFormData);
+            const entriesCreateResult = await createEntries(entryFormData);
 
-            if( status !== 200){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
-                handleEntryRegisterException(isAuthOrNetworkError, registerResult);
+            if( !entriesCreateResult ){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
+                entryCreateExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
                 entryRegisterResult = false;
             }
         } else {
@@ -46,7 +49,7 @@ async function validateAndGenerateEntryFormData(){
     const entryForm = document.querySelector('#entry-form');
     const entryItems = entryForm.querySelectorAll('.entry-item');
 
-    entryFormData.append('topicId', getTopicId());
+    entryFormData.append('topicId', createdTopic.getId());
 
     for ( const [index, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;
@@ -215,10 +218,6 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.classList.remove('youtube');
         }
     }, 300);
-}
-
-async function postEntries(requestBody){
-    return apiFormDataRequest(`topics/${getTopicId()}/entries`, {}, requestBody);
 }
 
 function isEntryCreated(){

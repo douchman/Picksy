@@ -1,8 +1,7 @@
 import {setupTopicSection, modifyTopic, registerTopic} from "./topic-section.js";
 import {setupEntrySection, registerEntries} from "./entry-section.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-
-let isTopicCreated = false; // 이미 생성된 주제 존재여부 플래그
+import {createdTopic} from "./const.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     setupTopicSection();
@@ -18,11 +17,10 @@ function addBottomBtnGroupEvents(){
         toggleBtnSaveBlock(true);
         displayLoadingMask();
 
-        if( isTopicCreated ){
+        if( createdTopic.isTopicCreated() ){
             topicRegisterSuccess = await modifyTopic();
         } else {
             topicRegisterSuccess = await registerTopic();
-            isTopicCreated = topicRegisterSuccess;
         }
 
         const entryRegisterSuccess =  topicRegisterSuccess && await registerEntries();

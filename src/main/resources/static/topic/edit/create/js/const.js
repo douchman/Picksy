@@ -1,9 +1,15 @@
-let topicId;
+export const createdTopic = {
+    id : null,
 
-export function setTopicId(newTopicId){
-    topicId = newTopicId;
-}
+    getId(){
+        return this.id;
+    },
 
-export function getTopicId(){
-    return topicId;
+    setId(id){
+        this.id = id;
+    },
+
+    isTopicCreated(){
+        return (this.id !== null && this.id !== undefined);
+    }
 }
