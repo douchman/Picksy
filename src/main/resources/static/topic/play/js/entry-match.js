@@ -1,23 +1,29 @@
-import {apiGetRequest, apiPatchRequest} from "../../../global/js/api.js";
+import { apiPatchRequest} from "../../../global/js/api.js";
 import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
 import {finishEntryMatch} from "./entry-match-finish.js";
+import {getCurrentEntryMatch} from "./topic-play-api.js";
+import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler";
+import {CurrentEntryMatchException} from "./exception/TopicPlayException";
+
+const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
-    const {status, data: matchInfo} = await getMatch();
+    const currentEntryMatchResult = await getCurrentEntryMatch(playRecord.getId());
 
-    if (status === 200) {
-        const matchId = matchInfo.matchId;
-        const currentTournament = matchInfo.currentTournament;
-        const entryMatch = matchInfo.entryMatch;
+    if (currentEntryMatchResult) {
+        const matchId = currentEntryMatchResult.matchId;
+        const currentTournament = currentEntryMatchResult.currentTournament;
+        const entryMatch = currentEntryMatchResult.entryMatch;
 
         match.setId(matchId);
         displayCurrentTournament(currentTournament);
         renderEntriesAndAddEvents(entryMatch);
     } else {
-        handleTopicPlayException(matchInfo);
+        handleTopicPlayException(currentEntryMatchResult);
+        topicPlayExceptionHandler.handle(new CurrentEntryMatchException(currentEntryMatchResult.message))
     }
 }
 
@@ -88,11 +94,6 @@ function toggleEntrySlotClickBlock(isBlock){
 // 현재 토너먼트 라운드 표시(업데이트)
 function displayCurrentTournament(currentTournament){
     document.querySelector('#current-tournament').textContent = `<${currentTournament}>`;
-}
-
-// 대결 조회
-async function getMatch(){
-    return await apiGetRequest(`topics/play-records/${playRecord.getId()}/matches`);
 }
 
 // 대결 결과 제출

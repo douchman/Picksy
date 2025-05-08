@@ -15,3 +15,12 @@ export class SetTopicInfoException extends Error {
         this.name = 'SetTopicInfoException';
     }
 }
+
+// 진행 엔트리 매치업 조회 Exception
+export class CurrentEntryMatchException extends Error {
+    constructor(message = '진행 할 엔트리 매치업 정보조회에 실패했어요', status = 500) {
+        super(message);
+        this.status = status;
+        this.name = 'CurrentEntryMatchException';
+    }
+}

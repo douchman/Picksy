@@ -1,5 +1,5 @@
 import {GlobalExceptionHandler} from "../../../../global/exception/global-exception-handler.js";
-import {SavePlayRecordInfoException, SetTopicInfoException} from "./TopicPlayException.js";
+import {CurrentEntryMatchException, SavePlayRecordInfoException, SetTopicInfoException} from "./TopicPlayException.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 
 export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
@@ -8,7 +8,9 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
             this.handleSavePlayRecordInfoException(error);
         } else if(error instanceof SetTopicInfoException){
             this.handleSetTopicInfoException(error);
-        } else {
+        } else if(error instanceof CurrentEntryMatchException) {
+           this.handleCurrentEntryMatch(error);
+        } else{
             super.handle(error);
         }
     }
@@ -23,6 +25,14 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
         showToastMessage(error.message , 'error', 3500);
         setTimeout(()=> {
             location.href = '/';
+        }, 2500);
+    }
+
+    handleCurrentEntryMatch(error){
+        console.error('[Current EntryMatch Exception]' , error);
+        showToastMessage(error.message , 'error', 3500);
+        setTimeout(() => {
+           location.href = '/';
         }, 2500);
     }
 }
