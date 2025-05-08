@@ -3,9 +3,9 @@ import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
 import {finishEntryMatch} from "./entry-match-finish.js";
-import {getCurrentEntryMatch} from "./topic-play-api.js";
-import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler";
-import {CurrentEntryMatchException} from "./exception/TopicPlayException";
+import {getCurrentEntryMatch, submitMatchResult} from "./topic-play-api.js";
+import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
+import {CurrentEntryMatchException, SubmitEntryMatchResultException} from "./exception/TopicPlayException.js";
 
 const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
@@ -24,6 +24,7 @@ export async function loadEntryMatchInfo() {
     } else {
         handleTopicPlayException(currentEntryMatchResult);
         topicPlayExceptionHandler.handle(new CurrentEntryMatchException(currentEntryMatchResult.message))
+        // TODO : retry submit
     }
 }
 
@@ -41,9 +42,9 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
         loserEntryId : loserEntryId
     }
 
-    const { status, data : submitResult } = await patchEntryMatch(requestBody);
+    const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
 
-    if( status === 200){
+    if( submitResult ){
         const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
 
         // 처리 완료 시 -> 승리/패배 엔트리 애니메이션 시작
@@ -57,6 +58,7 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
         }
     } else {
         handleTopicPlayException(submitResult);
+        topicPlayExceptionHandler.handle(new SubmitEntryMatchResultException(submitResult.message));
     }
 }
 
@@ -94,9 +96,4 @@ function toggleEntrySlotClickBlock(isBlock){
 // 현재 토너먼트 라운드 표시(업데이트)
 function displayCurrentTournament(currentTournament){
     document.querySelector('#current-tournament').textContent = `<${currentTournament}>`;
-}
-
-// 대결 결과 제출
-async function patchEntryMatch(requestBody){
-    return await apiPatchRequest(`topics/play-records/${playRecord.getId()}/matches/${match.getId()}`, {}, requestBody)
 }

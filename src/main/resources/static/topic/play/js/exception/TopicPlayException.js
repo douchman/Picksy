@@ -24,3 +24,12 @@ export class CurrentEntryMatchException extends Error {
         this.name = 'CurrentEntryMatchException';
     }
 }
+
+// 대결 결좌 제출 Exception
+export class SubmitEntryMatchResultException extends Error {
+    constructor(message = '대결 결과 제출에 실패했어요.', status = 500) {
+        super(message);
+        this.status = status;
+        this.name = 'SubmitEntryMatchResultException';
+    }
+}
