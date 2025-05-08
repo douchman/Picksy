@@ -2,6 +2,10 @@ import {generateFilePreviewURL} from "../../../../global/js/file.js";
 import {setTopicId} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {createTopic, updateTopic} from "./topic-create-api.js";
+import {TopicCreateExceptionHandler} from "./exception/topic-create-exception-handler.js";
+import {TopicCreateException, TopicUpdateException} from "../../core/js/exception/TopicEditException.js";
+
+const topicCreateExceptionHandler = new TopicCreateExceptionHandler()
 
 export function setupTopicSection(){
     addTopicSectionEvents();
@@ -67,7 +71,7 @@ export async function registerTopic(){
             setTopicId(topicCreateResult.topicId);
             return true;
         } else {
-            handleTopicRegisterException(isAuthOrNetworkError, registerResult);
+            topicCreateExceptionHandler.handle(new TopicCreateException(validationResult.message, topicCreateExceptionHandler.status));
             return false;
         }
     }
@@ -90,7 +94,7 @@ export async function modifyTopic(){
         if(topicUpdateResult){
             return true;
         } else {
-            handleTopicRegisterException(isAuthOrNetworkError, registerResult);
+            topicCreateExceptionHandler.handle(new TopicUpdateException(validationResult.message, topicCreateExceptionHandler.status));
             return false;
         }
     }
@@ -135,10 +139,4 @@ function validateAndGenerateTopicFormData(){
 
         }
     };
-}
-
-function handleTopicRegisterException(isAuthOrNetworkError, registerResult){
-    if( !isAuthOrNetworkError ){
-        showToastMessage(registerResult.message, 'error', 2000);
-    }
 }
