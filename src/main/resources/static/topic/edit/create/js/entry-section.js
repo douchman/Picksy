@@ -1,4 +1,4 @@
-import {createdTopic} from "./const.js";
+import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
     addStagedEntryMediaForYoutube,
