@@ -1,7 +1,7 @@
 import {generateFilePreviewURL} from "../../../../global/js/file.js";
 import {createdTopic} from "./const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {createTopic, updateTopic} from "./topic-create-api.js";
+import {createTopic, updateTopic} from "../../core/js/api/topic-edit-api.js";
 import {TopicCreateExceptionHandler} from "./exception/topic-create-exception-handler.js";
 import {TopicCreateException, TopicUpdateException} from "../../core/js/exception/TopicEditException.js";
 

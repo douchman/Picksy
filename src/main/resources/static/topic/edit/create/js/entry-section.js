@@ -9,7 +9,7 @@ import {
 import {renderEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
-import {createEntries} from "./entry-create-api.js";
+import {createEntries} from "../../core/js/api/entry-edit-api.js";
 import {EntryCreateExceptionHandler} from "./exception/entry-create-exception-handler.js";
 import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
 

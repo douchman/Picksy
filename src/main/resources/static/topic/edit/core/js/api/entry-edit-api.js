@@ -1,6 +1,6 @@
-import {apiRequest} from "../../../../global/api/api.js";
-import {createdTopic} from "./const.js";
-import {ApiMethod} from "../../../../global/api/api-method.js";
+import {apiRequest} from "../../../../../global/api/api.js";
+import {createdTopic} from "../../../create/js/const.js";
+import {ApiMethod} from "../../../../../global/api/api-method.js";
 
 // 대결주제 생성
 export async function createEntries(requestBody){
