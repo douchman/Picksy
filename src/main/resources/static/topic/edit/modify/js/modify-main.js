@@ -1,7 +1,7 @@
 import {setupTopicSection, modifyTopic, registerTopic} from "./topic-section.js";
 import {setupEntrySection, registerEntries} from "./entry-section.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {createdTopic} from "./const.js";
+import {createdTopic} from "../../core/js/const/const.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     setupTopicSection();
