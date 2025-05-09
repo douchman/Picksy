@@ -89,7 +89,7 @@ export async function modifyTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const topicUpdateResult = await updateTopic(requestBody);
+        const topicUpdateResult = await updateTopic(createTopic.getId(), requestBody);
 
         if(topicUpdateResult){
             return true;

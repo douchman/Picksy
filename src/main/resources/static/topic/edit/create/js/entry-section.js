@@ -31,7 +31,7 @@ export async function registerEntries(){
         const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
 
        if( validationResult ){
-            const entriesCreateResult = await createEntries(entryFormData);
+            const entriesCreateResult = await createEntries(createdTopic.getId(), entryFormData);
 
             if( !entriesCreateResult ){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
                 entryEditExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));

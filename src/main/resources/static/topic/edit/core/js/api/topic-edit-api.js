@@ -1,6 +1,5 @@
 import {apiRequest} from "../../../../../global/api/api.js";
 import {ApiMethod} from "../../../../../global/api/api-method.js";
-import {createdTopic} from "../const/const.js";
 
 // 대결주제 신규 생성
 export async function createTopic(requestBody){
@@ -12,8 +11,8 @@ export async function createTopic(requestBody){
 }
 
 // 생성되어있는 대결주제 업데이트
-export async function updateTopic(requestBody){
-    const {status, data : topicUpdateResult, isAuthOrNetworkException} = await fetchUpdateTopic(requestBody)
+export async function updateTopic(topicId, requestBody){
+    const {status, data : topicUpdateResult, isAuthOrNetworkException} = await fetchUpdateTopic(topicId, requestBody)
 
     if(isAuthOrNetworkException) return null;
 
@@ -28,6 +27,6 @@ async function fetchCreateTopic(requestBody) {
 }
 
 // 대결주제 업데이트 API fetch
-async function fetchUpdateTopic(requestBody){
-    return apiRequest(`topics/${createdTopic.getId()}`, ApiMethod.PATCH, requestBody, true);
+async function fetchUpdateTopic(topicId, requestBody){
+    return apiRequest(`topics/${topicId}`, ApiMethod.PATCH, requestBody, true);
 }

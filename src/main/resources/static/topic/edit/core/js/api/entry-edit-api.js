@@ -3,8 +3,8 @@ import {createdTopic} from "../const/const.js";
 import {ApiMethod} from "../../../../../global/api/api-method.js";
 
 // 대결주제 생성
-export async function createEntries(requestBody){
-    const {status, data : entriesCreateResult, isAuthOrNetworkException } = await fetchCreateEntries(requestBody);
+export async function createEntries(topicId, requestBody){
+    const {status, data : entriesCreateResult, isAuthOrNetworkException } = await fetchCreateEntries(topicId, requestBody);
 
     if( isAuthOrNetworkException ) return null;
 
@@ -14,6 +14,6 @@ export async function createEntries(requestBody){
 }
 
 // 엔트리 생성 API fetch
-async function fetchCreateEntries(requestBody){
+async function fetchCreateEntries(topicId, requestBody){
     return await apiRequest(`topics/${createdTopic.getId()}/entries`, ApiMethod.POST, requestBody, true);
 }
