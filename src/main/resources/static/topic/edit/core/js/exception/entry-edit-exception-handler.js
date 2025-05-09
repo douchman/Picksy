@@ -1,8 +1,8 @@
 import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
-import {EntryCreateException} from "../../../core/js/exception/EntryEditException.js";
+import {EntryCreateException} from "./EntryEditException.js";
 
-export class EntryCreateExceptionHandler extends GlobalExceptionHandler{
+export class EntryEditExceptionHandler extends GlobalExceptionHandler{
     handle(error){
         if( error instanceof EntryCreateException) {
             this.handleEntryCreateException(error);

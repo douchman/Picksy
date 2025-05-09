@@ -1,8 +1,8 @@
 import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
-import {TopicCreateException, TopicUpdateException} from "../../../core/js/exception/TopicEditException.js";
+import {TopicCreateException, TopicUpdateException} from "./TopicEditException.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
 
-export class TopicCreateExceptionHandler extends GlobalExceptionHandler{
+export class TopicEditExceptionHandler extends GlobalExceptionHandler{
     handle(error){
         if( error instanceof TopicCreateException) {
             this.handleTopicCreateException(error);

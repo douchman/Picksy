@@ -10,10 +10,10 @@ import {renderEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
 import {createEntries} from "../../core/js/api/entry-edit-api.js";
-import {EntryCreateExceptionHandler} from "./exception/entry-create-exception-handler.js";
+import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
 import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
 
-const entryCreateExceptionHandler = new EntryCreateExceptionHandler();
+const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
@@ -34,7 +34,7 @@ export async function registerEntries(){
             const entriesCreateResult = await createEntries(entryFormData);
 
             if( !entriesCreateResult ){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
-                entryCreateExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
+                entryEditExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
                 entryRegisterResult = false;
             }
         } else {
