@@ -30,3 +30,19 @@ async function fetchCreateTopic(requestBody) {
 async function fetchUpdateTopic(topicId, requestBody){
     return apiRequest(`topics/${topicId}`, ApiMethod.PATCH, requestBody, true);
 }
+
+// 대결주제 상세 정보 조회
+export async function getTopicDetail(topicId){
+    const {status, data : topicDetailResult, isAuthOrNetworkException} = await fetchTopicDetail(topicId);
+
+    if(isAuthOrNetworkException) return null;
+
+    if( status === 200 && topicDetailResult ){ return topicDetailResult }
+
+    return null;
+}
+
+// 대결주제 상세 정보 조회 API fetch
+async function fetchTopicDetail(topicId){
+    return apiRequest(`topics/${topicId}`, ApiMethod.GET, {}, false);
+}
