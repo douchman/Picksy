@@ -1,14 +1,16 @@
 import {generateFilePreviewURL} from "../../../../global/js/file.js";
 import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {createTopic, updateTopic} from "../../core/js/api/topic-edit-api.js";
+import {createTopic, getTopicDetail, updateTopic} from "../../core/js/api/topic-edit-api.js";
 import {TopicEditExceptionHandler} from "../../core/js/exception/topic-edit-exception-handler.js";
 import {TopicCreateException, TopicUpdateException} from "../../core/js/exception/TopicEditException.js";
 
 const topicEditExceptionHandler = new TopicEditExceptionHandler()
 
-export function setupTopicSection(){
-    addTopicSectionEvents();
+export async function setupTopicSection(){
+    if(await renderTopicDetail(createdTopic.getId())){
+        addTopicSectionEvents();
+    }
 }
 
 function addTopicSectionEvents(){
@@ -139,4 +141,33 @@ function validateAndGenerateTopicFormData(){
 
         }
     };
+}
+
+async function renderTopicDetail(topicId){
+    const topicDetailResult = await getTopicDetail(topicId);
+
+    console.log('topicDetail', topicDetailResult);
+
+    if( topicDetailResult ){
+        const topicDetail = topicDetailResult.topic;
+
+        // 대결주제 이미지 랜더링
+        const topicThumbnailPreview = document.querySelector('#topic-thumbnail-preview');
+        topicThumbnailPreview.style.backgroundImage = `url(${topicDetail.thumbnail})`;
+        topicThumbnailPreview.classList.add('uploaded');
+
+        // 대결주제 제목, 서브주제, 설명 랜더링
+        document.querySelector('#topic-title').value = topicDetail.title;
+        document.querySelector('#topic-subject').value = topicDetail.subject;
+        document.querySelector('#topic-desc').value = topicDetail.description;
+
+        // 공개 범위 랜더링
+        // TODO : API 수정 이후 처리 필요
+
+    } else {
+        topicEditExceptionHandler.handle(new TopicUpdateException(topicDetailResult.messsage, topicDetailResult.status));
+        return false;
+    }
+
+    return true;
 }

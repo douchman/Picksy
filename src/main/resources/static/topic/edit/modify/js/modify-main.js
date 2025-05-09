@@ -9,7 +9,7 @@ const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
     if(saveTopicId()){
-        setupTopicSection();
+        await setupTopicSection();
         setupEntrySection();
         addBottomBtnGroupEvents();
     }
