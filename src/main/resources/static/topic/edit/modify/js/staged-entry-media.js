@@ -68,9 +68,9 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
 function getMediaMimeTypeFromFromUploadFile(file){
     if( file ){
         if (file.type.startsWith('image/')){
-            return "IMAGE";
+            return MediaType.IMAGE;
         } else if (file.type.startsWith('video/')){
-            return "VIDEO"
+            return MediaType.VIDEO;
         }
     }
 }
