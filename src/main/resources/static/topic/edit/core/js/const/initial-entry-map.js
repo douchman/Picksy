@@ -19,7 +19,7 @@ export function appendToInitialEntryDataMap(entry){
 }
 
 export function isModifiedEntry(entryId, currentData){
-    const initialEntryData = initialEntryDataMap.get(entryId);
+    const initialEntryData = initialEntryDataMap.get(Number(entryId));
 
     if( !initialEntryData) return true;
 
