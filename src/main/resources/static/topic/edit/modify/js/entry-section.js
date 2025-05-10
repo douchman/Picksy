@@ -6,18 +6,20 @@ import {
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
     stagedEntryMedia
 } from "./staged-entry-media.js";
-import {renderEntryItem} from "../../core/entry-item-render.js";
+import {renderEntryItem, renderExistEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
-import {createEntries} from "../../core/js/api/entry-edit-api.js";
+import {createEntries, getEntryList} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
-import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
+import {EntryCreateException, EntryListException} from "../../core/js/exception/EntryEditException.js";
+import {MediaType} from "../../../../global/js/const.js";
 
 const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
-export function setupEntrySection(){
+export async function setupEntrySection(){
+    await renderEntries();
     addEntrySectionEvents();
 }
 function addEntrySectionEvents(){
@@ -224,4 +226,34 @@ function isEntryCreated(){
     const entryForm = document.querySelector('#entry-form');
 
     return entryForm.querySelector('.entry-item') !== null;
+}
+
+async function renderEntries(){
+    const entryListResult = await getEntryList(createdTopic.getId());
+
+    if( entryListResult ){
+        const entries = entryListResult.entries;
+        if( entries && entries.length > 0 ){
+            entries.forEach(entry => {
+                const entryMediaType = entry.mediaType;
+                const entryMediaUrl = entry.mediaUrl;
+                const entryThumbnail =
+                    entryMediaType === MediaType.IMAGE ?
+                        entry.mediaUrl
+                        : entry.thumbnail;
+
+                renderExistEntryItem(
+                    entryThumbnail,
+                    entry.id,
+                    entry.entryName,
+                    entry.description,
+                    `${entryMediaType === MediaType.YOUTUBE ? entryMediaUrl : ''}`);
+            });
+        }
+    } else {
+        entryEditExceptionHandler.handle(new EntryListException(entryListResult.message, entryListResult.status));
+        return false;
+    }
+
+    return true;
 }
