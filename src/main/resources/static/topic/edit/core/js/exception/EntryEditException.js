@@ -13,3 +13,11 @@ export class EntryUpdateException extends Error {
         this.name = 'EntryUpdateException';
     }
 }
+
+export class EntryListException extends Error {
+    constructor(message = 'Entry List Exception', status = 500) {
+        super(message);
+        this.status = status;
+        this.name = 'EntryListException';
+    }
+}
