@@ -30,7 +30,7 @@ export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
 export function renderExistEntryItem(thumbnail, entryId = generateRandomEntryId(), entryName, entryDesc, youTubeLink){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
-        `<div class="entry-item" id="${entryId}">
+        `<div class="entry-item modify-entry" id="${entryId}">
             <input class="entry-thumb-upload" type="file" accept="image/*, video/*">
             <div class="entry-thumb" style="background-image : url(${thumbnail})"></div>
                 <div class="entry-desc">
