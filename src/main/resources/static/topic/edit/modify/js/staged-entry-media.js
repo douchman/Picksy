@@ -10,6 +10,11 @@ export async function addStagedEntryMediaForYoutube(type, media, entryId, imageU
     stagedEntryMedia[entryId] = {type : type, media : media, thumbnail : await getThumbNailFileFromYoutubeUrl(imageUrl)};
 }
 
+// 이미 생성되어있는 엔트리의 기존값으로 스테이징
+export function  addStagedEntryMediaForExistEntry(entryId, mediaType, mediaUrl, thumbnail){
+    stagedEntryMedia[entryId] = {type : mediaType, media : mediaUrl, thumbnail : thumbnail};
+}
+
 // 엔트리 아이템 랜더링과 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = generateRandomEntryId()){
 
@@ -31,7 +36,7 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
     }
 }
 
-// 엔르티 아이템 업데이트와 함께 업로드 대기 파일 목록에 저장
+// 엔트리 아이템 업데이트와 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId){
 
     stagedEntryMedia[entryId] = {type : type, media : media};
@@ -58,7 +63,6 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
         }
     }
 }
-
 
 // 업로드 된 파일로부터 mime type 확인
 function getMediaMimeTypeFromFromUploadFile(file){
