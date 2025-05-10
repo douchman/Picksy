@@ -76,10 +76,11 @@ async function validateAndGenerateEntryFormData(){
 
         entryFormData.append(`entries[${index}].entryName`, entryName);
         entryFormData.append(`entries[${index}].description`, entryDescription);
-        if ( entryMediaType === 'file' ) { // 파일 업로드 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
-        } else { // 유튜브 링크 방식 엔트리
+
+        if ( MediaType.YOUTUBE === entryMediaType  ) { // 파일 업로드 방식 엔트리
             entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
+        } else { // 유튜브 링크 방식 엔트리
+            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
         }
 
         if( entryThumbnail ){
@@ -218,7 +219,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            await addStagedEntryMediaForYoutube('youtube', url, entryId, thumbNail );
+            await addStagedEntryMediaForYoutube(url, entryId, thumbNail );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
