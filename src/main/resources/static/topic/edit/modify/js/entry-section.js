@@ -1,6 +1,7 @@
 import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
+    addStagedEntryMediaForExistEntry,
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
@@ -256,6 +257,12 @@ function renderEntries(existEntries){
 function cacheInitialEntriesData(existEntries){
     existEntries.forEach(entry => {
         appendToInitialEntryDataMap(entry);
+        addStagedEntryMediaForExistEntry(
+            entry.id,
+            entry.mediaType,
+            entry.mediaUrl,
+            entry.thumbnail
+            );
     });
 }
 
