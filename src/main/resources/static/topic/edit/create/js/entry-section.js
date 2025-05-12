@@ -26,22 +26,19 @@ function addEntrySectionEvents(){
 }
 
 export async function registerEntries(){
-    let entryRegisterResult = true;
-    if( isEntryCreated()){
-        const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
+    const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
 
-       if( validationResult ){
-            const entriesCreateResult = await createEntries(createdTopic.getId(), entryFormData);
+    if( !validationResult ){ return false;}
+    if( !entryFormData ){ return true;}
 
-            if( !entriesCreateResult ){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
-                entryEditExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
-                entryRegisterResult = false;
-            }
-        } else {
-            entryRegisterResult = false;
-        }
+    const entriesCreateResult = await createEntries(createdTopic.getId(), entryFormData);
+
+    if( !entriesCreateResult ) { // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
+        entryEditExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
+        return false;
     }
-    return entryRegisterResult;
+
+    return true;
 }
 
 // 엔트리 추가 버튼 이벤트 등록
@@ -180,10 +177,4 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.classList.remove('youtube');
         }
     }, 300);
-}
-
-function isEntryCreated(){
-    const entryForm = document.querySelector('#entry-form');
-
-    return entryForm.querySelector('.entry-item') !== null;
 }
