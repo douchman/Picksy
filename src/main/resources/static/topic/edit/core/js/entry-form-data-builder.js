@@ -56,21 +56,42 @@ export function buildValidatedEntryModifyFormData(){
 
     for ( const [index, entryItem] of Array.from(entryModifyItems).entries()){
         const entryItemId = entryItem.id;
-        const currentData = {
-            entryName : entryItem.querySelector('.entry-name').value,
-            description : entryItem.querySelector('.entry-description').value,
-            mediaType : stagedEntryMedia[entryItemId].type,
-            mediaUrl : stagedEntryMedia[entryItemId].media,
-            thumbnail : stagedEntryMedia[entryItemId].thumbnail
-        }
+        const entryName = entryItem.querySelector('.entry-name').value;
+        const entryDescription = entryItem.querySelector('.entry-description').value;
+        const entryMediaType = stagedEntryMedia[entryItemId].type;
+        const entryMedia = stagedEntryMedia[entryItemId].media;
+        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
 
+        const currentData = {
+            entryName : entryName,
+            description : entryDescription,
+            mediaType : entryMediaType,
+            mediaUrl : entryMedia,
+            thumbnail : entryThumbnail
+        }
 
         if( isModifiedEntry(entryItemId, currentData)){
-            console.log(`entry id [${entryItemId}] -> 변경되었음!`);
-        } else {
-            //console.log(`entry id [${entryItemId}] -> 변경되지 않았음!`);
+            entryModifyFormData.append(`entries[${index}].entryName`, entryName);
+            entryModifyFormData.append(`entries[${index}].description`, entryDescription);
+
+            if ( entryMedia  ) { // 새로 업로드 된 미디어파일 존재 시
+                entryModifyFormData.append(`entries[${index}].mediaUrl`, entryMedia)
+            } else { // 유튜브 링크 방식 엔트리
+                entryModifyFormData.append(`entries[${index}].mediaFile`, entryMedia)
+            }
+
+            if( entryThumbnail ){ // 새로 업로드 된 썸네일 파일 존재 시
+                entryModifyFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
+            }
         }
-
-
     }
+
+
+    const isFormDataEmpty = entryModifyFormData.entries().next().done;
+
+    if( isFormDataEmpty ) {
+        return { validationResult : true, formData : null };
+    }
+
+    return { validationResult : true, formData : entryModifyFormData };
 }
