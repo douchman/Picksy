@@ -1,4 +1,4 @@
-import {stagedEntryMedia} from "../../modify/js/staged-entry-media.js";
+import {stagedEntryMedia} from "./staged-entry-media.js";
 import {createdTopic} from "./const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {isModifiedEntry} from "./const/initial-entry-map.js";

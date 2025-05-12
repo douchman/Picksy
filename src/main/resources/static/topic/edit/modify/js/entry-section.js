@@ -5,7 +5,7 @@ import {
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
-} from "./staged-entry-media.js";
+} from "../../core/js/staged-entry-media.js";
 import {renderEntryItem, renderExistEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
