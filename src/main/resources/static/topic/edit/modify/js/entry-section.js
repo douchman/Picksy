@@ -195,7 +195,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
 function isEntryCreated(){
     const entryForm = document.querySelector('#entry-form');
 
-    return entryForm.querySelector('.entry-item') !== null;
+    return entryForm.querySelector('.entry-item:not(.modify-entry)') !== null;
 }
 
 // 기존 엔트리 랜더링
