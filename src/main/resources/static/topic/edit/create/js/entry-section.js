@@ -12,6 +12,7 @@ import {createEntries} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
 import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
 import {buildValidatedEntryRegisterFormData} from "../../core/js/entry-form-data-builder.js";
+import {addEmptyStagedEntryMedia} from "../../core/js/staged-entry-media";
 
 const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
@@ -46,7 +47,9 @@ function addEntryZoneEvents(){
 
     // 클릭 -> 빈 엔트리 슬롯
     document.querySelector('#entry-add-zone').addEventListener('click', function(){
-        renderEntryItem(null);
+        const entryId = generateRandomEntryId();
+        renderEntryItem(null, entryId);
+        addEmptyStagedEntryMedia(entryId)
     });
 
     // 드래그 & 드롭 이벤트 처리
