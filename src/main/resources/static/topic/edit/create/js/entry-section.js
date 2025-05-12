@@ -4,7 +4,6 @@ import {
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
-    stagedEntryMedia
 } from "./staged-entry-media.js";
 import {renderEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
@@ -12,6 +11,7 @@ import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
 import {createEntries} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
 import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
+import {buildValidatedEntryRegisterFormData} from "../../core/js/entry-form-data-builder.js";
 
 const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
@@ -28,7 +28,7 @@ function addEntrySectionEvents(){
 export async function registerEntries(){
     let entryRegisterResult = true;
     if( isEntryCreated()){
-        const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
+        const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
 
        if( validationResult ){
             const entriesCreateResult = await createEntries(createdTopic.getId(), entryFormData);
@@ -42,44 +42,6 @@ export async function registerEntries(){
         }
     }
     return entryRegisterResult;
-}
-
-async function validateAndGenerateEntryFormData(){
-    const entryFormData = new FormData();
-    const entryForm = document.querySelector('#entry-form');
-    const entryItems = entryForm.querySelectorAll('.entry-item');
-
-    entryFormData.append('topicId', createdTopic.getId());
-
-    for ( const [index, entryItem] of Array.from(entryItems).entries()){
-        const entryItemId = entryItem.id;
-        const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDescription = entryItem.querySelector('.entry-description').value;
-        const entryMediaType = stagedEntryMedia[entryItemId].type;
-        const entryMedia = stagedEntryMedia[entryItemId].media;
-        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
-
-        if(!entryMedia) {
-            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
-            return { validationResult : false, formData : {}};
-        }
-
-        entryFormData.append(`entries[${index}].entryName`, entryName);
-        entryFormData.append(`entries[${index}].description`, entryDescription);
-        if ( entryMediaType === 'file' ) { // 파일 업로드 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
-        } else { // 유튜브 링크 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
-        }
-
-        if( entryThumbnail ){
-            entryFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
-        }
-
-    }
-
-    return { validationResult : true, formData : entryFormData };
-
 }
 
 // 엔트리 추가 버튼 이벤트 등록
