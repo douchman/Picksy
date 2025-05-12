@@ -8,9 +8,7 @@ import {MediaType} from "../../../../global/js/const.js";
 export function buildValidatedEntryRegisterFormData(){
     const entryFormData = new FormData();
     const entryForm = document.querySelector('#entry-form');
-    const entryItems = entryForm.querySelectorAll('.entry-item');
-
-    entryFormData.append('topicId', createdTopic.getId());
+    const entryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
 
     for ( const [index, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;
@@ -44,6 +42,8 @@ export function buildValidatedEntryRegisterFormData(){
     if( isFormDataEmpty ) {
         return { validationResult : true, formData : null };
     }
+
+    entryFormData.append('topicId', createdTopic.getId());
 
     return { validationResult : true, formData : entryFormData };
 }
