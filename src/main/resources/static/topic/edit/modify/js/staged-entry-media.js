@@ -12,8 +12,8 @@ export async function addStagedEntryMediaForYoutube(media, entryId, imageUrl ){
     stagedEntryMedia[entryId] = {type : MediaType.YOUTUBE, media : media, thumbnail : await getThumbNailFileFromYoutubeUrl(imageUrl)};
 }
 
-// 이미 생성되어있는 엔트리는 비어있는 값으로 스테이징
-export function  addStagedEntryMediaForExistEntry(entryId){
+// 비어있는 값으로 스테이징
+export function  addEmptyStagedEntryMedia(entryId){
     stagedEntryMedia[entryId] = {};
 }
 

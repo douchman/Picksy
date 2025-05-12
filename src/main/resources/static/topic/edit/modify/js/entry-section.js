@@ -1,7 +1,7 @@
 import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
-    addStagedEntryMediaForExistEntry,
+    addEmptyStagedEntryMedia,
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
@@ -78,7 +78,9 @@ function addEntryZoneEvents(){
 
     // 클릭 -> 빈 엔트리 슬롯
     document.querySelector('#entry-add-zone').addEventListener('click', function(){
-        renderEntryItem(null);
+        const entryId = generateRandomEntryId();
+        renderEntryItem(null, entryId);
+        addEmptyStagedEntryMedia(entryId)
     });
 
     // 드래그 & 드롭 이벤트 처리
@@ -234,11 +236,8 @@ function renderEntries(existEntries){
 function cacheInitialEntriesData(existEntries){
     existEntries.forEach(entry => {
         appendToInitialEntryDataMap(entry);
-        addStagedEntryMediaForExistEntry(
-            entry.id,
-            entry.mediaType,
-            entry.mediaUrl,
-            entry.thumbnail
+        addEmptyStagedEntryMedia(
+            entry.id
             );
     });
 }
