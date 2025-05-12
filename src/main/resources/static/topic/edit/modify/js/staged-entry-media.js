@@ -12,9 +12,9 @@ export async function addStagedEntryMediaForYoutube(media, entryId, imageUrl ){
     stagedEntryMedia[entryId] = {type : MediaType.YOUTUBE, media : media, thumbnail : await getThumbNailFileFromYoutubeUrl(imageUrl)};
 }
 
-// 이미 생성되어있는 엔트리의 기존값으로 스테이징
-export function  addStagedEntryMediaForExistEntry(entryId, mediaType, mediaUrl, thumbnail){
-    stagedEntryMedia[entryId] = {type : mediaType, media : mediaUrl, thumbnail : thumbnail};
+// 이미 생성되어있는 엔트리는 비어있는 값으로 스테이징
+export function  addStagedEntryMediaForExistEntry(entryId){
+    stagedEntryMedia[entryId] = {};
 }
 
 // 엔트리 아이템 랜더링과 함께 업로드 대기 파일 목록에 저장
