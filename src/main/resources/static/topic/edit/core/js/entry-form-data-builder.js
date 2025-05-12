@@ -64,10 +64,7 @@ export function buildValidatedEntryModifyFormData(){
 
         const currentData = {
             entryName : entryName,
-            description : entryDescription,
-            mediaType : entryMediaType,
-            mediaUrl : entryMedia,
-            thumbnail : entryThumbnail
+            description : entryDescription
         }
 
         if( isModifiedEntry(entryItemId, currentData)){
@@ -75,9 +72,9 @@ export function buildValidatedEntryModifyFormData(){
             entryModifyFormData.append(`entries[${index}].description`, entryDescription);
 
             if ( entryMedia  ) { // 새로 업로드 된 미디어파일 존재 시
-                entryModifyFormData.append(`entries[${index}].mediaUrl`, entryMedia)
-            } else { // 유튜브 링크 방식 엔트리
-                entryModifyFormData.append(`entries[${index}].mediaFile`, entryMedia)
+                entryModifyFormData.append(`entries[${index}].mediaFile`, entryMedia);
+            } else if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
+                entryModifyFormData.append(`entries[${index}].mediaUrl`, entryMedia);
             }
 
             if( entryThumbnail ){ // 새로 업로드 된 썸네일 파일 존재 시
