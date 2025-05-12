@@ -37,8 +37,14 @@ export function buildValidatedEntryRegisterFormData(){
         if( entryThumbnail ){
             entryFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
         }
-
     }
+
+    const isFormDataEmpty = entryFormData.entries().next().done;
+
+    if( isFormDataEmpty ) {
+        return { validationResult : true, formData : null };
+    }
+
     return { validationResult : true, formData : entryFormData };
 }
 
