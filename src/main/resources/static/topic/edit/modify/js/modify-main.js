@@ -1,5 +1,5 @@
 import {setupTopicSection, modifyTopic, registerTopic} from "./topic-section.js";
-import {setupEntrySection, registerEntries} from "./entry-section.js";
+import {setupEntrySection, registerEntries, updateEntries} from "./entry-section.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {createdTopic} from "../../core/js/const/const.js";
 import {TopicEditExceptionHandler} from "../../core/js/exception/topic-edit-exception-handler.js";
@@ -43,8 +43,9 @@ function addBottomBtnGroupEvents(){
         }
 
         const entryRegisterSuccess =  topicRegisterSuccess && await registerEntries();
+        const entryUpdateSuccess = topicRegisterSuccess && await updateEntries();
 
-        if( topicRegisterSuccess && entryRegisterSuccess ){
+        if( topicRegisterSuccess && entryRegisterSuccess && entryUpdateSuccess ){
             showToastMessage('성공적으로 저장되었습니다. :)');
             setTimeout(() =>{
                 location.href = '/';

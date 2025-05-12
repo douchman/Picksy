@@ -9,12 +9,19 @@ import {
 import {renderEntryItem, renderExistEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
-import {createEntries, getEntryList} from "../../core/js/api/entry-edit-api.js";
+import {createEntries, getEntryList, modifyEntries} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
-import {EntryCreateException, EntryListException} from "../../core/js/exception/EntryEditException.js";
+import {
+    EntryCreateException,
+    EntryListException,
+    EntryUpdateException
+} from "../../core/js/exception/EntryEditException.js";
 import {MediaType} from "../../../../global/js/const.js";
 import {appendToInitialEntryDataMap} from "../../core/js/const/initial-entry-map.js";
-import {buildValidatedEntryRegisterFormData} from "../../core/js/entry-form-data-builder.js";
+import {
+    buildValidatedEntryModifyFormData,
+    buildValidatedEntryRegisterFormData
+} from "../../core/js/entry-form-data-builder.js";
 
 const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
@@ -26,7 +33,6 @@ export async function setupEntrySection(){
         renderEntries(existEntries);
         cacheInitialEntriesData(existEntries);
     }
-
     addEntrySectionEvents();
 }
 
@@ -45,6 +51,22 @@ export async function registerEntries(){
 
     if( !entriesCreateResult ){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
         entryEditExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
+        return false;
+    }
+
+    return true;
+}
+
+export async function updateEntries(){
+    const {validationResult, formData : entryFormData} = await buildValidatedEntryModifyFormData();
+
+    if( validationResult ){ return false;}
+    if( !entryFormData) { return true;}
+
+    const entriesUpdateResult = await modifyEntries(createdTopic.getId(), entryFormData);
+
+    if( !entriesUpdateResult ){
+        entryEditExceptionHandler.handle(new EntryUpdateException(entriesUpdateResult.message, entriesUpdateResult.status));
         return false;
     }
 
