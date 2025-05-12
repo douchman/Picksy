@@ -33,3 +33,19 @@ export async function getEntryList(topicId){
 async function fetchEntryList(topicId){
     return await apiRequest(`topics/${topicId}/entries`, ApiMethod.GET,{}, false);
 }
+
+// 엔트리 업데이트
+export async function modifyEntries(topicId, requestBody){
+    const { status, data : entriesUpdateResult, isAuthOrNetworkException } = await fetchUpdateEntries(topicId, requestBody);
+
+    if( isAuthOrNetworkException ) return null;
+
+    if( status === 200 && entriesUpdateResult ){ return entriesUpdateResult; }
+
+    return null;
+}
+
+// 엔트리 업데이트 API fetch
+async function fetchUpdateEntries(topicId, requestBody){
+    return await apiRequest(`topics/${topicId}/entries`, ApiMethod.PATCH, requestBody, true);
+}
