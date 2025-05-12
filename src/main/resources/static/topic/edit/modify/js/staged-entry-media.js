@@ -3,6 +3,7 @@ import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {renderEntryItem} from "../../core/entry-item-render.js";
 import {getThumbNailFileFromYoutubeUrl} from "../../core/youtube.js";
 import {MediaType} from "../../../../global/js/const.js";
+import {initialEntryDataMap} from "../../core/js/const/initial-entry-map.js";
 
 export const stagedEntryMedia = {};
 
@@ -62,6 +63,11 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
             stagedEntryMedia[entryId].thumbnail = getThumbFileFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
         });
     }
+
+    if( initialEntryDataMap.has(Number(entryId)) ){ // 수정을 위한 값이 존재 할 경우 modified flag 변경
+        initialEntryDataMap.get(Number(entryId)).isMediaChanged = true;
+    }
+
 }
 
 // 업로드 된 파일로부터 mime type 확인
