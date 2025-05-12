@@ -1,10 +1,16 @@
 import {generateFilePreviewURL} from "../../../../global/js/file.js";
-import {apiFormDataPatchRequest, apiFormDataRequest} from "../../../../global/js/api.js";
-import {getTopicId, setTopicId} from "./const.js";
+import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {createTopic, getTopicDetail, updateTopic} from "../../core/js/api/topic-edit-api.js";
+import {TopicEditExceptionHandler} from "../../core/js/exception/topic-edit-exception-handler.js";
+import {TopicCreateException, TopicUpdateException} from "../../core/js/exception/TopicEditException.js";
 
-export function setupTopicSection(){
-    addTopicSectionEvents();
+const topicEditExceptionHandler = new TopicEditExceptionHandler()
+
+export async function setupTopicSection(){
+    if(await renderTopicDetail(createdTopic.getId())){
+        addTopicSectionEvents();
+    }
 }
 
 function addTopicSectionEvents(){
@@ -61,13 +67,13 @@ export async function registerTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const {status,isAuthOrNetworkError, data : registerResult } = await postTopic(requestBody);
+        const topicCreateResult = await createTopic(requestBody);
 
-        if( status === 200){
-            setTopicId(registerResult.topicId);
+        if( topicCreateResult){
+            createdTopic.setId(topicCreateResult.topicId);
             return true;
         } else {
-            handleTopicRegisterException(isAuthOrNetworkError, registerResult);
+            topicEditExceptionHandler.handle(new TopicCreateException(validationResult.message, validationResult.status));
             return false;
         }
     }
@@ -85,12 +91,12 @@ export async function modifyTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const {status,isAuthOrNetworkError, data : registerResult } = await patchTopic(requestBody);
+        const topicUpdateResult = await updateTopic(createTopic.getId(), requestBody);
 
-        if( status === 200){
+        if(topicUpdateResult){
             return true;
         } else {
-            handleTopicRegisterException(isAuthOrNetworkError, registerResult);
+            topicEditExceptionHandler.handle(new TopicUpdateException(validationResult.message, validationResult.status));
             return false;
         }
     }
@@ -137,16 +143,31 @@ function validateAndGenerateTopicFormData(){
     };
 }
 
-async function postTopic(requestBody){
-    return apiFormDataRequest('topics', {}, requestBody);
-}
+async function renderTopicDetail(topicId){
+    const topicDetailResult = await getTopicDetail(topicId);
 
-async function patchTopic(requestBody){
-    return apiFormDataPatchRequest(`topics/${getTopicId()}`, {}, requestBody);
-}
+    console.log('topicDetail', topicDetailResult);
 
-function handleTopicRegisterException(isAuthOrNetworkError, registerResult){
-    if( !isAuthOrNetworkError ){
-        showToastMessage(registerResult.message, 'error', 2000);
+    if( topicDetailResult ){
+        const topicDetail = topicDetailResult.topic;
+
+        // 대결주제 이미지 랜더링
+        const topicThumbnailPreview = document.querySelector('#topic-thumbnail-preview');
+        topicThumbnailPreview.style.backgroundImage = `url(${topicDetail.thumbnail})`;
+        topicThumbnailPreview.classList.add('uploaded');
+
+        // 대결주제 제목, 서브주제, 설명 랜더링
+        document.querySelector('#topic-title').value = topicDetail.title;
+        document.querySelector('#topic-subject').value = topicDetail.subject;
+        document.querySelector('#topic-desc').value = topicDetail.description;
+
+        // 공개 범위 랜더링
+        // TODO : API 수정 이후 처리 필요
+
+    } else {
+        topicEditExceptionHandler.handle(new TopicUpdateException(topicDetailResult.messsage, topicDetailResult.status));
+        return false;
     }
+
+    return true;
 }

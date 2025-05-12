@@ -1,11 +1,11 @@
 import {generateFilePreviewURL} from "../../../../global/js/file.js";
-import {createdTopic} from "./const.js";
+import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {createTopic, updateTopic} from "./topic-create-api.js";
-import {TopicCreateExceptionHandler} from "./exception/topic-create-exception-handler.js";
+import {createTopic, updateTopic} from "../../core/js/api/topic-edit-api.js";
+import {TopicEditExceptionHandler} from "../../core/js/exception/topic-edit-exception-handler.js";
 import {TopicCreateException, TopicUpdateException} from "../../core/js/exception/TopicEditException.js";
 
-const topicCreateExceptionHandler = new TopicCreateExceptionHandler()
+const topicEditExceptionHandler = new TopicEditExceptionHandler()
 
 export function setupTopicSection(){
     addTopicSectionEvents();
@@ -71,7 +71,7 @@ export async function registerTopic(){
             createdTopic.setId(topicCreateResult.topicId);
             return true;
         } else {
-            topicCreateExceptionHandler.handle(new TopicCreateException(validationResult.message, topicCreateExceptionHandler.status));
+            topicEditExceptionHandler.handle(new TopicCreateException(validationResult.message, validationResult.status));
             return false;
         }
     }
@@ -89,12 +89,12 @@ export async function modifyTopic(){
         requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
-        const topicUpdateResult = await updateTopic(requestBody);
+        const topicUpdateResult = await updateTopic(createTopic.getId(), requestBody);
 
         if(topicUpdateResult){
             return true;
         } else {
-            topicCreateExceptionHandler.handle(new TopicUpdateException(validationResult.message, topicCreateExceptionHandler.status));
+            topicEditExceptionHandler.handle(new TopicUpdateException(validationResult.message, validationResult.status));
             return false;
         }
     }

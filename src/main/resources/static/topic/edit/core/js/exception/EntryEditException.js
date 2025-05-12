@@ -5,3 +5,19 @@ export class EntryCreateException extends Error {
         this.name = 'EntryCreateException';
     }
 }
+
+export class EntryUpdateException extends Error {
+    constructor(message = 'Topic Update Exception', status = 500) {
+        super(message);
+        this.status = status;
+        this.name = 'EntryUpdateException';
+    }
+}
+
+export class EntryListException extends Error {
+    constructor(message = 'Entry List Exception', status = 500) {
+        super(message);
+        this.status = status;
+        this.name = 'EntryListException';
+    }
+}

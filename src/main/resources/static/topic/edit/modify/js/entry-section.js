@@ -1,82 +1,76 @@
-import {apiFormDataRequest} from "../../../../global/js/api.js";
-import {getTopicId} from "./const.js";
+import {createdTopic} from "../../core/js/const/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {handleEntryRegisterException} from "./exception.js";
 import {
+    addEmptyStagedEntryMedia,
     addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia,
-    stagedEntryMedia
 } from "./staged-entry-media.js";
-import {renderEntryItem} from "../../core/entry-item-render.js";
+import {renderEntryItem, renderExistEntryItem} from "../../core/entry-item-render.js";
 import {generateRandomEntryId} from "../../core/entry-uuid.js";
 import {getYouTubeInfoFromUrl} from "../../core/youtube.js";
+import {createEntries, getEntryList, modifyEntries} from "../../core/js/api/entry-edit-api.js";
+import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
+import {
+    EntryCreateException,
+    EntryListException,
+    EntryUpdateException
+} from "../../core/js/exception/EntryEditException.js";
+import {MediaType} from "../../../../global/js/const.js";
+import {appendToInitialEntryDataMap} from "../../core/js/const/initial-entry-map.js";
+import {
+    buildValidatedEntryModifyFormData,
+    buildValidatedEntryRegisterFormData
+} from "../../core/js/entry-form-data-builder.js";
+
+const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
-export function setupEntrySection(){
+export async function setupEntrySection(){
+    const existEntries = await getExistEntries();
+    if( existEntries && existEntries.length > 0){
+        renderEntries(existEntries);
+        cacheInitialEntriesData(existEntries);
+    }
     addEntrySectionEvents();
 }
+
 function addEntrySectionEvents(){
     addEntryZoneEvents(); // 엔트리 추가 버튼 이벤트
     addEntryFormEvents(); // 엔트리 등록 form 관련 이벤트
 }
 
 export async function registerEntries(){
-    let entryRegisterResult = true;
-    if( isEntryCreated()){
-        const {validationResult, formData : entryFormData } = await validateAndGenerateEntryFormData();
+    const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
 
-       if( validationResult ){
-            const { status,isAuthOrNetworkError,  data : registerResult } = await postEntries(entryFormData);
+    if( !validationResult ){ return false;}
+    if( !entryFormData ){ return true;}
 
-            if( status !== 200){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
-                handleEntryRegisterException(isAuthOrNetworkError, registerResult);
-                entryRegisterResult = false;
-            }
-        } else {
-            entryRegisterResult = false;
-        }
+    const entriesCreateResult = await createEntries(createdTopic.getId(), entryFormData);
+
+    if( !entriesCreateResult ){ // 성공시 별도의 처리가 필요없으므로, 실패의 경우만 따짐
+        entryEditExceptionHandler.handle(new EntryCreateException(entriesCreateResult.message, entriesCreateResult.status));
+        return false;
     }
-    return entryRegisterResult;
+
+    return true;
 }
 
-async function validateAndGenerateEntryFormData(){
-    const entryFormData = new FormData();
-    const entryForm = document.querySelector('#entry-form');
-    const entryItems = entryForm.querySelectorAll('.entry-item');
+export async function updateEntries(){
+    const {validationResult, formData : entryFormData} = await buildValidatedEntryModifyFormData();
 
-    entryFormData.append('topicId', getTopicId());
+    if( !validationResult ){ return false;}
+    if( !entryFormData) { return true;}
 
-    for ( const [index, entryItem] of Array.from(entryItems).entries()){
-        const entryItemId = entryItem.id;
-        const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDescription = entryItem.querySelector('.entry-description').value;
-        const entryMediaType = stagedEntryMedia[entryItemId].type;
-        const entryMedia = stagedEntryMedia[entryItemId].media;
-        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
+    const entriesUpdateResult = await modifyEntries(createdTopic.getId(), entryFormData);
 
-        if(!entryMedia) {
-            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
-            return { validationResult : false, formData : {}};
-        }
-
-        entryFormData.append(`entries[${index}].entryName`, entryName);
-        entryFormData.append(`entries[${index}].description`, entryDescription);
-        if ( entryMediaType === 'file' ) { // 파일 업로드 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
-        } else { // 유튜브 링크 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
-        }
-
-        if( entryThumbnail ){
-            entryFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
-        }
-
+    if( !entriesUpdateResult ){
+        entryEditExceptionHandler.handle(new EntryUpdateException(entriesUpdateResult.message, entriesUpdateResult.status));
+        return false;
     }
 
-    return { validationResult : true, formData : entryFormData };
-
+    return true;
 }
 
 // 엔트리 추가 버튼 이벤트 등록
@@ -84,7 +78,9 @@ function addEntryZoneEvents(){
 
     // 클릭 -> 빈 엔트리 슬롯
     document.querySelector('#entry-add-zone').addEventListener('click', function(){
-        renderEntryItem(null);
+        const entryId = generateRandomEntryId();
+        renderEntryItem(null, entryId);
+        addEmptyStagedEntryMedia(entryId)
     });
 
     // 드래그 & 드롭 이벤트 처리
@@ -207,7 +203,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            await addStagedEntryMediaForYoutube('youtube', url, entryId, thumbNail );
+            await addStagedEntryMediaForYoutube(url, entryId, thumbNail );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
@@ -217,12 +213,42 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
     }, 300);
 }
 
-async function postEntries(requestBody){
-    return apiFormDataRequest(`topics/${getTopicId()}/entries`, {}, requestBody);
+// 기존 엔트리 랜더링
+function renderEntries(existEntries){
+    existEntries.forEach(entry => {
+        const entryMediaType = entry.mediaType;
+        const entryMediaUrl = entry.mediaUrl;
+        const entryThumbnail =
+            entryMediaType === MediaType.IMAGE ?
+                entry.mediaUrl
+                : entry.thumbnail;
+
+        renderExistEntryItem(
+            entryThumbnail,
+            entry.id,
+            entry.entryName,
+            entry.description,
+            `${entryMediaType === MediaType.YOUTUBE ? entryMediaUrl : ''}`);
+    });
 }
 
-function isEntryCreated(){
-    const entryForm = document.querySelector('#entry-form');
+// 기존 엔트리 조회 데이터 캐싱
+function cacheInitialEntriesData(existEntries){
+    existEntries.forEach(entry => {
+        appendToInitialEntryDataMap(entry);
+        addEmptyStagedEntryMedia(
+            entry.id
+            );
+    });
+}
 
-    return entryForm.querySelector('.entry-item') !== null;
+async function getExistEntries(){
+    const entryListResult = await getEntryList(createdTopic.getId());
+
+    if( entryListResult ){
+        return entryListResult.entries;
+    } else {
+        entryEditExceptionHandler.handle(new EntryListException(entryListResult.message, entryListResult.status));
+        return null;
+    }
 }

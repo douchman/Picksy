@@ -32,8 +32,8 @@ public class PageController {
         return "topic/edit/create/topic-create";
     }
 
-    @GetMapping("topic/modify")
-    public String modifyTopic(){
+    @GetMapping("topic/modify/{topicId}")
+    public String modifyTopic(@PathVariable String topicId){
         return "topic/edit/modify/topic-modify";
     }
 
