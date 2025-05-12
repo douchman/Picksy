@@ -44,7 +44,7 @@ function addEntrySectionEvents(){
 export async function registerEntries(){
     const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
 
-    if( validationResult ){ return false;}
+    if( !validationResult ){ return false;}
     if( !entryFormData ){ return true;}
 
     const entriesCreateResult = await createEntries(createdTopic.getId(), entryFormData);
@@ -60,7 +60,7 @@ export async function registerEntries(){
 export async function updateEntries(){
     const {validationResult, formData : entryFormData} = await buildValidatedEntryModifyFormData();
 
-    if( validationResult ){ return false;}
+    if( !validationResult ){ return false;}
     if( !entryFormData) { return true;}
 
     const entriesUpdateResult = await modifyEntries(createdTopic.getId(), entryFormData);
