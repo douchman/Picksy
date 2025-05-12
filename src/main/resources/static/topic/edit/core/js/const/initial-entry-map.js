@@ -3,17 +3,11 @@ export const initialEntryDataMap = new Map();
 export function appendToInitialEntryDataMap(entry){
     const entryName = entry.entryName;
     const description = entry.description;
-    const mediaType = entry.mediaType;
-    const mediaUrl = entry.mediaUrl;
-    const thumbnail = entry.thumbnail;
     const isMediaChanged = false;
 
     initialEntryDataMap.set(entry.id ,{
             entryName,
             description,
-            mediaType,
-            mediaUrl,
-            thumbnail,
             isMediaChanged
         });
 }
@@ -25,8 +19,5 @@ export function isModifiedEntry(entryId, currentData){
 
     return (currentData.entryName !== initialEntryData.entryName ||
         currentData.description !== initialEntryData.description ||
-        currentData.mediaType !== initialEntryData.mediaType ||
-        currentData.mediaUrl !== initialEntryData.mediaUrl ||
-        currentData.thumbnail !== initialEntryData.thumbnail ||
-        currentData.isMediaChanged);
+        initialEntryData.isMediaChanged);
 }
