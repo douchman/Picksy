@@ -1,4 +1,5 @@
-import {generateRandomEntryId} from "./entry-uuid.js";
+import {generateRandomEntryId} from "../../entry-uuid.js";
+import {MediaType} from "../../../../../global/js/const.js";
 
 export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
     const entryForm = document.querySelector('#entry-form');
@@ -27,7 +28,7 @@ export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
 }
 
 // 생성되어있는 엔트리 랜더링 ( for modify )
-export function renderExistEntryItem(thumbnail, entryId = generateRandomEntryId(), entryName, entryDesc, youTubeLink){
+export function renderModifyEntryItem(thumbnail, entryId = generateRandomEntryId(), entryName, entryDesc, youTubeLink){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item modify-entry" id="${entryId}">
@@ -51,4 +52,24 @@ export function renderExistEntryItem(thumbnail, entryId = generateRandomEntryId(
         </div>`;
 
     entryForm.insertAdjacentHTML('beforeend', entryItem);
+}
+
+
+// 기존 엔트리 랜더링
+export function renderExistingEntries(existEntries){
+    existEntries.forEach(entry => {
+        const entryMediaType = entry.mediaType;
+        const entryMediaUrl = entry.mediaUrl;
+        const entryThumbnail =
+            entryMediaType === MediaType.IMAGE ?
+                entry.mediaUrl
+                : entry.thumbnail;
+
+        renderModifyEntryItem(
+            entryThumbnail,
+            entry.id,
+            entry.entryName,
+            entry.description,
+            `${entryMediaType === MediaType.YOUTUBE ? entryMediaUrl : ''}`);
+    });
 }
