@@ -145,7 +145,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            await addStagedEntryMediaForYoutube('youtube', url, entryId, thumbNail );
+            await addStagedEntryMediaForYoutube(url, entryId, thumbNail );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';
