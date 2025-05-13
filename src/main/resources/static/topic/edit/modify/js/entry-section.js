@@ -15,7 +15,7 @@ import {appendToInitialEntryDataMap} from "../../core/js/const/initial-entry-map
 import {
     buildValidatedEntryModifyFormData,
     buildValidatedEntryRegisterFormData
-} from "../../core/js/entry-form-data-builder.js";
+} from "../../core/js/entry-section/entry-form-data-builder.js";
 import {addEntryFormEvents, addEntryZoneEvents} from "../../core/js/entry-section/section-events.js";
 
 const entryEditExceptionHandler = new EntryEditExceptionHandler();

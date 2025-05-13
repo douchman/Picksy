@@ -2,7 +2,7 @@ import {createdTopic} from "../../core/js/const/const.js";
 import {createEntries} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
 import {EntryCreateException} from "../../core/js/exception/EntryEditException.js";
-import {buildValidatedEntryRegisterFormData} from "../../core/js/entry-form-data-builder.js";
+import {buildValidatedEntryRegisterFormData} from "../../core/js/entry-section/entry-form-data-builder.js";
 import {
     addEntryFormEvents,
     addEntryZoneEvents
