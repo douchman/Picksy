@@ -2,7 +2,7 @@ import {buildValidatedEntryModifyFormData, buildValidatedEntryRegisterFormData} 
 import {createEntries, getEntryList, modifyEntries} from "../api/entry-edit-api.js";
 import {createdTopic} from "../const/const.js";
 import {EntryCreateException, EntryListException, EntryUpdateException} from "../exception/EntryEditException.js";
-import {EntryEditExceptionHandler} from "../exception/entry-edit-exception-handler";
+import {EntryEditExceptionHandler} from "../exception/entry-edit-exception-handler.js";
 
 const entryEditExceptionHandler = new EntryEditExceptionHandler();
 

@@ -28,7 +28,7 @@ export async function registerTopic(){
 }
 
 export async function modifyTopic(){
-    const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = validateAndGenerateTopicFormData();
+    const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = buildValidatedTopicRegisterFormData();
 
     if( validationResult ){
         const requestBody = new FormData();
