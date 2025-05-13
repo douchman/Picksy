@@ -27,7 +27,7 @@ export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
 }
 
 // 생성되어있는 엔트리 랜더링 ( for modify )
-export function renderExistEntryItem(thumbnail, entryId = generateRandomEntryId(), entryName, entryDesc, youTubeLink){
+export function renderModifyEntryItem(thumbnail, entryId = generateRandomEntryId(), entryName, entryDesc, youTubeLink){
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item modify-entry" id="${entryId}">
