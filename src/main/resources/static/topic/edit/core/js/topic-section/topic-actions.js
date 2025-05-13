@@ -3,6 +3,7 @@ import {createTopic, getTopicDetail, updateTopic} from "../api/topic-edit-api.js
 import {createdTopic} from "../const/const.js";
 import {TopicCreateException, TopicUpdateException} from "../exception/TopicEditException.js";
 import {TopicEditExceptionHandler} from "../exception/topic-edit-exception-handler.js";
+import {setInitialTopic} from "../const/initial-topic";
 
 const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
@@ -15,9 +16,11 @@ export async function registerTopic(){
 
     if( !topicCreateResult){
         topicEditExceptionHandler.handle(new TopicCreateException(validationResult.message, validationResult.status));
-
     }
-    createdTopic.setId(topicCreateResult.topicId);
+
+    setCreatedTopicId(topicCreateResult);
+    saveRegisteredTopicData(topicCreateResult);
+
     return true;
 }
 
@@ -44,4 +47,17 @@ export async function getExistTopicDetail(){
         topicEditExceptionHandler.handle(new TopicUpdateException(topicDetailResult.messsage, topicDetailResult.status));
         return null;
     }
+}
+
+function setCreatedTopicId(topicCreateResult){
+    createdTopic.setId(topicCreateResult.topicId);
+}
+
+function saveRegisteredTopicData(topicCreateResult){
+    const registeredTopicData = {
+        title : topicCreateResult.title,
+        subject : topicCreateResult.subject,
+        description : topicCreateResult.description
+    }
+    setInitialTopic(registeredTopicData);
 }
