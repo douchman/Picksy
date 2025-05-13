@@ -1,4 +1,5 @@
 import {generateFilePreviewURL} from "../../../../../global/js/file.js";
+import {initialTopic} from "../const/initial-topic.js";
 
 export function addTopicSectionEvents(){
 
@@ -10,6 +11,7 @@ export function addTopicSectionEvents(){
             if(url){
                 topicThumbnail.style.backgroundImage = `url(${url})`;
                 topicThumbnail.classList.add('uploaded');
+                markTopicThumbnailAsChanged();
             }
         });
     });
@@ -37,8 +39,13 @@ export function addTopicSectionEvents(){
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 fileInput.files = dataTransfer.files;
+                markTopicThumbnailAsChanged();
             }
         });
         this.classList.remove('drag-over');
     });
+}
+
+function markTopicThumbnailAsChanged(){
+    initialTopic.isThumbnailChanged = true;
 }
