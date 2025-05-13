@@ -1,5 +1,5 @@
 import {buildValidatedTopicRegisterFormData, buildValidatedTopicUpdateFormData} from "./topic-form-data-builder.js";
-import {createTopic, updateTopic} from "../api/topic-edit-api.js";
+import {createTopic, getTopicDetail, updateTopic} from "../api/topic-edit-api.js";
 import {createdTopic} from "../const/const.js";
 import {TopicCreateException, TopicUpdateException} from "../exception/TopicEditException.js";
 import {TopicEditExceptionHandler} from "../exception/topic-edit-exception-handler.js";
@@ -51,4 +51,14 @@ export async function modifyTopic(){
         }
     }
     return false;
+}
+
+export async function getExistTopicDetail(){
+    const topicDetailResult = await getTopicDetail(createdTopic.getId());
+    if( topicDetailResult ){
+        return topicDetailResult;
+    } else {
+        topicEditExceptionHandler.handle(new TopicUpdateException(topicDetailResult.messsage, topicDetailResult.status));
+        return null;
+    }
 }
