@@ -1,9 +1,10 @@
-import {setupTopicSection, modifyTopic, registerTopic} from "./topic-section.js";
+import {setupTopicSection} from "./topic-section.js";
 import {setupEntrySection, registerEntries, updateEntries} from "./entry-section.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {createdTopic} from "../../core/js/const/const.js";
 import {TopicEditExceptionHandler} from "../../core/js/exception/topic-edit-exception-handler.js";
 import {TopicIdSaveException} from "../../core/js/exception/TopicEditException.js";
+import {modifyTopic, registerTopic} from "../../core/js/topic-section/topic-actions.js";
 
 const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
