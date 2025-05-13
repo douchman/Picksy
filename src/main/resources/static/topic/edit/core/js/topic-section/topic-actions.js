@@ -30,7 +30,7 @@ export async function modifyTopic(){
     if( !validationResult) return false;
     if( !topicModifyFormData ) return true;
 
-    const topicUpdateResult = await updateTopic(createTopic.getId(), topicModifyFormData);
+    const topicUpdateResult = await updateTopic(createdTopic.getId(), topicModifyFormData);
 
     if(!topicUpdateResult) {
         topicEditExceptionHandler.handle(new TopicUpdateException(validationResult.message, validationResult.status));
