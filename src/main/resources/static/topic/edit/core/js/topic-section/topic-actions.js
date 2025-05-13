@@ -2,6 +2,9 @@ import {buildValidatedTopicRegisterFormData} from "./topic-form-data-builder.js"
 import {createTopic, updateTopic} from "../api/topic-edit-api.js";
 import {createdTopic} from "../const/const.js";
 import {TopicCreateException, TopicUpdateException} from "../exception/TopicEditException.js";
+import {TopicEditExceptionHandler} from "../exception/topic-edit-exception-handler.js";
+
+const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
 export async function registerTopic(){
     const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = buildValidatedTopicRegisterFormData();
