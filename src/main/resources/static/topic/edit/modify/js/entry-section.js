@@ -2,7 +2,7 @@ import {createdTopic} from "../../core/js/const/const.js";
 import {
     addEmptyStagedEntryMedia,
 } from "../../core/js/staged-entry-media.js";
-import {renderExistEntryItem} from "../../core/entry-item-render.js";
+import {renderExistEntryItem} from "../../core/js/entry-section/entry-item-render.js";
 import {getEntryList} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
 import {
