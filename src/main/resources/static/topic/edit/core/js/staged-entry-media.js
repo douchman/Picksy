@@ -10,6 +10,7 @@ export const stagedEntryMedia = {};
 // 유튜브 링크 용 파일 스테이징
 export async function addStagedEntryMediaForYoutube(media, entryId, imageUrl ){
     stagedEntryMedia[entryId] = {type : MediaType.YOUTUBE, media : media, thumbnail : await getThumbNailFileFromYoutubeUrl(imageUrl)};
+    markInitialEntryDataAsChanged(entryId);
 }
 
 // 비어있는 값으로 스테이징
@@ -64,9 +65,7 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
         });
     }
 
-    if( initialEntryDataMap.has(Number(entryId)) ){ // 수정을 위한 값이 존재 할 경우 modified flag 변경
-        initialEntryDataMap.get(Number(entryId)).isMediaChanged = true;
-    }
+    markInitialEntryDataAsChanged(entryId)
 
 }
 
@@ -83,4 +82,10 @@ function getMediaMimeTypeFromFromUploadFile(file){
 
 export function removeStagedEntryMedia(fileId){
     delete stagedEntryMedia[fileId];
+}
+
+function markInitialEntryDataAsChanged(entryId){ // 수정을 위한 값이 존재 할 경우 modified flag 변경
+    if( initialEntryDataMap.has(Number(entryId)) ){
+        initialEntryDataMap.get(Number(entryId)).isMediaChanged = true;
+    }
 }
