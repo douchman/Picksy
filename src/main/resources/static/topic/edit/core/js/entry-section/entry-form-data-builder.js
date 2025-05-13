@@ -72,10 +72,10 @@ export function buildValidatedEntryModifyFormData(){
             entryModifyFormData.append(`entriesToUpdate[${index}].entryName`, entryName);
             entryModifyFormData.append(`entriesToUpdate[${index}].description`, entryDescription);
 
-            if ( entryMedia  ) { // 새로 업로드 된 미디어파일 존재 시
-                entryModifyFormData.append(`entriesToUpdate[${index}].mediaFile`, entryMedia);
-            } else if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
+            if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
                 entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, entryMedia);
+            } else {
+                entryModifyFormData.append(`entriesToUpdate[${index}].mediaFile`, entryMedia);
             }
 
             if( entryThumbnail ){ // 새로 업로드 된 썸네일 파일 존재 시
