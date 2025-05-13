@@ -1,4 +1,5 @@
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {isModifiedTopic} from "../const/initial-topic";
 
 export function buildValidatedTopicRegisterFormData(){
     const topicTitle = document.querySelector('#topic-title').value;
@@ -61,6 +62,14 @@ export function buildValidatedTopicUpdateFormData(){
         showToastMessage('대결 설명을 입력해주세요', 'alert');
         return {validationResult : false, formData : {}}
     }
+
+    const currentData = {
+        title : topicTitle,
+        subject : topicSubject,
+        description : topicDesc
+    }
+
+    if( !isModifiedTopic(currentData) ){ return { validationResult : true, formData : null} }
 
     return {
         validationResult : true,

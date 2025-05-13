@@ -31,26 +31,25 @@ export async function registerTopic(){
 }
 
 export async function modifyTopic(){
-    const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = buildValidatedTopicUpdateFormData();
+    const {validationResult , formData } = buildValidatedTopicUpdateFormData();
 
-    if( validationResult ){
-        const requestBody = new FormData();
-        requestBody.append('title', topicTitle);
-        requestBody.append('subject', topicSubject);
-        requestBody.append('description', topicDesc);
-        topicThumb && requestBody.append('thumbnail', topicThumb);
-        requestBody.append('visibility', visibility);
+    if( !validationResult) return false;
+    if( !formData ) return true;
 
-        const topicUpdateResult = await updateTopic(createTopic.getId(), requestBody);
+    const requestBody = new FormData();
+    requestBody.append('title', formData.topicTitle);
+    requestBody.append('subject', formData.topicSubject);
+    requestBody.append('description', formData.topicDesc);
+    formData.topicThumb && requestBody.append('thumbnail', formData.topicThumb);
+    requestBody.append('visibility', formData.visibility);
 
-        if(topicUpdateResult){
-            return true;
-        } else {
-            topicEditExceptionHandler.handle(new TopicUpdateException(validationResult.message, validationResult.status));
-            return false;
-        }
+    const topicUpdateResult = await updateTopic(createTopic.getId(), requestBody);
+
+    if(!topicUpdateResult) {
+        topicEditExceptionHandler.handle(new TopicUpdateException(validationResult.message, validationResult.status));
     }
-    return false;
+
+    return true;
 }
 
 export async function getExistTopicDetail(){
