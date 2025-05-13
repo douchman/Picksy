@@ -2,7 +2,7 @@ import {createdTopic} from "../../core/js/const/const.js";
 import {
     addEmptyStagedEntryMedia,
 } from "../../core/js/staged-entry-media.js";
-import {renderExistingEntries} from "../../core/js/entry-section/entry-item-render.js";
+import {renderExistingEntries} from "../../core/js/entry-section/entry-renderer.js";
 import {getEntryList} from "../../core/js/api/entry-edit-api.js";
 import {EntryEditExceptionHandler} from "../../core/js/exception/entry-edit-exception-handler.js";
 import {
@@ -26,7 +26,6 @@ function addEntrySectionEvents(){
     addEntryZoneEvents(); // 엔트리 추가 버튼 이벤트
     addEntryFormEvents(); // 엔트리 등록 form 관련 이벤트
 }
-
 
 // 기존 엔트리 조회 데이터 캐싱
 function cacheInitialEntriesData(existEntries){
