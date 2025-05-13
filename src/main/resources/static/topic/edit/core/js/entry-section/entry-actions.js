@@ -1,7 +1,10 @@
 import {buildValidatedEntryModifyFormData, buildValidatedEntryRegisterFormData} from "./entry-form-data-builder.js";
-import {createEntries, modifyEntries} from "../api/entry-edit-api.js";
+import {createEntries, getEntryList, modifyEntries} from "../api/entry-edit-api.js";
 import {createdTopic} from "../const/const.js";
-import {EntryCreateException, EntryUpdateException} from "../exception/EntryEditException.js";
+import {EntryCreateException, EntryListException, EntryUpdateException} from "../exception/EntryEditException.js";
+import {EntryEditExceptionHandler} from "../exception/entry-edit-exception-handler";
+
+const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
 export async function registerEntries(){
     const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
@@ -33,4 +36,15 @@ export async function updateEntries(){
     }
 
     return true;
+}
+
+export async function getExistEntries(){
+    const entryListResult = await getEntryList(createdTopic.getId());
+
+    if( entryListResult ){
+        return entryListResult.entries;
+    } else {
+        entryEditExceptionHandler.handle(new EntryListException(entryListResult.message, entryListResult.status));
+        return null;
+    }
 }
