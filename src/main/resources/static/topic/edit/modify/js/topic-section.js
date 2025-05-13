@@ -1,9 +1,9 @@
-import {createdTopic} from "../../core/js/const/const.js";
 import {addTopicSectionEvents} from "../../core/js/topic-section/section-events.js";
-import {renderTopicDetail} from "../../core/js/topic-section/topic-renderer.js";
+import {getExistTopicDetail} from "../../core/js/topic-section/topic-actions.js";
 
 export async function setupTopicSection() {
-    if (await renderTopicDetail(createdTopic.getId())) {
+    const topicDetail = await getExistTopicDetail();
+    if( topicDetail ) {
         addTopicSectionEvents();
     }
 }
