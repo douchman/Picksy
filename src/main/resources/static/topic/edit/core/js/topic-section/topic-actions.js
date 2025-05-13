@@ -3,7 +3,7 @@ import {createTopic, getTopicDetail, updateTopic} from "../api/topic-edit-api.js
 import {createdTopic} from "../const/const.js";
 import {TopicCreateException, TopicUpdateException} from "../exception/TopicEditException.js";
 import {TopicEditExceptionHandler} from "../exception/topic-edit-exception-handler.js";
-import {setInitialTopic} from "../const/initial-topic";
+import {setInitialTopic} from "../const/initial-topic.js";
 
 const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
