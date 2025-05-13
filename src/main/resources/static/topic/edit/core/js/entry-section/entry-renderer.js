@@ -1,5 +1,5 @@
 import {generateRandomEntryId} from "../../entry-uuid.js";
-import {MediaType} from "../../../../../global/js/const";
+import {MediaType} from "../../../../../global/js/const.js";
 
 export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
     const entryForm = document.querySelector('#entry-form');
