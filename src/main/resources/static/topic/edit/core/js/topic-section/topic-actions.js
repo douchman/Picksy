@@ -1,4 +1,4 @@
-import {buildValidatedTopicRegisterFormData} from "./topic-form-data-builder.js";
+import {buildValidatedTopicRegisterFormData, buildValidatedTopicUpdateFormData} from "./topic-form-data-builder.js";
 import {createTopic, updateTopic} from "../api/topic-edit-api.js";
 import {createdTopic} from "../const/const.js";
 import {TopicCreateException, TopicUpdateException} from "../exception/TopicEditException.js";
@@ -31,14 +31,14 @@ export async function registerTopic(){
 }
 
 export async function modifyTopic(){
-    const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = buildValidatedTopicRegisterFormData();
+    const {validationResult , formData : {topicTitle, topicSubject, topicDesc, topicThumb, visibility }} = buildValidatedTopicUpdateFormData();
 
     if( validationResult ){
         const requestBody = new FormData();
         requestBody.append('title', topicTitle);
         requestBody.append('subject', topicSubject);
         requestBody.append('description', topicDesc);
-        requestBody.append('thumbnail', topicThumb);
+        topicThumb && requestBody.append('thumbnail', topicThumb);
         requestBody.append('visibility', visibility);
 
         const topicUpdateResult = await updateTopic(createTopic.getId(), requestBody);
