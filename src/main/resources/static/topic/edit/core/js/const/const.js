@@ -13,6 +13,3 @@ export const createdTopic = {
         return (this.id !== null && this.id !== undefined);
     }
 }
-
-// 진입 모드
-export let editMode = '';
