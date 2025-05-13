@@ -1,4 +1,5 @@
 import {generateRandomEntryId} from "../../entry-uuid.js";
+import {MediaType} from "../../../../../global/js/const";
 
 export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
     const entryForm = document.querySelector('#entry-form');
@@ -51,4 +52,24 @@ export function renderModifyEntryItem(thumbnail, entryId = generateRandomEntryId
         </div>`;
 
     entryForm.insertAdjacentHTML('beforeend', entryItem);
+}
+
+
+// 기존 엔트리 랜더링
+export function renderExistingEntries(existEntries){
+    existEntries.forEach(entry => {
+        const entryMediaType = entry.mediaType;
+        const entryMediaUrl = entry.mediaUrl;
+        const entryThumbnail =
+            entryMediaType === MediaType.IMAGE ?
+                entry.mediaUrl
+                : entry.thumbnail;
+
+        renderModifyEntryItem(
+            entryThumbnail,
+            entry.id,
+            entry.entryName,
+            entry.description,
+            `${entryMediaType === MediaType.YOUTUBE ? entryMediaUrl : ''}`);
+    });
 }
