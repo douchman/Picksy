@@ -10,16 +10,16 @@ input[type="file"] {
     height: 100%;
 }
 
-.topic-modify .modify-header{
+.topic-edit .modify-header{
     padding : 10px;
 }
 
-.topic-modify .modify-header p{
+.topic-edit .modify-header p{
     font-size : 25px;
     font-weight: 600;
 }
 
-.topic-modify .sections{
+.topic-edit .sections{
     display: flex;
     height: calc(100% - 110px);
     gap : 10px;
