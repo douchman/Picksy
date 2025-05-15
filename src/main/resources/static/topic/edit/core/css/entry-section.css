@@ -153,27 +153,70 @@
     border-color : var(--signature-color);
 }
 
-
-.entry-item .btn-remove-entry{
+.entry-item .item-tools{
     position: absolute;
     top :0;
     right: 0;
     width: 48px;
     height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: .2s ease opacity;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.entry-item .item-tools .btn-remove-entry{
+    width: 100%;
     background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/trash.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 30px 30px;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 0 0;
     background-color: #FE4F2D;
-    visibility: hidden;
-    opacity: 0;
-    transition: .2s ease opacity;
+    padding: 0;
+    flex : 1;
+}
+.entry-item .item-tools .btn-remove-entry.only{
+    border-radius: 0 6px 6px 0;
 }
 
-.entry-item:hover .btn-remove-entry{
+.entry-item .item-tools .btn-restore-entry{
+    width: 100%;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/arrow-repeat-wh.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    border-radius: 0 0 6px 0;
+    background-color: #9EC6F3;
+    padding: 0;
+    flex : 1;
+}
+
+.entry-item:not(.removed):hover .item-tools{
     visibility: visible;
     opacity: 1;
+}
+
+.entry-item .mask-removed{
+    position: absolute;
+    top : 0;
+    left : 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    background-color: rgba(0,0,0, .65);
+    background-repeat: no-repeat;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/trash.svg");
+    background-position: center;
+    background-size: 40px 40px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.entry-item.removed .mask-removed{
+    visibility: visible;
 }
 
 @keyframes newItemBlink {

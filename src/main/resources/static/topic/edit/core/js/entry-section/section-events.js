@@ -7,6 +7,8 @@ import {
 } from "../staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "../../youtube.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {initialEntryDataMap} from "../const/initial-entry-map.js";
+import {MediaType} from "../../../../../global/js/const.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
@@ -66,7 +68,9 @@ function entryThumbClickEvent(){
 
         const handlers = {
             'btn-remove-entry' : removeEntryItem,
+            'btn-restore-entry' : restoreEntryItem,
             'entry-thumb' : triggerEntryThumbUpload,
+            'mask-removed' : cancelRemoved,
         }
 
         for (const key in handlers) {
@@ -120,15 +124,63 @@ function updateEntryThumb(entryThumbUpload){
 function removeEntryItem(target){
     const entryItem = target.closest('.entry-item');
     if( entryItem ){
-        const thumbId = entryItem.querySelector('.entry-thumb').id;
-        entryItem.remove();
-        thumbId && removeStagedEntryMedia(thumbId)
+        const isModifyEntry = entryItem.classList.contains('modify-entry');
+        if( isModifyEntry ) { // 수정 대상 엔트리 삭제
+            entryItem.classList.add('removed');
+        } else { // 신규 추가 대상 엔트리의 삭제
+            const thumbId = entryItem.querySelector('.entry-thumb').id;
+            entryItem.remove();
+            thumbId && removeStagedEntryMedia(thumbId)
+        }
+
+    }
+}
+
+// 생성한 엔트리 입력사항 되돌리기
+function restoreEntryItem(target){
+    const entryItem = target.closest('.entry-item');
+    if(entryItem){
+        const initialEntryData = initialEntryDataMap.get(Number(entryItem.id));
+        const entryMediaType = initialEntryData.mediaType;
+        const entryName = entryItem.querySelector('.entry-name');
+        const entryDescription = entryItem.querySelector('.entry-description');
+        const entryThumb = entryItem.querySelector('.entry-thumb');
+        const youTubeLink = entryItem.querySelector('.youtube-link');
+
+        switch(entryMediaType) {
+            case MediaType.IMAGE:
+                entryThumb.style.backgroundImage = 'url(' + initialEntryData.mediaUrl + ')';
+                youTubeLink.value = '';
+                break;
+            case MediaType.VIDEO:
+                entryThumb.style.backgroundImage = 'url(' + initialEntryData.thumbnail + ')';
+                youTubeLink.value = '';
+                break;
+            case MediaType.YOUTUBE:
+                entryThumb.style.backgroundImage = 'url(' + initialEntryData.thumbnail + ')';
+                youTubeLink.value = initialEntryData.mediaUrl;
+                break;
+        }
+
+        entryThumb.classList.remove('empty');
+        entryName.value = initialEntryData.entryName;
+        entryDescription.value = initialEntryData.description;
+
+        initialEntryData.isMediaChanged = false;
     }
 }
 
 // 엔트리 업로드 이벤트 호출을 위해 트리거
 function triggerEntryThumbUpload(entryThumb){
     entryThumb.closest('.entry-item').querySelector('.entry-thumb-upload').click();
+}
+
+// 수정 대상 엔트리 삭제대상 복구
+function cancelRemoved(target){
+    const entryItem = target.closest('.entry-item');
+    if(entryItem && entryItem.classList.contains('removed')){
+        entryItem.classList.remove('removed');
+    }
 }
 
 // 입력된 유튜브 링크로부터 썸네일 조회
@@ -145,7 +197,7 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.style.backgroundImage = `url(${thumbNail})`;
             entryThumb.classList.add('youtube');
             entryThumb.classList.remove('empty');
-            await addStagedEntryMediaForYoutube('youtube', url, entryId, thumbNail );
+            await addStagedEntryMediaForYoutube(url, entryId, thumbNail );
         } else {
             showToastMessage(`${message}`, 'error', 2500);
             entryThumb.style.backgroundImage = '';

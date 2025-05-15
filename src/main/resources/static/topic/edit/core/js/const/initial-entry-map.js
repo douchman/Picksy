@@ -3,11 +3,17 @@ export const initialEntryDataMap = new Map();
 export function appendToInitialEntryDataMap(entry){
     const entryName = entry.entryName;
     const description = entry.description;
+    const mediaType = entry.mediaType;
+    const mediaUrl = entry.mediaUrl;
+    const thumbnail = entry.thumbnail;
     const isMediaChanged = false;
 
     initialEntryDataMap.set(entry.id ,{
             entryName,
             description,
+            mediaType,
+            mediaUrl,
+            thumbnail,
             isMediaChanged
         });
 }
