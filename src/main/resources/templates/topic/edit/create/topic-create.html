@@ -8,59 +8,63 @@
 </head>
 <th:block layout:fragment="Content">
     <body data-require-auth="true">
-        <div id="topic-create" class="topic-create">
-            <section class="separate-section topic-section">
-                <p class="section-header">대결주제 설정</p>
-                <div id="topic-form" class="topic-group">
-                    <div class="topic-item">
-                        <span class="item-index">대표이미지</span>
-                        <div class="topic-thumb">
-                            <input id="topic-thumbnail" type="file" accept="image/*">
-                            <label id="topic-thumbnail-preview" class="topic-thumbnail-preview" for="topic-thumbnail" ></label>
+        <div id="topic-create" class="topic-edit topic-create">
+            <div class="modify-header">
+                <p class="t-i">대결주제 등록</p>
+            </div>
+            <div class="sections">
+                <section class="separate-section topic-section">
+                    <p class="section-header">대결주제 설정</p>
+                    <div id="topic-form" class="topic-group">
+                        <div class="topic-item">
+                            <span class="item-index">대표이미지</span>
+                            <div class="topic-thumb">
+                                <input id="topic-thumbnail" type="file" accept="image/*">
+                                <label id="topic-thumbnail-preview" class="topic-thumbnail-preview" for="topic-thumbnail" ></label>
+                            </div>
+                        </div>
+
+                        <div class="topic-item topic-desc-group">
+                            <span class="item-index">대결주제 정보</span>
+                            <div class="input-group topic-title">
+                                <label for="topic-title" class="desc-index">대결 제목</label>
+                                <input id="topic-title" type="text" placeholder="대결 제목">
+                            </div>
+
+                            <div class="input-group topic-subject">
+                                <label for="topic-subject" class="desc-index">주요개념</label>
+                                <input id="topic-subject" type="text" placeholder="카테고리, 키워드 (ex.음식, 선수, 영화 ..) ">
+                            </div>
+
+                            <div class="input-group topic-desc">
+                                <label for="topic-desc" class="desc-index">대결 설명</label>
+                                <input id="topic-desc" type="text" placeholder="대결 설명">
+                            </div>
+                        </div>
+
+                        <div class="topic-item topic-visibility">
+                            <span class="item-index">공개 범위 설정</span>
+                            <div class="visibility-group">
+                                <input id="private" type="radio" name="visibility" value="PRIVATE" checked>
+                                <label for="private" class="private">비공개</label>
+                                <input id="public" type="radio" name="visibility" value="PUBLIC">
+                                <label for="public" class="public">전체공개</label>
+                                <input id="link" type="radio" name="visibility" value="UNLISTED">
+                                <label for="link" class="link">링크</label>
+                            </div>
                         </div>
                     </div>
+                </section>
 
-                    <div class="topic-item topic-desc-group">
-                        <span class="item-index">대결주제 정보</span>
-                        <div class="input-group topic-title">
-                            <label for="topic-title" class="desc-index">대결 제목</label>
-                            <input id="topic-title" type="text" placeholder="대결 제목">
-                        </div>
-
-                        <div class="input-group topic-subject">
-                            <label for="topic-subject" class="desc-index">주요개념</label>
-                            <input id="topic-subject" type="text" placeholder="카테고리, 키워드 (ex.음식, 선수, 영화 ..) ">
-                        </div>
-
-                        <div class="input-group topic-desc">
-                            <label for="topic-desc" class="desc-index">대결 설명</label>
-                            <input id="topic-desc" type="text" placeholder="대결 설명">
-                        </div>
+                <section class="separate-section entry-section">
+                    <p class="section-header">대결 엔트리 등록</p>
+                    <div id="entry-add-zone" class="entry-add-zone"></div>
+                    <div class="entry-group">
+                        <p class="group-index">엔트리 등록/수정</p>
+                        <div id="entry-form" class="entry-form"></div>
                     </div>
-
-                    <div class="topic-item topic-visibility">
-                        <span class="item-index">공개 범위 설정</span>
-                        <div class="visibility-group">
-                            <input id="private" type="radio" name="visibility" value="PRIVATE" checked>
-                            <label for="private" class="private">비공개</label>
-                            <input id="public" type="radio" name="visibility" value="PUBLIC">
-                            <label for="public" class="public">전체공개</label>
-                            <input id="link" type="radio" name="visibility" value="UNLISTED">
-                            <label for="link" class="link">링크</label>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="separate-section entry-section">
-                <p class="section-header">대결 엔트리 등록</p>
-                <div id="entry-add-zone" class="entry-add-zone"></div>
-                <div class="entry-group">
-                    <p class="group-index">엔트리 등록/수정</p>
-                    <div id="entry-form" class="entry-form"></div>
-                </div>
-            </section>
-
+                </section>
+            </div>
             <div class="bottom-btn-group">
                 <button id="btn-save" class="btn-save" type="button">저장</button>
                 <button id="btn-cancel" class="btn-cancel" type="button">취소</button>
