@@ -10,6 +10,10 @@ input[type="file"] {
     height: 100%;
 }
 
+.topic-edit{
+    height: 100%;
+}
+
 .topic-edit .modify-header{
     padding : 10px;
 }
