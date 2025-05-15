@@ -70,6 +70,7 @@ function entryThumbClickEvent(){
             'btn-remove-entry' : removeEntryItem,
             'btn-restore-entry' : restoreEntryItem,
             'entry-thumb' : triggerEntryThumbUpload,
+            'mask-removed' : cancelRemoved,
         }
 
         for (const key in handlers) {
@@ -172,6 +173,14 @@ function restoreEntryItem(target){
 // 엔트리 업로드 이벤트 호출을 위해 트리거
 function triggerEntryThumbUpload(entryThumb){
     entryThumb.closest('.entry-item').querySelector('.entry-thumb-upload').click();
+}
+
+// 수정 대상 엔트리 삭제대상 복구
+function cancelRemoved(target){
+    const entryItem = target.closest('.entry-item');
+    if(entryItem && entryItem.classList.contains('removed')){
+        entryItem.classList.remove('removed');
+    }
 }
 
 // 입력된 유튜브 링크로부터 썸네일 조회
