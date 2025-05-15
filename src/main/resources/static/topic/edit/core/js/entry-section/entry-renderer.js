@@ -21,7 +21,9 @@ export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
                          <input class="youtube-link" type="text" maxlength="200" placeholder="유튜브 링크를 입력해주세요">
                     </div>
                 </div>
-                <button class="btn-remove-entry"></button>
+                <div class="item-tools">
+                    <button class="btn-remove-entry only"></button>
+                </div>
         </div>`;
 
     entryForm.insertAdjacentHTML('beforeend', entryItem);
@@ -48,7 +50,10 @@ export function renderModifyEntryItem(thumbnail, entryId = generateRandomEntryId
                          <input class="youtube-link" value="${youTubeLink ? youTubeLink : ''}" type="text" maxlength="200" placeholder="유튜브 링크를 입력해주세요">
                     </div>
                 </div>
-                <button class="btn-remove-entry"></button>
+                <div class="item-tools">
+                    <button class="btn-remove-entry"></button>
+                    <button class="btn-restore-entry"></button>
+                </div>
         </div>`;
 
     entryForm.insertAdjacentHTML('beforeend', entryItem);
