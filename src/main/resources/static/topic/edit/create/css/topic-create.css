@@ -1,5 +1,5 @@
-@import "topic-section.css";
-@import "entry-section.css";
+@import "../../core/css/entry-section.css";
+@import "../../core/css/topic-section.css";
 
 input[type="file"] {
     display: none;
