@@ -123,9 +123,15 @@ function updateEntryThumb(entryThumbUpload){
 function removeEntryItem(target){
     const entryItem = target.closest('.entry-item');
     if( entryItem ){
-        const thumbId = entryItem.querySelector('.entry-thumb').id;
-        entryItem.remove();
-        thumbId && removeStagedEntryMedia(thumbId)
+        const isModifyEntry = entryItem.classList.contains('modify-entry');
+        if( isModifyEntry ) { // 수정 대상 엔트리 삭제
+            entryItem.classList.add('removed');
+        } else { // 신규 추가 대상 엔트리의 삭제
+            const thumbId = entryItem.querySelector('.entry-thumb').id;
+            entryItem.remove();
+            thumbId && removeStagedEntryMedia(thumbId)
+        }
+
     }
 }
 
