@@ -54,6 +54,7 @@ export function renderModifyEntryItem(thumbnail, entryId = generateRandomEntryId
                     <button class="btn-remove-entry"></button>
                     <button class="btn-restore-entry"></button>
                 </div>
+                <div class="mask-removed"></div>
         </div>`;
 
     entryForm.insertAdjacentHTML('beforeend', entryItem);
