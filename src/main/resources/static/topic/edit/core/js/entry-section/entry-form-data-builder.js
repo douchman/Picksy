@@ -67,10 +67,16 @@ export function buildValidatedEntryModifyFormData(){
             description : entryDescription
         }
 
-        if( isModifiedEntry(entryItemId, currentData)){
+        const isRemoveTargetEntry = entryItem.classList.contains('removed');
+        if( isRemoveTargetEntry ) {
+            entryModifyFormData.append(`entriesToUpdate[${index}].id`, entryItemId);
+            entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "true");
+
+        } else if( isModifiedEntry(entryItemId, currentData)){
             entryModifyFormData.append(`entriesToUpdate[${index}].id`, entryItemId);
             entryModifyFormData.append(`entriesToUpdate[${index}].entryName`, entryName);
             entryModifyFormData.append(`entriesToUpdate[${index}].description`, entryDescription);
+            entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "false");
 
             if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
                 entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, entryMedia);
