@@ -1,7 +1,7 @@
 import {stagedEntryMedia} from "../staged-entry-media.js";
 import {createdTopic} from "../const/const.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
-import {isModifiedEntry} from "../const/initial-entry-map.js";
+import {initialEntryDataMap, isModifiedEntry} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/js/const.js";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
@@ -78,10 +78,14 @@ export function buildValidatedEntryModifyFormData(){
             entryModifyFormData.append(`entriesToUpdate[${index}].description`, entryDescription);
             entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "false");
 
-            if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
-                entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, entryMedia);
-            } else {
-                entryModifyFormData.append(`entriesToUpdate[${index}].mediaFile`, entryMedia);
+            const isMediaChanged = initialEntryDataMap[entryItemId].isMediaChanged; // 미디어 변경 여부
+
+            if( isMediaChanged ) { // 변경된 경우만 처리
+                if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
+                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, entryMedia);
+                } else {
+                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaFile`, entryMedia);
+                }
             }
 
             if( entryThumbnail ){ // 새로 업로드 된 썸네일 파일 존재 시
