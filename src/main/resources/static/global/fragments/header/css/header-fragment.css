@@ -23,7 +23,7 @@
     color : #FFF;
     position: relative;
     font-size: 20px;
-    padding : 0 24px 0 40px;
+    padding : 0 40px 0 24px;
     height: 100%;
     box-sizing: border-box;
     background-color: var(--signature-color);
@@ -33,12 +33,11 @@
 }
 
 .header-title:after{
-    content : '⚔️';
-    font-size: 20px;
-    font-weight: 500;
+    content : '👆';
     position: absolute;
+    font-size: 20px;
     top : 50%;
-    left : 8px;
+    right : 8px;
     transform : translateY(-50%);
 }
 
