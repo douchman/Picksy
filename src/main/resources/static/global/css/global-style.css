@@ -3,6 +3,10 @@
     --common-toast-z-index : 8888;
 }
 
+body {
+    font-family: 'Pretendard', sans-serif;
+}
+
 p{
     margin : 0;
     padding : 0;
