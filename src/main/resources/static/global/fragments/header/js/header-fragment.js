@@ -1,13 +1,12 @@
 import {checkAuthMember, memberLogout} from "../../../js/auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await toggleLoginAndLogoutButton();
+    const authState = await checkMemberAuthState;
+    renderHeaderForAuthState(authState);
 });
 
-async function toggleLoginAndLogoutButton() {
-    const {auth : isAuth} = await checkAuthMember()
-
-    if ( isAuth ){
+function renderHeaderForAuthState(authState) {
+    if ( authState ){
         setHeaderForAuthMember();
     }
 }
@@ -51,4 +50,9 @@ function renderMyTopicsButton(){
 function removeMyTopicsButton(){
     const myTopicButton = document.querySelector('#btn-mt-topic');
     if(myTopicButton ) myTopicButton.remove();
+}
+
+async function checkMemberAuthState(){
+    const {auth : isAuth} = await checkAuthMember();
+    return isAuth;
 }
