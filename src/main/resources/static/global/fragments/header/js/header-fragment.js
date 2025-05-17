@@ -11,6 +11,9 @@ async function toggleLoginAndLogoutButton() {
         removeLoginButton();
         renderLogoutButton();
         addLogoutButtonEvent();
+        setupMyTopics();
+    } else {
+        removeMyTopicsButton();
     }
 }
 
@@ -27,4 +30,19 @@ function addLogoutButtonEvent(){
     document.querySelector('#btn-logout').addEventListener('click', async () => {
         await memberLogout();
     });
+}
+
+function setupMyTopics(){
+    renderMyTopicsButton();
+}
+
+function renderMyTopicsButton(){
+    const centerNavGroup = document.querySelector('#center-nav-group');
+    const myTopicButton = `<a id="btn-my-topic" class="nav" href="/topic/my">내가 만든 대결주제</a>`
+    centerNavGroup.insertAdjacentHTML('beforeend', myTopicButton);
+}
+
+function removeMyTopicsButton(){
+    const myTopicButton = document.querySelector('#btn-mt-topic');
+    if(myTopicButton ) myTopicButton.remove();
 }
