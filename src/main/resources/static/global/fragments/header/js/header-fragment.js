@@ -1,21 +1,29 @@
 import {checkAuthMember, memberLogout} from "../../../js/auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await toggleLoginAndLogoutButton();
+    const isAuth = await checkMemberAuthState;
+    renderHeaderForAuthState(isAuth);
 });
 
-async function toggleLoginAndLogoutButton() {
-    const {auth : isAuth} = await checkAuthMember()
-
+function renderHeaderForAuthState(isAuth) {
     if ( isAuth ){
-        removeLoginButton();
-        renderLogoutButton();
-        addLogoutButtonEvent();
+        applyAuthenticatedHeaderUI();
     }
+}
+
+function applyAuthenticatedHeaderUI(){
+    removeLoginButton();
+    setupLogoutButton();
+    setupMyTopicsButton();
 }
 
 function removeLoginButton(){
     document.querySelector('#move-login-page').remove();
+}
+
+function setupLogoutButton(){
+    renderLogoutButton();
+    addLogoutButtonEvent();
 }
 
 function renderLogoutButton(){
@@ -27,4 +35,19 @@ function addLogoutButtonEvent(){
     document.querySelector('#btn-logout').addEventListener('click', async () => {
         await memberLogout();
     });
+}
+
+function setupMyTopicsButton(){
+    renderMyTopicsButton();
+}
+
+function renderMyTopicsButton(){
+    const centerNavGroup = document.querySelector('#center-nav-group');
+    const myTopicButton = `<a id="btn-my-topic" class="nav" href="/topic/my">내가 만든 대결주제</a>`
+    centerNavGroup.insertAdjacentHTML('beforeend', myTopicButton);
+}
+
+async function checkMemberAuthState(){
+    const {auth : isAuth} = await checkAuthMember();
+    return isAuth;
 }

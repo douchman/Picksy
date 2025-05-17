@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/topic/my/css/my-topic.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body data-require-auth="true">
+        <div id="my-topic" class="my-topic">
+            <div class="top-header">
+                <p>내가 만든 대결주제</p>
+            </div>
+
+            <div class="topic-board">
+                <div class="topic-search-filter">
+                    <div class="filter-item filter-order">
+                        <div class="order-item">
+                            <input id="order-latest" type="radio" name="search-order" checked>
+                            <label for="order-latest" class="lbl-radio">최신순</label>
+                        </div>
+                        <div class="order-item">
+                            <input id="order-popular" type="radio" name="search-order">
+                            <label for="order-popular" class="lbl-radio">인기순</label>
+                        </div>
+                    </div>
+                    <div class="filter-item filter-keyword">
+                        <input id="keyword-search" class="keyword-search" type="text" placeholder="대결 주제 검색">
+                        <button id="btn-search-topic" class="btn-search-topic" type="button">검색</button>
+                    </div>
+                </div>
+                <div id="topic-cards" class="topic-cards">
+                    <div class="topic-card">
+                        <div class="topic-thumb"></div>
+                        <div class="topic-meta">
+                            <p class="title">대결주제의 제목</p>
+                            <p class="subject">대결 주제의 부주제</p>
+                            <p class="description">대결주제의 설명이 표현되는 공간</p>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn-modify" type="button"></button>
+                            <button class="btn-stats" type="button"></button>
+                            <button class="btn-share" type="button"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</th:block>
+</html>
