@@ -1,12 +1,12 @@
 import {checkAuthMember, memberLogout} from "../../../js/auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const authState = await checkMemberAuthState;
-    renderHeaderForAuthState(authState);
+    const isAuth = await checkMemberAuthState;
+    renderHeaderForAuthState(isAuth);
 });
 
-function renderHeaderForAuthState(authState) {
-    if ( authState ){
+function renderHeaderForAuthState(isAuth) {
+    if ( isAuth ){
         applyAuthenticatedHeaderUI();
     }
 }
