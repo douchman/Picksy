@@ -8,17 +8,23 @@ async function toggleLoginAndLogoutButton() {
     const {auth : isAuth} = await checkAuthMember()
 
     if ( isAuth ){
-        removeLoginButton();
-        renderLogoutButton();
-        addLogoutButtonEvent();
-        setupMyTopics();
-    } else {
-        removeMyTopicsButton();
+        setHeaderForAuthMember();
     }
+}
+
+function setHeaderForAuthMember(){
+    removeLoginButton();
+    setupLogoutButton();
+    setupMyTopicsButton();
 }
 
 function removeLoginButton(){
     document.querySelector('#move-login-page').remove();
+}
+
+function setupLogoutButton(){
+    renderLogoutButton();
+    addLogoutButtonEvent();
 }
 
 function renderLogoutButton(){
@@ -32,7 +38,7 @@ function addLogoutButtonEvent(){
     });
 }
 
-function setupMyTopics(){
+function setupMyTopicsButton(){
     renderMyTopicsButton();
 }
 
