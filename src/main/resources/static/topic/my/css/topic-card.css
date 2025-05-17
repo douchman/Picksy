@@ -1,0 +1,115 @@
+.topic-cards{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 16px 0;
+    gap: 10px;
+}
+
+.topic-card{
+    padding : 16px 10px;
+    background-color: #FFF;
+    border-radius: 4px;
+    transition: .2s ease all;
+    cursor: pointer;
+}
+
+.topic-card .topic-thumb{
+    margin-bottom: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-02.jpg");
+}
+
+.topic-card .topic-meta{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.topic-card .topic-meta .title{
+    color: #7D7D7D;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.topic-card .topic-meta .subject{
+    color: #838383;
+    font-size: 14px;
+}
+
+.topic-card .topic-meta .description{
+    color: #B4B4B8;
+    font-size: 10px;
+}
+
+.topic-card .btn-group{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topic-card .btn-group button{
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    display: flex;
+    align-items: center;
+    outline: 0;
+    padding: 4px 6px 4px 30px;
+    border-radius: 4px;
+    background: none;
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+    transition: .3s ease all;
+}
+
+.topic-card .btn-group button.btn-stats{
+    --btn-text: '통계보기';
+    --btn-emoji: '📊';
+    --text-color: #E8C5E5;
+    border-color: rgb(232, 197, 229);
+}
+
+.topic-card .btn-group button.btn-share{
+    --btn-text: '공유';
+    --btn-emoji: '🚀';
+    --text-color: #B0EBB4;
+    border-color: rgb(176, 235, 180);
+}
+
+
+.topic-card .btn-group button.btn-modify{
+    --btn-text: '수정';
+    --btn-emoji: '🛠️';
+    --text-color: #AEDFF7;
+    border-color: rgb(174, 223, 247);
+}
+
+.topic-card .btn-group button:before{
+    content : var(--btn-emoji);
+    position: absolute;
+    left : 6px;
+    top : 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+
+.topic-card .btn-group button:after {
+    content: var(--btn-text);
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.topic-card .btn-group button:hover{
+    color : #FFF;
+    background-color: var(--text-color);
+}
+
+.topic-card .btn-group button:hover:after{
+    color : #FFF;
+}
