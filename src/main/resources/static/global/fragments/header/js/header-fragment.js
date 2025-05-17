@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function renderHeaderForAuthState(authState) {
     if ( authState ){
-        setHeaderForAuthMember();
+        applyAuthenticatedHeaderUI();
     }
 }
 
-function setHeaderForAuthMember(){
+function applyAuthenticatedHeaderUI(){
     removeLoginButton();
     setupLogoutButton();
     setupMyTopicsButton();
