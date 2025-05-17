@@ -47,11 +47,6 @@ function renderMyTopicsButton(){
     centerNavGroup.insertAdjacentHTML('beforeend', myTopicButton);
 }
 
-function removeMyTopicsButton(){
-    const myTopicButton = document.querySelector('#btn-mt-topic');
-    if(myTopicButton ) myTopicButton.remove();
-}
-
 async function checkMemberAuthState(){
     const {auth : isAuth} = await checkAuthMember();
     return isAuth;
