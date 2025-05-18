@@ -49,7 +49,6 @@ function renderScrollObserverTarget(){
 }
 
 function handlePagination(pagination){
-    console.log('### handlePagination ####')
     const hasNext = pagination.currentPage < pagination.totalPages;
     if( !hasNext ){
         stopInfiniteScrollObserver();
