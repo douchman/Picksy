@@ -30,23 +30,26 @@
                         <button id="btn-search-topic" class="btn-search-topic" type="button">검색</button>
                     </div>
                 </div>
-                <div id="topic-cards" class="topic-cards">
-                    <div class="topic-card">
-                        <div class="topic-thumb"></div>
-                        <div class="topic-meta">
-                            <p class="title">대결주제의 제목</p>
-                            <p class="subject">대결 주제의 부주제</p>
-                            <p class="description">대결주제의 설명이 표현되는 공간</p>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn-modify" type="button"></button>
-                            <button class="btn-stats" type="button"></button>
-                            <button class="btn-share" type="button"></button>
-                        </div>
+                <div id="topic-card-wrapper" class="topic-card-wrapper">
+                    <div id="topic-cards" class="topic-cards">
+                        <!--<div class="topic-card">
+                            <div class="topic-thumb"></div>
+                            <div class="topic-meta">
+                                <p class="title">대결주제의 제목</p>
+                                <p class="subject">대결 주제의 부주제</p>
+                                <p class="description">대결주제의 설명이 표현되는 공간</p>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn-modify" type="button"></button>
+                                <button class="btn-stats" type="button"></button>
+                                <button class="btn-share" type="button"></button>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <script type="module" th:src="@{'/topic/my/js/my-topic-main.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>
