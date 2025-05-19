@@ -1,9 +1,12 @@
-import {setupTournamentSelectDialog, openTournamentSelectDialog} from "./tournament-select-dialog.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
 import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
 import {searchTopics} from "./home-api.js";
 import {TopicSearchException} from "./exception/HomeException.js";
+import {
+    openTournamentSelectDialog,
+    setupTournamentSelectDialog
+} from "../../global/tounament-select-dialog/js/tournament-select-dialog.js";
 
 let scrollObserver;
 let isLoading = false;
