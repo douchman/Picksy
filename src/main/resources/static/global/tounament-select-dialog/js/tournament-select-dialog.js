@@ -1,15 +1,16 @@
-import {TOURNAMENT_DESC} from "./const.js";
-import {showToastMessage} from "../../global/popup/js/common-toast-message.js";
-import {toggleBodyScrollBlocked} from "../../global/js/layout-common.js";
-import {HomeExceptionHandler} from "./exception/home-exception-handler.js";
-import {getTopicDetail, getTopicPlayRecordId} from "./home-api.js";
-import {TournamentException} from "./exception/HomeException.js";
+import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
+import {showToastMessage} from "../../popup/js/common-toast-message.js";
+import {toggleBodyScrollBlocked} from "../../js/layout-common.js";
+import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
+import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
+import {PlayRecordIdException, TopicDetailException} from "./exception/TournamentSelectException.js";
 
-const homeExceptionHandler = new HomeExceptionHandler();
+const tournamentSelectExceptionHandler = new TournamentSelectExceptionHandler();
 
 /* 토너먼트 선택기 셋업 */
 // 선택기 랜더링
 // 선택기 이벤트 등록
+
 export function setupTournamentSelectDialog(){
     renderDialog();
     addDialogEvents();
@@ -100,7 +101,7 @@ export async function openTournamentSelectDialog(topicId){
 
         toggleBodyScrollBlocked(true);
     } else {
-        homeExceptionHandler.handle(new TournamentException(topicDetailResult.message, 500))
+        tournamentSelectExceptionHandler.handle(new TopicDetailException());
     }
 
 }
@@ -147,6 +148,6 @@ async function getPlayRecordIdAndStart(){
         closeTournamentSelectDialog();
     } else {
         showToastMessage(playRecordResult.message, 'error', 2500);
-        homeExceptionHandler.handle(new TournamentException(playRecordResult.message, 500));
+        tournamentSelectExceptionHandler.handle(new PlayRecordIdException());
     }
 }
