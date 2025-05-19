@@ -16,7 +16,7 @@ function renderTopicCards(topicList){
 
     topicList.forEach(topic => {
         const topicCard = /*html*/`
-                         <div id="${topic.id}" class="topic-card">
+                         <div id="${topic.id}" class="topic-card" data-action="play">
                             ${renderVisibilityLabel(topic.visibility)}
                             <div class="topic-thumb" style="background-image: url('${topic.thumbnail}')"></div>
                             <div class="topic-meta">
@@ -25,9 +25,9 @@ function renderTopicCards(topicList){
                                 <p class="description">${topic.description}</p>
                             </div>
                             <div class="btn-group">
-                                <button class="btn-modify" type="button"></button>
-                                <button class="btn-stats" type="button"></button>
-                                <button class="btn-share" type="button"></button>
+                                <button class="btn-modify" data-action="modify" type="button"></button>
+                                <button class="btn-stats" data-action="stats" type="button"></button>
+                                <button class="btn-share" data-action="share" type="button"></button>
                             </div>
                         </div>`;
 
