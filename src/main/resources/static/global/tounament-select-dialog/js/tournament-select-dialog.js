@@ -1,4 +1,4 @@
-import {TOURNAMENT_DESC} from "../../../home/js/const.js";
+import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
 import {showToastMessage} from "../../popup/js/common-toast-message.js";
 import {toggleBodyScrollBlocked} from "../../js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
