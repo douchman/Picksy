@@ -1,7 +1,8 @@
 import {setupInfiniteScrollObserver} from "./topic-cards-scroll-observer.js";
 
 const ACTION_HANDLERS = {
-    modify : moveToTopicModifyPage
+    modify : moveToTopicModifyPage,
+    stats : moveToTopicStatsPage
 }
 
 export function setupTopicCards(){
@@ -32,4 +33,8 @@ function addTopicCardClickEvent(){
 
 function moveToTopicModifyPage(topicId){
     window.open(`/topic/modify/${topicId}`, '_blank'); // 새 탭으로 수정페이지 열기
+}
+
+function moveToTopicStatsPage(topicId){
+    window.open(`/statistics/topic/${topicId}`, '_blank'); // 새 탭으로 수정페이지 열기
 }
