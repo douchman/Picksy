@@ -1,3 +1,5 @@
+import {Visibility} from "../../../../global/js/const.js";
+
 export function renderMyTopics(topicList){
     renderTopicCards(topicList);
 }
@@ -15,6 +17,7 @@ function renderTopicCards(topicList){
     topicList.forEach(topic => {
         const topicCard = /*html*/`
                          <div id="${topic.id}" class="topic-card">
+                            ${renderVisibilityLabel(topic.visibility)}
                             <div class="topic-thumb" style="background-image: url('${topic.thumbnail}')"></div>
                             <div class="topic-meta">
                                 <p class="title">${topic.title}</p>
@@ -30,6 +33,27 @@ function renderTopicCards(topicList){
 
         topicCards.insertAdjacentHTML('beforeend',topicCard);
     });
+}
+
+// 공개범위 라벨 랜더
+function renderVisibilityLabel(visibility){
+    let visibilityClass = '';
+
+    switch (visibility){
+        case Visibility.PUBLIC:
+            visibilityClass = 'public';
+            break;
+        case Visibility.PRIVATE:
+            visibilityClass = 'private';
+            break;
+        case Visibility.UNLISTED:
+            visibilityClass = 'unlisted';
+            break;
+    }
+
+    const visibilityName = Visibility.getVisibilityName(visibility);
+
+    return `<label class="visibility-label ${visibilityClass}">${visibilityName}</label>`
 }
 
 // 표시 컨텐츠 비었음으로 상태 변경

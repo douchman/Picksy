@@ -6,11 +6,40 @@
 }
 
 .topic-card{
+    position: relative;
     padding : 16px 10px;
     background-color: #FFF;
     border-radius: 4px;
     transition: .2s ease all;
     cursor: pointer;
+}
+
+.topic-card .visibility-label{
+    position: absolute;
+    top: 5px;
+    right : 5px;
+    border-radius: 4px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    display: inline-block;
+    color :#FFF;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.topic-card .visibility-label.public{
+    color : #1565C0 ;
+    background-color: #E3F2FD ;
+}
+
+.topic-card .visibility-label.private{
+    color : #C62828 ;
+    background-color: #FFEBEE ;
+}
+
+.topic-card .visibility-label.unlisted{
+    color : #2E7D32;
+    background-color: #F1F8E9 ;
 }
 
 .topic-card .topic-thumb{
