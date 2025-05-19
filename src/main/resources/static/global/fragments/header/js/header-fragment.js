@@ -1,7 +1,7 @@
 import {checkAuthMember, memberLogout} from "../../../js/auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const isAuth = await checkMemberAuthState;
+    const isAuth = await checkMemberAuthState();
     renderHeaderForAuthState(isAuth);
 });
 
