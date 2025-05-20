@@ -1,6 +1,11 @@
 import {setupInfiniteScrollObserver} from "./topic-cards-scroll-observer.js";
+import {
+    openTournamentSelectDialog,
+    setupTournamentSelectDialog
+} from "../../../../global/tounament-select-dialog/js/tournament-select-dialog.js";
 
 const ACTION_HANDLERS = {
+    play : openTournamentSelect,
     modify : moveToTopicModifyPage,
     stats : moveToTopicStatsPage
 }
@@ -8,6 +13,7 @@ const ACTION_HANDLERS = {
 export function setupTopicCards(){
     setupInfiniteScrollObserver();
     setupTopicCardEvents();
+    setupTournamentSelectDialog();
 }
 
 function setupTopicCardEvents(){
@@ -29,6 +35,10 @@ function addTopicCardClickEvent(){
             if( topicId ) { handler(topicId); }
         }
     });
+}
+
+async function openTournamentSelect(topicId){
+    await openTournamentSelectDialog(topicId);
 }
 
 function moveToTopicModifyPage(topicId){
