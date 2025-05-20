@@ -33,7 +33,7 @@ async function fetchUpdateTopic(topicId, requestBody){
 
 // 대결주제 상세 정보 조회
 export async function getTopicDetail(topicId){
-    const {status, data : topicDetailResult, isAuthOrNetworkException} = await fetchTopicDetail(topicId);
+    const {status, data : topicDetailResult, isAuthOrNetworkException} = await fetchTopicDetailForModify(topicId);
 
     if(isAuthOrNetworkException) return null;
 
@@ -43,6 +43,6 @@ export async function getTopicDetail(topicId){
 }
 
 // 대결주제 상세 정보 조회 API fetch
-async function fetchTopicDetail(topicId){
-    return apiRequest(`topics/${topicId}`, ApiMethod.GET, {}, false);
+async function fetchTopicDetailForModify(topicId){
+    return apiRequest(`topics/${topicId}/edit-info`, ApiMethod.GET, {}, false);
 }
