@@ -25,9 +25,9 @@ export const playRecordStorage = {
     saveId(id){
         sessionStorage.setItem(this.key, String(id));
     },
-    loadId(id){
+    loadId(){
         const playRecordId = sessionStorage.getItem(this.key);
-        return id ? Number(playRecordId) : null;
+        return playRecordId ? Number(playRecordId) : null;
     },
     exists(){
         return !!sessionStorage.getItem(this.key);
