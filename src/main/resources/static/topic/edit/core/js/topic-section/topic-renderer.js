@@ -11,4 +11,13 @@ export function renderTopicDetail(topicDetailResult){
     document.querySelector('#topic-subject').value = topicDetail.subject;
     document.querySelector('#topic-desc').value = topicDetail.description;
 
+    renderTopicVisibility(topicDetail.visibility);
+}
+
+// 대결주제 공개범위 랜더링
+function renderTopicVisibility(visibility){
+    const visibilityRadio = document.querySelector(`input[name="visibility"][value="${visibility}"]`);
+    if( visibilityRadio ) {
+        visibilityRadio.checked = true;
+    }
 }

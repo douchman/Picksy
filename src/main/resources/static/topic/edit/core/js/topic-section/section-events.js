@@ -44,6 +44,16 @@ export function addTopicSectionEvents(){
         });
         this.classList.remove('drag-over');
     });
+
+    document.querySelector('#visibility-radio-group').addEventListener('change', function(e){
+        if(e.target.matches('input.visibility-radio')){
+            changeInitialTopicVisibility(e.target);
+        }
+    });
+}
+
+function changeInitialTopicVisibility(visibilityRadio){
+    initialTopic.visibility = visibilityRadio.value;
 }
 
 function markTopicThumbnailAsChanged(){
