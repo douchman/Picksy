@@ -5,7 +5,7 @@ import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exc
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {PlayRecordIdException, TopicDetailException} from "./exception/TournamentSelectException.js";
 import {loadEntryMatchInfo} from "../../js/entry-match.js";
-import {playRecord} from "../../js/const.js";
+import {playRecordStorage} from "../../js/const.js";
 
 const tournamentSelectExceptionHandler = new TournamentSelectExceptionHandler();
 
@@ -150,10 +150,6 @@ async function getPlayRecordIdAndStart(){
     }
 
     closeTournamentSelectDialog();
-    savePlayRecord(playRecordResult.playRecordId);
+    playRecordStorage.saveId(playRecordResult.playRecordId);
     await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
-}
-
-function savePlayRecord(playRecordId){
-    playRecord.setId(playRecordId);
 }
