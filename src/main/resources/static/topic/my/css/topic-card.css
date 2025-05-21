@@ -5,6 +5,22 @@
     gap: 10px;
 }
 
+.topic-cards.empty{
+    height: 400px;
+    position: relative;
+}
+
+.topic-cards.empty:after{
+    content : '🤔 조회된 대결주제가 없어요';
+    color : #333;
+    font-size: 24px;
+    font-weight: 600;
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .topic-card{
     position: relative;
     padding : 16px 10px;
