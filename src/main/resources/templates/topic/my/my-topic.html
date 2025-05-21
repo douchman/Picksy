@@ -15,37 +15,43 @@
 
             <div class="topic-board">
                 <div class="topic-search-filter">
-                    <div class="filter-item filter-order">
-                        <div class="order-item">
-                            <input id="order-latest" type="radio" name="search-order" checked>
+                    <div id="filter-visibility" class="filter-item filter-radio-group">
+                        <div class="radio-item">
+                            <input id="visibility-all" class="search-visibility" type="radio" name="search-visibility" value="ALL" checked>
+                            <label for="visibility-all" class="lbl-radio">전체</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-public" class="search-visibility" type="radio" name="search-visibility" value="PUBLIC">
+                            <label for="visibility-public" class="lbl-radio">공개</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-private" class="search-visibility" type="radio" name="search-visibility" value="PRIVATE">
+                            <label for="visibility-private" class="lbl-radio">비공개</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-unlisted" class="search-visibility" type="radio" name="search-visibility" value="UNLISTED">
+                            <label for="visibility-unlisted" class="lbl-radio">링크</label>
+                        </div>
+                    </div>
+
+                    <div id="filter-order" class="filter-item filter-radio-group">
+                        <div class="radio-item">
+                            <input id="order-latest" class="search-order" type="radio" name="search-order" value="LATEST" checked>
                             <label for="order-latest" class="lbl-radio">최신순</label>
                         </div>
-                        <div class="order-item">
-                            <input id="order-popular" type="radio" name="search-order">
+                        <div class="radio-item">
+                            <input id="order-popular" class="search-order" type="radio" name="search-order" value="POPULAR">
                             <label for="order-popular" class="lbl-radio">인기순</label>
                         </div>
                     </div>
+
                     <div class="filter-item filter-keyword">
                         <input id="keyword-search" class="keyword-search" type="text" placeholder="대결 주제 검색">
                         <button id="btn-search-topic" class="btn-search-topic" type="button">검색</button>
                     </div>
                 </div>
                 <div id="topic-card-wrapper" class="topic-card-wrapper">
-                    <div id="topic-cards" class="topic-cards">
-                        <!--<div class="topic-card">
-                            <div class="topic-thumb"></div>
-                            <div class="topic-meta">
-                                <p class="title">대결주제의 제목</p>
-                                <p class="subject">대결 주제의 부주제</p>
-                                <p class="description">대결주제의 설명이 표현되는 공간</p>
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn-modify" type="button"></button>
-                                <button class="btn-stats" type="button"></button>
-                                <button class="btn-share" type="button"></button>
-                            </div>
-                        </div>-->
-                    </div>
+                    <div id="topic-cards" class="topic-cards"></div>
                 </div>
             </div>
         </div>
