@@ -4,6 +4,8 @@ import {toggleBodyScrollBlocked} from "../../../../global/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {PlayRecordIdException, TopicDetailException} from "./exception/TournamentSelectException.js";
+import {loadEntryMatchInfo} from "../../js/entry-match.js";
+import {playRecord} from "../../js/const.js";
 
 const tournamentSelectExceptionHandler = new TournamentSelectExceptionHandler();
 
@@ -148,8 +150,11 @@ async function getPlayRecordIdAndStart(){
         return null;
     }
 
-    localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
-    //window.open(`/topic/play/${topicId}`, '_blank'); // 대결 진행페이지 이동 ( 새 탭 열기 )
     closeTournamentSelectDialog();
-    //return playRecordResult.playRecordId;
+    savePlayRecord(playRecordResult.playRecordId);
+    await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
+}
+
+function savePlayRecord(playRecordId){
+    playRecord.setId(playRecordId);
 }
