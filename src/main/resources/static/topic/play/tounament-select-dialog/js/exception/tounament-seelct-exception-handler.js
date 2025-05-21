@@ -1,6 +1,6 @@
-import {GlobalExceptionHandler} from "../../../exception/global-exception-handler.js";
+import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
 import {PlayRecordIdException, TopicDetailException} from "./TournamentSelectException.js";
-import {showToastMessage} from "../../../popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
 
 export class TournamentSelectExceptionHandler extends GlobalExceptionHandler{
     handle(error){

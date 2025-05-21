@@ -1,6 +1,6 @@
 import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
-import {showToastMessage} from "../../popup/js/common-toast-message.js";
-import {toggleBodyScrollBlocked} from "../../js/layout-common.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {toggleBodyScrollBlocked} from "../../../../global/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {PlayRecordIdException, TopicDetailException} from "./exception/TournamentSelectException.js";
@@ -142,12 +142,14 @@ async function getPlayRecordIdAndStart(){
 
     const playRecordResult = await getTopicPlayRecordId(topicId, tournamentStage);
 
-    if( playRecordResult){
-        localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
-        window.open(`/topic/play/${topicId}`, '_blank'); // 대결 진행페이지 이동 ( 새 탭 열기 )
-        closeTournamentSelectDialog();
-    } else {
+    if(!playRecordResult){
         showToastMessage(playRecordResult.message, 'error', 2500);
         tournamentSelectExceptionHandler.handle(new PlayRecordIdException());
+        return null;
     }
+
+    localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
+    //window.open(`/topic/play/${topicId}`, '_blank'); // 대결 진행페이지 이동 ( 새 탭 열기 )
+    closeTournamentSelectDialog();
+    //return playRecordResult.playRecordId;
 }

@@ -1,5 +1,5 @@
-import {apiRequest} from "../../../api/api.js";
-import {ApiMethod} from "../../../api/api-method.js";
+import {apiRequest} from "../../../../../global/api/api.js";
+import {ApiMethod} from "../../../../../global/api/api-method.js";
 
 // 대결주제 상세정보( 토너먼트 정보 포함) 조회
 export async function getTopicDetail(topicId){
