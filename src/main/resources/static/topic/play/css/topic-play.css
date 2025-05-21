@@ -1,4 +1,5 @@
 @import "match-stage.css";
+@import "../tounament-select-dialog/css/tournament-select-dialog.css";
 
 html, body{
     height: 100%;

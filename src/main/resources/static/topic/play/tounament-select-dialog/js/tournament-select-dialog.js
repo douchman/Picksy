@@ -1,9 +1,11 @@
 import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
-import {showToastMessage} from "../../popup/js/common-toast-message.js";
-import {toggleBodyScrollBlocked} from "../../js/layout-common.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {toggleBodyScrollBlocked} from "../../../../global/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {PlayRecordIdException, TopicDetailException} from "./exception/TournamentSelectException.js";
+import {loadEntryMatchInfo} from "../../js/entry-match.js";
+import {playRecordStorage} from "../../js/const.js";
 
 const tournamentSelectExceptionHandler = new TournamentSelectExceptionHandler();
 
@@ -21,7 +23,6 @@ function renderDialog(){
     const tournamentSelectDialog = `<div id="tournament-select-dialog" class="tournament-select-dialog">
             <div class="bg"></div>
             <div class="dialog-body">
-                <button id="btn-close-tournament-select-dialog" class="btn-close-tournament-select-dialog"  type="button"></button>
                 <div class="topic-desc-box">
                     <p id="topic-title" class="topic-title">대결 주제의 제목</p>
                     <p id="topic-desc" class="topic-desc">대결 주제 설명</p>
@@ -51,12 +52,8 @@ function addDialogEvents() {
         toggleTournamentSelect(true);
     });
 
-    // dialog 외부 배경화면 -> dialog 닫힘
-    document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
-    // dialog 닫기 버튼 -> dialog 닫힘
-    document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
     // dialog 취소 버튼 -> dialog 닫힘
-    document.querySelector('#btn-cancel-dialog').addEventListener('click', closeTournamentSelectDialog);
+    document.querySelector('#btn-cancel-dialog').addEventListener('click', backToHome);
 
     // dialog 내부 토너먼트 선택기 이벤트
     document.querySelector('#tournament-items').addEventListener('click', function(event){
@@ -112,6 +109,10 @@ function closeTournamentSelectDialog(){
     toggleBodyScrollBlocked(false);
 }
 
+function backToHome(){
+    location.href = '/';
+}
+
 function clearDialogData(dialog){
     dialog.querySelector('#topic-title').textContent = '';
     dialog.querySelector('#topic-desc').textContent = '';
@@ -142,12 +143,13 @@ async function getPlayRecordIdAndStart(){
 
     const playRecordResult = await getTopicPlayRecordId(topicId, tournamentStage);
 
-    if( playRecordResult){
-        localStorage.setItem(`topic-${topicId}-playRecord-id`, playRecordResult.playRecordId);
-        window.open(`/topic/play/${topicId}`, '_blank'); // 대결 진행페이지 이동 ( 새 탭 열기 )
-        closeTournamentSelectDialog();
-    } else {
+    if(!playRecordResult){
         showToastMessage(playRecordResult.message, 'error', 2500);
         tournamentSelectExceptionHandler.handle(new PlayRecordIdException());
+        return null;
     }
+
+    closeTournamentSelectDialog();
+    playRecordStorage.saveId(playRecordResult.playRecordId);
+    await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
 }

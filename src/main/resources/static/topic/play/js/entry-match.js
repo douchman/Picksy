@@ -1,4 +1,4 @@
-import {match, playRecord} from "./const.js";
+import {match, playRecordStorage} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {handleTopicPlayException} from "./exceptionHandler.js";
 import {finishEntryMatch} from "./entry-match-finish.js";
@@ -10,7 +10,7 @@ const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
-    const currentEntryMatchResult = await getCurrentEntryMatch(playRecord.getId());
+    const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
 
     if (currentEntryMatchResult) {
         const matchId = currentEntryMatchResult.matchId;

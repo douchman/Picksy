@@ -1,11 +1,7 @@
 import {setupInfiniteScrollObserver} from "./topic-cards-scroll-observer.js";
-import {
-    openTournamentSelectDialog,
-    setupTournamentSelectDialog
-} from "../../../../global/tounament-select-dialog/js/tournament-select-dialog.js";
 
 const ACTION_HANDLERS = {
-    play : openTournamentSelect,
+    play : moveToTopicPlay,
     modify : moveToTopicModifyPage,
     stats : moveToTopicStatsPage
 }
@@ -13,7 +9,6 @@ const ACTION_HANDLERS = {
 export function setupTopicCards(){
     setupInfiniteScrollObserver();
     setupTopicCardEvents();
-    setupTournamentSelectDialog();
 }
 
 function setupTopicCardEvents(){
@@ -37,8 +32,8 @@ function addTopicCardClickEvent(){
     });
 }
 
-async function openTournamentSelect(topicId){
-    await openTournamentSelectDialog(topicId);
+async function moveToTopicPlay(topicId){
+    window.open(`/topic/play/${topicId}`, '_blank'); // 대결진행 페이지 이동(새 탭 열기)
 }
 
 function moveToTopicModifyPage(topicId){

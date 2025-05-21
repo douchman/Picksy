@@ -1,6 +1,5 @@
 @import './top-header.css';
 @import 'topic-board.css';
-@import '../../../global/tounament-select-dialog/css/tournament-select-dialog.css';
 
 .my-topic{
     padding : 20px 16px;
