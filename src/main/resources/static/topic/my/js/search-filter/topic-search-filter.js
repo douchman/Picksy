@@ -46,25 +46,19 @@ function addKeywordSearchEvent(){
 function handleFilterVisibilityChange(searchVisibility){
     const visibility = searchVisibility.value;
     updateTopicSearchParamsVisibility(visibility);
-   topicSearchParams.setPageToFirst(); // 페이지 1로 초기화
-    clearTopicCardsContents(); // 랜더링 된 대결주제 카드 비우기
-    startInfiniteScrollObserver(); // 옵저버 재시작
+    refreshTopicCards();
 }
 
 function handleFilterOrderChange(searchOrder){
     const sortBy = searchOrder.value;
     updateTopicSearchParamsSortBy(sortBy);
-    topicSearchParams.setPageToFirst(); // 페이지 1로 초기화
-    clearTopicCardsContents(); // 랜더링 된 대결주제 카드 비우기
-    startInfiniteScrollObserver(); // 옵저버 재시작
+    refreshTopicCards();
 }
 
 function handleKeywordSearch(){
     const keyword = document.querySelector('#keyword-search').value;
     updateTopicSearchParamsKeyword(keyword);
-    topicSearchParams.setPageToFirst(); // 페이지 1로 초기화
-    clearTopicCardsContents(); // 랜더링 된 대결주제 카드 비우기
-    startInfiniteScrollObserver(); // 옵저버 재시작
+    refreshTopicCards();
 }
 
 function updateTopicSearchParamsVisibility(visibility){
@@ -81,4 +75,10 @@ function updateTopicSearchParamsSortBy(sortBy){
 
 function updateTopicSearchParamsKeyword(keyword){
     topicSearchParams.keyword = keyword;
+}
+
+function refreshTopicCards(){
+    topicSearchParams.setPageToFirst(); // 페이지 1로 초기화
+    clearTopicCardsContents(); // 랜더링 된 대결주제 카드 비우기
+    startInfiniteScrollObserver(); // 옵저버 재시작
 }
