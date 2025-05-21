@@ -8,10 +8,11 @@ function renderTopicCards(topicList){
     const isTopicListEmpty = !topicList || topicList.length === 0;
 
     if( isTopicListEmpty ) {
-        toggleTopicCardsEmpty();
+        toggleTopicCardsEmpty(true);
         return ;
     }
 
+    toggleTopicCardsEmpty(false);
     const topicCards = document.querySelector('#topic-cards');
 
     topicList.forEach(topic => {
