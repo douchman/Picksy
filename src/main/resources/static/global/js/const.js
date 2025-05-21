@@ -31,5 +31,9 @@ export const Visibility = {
         if( this.UNLISTED === visibility ) {
             return '🔗링크'
         }
+    },
+
+    isAvailableVisibility(visibility){
+        return Object.values(this).includes(visibility);
     }
 }
