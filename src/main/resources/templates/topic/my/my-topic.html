@@ -15,6 +15,25 @@
 
             <div class="topic-board">
                 <div class="topic-search-filter">
+                    <div id="filter-visibility" class="filter-item filter-radio-group">
+                        <div class="radio-item">
+                            <input id="visibility-all" class="search-visibility" type="radio" name="search-visibility" value="ALL" checked>
+                            <label for="visibility-all" class="lbl-radio">전체</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-public" class="search-visibility" type="radio" name="search-visibility" value="PUBLIC">
+                            <label for="visibility-public" class="lbl-radio">공개</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-private" class="search-visibility" type="radio" name="search-visibility" value="PRIVATE">
+                            <label for="visibility-private" class="lbl-radio">비공개</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-unlisted" class="search-visibility" type="radio" name="search-visibility" value="UNLISTED">
+                            <label for="visibility-unlisted" class="lbl-radio">링크</label>
+                        </div>
+                    </div>
+
                     <div id="filter-order" class="filter-item filter-radio-group">
                         <div class="radio-item">
                             <input id="order-latest" class="search-order" type="radio" name="search-order" value="LATEST" checked>
