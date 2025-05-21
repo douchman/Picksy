@@ -53,7 +53,7 @@ function addDialogEvents() {
     });
 
     // dialog 취소 버튼 -> dialog 닫힘
-    document.querySelector('#btn-cancel-dialog').addEventListener('click', closeTournamentSelectDialog);
+    document.querySelector('#btn-cancel-dialog').addEventListener('click', backToHome);
 
     // dialog 내부 토너먼트 선택기 이벤트
     document.querySelector('#tournament-items').addEventListener('click', function(event){
@@ -107,6 +107,10 @@ function closeTournamentSelectDialog(){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.classList.remove('show');
     toggleBodyScrollBlocked(false);
+}
+
+function backToHome(){
+    location.href = '/';
 }
 
 function clearDialogData(dialog){
