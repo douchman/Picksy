@@ -59,7 +59,7 @@ function addTopicCardEvents(){
             window.open(`/statistics/topic/${topicId}`, '_blank'); // 통계페이지 이동(새 탭 열기)
         } else if (topicCard) {
             const topicId = topicCard.dataset.id;
-            // TODO : start topic
+            window.open(`/topic/play/${topicId}`, '_blank'); // 대결진행 페이지 이동(새 탭 열기)
         }
     });
 }
