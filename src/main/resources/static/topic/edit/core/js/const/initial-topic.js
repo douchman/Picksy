@@ -1,3 +1,5 @@
+import {Visibility} from "../../../../../global/js/const.js";
+
 export const initialTopic = {}
 
 export function setInitialTopic(topic){
@@ -6,7 +8,7 @@ export function setInitialTopic(topic){
         initialTopic.subject = topic.subject;
         initialTopic.description = topic.description;
         initialTopic.isThumbnailChanged = false;
-        // TODO : visibility 관련 API 수정 이후 추가 필요
+        initialTopic.visibility = Visibility.PRIVATE;
     }
 }
 
@@ -15,6 +17,7 @@ export function isModifiedTopic(currentData){
         initialTopic.title !== currentData.title ||
         initialTopic.subject !== currentData.subject ||
         initialTopic.description !== currentData.description ||
+        initialTopic.visibility !== currentData.visibility ||
         initialTopic.isThumbnailChanged
     );
 }

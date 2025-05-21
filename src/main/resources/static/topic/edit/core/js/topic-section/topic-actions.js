@@ -57,7 +57,8 @@ function saveRegisteredTopicData(topicCreateResult){
     const registeredTopicData = {
         title : topicCreateResult.title,
         subject : topicCreateResult.subject,
-        description : topicCreateResult.description
+        description : topicCreateResult.description,
+        visibility : topicCreateResult.visibility
     }
     setInitialTopic(registeredTopicData);
 }
