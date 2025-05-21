@@ -14,5 +14,5 @@ export async function getMyTopic(requestBody){
 
 // 내가 생성한 대결주제 조회 API fetch
 async function fetchMyTopic(requestBody){
-    return await apiRequest('topics/mine' , ApiMethod.GET, requestBody, false);
+    return await apiRequest('my/topics' , ApiMethod.GET, requestBody, false);
 }
