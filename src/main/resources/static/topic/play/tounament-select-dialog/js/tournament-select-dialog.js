@@ -52,8 +52,6 @@ function addDialogEvents() {
         toggleTournamentSelect(true);
     });
 
-    // dialog 외부 배경화면 -> dialog 닫힘
-    document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
     // dialog 취소 버튼 -> dialog 닫힘
     document.querySelector('#btn-cancel-dialog').addEventListener('click', closeTournamentSelectDialog);
 
