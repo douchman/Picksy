@@ -23,7 +23,6 @@ function renderDialog(){
     const tournamentSelectDialog = `<div id="tournament-select-dialog" class="tournament-select-dialog">
             <div class="bg"></div>
             <div class="dialog-body">
-                <button id="btn-close-tournament-select-dialog" class="btn-close-tournament-select-dialog"  type="button"></button>
                 <div class="topic-desc-box">
                     <p id="topic-title" class="topic-title">대결 주제의 제목</p>
                     <p id="topic-desc" class="topic-desc">대결 주제 설명</p>
@@ -55,8 +54,6 @@ function addDialogEvents() {
 
     // dialog 외부 배경화면 -> dialog 닫힘
     document.querySelector('#tournament-select-dialog .bg').addEventListener('click',closeTournamentSelectDialog);
-    // dialog 닫기 버튼 -> dialog 닫힘
-    document.querySelector('#btn-close-tournament-select-dialog').addEventListener('click', closeTournamentSelectDialog);
     // dialog 취소 버튼 -> dialog 닫힘
     document.querySelector('#btn-cancel-dialog').addEventListener('click', closeTournamentSelectDialog);
 
