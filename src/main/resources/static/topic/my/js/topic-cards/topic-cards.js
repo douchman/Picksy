@@ -1,7 +1,7 @@
 import {setupInfiniteScrollObserver} from "./topic-cards-scroll-observer.js";
 
 const ACTION_HANDLERS = {
-    play : openTournamentSelect,
+    play : moveToTopicPlay,
     modify : moveToTopicModifyPage,
     stats : moveToTopicStatsPage
 }
@@ -32,8 +32,8 @@ function addTopicCardClickEvent(){
     });
 }
 
-async function openTournamentSelect(topicId){
-    // TODO : start topic
+async function moveToTopicPlay(topicId){
+    window.open(`/topic/play/${topicId}`, '_blank'); // 대결진행 페이지 이동(새 탭 열기)
 }
 
 function moveToTopicModifyPage(topicId){
