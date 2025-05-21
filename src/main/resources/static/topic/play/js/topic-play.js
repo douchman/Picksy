@@ -1,4 +1,4 @@
-import {topic} from "./const.js";
+import {playRecordStorage, topic} from "./const.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 import {getTopicDetail} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
@@ -7,6 +7,7 @@ import {
     openTournamentSelectDialog,
     setupTournamentSelectDialog
 } from "../tounament-select-dialog/js/tournament-select-dialog.js";
+import {loadEntryMatchInfo} from "./entry-match.js";
 
 const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
@@ -21,8 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 유튜브 API 로드 후 호출되는 전역 함수
     onYouTubeIframeApiReady(async () =>{
-        await openTournamentSelectDialog(topic.getId());
         addTopicPlayEvents();
+        if(!playRecordStorage.exists()){ // 저장된 식별자 존재여부 확인
+            await openTournamentSelectDialog(topic.getId());
+        } else{ // 이미 저장된 식별자 존재 시 바로 매치업 조회
+            await loadEntryMatchInfo();
+        }
     });
 });
 
