@@ -2,7 +2,7 @@ import {renderMyTopics} from "./topic-cards-renderer.js";
 import {getMyTopic} from "../api/my-topic-api.js";
 import {MyTopicExceptionHandler} from "../exception/my-topic-exception-handler.js";
 import {GetMyTopicException} from "../exception/MyTopicException.js";
-import {topicSearchParams} from "./topic-cards-const.js";
+import {topicSearchParams} from "../const/topic-search-params.js";
 
 let scrollObserver;
 let isLoading = false;
