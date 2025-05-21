@@ -3,10 +3,6 @@ import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
 import {searchTopics} from "./home-api.js";
 import {TopicSearchException} from "./exception/HomeException.js";
-import {
-    openTournamentSelectDialog,
-    setupTournamentSelectDialog
-} from "../../global/tounament-select-dialog/js/tournament-select-dialog.js";
 
 let scrollObserver;
 let isLoading = false;
@@ -16,7 +12,6 @@ const homeExceptionHandler = new HomeExceptionHandler();
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
     setupHome();
-    setupTournamentSelectDialog(); // 토너먼트 선택기 셋업
 
 });
 
@@ -64,7 +59,7 @@ function addTopicCardEvents(){
             window.open(`/statistics/topic/${topicId}`, '_blank'); // 통계페이지 이동(새 탭 열기)
         } else if (topicCard) {
             const topicId = topicCard.dataset.id;
-            await openTournamentSelectDialog(topicId);
+            // TODO : start topic
         }
     });
 }
