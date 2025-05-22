@@ -3,6 +3,7 @@ import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
 import {searchTopics} from "./home-api.js";
 import {TopicSearchException} from "./exception/HomeException.js";
+import {shareTopic} from "../../global/js/share.js";
 
 let scrollObserver;
 let isLoading = false;
@@ -54,10 +55,15 @@ function addTopicCardEvents(){
     document.querySelector('#topic-content-cards').addEventListener('click' , async function(event){
         const topicCard = event.target.closest('.topic-content-card');
         const btnTopicStats = event.target.closest('.btn-topic-stats');
+        const btnTopicShare = event.target.closest('.btn-topic-share');
         if (btnTopicStats) {
             const topicId = topicCard.dataset.id;
             window.open(`/statistics/topic/${topicId}`, '_blank'); // 통계페이지 이동(새 탭 열기)
-        } else if (topicCard) {
+        } else if (btnTopicShare) {
+            const topicId = topicCard.dataset.id;
+            shareTopic(topicId);
+        }
+        else if (topicCard) {
             const topicId = topicCard.dataset.id;
             window.open(`/topic/play/${topicId}`, '_blank'); // 대결진행 페이지 이동(새 탭 열기)
         }

@@ -1,9 +1,11 @@
 import {setupInfiniteScrollObserver} from "./topic-cards-scroll-observer.js";
+import {shareTopic} from "../../../../global/js/share.js";
 
 const ACTION_HANDLERS = {
     play : moveToTopicPlay,
     modify : moveToTopicModifyPage,
-    stats : moveToTopicStatsPage
+    stats : moveToTopicStatsPage,
+    share : shareMyTopic
 }
 
 export function setupTopicCards(){
@@ -38,6 +40,10 @@ async function moveToTopicPlay(topicId){
 
 function moveToTopicModifyPage(topicId){
     window.open(`/topic/modify/${topicId}`, '_blank'); // 새 탭으로 수정페이지 열기
+}
+
+function shareMyTopic(topicId){
+    shareTopic(topicId)
 }
 
 function moveToTopicStatsPage(topicId){
