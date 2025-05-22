@@ -28,7 +28,7 @@ function renderTopicCards(topicList){
                             <div class="btn-group">
                                 <button class="btn-modify" data-action="modify" type="button"></button>
                                 <button class="btn-stats" data-action="stats" type="button"></button>
-                                <button class="btn-share" data-action="share" type="button"></button>
+                                ${renderShareButton(topic.visibility)}
                             </div>
                         </div>`;
 
@@ -56,6 +56,15 @@ function renderVisibilityLabel(visibility){
 
     return `<label class="visibility-label ${visibilityClass}">${visibilityName}</label>`
 }
+
+// 공유버튼 랜더링
+function renderShareButton(visibility){
+    if( Visibility.PRIVATE !== visibility ) {
+        return '<button class="btn-share" data-action="share" type="button"></button>';
+    }
+    return '';
+}
+
 
 // 표시 컨텐츠 비었음으로 상태 변경
 function toggleTopicCardsEmpty(isEmpty = false){
