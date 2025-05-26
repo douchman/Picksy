@@ -4,15 +4,16 @@ import {handleTopicPlayException} from "./exceptionHandler.js";
 import {finishEntryMatch} from "./entry-match-finish.js";
 import {getCurrentEntryMatch, submitMatchResult} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
-import {CurrentEntryMatchException, SubmitEntryMatchResultException} from "./exception/TopicPlayException.js";
+import { SubmitEntryMatchResultException} from "./exception/TopicPlayException.js";
 
 const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
-    const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
 
-    if (currentEntryMatchResult) {
+    try {
+        const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
+
         const matchId = currentEntryMatchResult.matchId;
         const currentTournament = currentEntryMatchResult.currentTournament;
         const entryMatch = currentEntryMatchResult.entryMatch;
@@ -20,9 +21,8 @@ export async function loadEntryMatchInfo() {
         match.setId(matchId);
         displayCurrentTournament(currentTournament);
         renderEntriesAndAddEvents(entryMatch);
-    } else {
-        handleTopicPlayException(currentEntryMatchResult);
-        topicPlayExceptionHandler.handle(new CurrentEntryMatchException(currentEntryMatchResult.message))
+    } catch(error) {
+        topicPlayExceptionHandler.handle(error, {context: 'currentEntryMatch'})
         // TODO : retry submit
     }
 }

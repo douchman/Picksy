@@ -12,6 +12,9 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
         if(error instanceof ApiResponseException){
             if( context === 'topicDetail')
                 this.handleSaveTopicInfoException(error);
+            else if( context === 'currentEntryMatch'){
+                this.handleCurrentEntryMatchException(error);
+            }
         }
 
       /*  if(error instanceof SavePlayRecordInfoException){
@@ -42,7 +45,7 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
 
     handleCurrentEntryMatchException(error){
         console.error('[Current EntryMatch Exception]' , error);
-        showToastMessage(error.message , 'error', 3500);
+        showToastMessage('진행할 대결 정보 조회를 확인할 수 없습니다.' , 'error', 3500);
         setTimeout(() => {
            location.href = '/';
         }, 2500);
