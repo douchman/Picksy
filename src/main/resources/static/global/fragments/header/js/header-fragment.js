@@ -51,6 +51,26 @@ function renderMyTopicsButton(){
     centerNavGroup.insertAdjacentHTML('beforeend', myTopicButton);
 }
 
+function applyNotAuthenticatedHeaderUI(){
+    renderLoginButton();
+    removeMyTopicsButton();
+    removeLogoutButton();
+}
+
+function renderLoginButton(){
+    const loginButton = '<a id="move-login-page" class="move-login-page" href="/login">로그인</a>';
+    document.querySelector('#right-nav-group').insertAdjacentHTML('beforeend', loginButton);
+}
+
+function removeMyTopicsButton(){
+    const myTopicsButton = document.querySelector('#btn-my-topic');
+    if(myTopicsButton) myTopicsButton.remove();
+}
+
+function removeLogoutButton(){
+    document.querySelector('#btn-logout').remove();
+}
+
 async function checkMemberAuthState(){
     try {
         const {auth : isAuth} = await checkAuthMember();
@@ -64,6 +84,7 @@ async function checkMemberAuthState(){
 async function logout(){
     try {
         await memberLogout();
+        applyNotAuthenticatedHeaderUI();
         showToastMessage('로그아웃 되었습니다 :)', 3000);
     } catch(error){
         authExceptionHandler.handle(error, {context : 'logout'});
