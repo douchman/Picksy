@@ -10,7 +10,8 @@ export function shareTopic(topicId){
 }
 
 function generateTopicPlayUrl(topicId){
-    return `http://localhost:8081/topic/play/${topicId}`
+    const origin = window.location.origin;
+    return `${origin}/topic/play/${topicId}`
 }
 
 function copyURLToClipboard(url) {
