@@ -5,7 +5,7 @@ import {
     SubmitEntryMatchResultException
 } from "./TopicPlayException.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
-import {ApiResponseException} from "../../../../global/api/exception/ApiException";
+import {ApiResponseException} from "../../../../global/api/exception/ApiException.js";
 
 export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
     handle(error, {context}) {
