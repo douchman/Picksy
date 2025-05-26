@@ -10,10 +10,14 @@ import {ApiResponseException} from "../../../../global/api/exception/ApiExceptio
 export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
     handle(error, {context}) {
         if(error instanceof ApiResponseException){
-            if( context === 'topicDetail')
+            if( context === 'topicDetail'){
                 this.handleSaveTopicInfoException(error);
+            }
             else if( context === 'currentEntryMatch'){
                 this.handleCurrentEntryMatchException(error);
+            }
+            else if( context === 'submitMatchResult'){
+                this.handleSubmitEntryMatchResultException(error);
             }
         }
 
@@ -53,6 +57,6 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
 
     handleSubmitEntryMatchResultException(error){
         console.error('[Submit EntryMatch Result Exception]' , error);
-        showToastMessage(error.message , 'error', 3500);
+        showToastMessage('대결 결과 제출 중 문제가 발생했어요. 잠시후 다시 시도해주세요.', 'error', 3500);
     }
 }

@@ -41,9 +41,8 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
         loserEntryId : loserEntryId
     }
 
-    const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
-
-    if( submitResult ){
+    try {
+        const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
         const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
 
         // 처리 완료 시 -> 승리/패배 엔트리 애니메이션 시작
@@ -55,9 +54,8 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
         } else {
             finishEntryMatch();
         }
-    } else {
-        handleTopicPlayException(submitResult);
-        topicPlayExceptionHandler.handle(new SubmitEntryMatchResultException(submitResult.message));
+    } catch (error){
+        topicPlayExceptionHandler.handle(error, {context : 'submitMatchResult'});
     }
 }
 

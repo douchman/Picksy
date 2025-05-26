@@ -13,16 +13,5 @@ export async function getCurrentEntryMatch(playRecordId){
 
 // 엔트리 매치결과 제출
 export async function submitMatchResult(playRecordId, matchId, requestBody){
-    const {status, data : entryMatchSubmitResult, isAuthOrNetworkException} = await fetchMatchResult(playRecordId, matchId, requestBody);
-
-    if( isAuthOrNetworkException ) return null;
-
-    if( status === 200 && entryMatchSubmitResult ){ return entryMatchSubmitResult; }
-
-    return null;
-}
-
-// 엔트리 매치 결과 제출 API fetch
-async function fetchMatchResult(playRecordId, matchId, requestBody){
     return await apiRequest(`topics/play-records/${playRecordId}/matches/${matchId}`,ApiMethod.PATCH, requestBody, false );
 }
