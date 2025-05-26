@@ -1,6 +1,6 @@
 import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
-import {ApiResponseException} from "../../../../../global/api/exception/ApiException";
+import {ApiResponseException} from "../../../../../global/api/exception/ApiException.js";
 
 export class EntryEditExceptionHandler extends GlobalExceptionHandler{
     handle(error, {context}){
