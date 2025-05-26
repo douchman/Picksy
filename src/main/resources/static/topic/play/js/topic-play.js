@@ -2,7 +2,6 @@ import {playRecordStorage, topic} from "./const.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 import {getTopicDetail} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
-import { SetTopicInfoException} from "./exception/TopicPlayException.js";
 import {
     openTournamentSelectDialog,
     setupTournamentSelectDialog
@@ -44,12 +43,12 @@ async function saveTopicInfo(){
 
     topic.setId(topicId);
 
-    const topicDetailResult = await getTopicDetail(topic.getId());
-    if ( topicDetailResult ){
+    try{
+        const topicDetailResult = await getTopicDetail(topic.getId());
         topic.setTitle(topicDetailResult.topic.title);
         renderTopicTitle();
-    } else {
-        topicPlayExceptionHandler.handle(new SetTopicInfoException(topicDetailResult.message));
+    } catch (error){
+        topicPlayExceptionHandler.handle(error, {context : 'topicDetail'});
         return false;
     }
 
