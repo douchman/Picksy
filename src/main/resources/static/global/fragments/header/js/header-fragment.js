@@ -1,4 +1,8 @@
-import {checkAuthMember, memberLogout} from "../../../js/auth.js";
+import {checkAuthMember, memberLogout} from "../../../auth/auth.js";
+import {AuthExceptionHandler} from "../../../auth/exception/auth-exception-handler.js";
+import {showToastMessage} from "../../../popup/js/common-toast-message.js";
+
+const authExceptionHandler = new AuthExceptionHandler();
 
 document.addEventListener("DOMContentLoaded", async () => {
     const isAuth = await checkMemberAuthState();
@@ -33,7 +37,7 @@ function renderLogoutButton(){
 
 function addLogoutButtonEvent(){
     document.querySelector('#btn-logout').addEventListener('click', async () => {
-        await memberLogout();
+        await logout();
     });
 }
 
@@ -47,7 +51,42 @@ function renderMyTopicsButton(){
     centerNavGroup.insertAdjacentHTML('beforeend', myTopicButton);
 }
 
+function applyNotAuthenticatedHeaderUI(){
+    renderLoginButton();
+    removeMyTopicsButton();
+    removeLogoutButton();
+}
+
+function renderLoginButton(){
+    const loginButton = '<a id="move-login-page" class="move-login-page" href="/login">로그인</a>';
+    document.querySelector('#right-nav-group').insertAdjacentHTML('beforeend', loginButton);
+}
+
+function removeMyTopicsButton(){
+    const myTopicsButton = document.querySelector('#btn-my-topic');
+    if(myTopicsButton) myTopicsButton.remove();
+}
+
+function removeLogoutButton(){
+    document.querySelector('#btn-logout').remove();
+}
+
 async function checkMemberAuthState(){
-    const {auth : isAuth} = await checkAuthMember();
-    return isAuth;
+    try {
+        const {auth : isAuth} = await checkAuthMember();
+        return isAuth;
+    } catch (error) {
+        authExceptionHandler.handle(error, {context : 'checkAuthState'});
+        return false;
+    }
+}
+
+async function logout(){
+    try {
+        await memberLogout();
+        applyNotAuthenticatedHeaderUI();
+        showToastMessage('로그아웃 되었습니다 :)', 3000);
+    } catch(error){
+        authExceptionHandler.handle(error, {context : 'logout'});
+    }
 }
