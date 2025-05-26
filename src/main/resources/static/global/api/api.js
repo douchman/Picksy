@@ -1,7 +1,8 @@
 import {ApiMethod} from "./api-method.js";
 import {API_URL} from "../js/const.js";
 import {ApiExceptionHandler} from "./exception/api-exception-handler.js";
-import {FetchNetworkException, UserAuthException} from "./exception/ApiException.js";
+import {FetchNetworkException} from "./exception/ApiException.js";
+import {UserAuthException} from "../exception/GlobalException.js";
 
 const apiExceptionHandler = new ApiExceptionHandler();
 
