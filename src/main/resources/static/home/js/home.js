@@ -2,7 +2,6 @@ import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-locals
 import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
 import {searchTopics} from "./home-api.js";
-import {TopicSearchException} from "./exception/HomeException.js";
 import {shareTopic} from "../../global/js/share.js";
 
 let scrollObserver;
@@ -78,9 +77,8 @@ async function renderTopics(){
 
     const topicContentCards = document.querySelector('#topic-content-cards');
 
-    const topicSearchResult = await searchTopics(topicSearchParams);
-
-    if( topicSearchResult ){
+    try{
+        const topicSearchResult = await searchTopics(topicSearchParams);
 
         const topicList = topicSearchResult.topicList;
         const pagination = topicSearchResult.pagination;
@@ -115,9 +113,9 @@ async function renderTopics(){
         } else {
             toggleTopicContentsSectionEmpty(true);
         }
-    } else {
+    } catch(error){
         stopInfiniteScrollObserver();
-        homeExceptionHandler.handle( new TopicSearchException(topicSearchResult.message, 500));
+        homeExceptionHandler.handle(error);
     }
 
     isLoading = false;
