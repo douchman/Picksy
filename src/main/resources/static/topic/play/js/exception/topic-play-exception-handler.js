@@ -2,24 +2,27 @@ import {GlobalExceptionHandler} from "../../../../global/exception/global-except
 import {
     CurrentEntryMatchException,
     SavePlayRecordInfoException,
-    SetTopicInfoException,
     SubmitEntryMatchResultException
 } from "./TopicPlayException.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {ApiResponseException} from "../../../../global/api/exception/ApiException";
 
 export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
-    handle(error) {
-        if(error instanceof SavePlayRecordInfoException){
+    handle(error, {context}) {
+        if(error instanceof ApiResponseException){
+            if( context === 'topicDetail')
+                this.handleSaveTopicInfoException(error);
+        }
+
+      /*  if(error instanceof SavePlayRecordInfoException){
             this.handleSavePlayRecordInfoException(error);
-        } else if(error instanceof SetTopicInfoException){
-            this.handleSetTopicInfoException(error);
         } else if(error instanceof CurrentEntryMatchException) {
             this.handleCurrentEntryMatchException(error);
         } else if(error instanceof SubmitEntryMatchResultException){
             this.handleSubmitEntryMatchResultException(error);
         } else{
             super.handle(error);
-        }
+        }*/
     }
 
     handleSavePlayRecordInfoException(error){
@@ -29,9 +32,9 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
             location.href = '/';
         }, 2500);
     }
-    handleSetTopicInfoException(error){
-        console.error('[Set TopicInfo Exception]' , error);
-        showToastMessage(error.message , 'error', 3500);
+    handleSaveTopicInfoException(error){
+        console.error('[Save TopicInfo Exception]' , error);
+        showToastMessage('대결주제 정보를 확인할 수 없어요:(' , 'error', 3500);
         setTimeout(()=> {
             location.href = '/';
         }, 2500);
