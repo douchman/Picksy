@@ -1,19 +1,18 @@
 import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 import {GlobalExceptionHandler} from "../../../global/exception/global-exception-handler.js";
-import {TopicSearchException} from "./HomeException.js";
+import {ApiResponseException} from "../../../global/api/exception/ApiException.js";
 
 export class HomeExceptionHandler extends GlobalExceptionHandler{
     handle(error){
-        if( error instanceof TopicSearchException){
-            this.handleTopicSearchException(error);
+        if( error instanceof ApiResponseException){
+            this.handleApiResponseException(error);
         } else{
             super.handle(error)
         }
-
     }
 
-    handleTopicSearchException(error){
+    handleApiResponseException(error){
         console.error('[Topic Search Exception]' , error);
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage(`${error.message}`, 'error', 3000);
     }
 }
