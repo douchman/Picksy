@@ -40,10 +40,10 @@ export class TopicEditExceptionHandler extends GlobalExceptionHandler{
 
     handleTopicIdSaveException(error){
         console.error('[TopicId Save Exception]' , error);
-        showToastMessage(`${error.message}`, 'alert', 3000);
+        showToastMessage('대결주제 정보 확인 중 문제가 발생했어요. 이전 메뉴에서 다시 확인해주세요.', 'alert', 3000);
 
         setTimeout(() => {
-            location.href = '/';
+            location.href = '/topic/my';
         }, 2500);
     }
 }
