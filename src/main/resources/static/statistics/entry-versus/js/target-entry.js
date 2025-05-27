@@ -1,21 +1,22 @@
 import {targetTopic, targetEntry, TournamentStageName} from "./const.js"
-import {apiGetRequest} from "../../../global/js/api.js";
 import {MediaType} from "../../../global/js/const.js";
+import {getTargetEntryStatistics} from "./versus-statistics-api.js";
 
 /* 조회 대상 엔트리 셋업 */
 // 엔트리 상세 정보 & 통계 조회
 // 랜더링
 export async function setupTargetEntry(){
-    const {status, data : targetEntryStatsResult} = await getTargetEntryStatistics();
+    try {
+        const targetEntryStatsResult = await getTargetEntryStatistics(targetTopic.id, targetEntry.id);
 
-    if( status === 200) {
         const targetEntryDetail = targetEntryStatsResult.entry;
         const targetEntryStats = targetEntryStatsResult.statistics;
 
         renderTargetEntryInfo(targetEntryDetail);
         renderTargetEntryStatistics(targetEntryStats);
-    } else {
-        // TODO : target entry statistics exception
+
+    } catch (error){
+        // TODO : handle target Entry Statistics Exception
         return false;
     }
 
@@ -58,8 +59,4 @@ function roundToNDecimal(value, n){
         return Number(value.toFixed(n));
     }
     return 0;
-}
-
-async function getTargetEntryStatistics(){
-    return await apiGetRequest(`statistics/topics/${targetTopic.id}/entries/${targetEntry.id}`);
 }
