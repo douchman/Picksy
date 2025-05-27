@@ -1,5 +1,5 @@
-import {apiGetRequest} from "../../../global/js/api.js";
-import {topic} from "./const.js";
+import {apiGetRequest} from "../../../../global/js/api.js";
+import {topic} from "../const.js";
 import {addCommentRegisterEvent} from "./comment-register.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버

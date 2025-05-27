@@ -1,6 +1,6 @@
-import {apiPostRequest} from "../../../global/js/api.js";
-import {topic} from "./const.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {apiPostRequest} from "../../../../global/js/api.js";
+import {topic} from "../const.js";
+import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
     authorValidationMessage,
     commentContentValidationMessage,
