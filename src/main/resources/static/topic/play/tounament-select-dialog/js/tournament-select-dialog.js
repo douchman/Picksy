@@ -3,7 +3,7 @@ import {showToastMessage} from "../../../../global/popup/js/common-toast-message
 import {toggleBodyScrollBlocked} from "../../../../global/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
-import {PlayRecordIdException, TopicDetailException} from "./exception/TournamentSelectException.js";
+import {PlayRecordIdException} from "./exception/TournamentSelectException.js";
 import {loadEntryMatchInfo} from "../../js/entry-match.js";
 import {playRecordStorage} from "../../js/const.js";
 
@@ -83,9 +83,9 @@ function addDialogEvents() {
 export async function openTournamentSelectDialog(topicId){
     const dialog = document.querySelector('#tournament-select-dialog');
     dialog.setAttribute('data-topic-id', topicId);
-    const topicDetailResult= await getTopicDetail(topicId);
 
-    if( topicDetailResult ){
+    try {
+        const topicDetailResult = await getTopicDetail(topicId);
         const topic = topicDetailResult.topic;
         const tournamentList = topicDetailResult.tournamentList;
 
@@ -97,10 +97,9 @@ export async function openTournamentSelectDialog(topicId){
         dialog.classList.add('show');
 
         toggleBodyScrollBlocked(true);
-    } else {
-        tournamentSelectExceptionHandler.handle(new TopicDetailException());
+    } catch(error){
+        tournamentSelectExceptionHandler.handle(error, {context : 'topicDetail'});
     }
-
 }
 
 function closeTournamentSelectDialog(){
