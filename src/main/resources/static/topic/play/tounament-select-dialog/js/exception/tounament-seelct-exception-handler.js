@@ -1,17 +1,17 @@
 import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
-import {PlayRecordIdException, TopicDetailException} from "./TournamentSelectException.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {ApiResponseException} from "../../../../../global/api/exception/ApiException.js";
 
 export class TournamentSelectExceptionHandler extends GlobalExceptionHandler{
-    handle(error){
-        if( error instanceof TopicDetailException){
-            this.handleTopicDetailException(error);
-        } else if (error instanceof PlayRecordIdException){
-            this.handlePlayRecordIdException(error);
+    handle(error, {context}){
+        if( error instanceof ApiResponseException){
+            if(context === 'topicDetail')
+                this.handleTopicDetailException(error);
+            else if ( context === 'playRecordId')
+                this.handlePlayRecordIdException(error);
         } else{
             super.handle(error)
         }
-
     }
 
     handleTopicDetailException(error){
