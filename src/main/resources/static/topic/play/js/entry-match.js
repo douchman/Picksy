@@ -4,15 +4,16 @@ import {handleTopicPlayException} from "./exceptionHandler.js";
 import {finishEntryMatch} from "./entry-match-finish.js";
 import {getCurrentEntryMatch, submitMatchResult} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
-import {CurrentEntryMatchException, SubmitEntryMatchResultException} from "./exception/TopicPlayException.js";
+import { SubmitEntryMatchResultException} from "./exception/TopicPlayException.js";
 
 const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
 // 엔트리 대진표 조회
 export async function loadEntryMatchInfo() {
-    const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
 
-    if (currentEntryMatchResult) {
+    try {
+        const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
+
         const matchId = currentEntryMatchResult.matchId;
         const currentTournament = currentEntryMatchResult.currentTournament;
         const entryMatch = currentEntryMatchResult.entryMatch;
@@ -20,9 +21,8 @@ export async function loadEntryMatchInfo() {
         match.setId(matchId);
         displayCurrentTournament(currentTournament);
         renderEntriesAndAddEvents(entryMatch);
-    } else {
-        handleTopicPlayException(currentEntryMatchResult);
-        topicPlayExceptionHandler.handle(new CurrentEntryMatchException(currentEntryMatchResult.message))
+    } catch(error) {
+        topicPlayExceptionHandler.handle(error, {context: 'currentEntryMatch'})
         // TODO : retry submit
     }
 }
@@ -41,9 +41,8 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
         loserEntryId : loserEntryId
     }
 
-    const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
-
-    if( submitResult ){
+    try {
+        const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
         const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
 
         // 처리 완료 시 -> 승리/패배 엔트리 애니메이션 시작
@@ -55,9 +54,8 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
         } else {
             finishEntryMatch();
         }
-    } else {
-        handleTopicPlayException(submitResult);
-        topicPlayExceptionHandler.handle(new SubmitEntryMatchResultException(submitResult.message));
+    } catch (error){
+        topicPlayExceptionHandler.handle(error, {context : 'submitMatchResult'});
     }
 }
 
