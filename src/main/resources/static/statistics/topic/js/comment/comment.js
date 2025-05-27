@@ -1,6 +1,7 @@
 import {addCommentRegisterEvent} from "./comment-register.js";
 import {getComments} from "./comment-api.js";
 import {topic} from "../const.js";
+import {CommentExceptionHandler} from "./exception/comment-exception-handler.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버
 let isFetchingComments = false; // 데이터 조회 플래그
@@ -15,6 +16,8 @@ let commentsPagination = { // 페이지네이션 전역변수
     currentPage : 1,
     totalPages : 0
 }
+
+const commentExceptionHandler = new CommentExceptionHandler();
 
 /* 유저 코멘트 셋업 */
 // 코멘트 무한 스크롤 설정
@@ -98,7 +101,7 @@ async function renderComments(){
         }
 
     } catch (error) {
-        // TODO : handle getCommentsException
+        commentExceptionHandler.handle(error, {context : 'getComments'})
     }
 }
 

@@ -7,6 +7,10 @@ import {
     validateCommentContent
 } from "./comment-register-validate.js";
 import {postComments} from "./comment-api.js";
+import {CommentExceptionHandler} from "./exception/comment-exception-handler.js";
+
+
+const commentExceptionHandler = new CommentExceptionHandler();
 
 // 댓글 작성 이벤트
 export function addCommentRegisterEvent(){
@@ -34,7 +38,7 @@ async function registerComment(){
                 renderRegisteredComment(registerResult.author, registerResult.content, registerResult.createdAt);
             }, 300); // 지연 후 랜더링
         } catch (error) {
-            // TODO : handle registerComment Exception
+            commentExceptionHandler.handle(error, {context : 'registerComment'})
         }
     }
 
