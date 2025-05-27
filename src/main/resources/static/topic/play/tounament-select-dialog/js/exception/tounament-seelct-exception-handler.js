@@ -15,12 +15,12 @@ export class TournamentSelectExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleTopicDetailException(error){
-        console.error('[Topic Search Exception]' , error);
+        console.error('[Topic Detail Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 
     handlePlayRecordIdException(error){
-        console.error('[Tournament Exception]' , error);
+        console.error('[PlayRecordId Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 }
