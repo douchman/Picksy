@@ -15,12 +15,12 @@ export class CommentExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleGetCommentsException(error){
-        console.error('[Topic Search Exception]' , error);
+        console.error('[Get Comments Exception]' , error);
         showToastMessage('댓글 조회 중 문제가 발생했어요. 새로고침 후 이용해주세요.', 'error', 3000);
     }
 
     handleRegisterCommentsException(error){
-        console.error('[Topic Search Exception]' , error);
+        console.error('[Comment Register Exception]' , error);
         showToastMessage('댓글 작성 중 문제가 발생했어요. 잠시 후 다시 시도해주세요.', 'error', 3000);
     }
 }
