@@ -21,6 +21,6 @@ export class CommentsExceptionHandler extends GlobalExceptionHandler {
 
     handleRegisterCommentsException(error){
         console.error('[Register Comments Exception]' , error);
-        showToastMessage(error.message , 'error', 3000);
+        showToastMessage('댓글 작성 중 문제가 발생했습니다. 다시 시도해도 문제가 지속될 경우 [대결주제 통계] 페이지에서 이용바랍니다.' , 'error', 3000);
     }
 }
