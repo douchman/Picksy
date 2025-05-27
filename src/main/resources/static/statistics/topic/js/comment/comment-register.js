@@ -1,4 +1,3 @@
-import {apiPostRequest} from "../../../../global/js/api.js";
 import {topic} from "../const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
@@ -7,6 +6,7 @@ import {
     validateAuthor,
     validateCommentContent
 } from "./comment-register-validate.js";
+import {postComments} from "./comment-api";
 
 // 댓글 작성 이벤트
 export function addCommentRegisterEvent(){
@@ -20,22 +20,21 @@ async function registerComment(){
     toggleRegisterButtonBlock(true);
 
     if( validateCommentForm()){
-        const registerRequestBody = {
+        const requestBody = {
             author : document.querySelector('#author').value,
             content : document.querySelector('#comment-content').value,
         }
 
-        const {status, data : registerResult } = await postComments(registerRequestBody);
+        try {
+            const registerResult = await postComments( topic.getId(), requestBody);
 
-        if( status === 200 ){
             initCommentRegisterForm(); // 코멘트 form 초기화
             commentListScrollTop(); // 스크롤 최상단
             setTimeout(() => {
                 renderRegisteredComment(registerResult.author, registerResult.content, registerResult.createdAt);
             }, 300); // 지연 후 랜더링
-
-        } else{
-            showToastMessage('댓글 작성에 문제가 발생했어요. 잠시 후 다시 시도해 주세요');
+        } catch (error) {
+            // TODO : handle registerComment Exception
         }
     }
 
@@ -95,9 +94,4 @@ function validateCommentForm(){
     }
 
     return true;
-}
-
-// 댓글 작성 api
-async function postComments(requestBody){
-    return await apiPostRequest(`topics/${topic.getId()}/comments`, {}, requestBody)
 }
