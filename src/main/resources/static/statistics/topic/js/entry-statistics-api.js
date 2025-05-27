@@ -1,6 +1,6 @@
-import {apiGetRequest} from "../../../global/js/api.js";
-import {topic} from "./const.js";
+import {apiRequest} from "../../../global/api/api.js";
+import {ApiMethod} from "../../../global/api/api-method.js";
 
-export async function getEntryStatistics(requestBody){
-    return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
+export async function getEntryStatistics(topicId, requestBody){
+    return await apiRequest(`statistics/topics/${topicId}/entries`, ApiMethod.GET, requestBody, false);
 }

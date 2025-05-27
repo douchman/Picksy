@@ -2,6 +2,7 @@ import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./entry-statistics-table-con
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
 import {getEntryStatistics} from "./entry-statistics-api.js";
+import {topic} from "./const.js";
 
 export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
@@ -16,7 +17,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
     }
 
     try {
-        const entryStatisticsResult = await getEntryStatistics(requestBody);
+        const entryStatisticsResult = await getEntryStatistics(topic.getId(), requestBody);
 
         const lastUpdatedAt = entryStatisticsResult.lastUpdatedAt;
         const entriesStatistics = entryStatisticsResult.entriesStatistics;
