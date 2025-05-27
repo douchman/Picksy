@@ -36,12 +36,12 @@ function saveTopicId(){
 // 대결 주제 통계 랜더링
 async function renderTopicStatistics(){
     try {
-        const topicStatisticsResult = await getTopicStatistics();
+        const topicStatisticsResult = await getTopicStatistics(topic.getId());
 
-        const topic = topicStatisticsResult.topic;
+        const topicDetail = topicStatisticsResult.topic;
         const topicStatistics = topicStatisticsResult.topicStatistics;
 
-        renderTopicTitle(topic.title);
+        renderTopicTitle(topicDetail.title);
         renderTotalMatches(topicStatistics.totalMatches);
     } catch(error){
       // TODO : handle getTopicStatistics API Exception
