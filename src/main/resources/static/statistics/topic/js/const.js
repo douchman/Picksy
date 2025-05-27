@@ -10,15 +10,3 @@ export const topic = {
         return this.id;
     }
 }
-
-export const entryStatsTable = {
-    itemPerPage : 10,
-
-    setItemPerPage(itemPerPage) {
-        this.itemPerPage = itemPerPage;
-    },
-
-    getItemPerPage(){
-        return this.itemPerPage;
-    }
-}

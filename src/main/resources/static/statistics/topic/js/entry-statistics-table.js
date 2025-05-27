@@ -1,4 +1,4 @@
-import {entryStatsTable, topic} from "./const.js";
+import {topic} from "./const.js";
 import {RankSort, ScoreSort, tableQuery} from "./entry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics-table-renderer.js";
 import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-media-viewer/js/entry-media-viewer.js";
@@ -58,7 +58,6 @@ function addItemCountListEvent(){
         itemPerPage.value = itemPerPageCount;
         itemPerPage.innerText = countText;
 
-        entryStatsTable.setItemPerPage(itemPerPageCount);
         toggleFilterItemCountActive(false);
 
         tableQuery.pageSize = itemPerPageCount; // 표시 갯수 변경
