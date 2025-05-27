@@ -3,6 +3,9 @@ import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
 import {getEntryStatistics} from "../api/entry-statistics-api.js";
 import {topic} from "../const.js";
+import {EntryStatisticsExceptionHandler} from "./exception/entry-statistics-exception-handler.js";
+
+const entryStatisticsExceptionHandler = new EntryStatisticsExceptionHandler();
 
 export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
@@ -58,7 +61,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
         isUpdatePaginationUi && updatePaginationSetting();
 
     } catch(error) {
-        // TODO : handle getEntryStatistics Api Exception
+        entryStatisticsExceptionHandler.handle(error, {context : 'entryStatistics'});
         return false;
     }
 
