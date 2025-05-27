@@ -1,5 +1,5 @@
 import {topic} from "./const.js";
-import {setupEntryStatisticsTable} from "./entry-statistics-table.js";
+import {setupEntryStatisticsTable} from "./entry-statistics-table/entry-statistics-table.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 import {getTopicStatistics} from "./topic-statistics-api.js";
 

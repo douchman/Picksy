@@ -1,9 +1,9 @@
-import {topic} from "./const.js";
+import {topic} from "../const.js";
 import {RankSort, ScoreSort, tableQuery} from "./entry-statistics-table-const.js";
 import {renderEntryStatistics} from "./entry-statistics-table-renderer.js";
-import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-media-viewer/js/entry-media-viewer.js";
+import {setupEntryMediaViewer, showThumbViewer} from "../../../../global/entry-media-viewer/js/entry-media-viewer.js";
 import {renderTablePagination} from "./entry-statistics-table-pagination.js";
-import {setupUserComment} from "./comment/comment.js";
+import {setupUserComment} from "../comment/comment.js";
 
 let keywordSearchDebounceTimer;
 

@@ -1,8 +1,8 @@
 import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./entry-statistics-table-const.js"
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
-import {getEntryStatistics} from "./entry-statistics-api.js";
-import {topic} from "./const.js";
+import {getEntryStatistics} from "../entry-statistics-api.js";
+import {topic} from "../const.js";
 
 export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
