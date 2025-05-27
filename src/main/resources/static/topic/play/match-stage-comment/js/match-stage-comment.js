@@ -1,8 +1,8 @@
 import {addCommentRegisterEvent} from "./comment-reigster.js";
-import {topic} from "../const.js";
+import {topic} from "../../js/const.js";
 import {getComments} from "./comment-api.js";
-import {CommentsExceptionHandler} from "../exception/comment-exception-handler.js";
-import {GetCommentsException} from "../exception/CommentException.js";
+import {CommentsExceptionHandler} from "../../js/exception/comment-exception-handler.js";
+import {GetCommentsException} from "../../js/exception/CommentException.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버
 let isFetchingComments = false; // 데이터 조회 플래그

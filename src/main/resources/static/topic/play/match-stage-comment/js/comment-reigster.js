@@ -1,4 +1,4 @@
-import {topic} from "../const.js";
+import {topic} from "../../js/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
     authorValidationMessage,
@@ -6,9 +6,9 @@ import {
     validateAuthor,
     validateCommentContent
 } from "./comment-register-validation.js";
-import {CommentsExceptionHandler} from "../exception/comment-exception-handler.js";
+import {CommentsExceptionHandler} from "../../js/exception/comment-exception-handler.js";
 import {createComment} from "./comment-api.js";
-import {RegisterCommentException} from "../exception/CommentException.js";
+import {RegisterCommentException} from "../../js/exception/CommentException.js";
 
 const commentExceptionHandler = new CommentsExceptionHandler();
 // 댓글 작성 이벤트

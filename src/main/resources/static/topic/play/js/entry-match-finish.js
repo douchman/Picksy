@@ -1,4 +1,4 @@
-import {setupMatchStageComment} from "./match-stage-comment/match-stage-comment.js";
+import {setupMatchStageComment} from "../match-stage-comment/js/match-stage-comment.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../../global/js/vstopic-localstorage.js";
 
 // 매치 종료
