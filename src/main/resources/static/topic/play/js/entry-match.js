@@ -1,10 +1,8 @@
 import {match, playRecordStorage} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
-import {handleTopicPlayException} from "./exceptionHandler.js";
 import {finishEntryMatch} from "./entry-match-finish.js";
 import {getCurrentEntryMatch, submitMatchResult} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
-import { SubmitEntryMatchResultException} from "./exception/TopicPlayException.js";
 
 const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
