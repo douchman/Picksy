@@ -2,7 +2,9 @@ import {topic} from "./const.js";
 import {setupEntryStatisticsTable} from "./entry-statistics-table/entry-statistics-table.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
 import {getTopicStatistics} from "./api/topic-statistics-api.js";
+import {TopicStatisticsExceptionHandler} from "./exception/topic-statistics-exception-handler.js";
 
+const topicStatisticsException = new TopicStatisticsExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -44,8 +46,8 @@ async function renderTopicStatistics(){
         renderTopicTitle(topicDetail.title);
         renderTotalMatches(topicStatistics.totalMatches);
     } catch(error){
-      // TODO : handle getTopicStatistics API Exception
-      return false;
+        topicStatisticsException.handle(error, {context : 'topicStatistics'});
+        return false;
     }
 
     return true;
