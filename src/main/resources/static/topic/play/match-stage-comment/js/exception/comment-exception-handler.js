@@ -1,6 +1,6 @@
-import {GlobalExceptionHandler} from "../../../../global/exception/global-exception-handler.js";
+import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
 import {GetCommentsException, RegisterCommentException} from "./CommentException.js";
-import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
 
 export class CommentsExceptionHandler extends GlobalExceptionHandler {
     handle(error){

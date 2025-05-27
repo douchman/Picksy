@@ -6,9 +6,9 @@ import {
     validateAuthor,
     validateCommentContent
 } from "./comment-register-validation.js";
-import {CommentsExceptionHandler} from "../../js/exception/comment-exception-handler.js";
+import {CommentsExceptionHandler} from "./exception/comment-exception-handler.js";
 import {createComment} from "./comment-api.js";
-import {RegisterCommentException} from "../../js/exception/CommentException.js";
+import {RegisterCommentException} from "./exception/CommentException.js";
 
 const commentExceptionHandler = new CommentsExceptionHandler();
 // 댓글 작성 이벤트
