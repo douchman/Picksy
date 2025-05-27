@@ -1,7 +1,7 @@
 import {topic} from "./const.js";
 import {setupEntryStatisticsTable} from "./entry-statistics-table/entry-statistics-table.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
-import {getTopicStatistics} from "./topic-statistics-api.js";
+import {getTopicStatistics} from "./api/topic-statistics-api.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
