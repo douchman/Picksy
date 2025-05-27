@@ -1,13 +1,14 @@
 import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
-import {GetCommentsException, RegisterCommentException} from "./CommentException.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {ApiResponseException} from "../../../../../global/api/exception/ApiException";
 
 export class CommentsExceptionHandler extends GlobalExceptionHandler {
-    handle(error){
-        if( error instanceof GetCommentsException ){
-            this.handleGetCommentsException(error)
-        } else if ( error instanceof RegisterCommentException ){
-            this.handleRegisterCommentsException(error);
+    handle(error, {context}){
+        if( error instanceof ApiResponseException ){
+            if( context === 'getComments')
+                this.handleGetCommentsException(error);
+            else if( context === 'registerComment')
+                this.handleRegisterCommentsException(error);
         } else{
             super.handle(error);
         }
@@ -15,7 +16,7 @@ export class CommentsExceptionHandler extends GlobalExceptionHandler {
 
     handleGetCommentsException(error){
         console.error('[Get Comments Exception]' , error);
-        showToastMessage(error.message , 'error', 3000);
+        showToastMessage('댓글 조회 중 문제가 발생했습니다. [대결주제 통계] 페이지를 이용해 주세요.' , 'error', 3000);
     }
 
     handleRegisterCommentsException(error){
