@@ -8,16 +8,5 @@ export async function getTopicDetail(topicId){
 
 // 대결주제 시작 -> 서버에 알림 & playRecordId 식별자 반환
 export async function getTopicPlayRecordId(topicId, tournamentStage){
-    const { status, data : playRecordResult, isAuthOrNetworkException } = await fetchPlayRecord(topicId, tournamentStage);
-
-    if( isAuthOrNetworkException ) return null;
-
-    if( status === 200 && playRecordResult ){ return playRecordResult }
-
-    return null;
-}
-
-// 대결시작 알림 API fetch
-async function fetchPlayRecord(topicId, tournamentStage){
     return await apiRequest(`topics/${topicId}/play-records`, ApiMethod.POST, {tournamentStage});
 }

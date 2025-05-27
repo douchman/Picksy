@@ -1,9 +1,7 @@
 import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
-import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {toggleBodyScrollBlocked} from "../../../../global/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
-import {PlayRecordIdException} from "./exception/TournamentSelectException.js";
 import {loadEntryMatchInfo} from "../../js/entry-match.js";
 import {playRecordStorage} from "../../js/const.js";
 
@@ -140,15 +138,17 @@ async function getPlayRecordIdAndStart(){
     const tournamentStage = dialog.querySelector('#selected-tournament').dataset.tournamentStage;
     const topicId = dialog.getAttribute('data-topic-id');
 
-    const playRecordResult = await getTopicPlayRecordId(topicId, tournamentStage);
+    let playRecordResult;
 
-    if(!playRecordResult){
-        showToastMessage(playRecordResult.message, 'error', 2500);
-        tournamentSelectExceptionHandler.handle(new PlayRecordIdException());
-        return null;
+    try {
+        playRecordResult = await getTopicPlayRecordId(topicId, tournamentStage);
+    } catch(error){
+        tournamentSelectExceptionHandler.handle(error , {context : 'playRecordId'});
     }
-
     closeTournamentSelectDialog();
-    playRecordStorage.saveId(playRecordResult.playRecordId);
-    await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
+
+    if(playRecordResult){
+        playRecordStorage.saveId(playRecordResult.playRecordId);
+        await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
+    }
 }
