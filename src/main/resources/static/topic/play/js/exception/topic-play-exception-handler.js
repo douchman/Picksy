@@ -1,9 +1,4 @@
 import {GlobalExceptionHandler} from "../../../../global/exception/global-exception-handler.js";
-import {
-    CurrentEntryMatchException,
-    SavePlayRecordInfoException,
-    SubmitEntryMatchResultException
-} from "./TopicPlayException.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {ApiResponseException} from "../../../../global/api/exception/ApiException.js";
 
@@ -20,24 +15,6 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
                 this.handleSubmitEntryMatchResultException(error);
             }
         }
-
-      /*  if(error instanceof SavePlayRecordInfoException){
-            this.handleSavePlayRecordInfoException(error);
-        } else if(error instanceof CurrentEntryMatchException) {
-            this.handleCurrentEntryMatchException(error);
-        } else if(error instanceof SubmitEntryMatchResultException){
-            this.handleSubmitEntryMatchResultException(error);
-        } else{
-            super.handle(error);
-        }*/
-    }
-
-    handleSavePlayRecordInfoException(error){
-        console.error('[Save PlayRecordInfo Exception]' , error);
-        showToastMessage(error.message , 'error', 3500);
-        setTimeout(()=> {
-            location.href = '/';
-        }, 2500);
     }
     handleSaveTopicInfoException(error){
         console.error('[Save TopicInfo Exception]' , error);
