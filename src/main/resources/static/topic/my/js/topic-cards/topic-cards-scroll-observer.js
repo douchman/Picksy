@@ -1,7 +1,6 @@
 import {renderMyTopics} from "./topic-cards-renderer.js";
 import {getMyTopic} from "../api/my-topic-api.js";
 import {MyTopicExceptionHandler} from "../exception/my-topic-exception-handler.js";
-import {GetMyTopicException} from "../exception/MyTopicException.js";
 import {topicSearchParams} from "../const/topic-search-params.js";
 
 let scrollObserver;
@@ -17,16 +16,16 @@ export function setupInfiniteScrollObserver(){
     scrollObserver = new IntersectionObserver(async ([entry]) => {
         if(entry.isIntersecting && !isLoading){
             isLoading = true;
-            const myTopicResult = await getMyTopic(topicSearchParams);
 
-            if( !myTopicResult ){
-                myTopicExceptionHandler.handle(new GetMyTopicException());
-            } else {
+            try {
+                const myTopicResult = await getMyTopic(topicSearchParams);
                 const topicList = myTopicResult.topicList;
                 const pagination = myTopicResult.pagination;
 
                 await renderMyTopics(topicList);
                 handlePagination(pagination);
+            } catch (error){
+                myTopicExceptionHandler.handle(error, {context : 'topicList'});
             }
 
             isLoading = false;
