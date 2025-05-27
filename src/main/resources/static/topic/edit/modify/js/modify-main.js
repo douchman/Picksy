@@ -23,7 +23,7 @@ function saveTopicId(){
     const topicId = Number(segments[segments.length - 1]);
 
     if ( !Number.isFinite(topicId) ){
-        topicEditExceptionHandler.handle(new TopicIdSaveException());
+        topicEditExceptionHandler.handle(new TopicIdSaveException() , {context : 'saveTopicId'});
         return false;
     }
 

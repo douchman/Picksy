@@ -1,7 +1,6 @@
 import {buildValidatedTopicRegisterFormData, buildValidatedTopicUpdateFormData} from "./topic-form-data-builder.js";
 import {createTopic, getTopicDetail, updateTopic} from "../api/topic-edit-api.js";
 import {createdTopic} from "../const/const.js";
-import {TopicCreateException, TopicUpdateException} from "../exception/TopicEditException.js";
 import {TopicEditExceptionHandler} from "../exception/topic-edit-exception-handler.js";
 import {setInitialTopic} from "../const/initial-topic.js";
 
@@ -12,14 +11,15 @@ export async function registerTopic(){
 
     if( !validationResult || !topicRegisterFromData ) return false;
 
-    const topicCreateResult = await createTopic(topicRegisterFromData);
+    try {
+        const topicCreateResult = await createTopic(topicRegisterFromData);
 
-    if( !topicCreateResult){
-        topicEditExceptionHandler.handle(new TopicCreateException(validationResult.message, validationResult.status));
+        setCreatedTopicId(topicCreateResult);
+        saveRegisteredTopicData(topicCreateResult);
+    } catch (error){
+        topicEditExceptionHandler.handle(error, {context : 'topicCreate'});
+        return false;
     }
-
-    setCreatedTopicId(topicCreateResult);
-    saveRegisteredTopicData(topicCreateResult);
 
     return true;
 }
@@ -30,21 +30,20 @@ export async function modifyTopic(){
     if( !validationResult) return false;
     if( !topicModifyFormData ) return true;
 
-    const topicUpdateResult = await updateTopic(createdTopic.getId(), topicModifyFormData);
-
-    if(!topicUpdateResult) {
-        topicEditExceptionHandler.handle(new TopicUpdateException(validationResult.message, validationResult.status));
+    try {
+        await updateTopic(createdTopic.getId(), topicModifyFormData);
+    } catch (error){
+        topicEditExceptionHandler.handle(error, {context : 'topicModify'});
+        return false;
     }
-
     return true;
 }
 
 export async function getExistTopicDetail(){
-    const topicDetailResult = await getTopicDetail(createdTopic.getId());
-    if( topicDetailResult ){
-        return topicDetailResult;
-    } else {
-        topicEditExceptionHandler.handle(new TopicUpdateException(topicDetailResult.messsage, topicDetailResult.status));
+    try {
+        return await getTopicDetail(createdTopic.getId());
+    } catch (error) {
+        topicEditExceptionHandler.handle(error, {context : 'topicDetail'});
         return null;
     }
 }

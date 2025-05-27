@@ -1,14 +1,19 @@
 import {GlobalExceptionHandler} from "../../../../../global/exception/global-exception-handler.js";
-import {TopicCreateException, TopicIdSaveException, TopicUpdateException} from "./TopicEditException.js";
+import {TopicIdSaveException} from "./TopicEditException.js";
 import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {ApiResponseException} from "../../../../../global/api/exception/ApiException.js";
 
 export class TopicEditExceptionHandler extends GlobalExceptionHandler{
-    handle(error){
-        if( error instanceof TopicCreateException) {
-            this.handleTopicCreateException(error);
-        } else if ( error instanceof TopicUpdateException ) {
-            this.handleTopicUpdateException(error);
-        } else if ( error instanceof TopicIdSaveException ) {
+    handle(error, {context}){
+        if( error instanceof ApiResponseException) {
+            if( context === 'topicCreate')
+                this.handleTopicCreateException(error);
+            else if ( context === 'topicModify')
+                this.handleTopicUpdateException(error);
+            else if( context === 'topicDetail')
+                this.handleTopicDetailException(error);
+        }
+        else if ( error instanceof TopicIdSaveException ) {
             this.handleTopicIdSaveException(error);
         } else{
             super.handle(error)
@@ -25,12 +30,20 @@ export class TopicEditExceptionHandler extends GlobalExceptionHandler{
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 
-    handleTopicIdSaveException(error){
-        console.error('[TopicId Save Exception]' , error);
-        showToastMessage(`${error.message}`, 'alert', 3000);
-
+    handleTopicDetailException(error){
+        console.error('[Topic Detail Exception]' , error);
+        showToastMessage(`${error.message}`, 'error', 2500);
         setTimeout(() => {
             location.href = '/';
+        }, 3000)
+    }
+
+    handleTopicIdSaveException(error){
+        console.error('[TopicId Save Exception]' , error);
+        showToastMessage('대결주제 정보 확인 중 문제가 발생했어요. 이전 메뉴에서 다시 확인해주세요.', 'alert', 3000);
+
+        setTimeout(() => {
+            location.href = '/topic/my';
         }, 2500);
     }
 }
