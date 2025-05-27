@@ -2,7 +2,6 @@ import {addCommentRegisterEvent} from "./comment-reigster.js";
 import {topic} from "../../js/const.js";
 import {getComments} from "./comment-api.js";
 import {CommentsExceptionHandler} from "./exception/comment-exception-handler.js";
-import {GetCommentsException} from "./exception/CommentException.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버
 let isFetchingComments = false; // 데이터 조회 플래그
@@ -105,9 +104,9 @@ function stopCommentListScrollObserver(){
 
 // 코멘트 랜더링
 async function renderComments(){
-    const commentResult = await getComments(topic.getId(), commentsQuery);
+    try {
+        const commentResult = await getComments(topic.getId(), commentsQuery);
 
-    if( commentResult){
         const commentList = commentResult.commentList;
         const pagination = commentResult.pagination;
 
@@ -130,8 +129,8 @@ async function renderComments(){
                 document.querySelector('#comment-list').insertAdjacentHTML('beforeend', commentItem);
             });
         }
-    } else {
-        commentExceptionHandler.handle(new GetCommentsException(commentResult.message));
+    } catch (error){
+        commentExceptionHandler.handle(error, {context : 'getComments'});
     }
 }
 
