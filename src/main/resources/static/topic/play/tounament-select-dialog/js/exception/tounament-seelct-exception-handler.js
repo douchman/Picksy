@@ -16,7 +16,7 @@ export class TournamentSelectExceptionHandler extends GlobalExceptionHandler{
 
     handleTopicDetailException(error){
         console.error('[Topic Detail Exception]' , error);
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage('대결주제 상세정보 조회 중 문제가 발생했어요. 잠시 후 다시 입장해주세요.', 'error', 3000);
     }
 
     handlePlayRecordIdException(error){
