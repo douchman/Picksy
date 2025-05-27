@@ -6,7 +6,7 @@ import {
     validateAuthor,
     validateCommentContent
 } from "./comment-register-validate.js";
-import {postComments} from "./comment-api";
+import {postComments} from "./comment-api.js";
 
 // 댓글 작성 이벤트
 export function addCommentRegisterEvent(){
