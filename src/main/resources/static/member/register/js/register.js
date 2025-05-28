@@ -7,7 +7,7 @@ import {
     passwordValidationMessage,
     isPasswordEqual, passwordMismatchMessage
 } from "../../login/js/validation.js";
-import {apiPostRequest} from "../../../global/js/api.js";
+import {postMember} from "./register-api.js";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function registerMember(){
-    const { validationResult , form : requestBody } = validateRegisterForm();
-    if( validationResult ){
-        const {status, data } = await postMember(requestBody);
 
-        if ( status === 200 ){
+    const { validationResult , form : requestBody } = validateRegisterForm();
+
+    try {
+        if( validationResult ){
+            await postMember(requestBody);
             alert('가입이 완료되었습니다.') // 임시
-            location.href = '/login';
-        } else {
-            showRegisterMessage(data.message);
         }
+    } catch(error){
+        // TODO : handle register Exception
     }
 }
 
@@ -74,8 +74,4 @@ function showRegisterMessage(message){
     const messageBox = document.querySelector('#message-box');
     messageBox.textContent = message;
     messageBox.classList.add('show')
-}
-
-async function postMember(requestBody){
-    return await apiPostRequest('member', {}, requestBody);
 }
