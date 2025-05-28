@@ -4,7 +4,7 @@
       layout:decorate="~{global/layouts/base-layout.html}">
 
 <head>
-    <link rel="stylesheet" th:href="@{'/statistics/entry/css/entry-versus-statistics.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <link rel="stylesheet" th:href="@{'/statistics/entry-versus/css/entry-versus-statistics.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
 </head>
 <th:block layout:fragment="Content">
     <body>
@@ -68,6 +68,6 @@
 
         </div>
     </body>
-    <script type="module" th:src="@{'/statistics/entry/js/entry-versus-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+    <script type="module" th:src="@{'/statistics/entry-versus/js/entry-versus-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>

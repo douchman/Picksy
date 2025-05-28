@@ -1,7 +1,10 @@
 import {targetEntry, targetTopic} from "./const.js";
-import {apiGetRequest} from "../../../global/js/api.js";
 import {MediaType} from "../../../global/js/const.js";
 import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-media-viewer/js/entry-media-viewer.js";
+import {getEntryVersusStatistics} from "./versus-statistics-api.js";
+import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler.js";
+
+const entryVersusExceptionHandler = new EntryVersusExceptionHandler();
 
 /* 상대한 엔트리 셋업 */
 // 상대한 엔트리 매치업 조회
@@ -9,22 +12,23 @@ import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-medi
 // 엔트리 미디어 뷰어 셋업
 export async function setupOpponentEntries() {
     setupEntryMediaViewer(); // 미디어 뷰어 셋업
-    const {status, data : entryVersusStatisticsResult} = await getEntryVersusStatistics();
 
-    if( status === 200) {
+    try {
 
+        const entryVersusStatisticsResult = await getEntryVersusStatistics(targetTopic.id, targetEntry.id);
         const matchUpRecord = entryVersusStatisticsResult.matchUpRecords;
 
         if( isMatchUpRecordExist(matchUpRecord)){
             renderMatchUpRecords(matchUpRecord);
         }
         addOpponentEntriesEvents();
-    } else {
-        // TODO : target entry versus statistics exception
+
+    } catch(error){
+        entryVersusExceptionHandler.handle(error, {context : 'entryVersusStats'});
         return false;
     }
-    return true;
 
+    return true;
 }
 
 // 상대 엔트리 테이블 이벤트 등록
@@ -94,8 +98,4 @@ function renderMatchResult(matchRecord){
 
 function isMatchUpRecordExist( matchUpRecords ){
     return (matchUpRecords && matchUpRecords.length !== 0);
-}
-
-async function getEntryVersusStatistics(){
-    return await apiGetRequest(`statistics/versus/topics/${targetTopic.id}/entries/${targetEntry.id}`);
 }

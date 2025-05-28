@@ -59,7 +59,7 @@ public class PageController {
             @PathVariable Integer topicId,
             @PathVariable Integer entryId){
         // 직관적인 URL 을 위해 PathVariable 사용
-        return "statistics/entry/entry-versus-statistics";
+        return "statistics/entry-versus/entry-versus-statistics";
     }
 
     // 404
