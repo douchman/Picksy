@@ -56,8 +56,3 @@ function showMessage(message){
     document.querySelector('#alert-message').textContent = message;
     document.querySelector('#message-box').classList.add('show');
 }
-
-function hideMessage(){
-    document.querySelector('#alert-message').textContent = '';
-    document.querySelector('#message-box').classList.remove('show');
-}
