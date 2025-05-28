@@ -1,8 +1,8 @@
-import {flushPlayRecordIdsFromLocalStorage} from "../../global/js/vstopic-localstorage.js";
+import {flushPlayRecordIdsFromLocalStorage} from "../../global/global.js";
 import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
 import {searchTopics} from "./home-api.js";
-import {shareTopic} from "../../global/js/share.js";
+import {shareTopic} from "../../global/util/share.js";
 
 let scrollObserver;
 let isLoading = false;

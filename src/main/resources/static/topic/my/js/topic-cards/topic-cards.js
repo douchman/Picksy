@@ -1,5 +1,5 @@
 import {setupInfiniteScrollObserver} from "./topic-cards-scroll-observer.js";
-import {shareTopic} from "../../../../global/js/share.js";
+import {shareTopic} from "../../../../global/util/share.js";
 
 const ACTION_HANDLERS = {
     play : moveToTopicPlay,

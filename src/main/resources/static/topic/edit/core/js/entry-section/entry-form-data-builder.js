@@ -1,8 +1,8 @@
 import {stagedEntryMedia} from "../staged-entry-media.js";
 import {createdTopic} from "../const/const.js";
-import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {initialEntryDataMap, isModifiedEntry} from "../const/initial-entry-map.js";
-import {MediaType} from "../../../../../global/js/const.js";
+import {MediaType} from "../../../../../global/const/const.js";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
 export function buildValidatedEntryRegisterFormData(){

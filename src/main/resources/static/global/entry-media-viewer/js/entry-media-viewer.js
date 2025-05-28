@@ -1,6 +1,6 @@
-import {extractYoutubeVideoIdFromUrl} from "../../js/youtube-iframe-api.js";
-import {showToastMessage} from "../../popup/js/common-toast-message.js";
-import {toggleBodyScrollBlocked} from "../../js/layout-common.js";
+import {extractYoutubeVideoIdFromUrl} from "../../youtube/youtube-iframe-api.js";
+import {showToastMessage} from "../../toast-message/js/common-toast-message.js";
+import {toggleBodyScrollBlocked} from "../../layouts/js/layout-common.js";
 
 
 /* 엔트리 미디어 뷰어 셋업 */

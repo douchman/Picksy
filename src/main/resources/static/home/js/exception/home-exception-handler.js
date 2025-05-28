@@ -1,4 +1,4 @@
-import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../global/toast-message/js/common-toast-message.js";
 import {GlobalExceptionHandler} from "../../../global/exception/global-exception-handler.js";
 import {ApiResponseException} from "../../../global/api/exception/ApiException.js";
 

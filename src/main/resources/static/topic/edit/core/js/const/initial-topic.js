@@ -1,4 +1,4 @@
-import {Visibility} from "../../../../../global/js/const.js";
+import {Visibility} from "../../../../../global/const/const.js";
 
 export const initialTopic = {}
 

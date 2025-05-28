@@ -1,5 +1,5 @@
 import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
-import {toggleBodyScrollBlocked} from "../../../../global/js/layout-common.js";
+import {toggleBodyScrollBlocked} from "../../../../global/layouts/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {loadEntryMatchInfo} from "../../js/entry-match.js";

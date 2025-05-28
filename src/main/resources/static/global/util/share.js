@@ -1,4 +1,4 @@
-import {showToastMessage} from "../popup/js/common-toast-message.js";
+import {showToastMessage} from "../toast-message/js/common-toast-message.js";
 
 const COPY_SUCCESS_MESSAGE = "공유 링크를 복사했어요 :)";
 const COPY_FAIL_MESSAGE = "링크를 복사하기 못했어요 :(";

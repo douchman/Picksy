@@ -1,7 +1,7 @@
 import {topicSearchParams} from "../const/topic-search-params.js";
 import {clearTopicCardsContents} from "../topic-cards/topic-cards-renderer.js";
 import {startInfiniteScrollObserver} from "../topic-cards/topic-cards-scroll-observer.js";
-import {Visibility} from "../../../../global/js/const.js";
+import {Visibility} from "../../../../global/const/const.js";
 
 export function setupSearchFilter(){
     addSearchFilterEvents();

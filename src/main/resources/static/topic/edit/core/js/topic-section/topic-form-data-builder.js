@@ -1,4 +1,4 @@
-import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {isModifiedTopic} from "../const/initial-topic.js";
 
 export function buildValidatedTopicRegisterFormData(){

@@ -1,5 +1,5 @@
 import {addEntrySlotClickEvents} from "./entry-event-handle.js";
-import {extractYoutubeVideoIdFromUrl} from "../../../global/js/youtube-iframe-api.js";
+import {extractYoutubeVideoIdFromUrl} from "../../../global/youtube/youtube-iframe-api.js";
 
 /* 각 대결 엔트리 랜더링 */
 export function renderEntriesAndAddEvents(entryMatch){
