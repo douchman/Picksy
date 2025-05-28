@@ -1,4 +1,4 @@
-import {generateFilePreviewURL} from "../../../../../global/js/file.js";
+import {generateFilePreviewURL} from "../../../../../global/util/file.js";
 import {initialTopic} from "../const/initial-topic.js";
 
 export function addTopicSectionEvents(){

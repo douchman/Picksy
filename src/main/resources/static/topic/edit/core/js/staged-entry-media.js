@@ -1,4 +1,4 @@
-import {generateFilePreviewURL, generateVideoPreviewRL, getThumbFileFromVideoUrl} from "../../../../global/js/file.js";
+import {generateFilePreviewURL, generateVideoPreviewRL, getThumbFileFromVideoUrl} from "../../../../global/util/file.js";
 import {generateRandomEntryId} from "../entry-uuid.js";
 import {renderEntryItem} from "./entry-section/entry-renderer.js";
 import {getThumbNailFileFromYoutubeUrl} from "../youtube.js";
