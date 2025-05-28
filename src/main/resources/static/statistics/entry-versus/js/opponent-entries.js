@@ -2,6 +2,9 @@ import {targetEntry, targetTopic} from "./const.js";
 import {MediaType} from "../../../global/js/const.js";
 import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-media-viewer/js/entry-media-viewer.js";
 import {getEntryVersusStatistics} from "./versus-statistics-api.js";
+import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler";
+
+const entryVersusExceptionHandler = new EntryVersusExceptionHandler();
 
 /* 상대한 엔트리 셋업 */
 // 상대한 엔트리 매치업 조회
@@ -21,7 +24,7 @@ export async function setupOpponentEntries() {
         addOpponentEntriesEvents();
 
     } catch(error){
-        // TODO : target entry versus statistics exception
+        entryVersusExceptionHandler.handle(error, {context : 'entryVersusStats'});
         return false;
     }
 

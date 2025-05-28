@@ -1,6 +1,9 @@
 import {targetTopic, targetEntry, TournamentStageName} from "./const.js"
 import {MediaType} from "../../../global/js/const.js";
 import {getTargetEntryStatistics} from "./versus-statistics-api.js";
+import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler";
+
+const entryVersusExceptionHandler = new EntryVersusExceptionHandler();
 
 /* 조회 대상 엔트리 셋업 */
 // 엔트리 상세 정보 & 통계 조회
@@ -16,7 +19,7 @@ export async function setupTargetEntry(){
         renderTargetEntryStatistics(targetEntryStats);
 
     } catch (error){
-        // TODO : handle target Entry Statistics Exception
+        entryVersusExceptionHandler.handle(error, {context : 'targetEntryStats'});
         return false;
     }
 
