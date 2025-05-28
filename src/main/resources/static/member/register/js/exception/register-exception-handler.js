@@ -14,7 +14,6 @@ export class RegisterExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleMemberRegisterException(error){
-        console.error('[Member Register Exception]', error);
-        showToastMessage('회원등록 중 문제가 발생했습니다. 입력사항을 확인 후 다시 시도해주세요', 'error', 3500);
+        showToastMessage(`${error.message}`, 'error', 3500);
     }
 }
