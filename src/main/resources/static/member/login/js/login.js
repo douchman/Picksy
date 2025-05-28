@@ -1,4 +1,7 @@
 import {memberLogin} from "./login-api.js";
+import {LoginExceptionHandler} from "./exception/login-exception-handler.js";
+
+const loginExceptionHandler = new LoginExceptionHandler();
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -14,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     location.href = '/';
                 }
             }catch(error){
-                // TODO : handle Login Exception
+                loginExceptionHandler.handle(error, {context : 'userLogin'});
             }
         }
     });
