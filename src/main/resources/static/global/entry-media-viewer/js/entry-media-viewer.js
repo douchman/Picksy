@@ -1,4 +1,4 @@
-import {extractYoutubeVideoIdFromUrl} from "../../js/youtube-iframe-api.js";
+import {extractYoutubeVideoIdFromUrl} from "../../youtube/youtube-iframe-api.js";
 import {showToastMessage} from "../../toast-message/js/common-toast-message.js";
 import {toggleBodyScrollBlocked} from "../../layouts/js/layout-common.js";
 
