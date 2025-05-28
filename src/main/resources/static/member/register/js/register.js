@@ -1,7 +1,7 @@
 import {registerMember} from "./register-api.js";
 import {RegisterExceptionHandler} from "./exception/register-exception-handler.js";
 import {buildValidatedRegisterForm} from "./register-form-data-builder.js";
-import {showToastMessage} from "../../../global/popup/js/common-toast-message";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message.js";
 
 const registerExceptionHandler = new RegisterExceptionHandler();
 
