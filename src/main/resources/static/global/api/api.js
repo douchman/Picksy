@@ -1,5 +1,5 @@
 import {ApiMethod} from "./api-method.js";
-import {API_URL} from "../js/const.js";
+import {API_URL} from "../const/const.js";
 import {ApiResponseException, FetchNetworkException} from "./exception/ApiException.js";
 import {UserAuthException} from "../exception/GlobalException.js";
 

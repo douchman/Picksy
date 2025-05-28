@@ -2,7 +2,7 @@ import {generateFilePreviewURL, generateVideoPreviewRL, getThumbFileFromVideoUrl
 import {generateRandomEntryId} from "../entry-uuid.js";
 import {renderEntryItem} from "./entry-section/entry-renderer.js";
 import {getThumbNailFileFromYoutubeUrl} from "../youtube.js";
-import {MediaType} from "../../../../global/js/const.js";
+import {MediaType} from "../../../../global/const/const.js";
 import {initialEntryDataMap} from "./const/initial-entry-map.js";
 
 export const stagedEntryMedia = {};

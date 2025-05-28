@@ -8,7 +8,7 @@ import {
 import {getYouTubeInfoFromUrl} from "../../youtube.js";
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {initialEntryDataMap} from "../const/initial-entry-map.js";
-import {MediaType} from "../../../../../global/js/const.js";
+import {MediaType} from "../../../../../global/const/const.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
