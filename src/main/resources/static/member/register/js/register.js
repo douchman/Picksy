@@ -8,7 +8,9 @@ import {
     isPasswordEqual, passwordMismatchMessage
 } from "../../login/js/validation.js";
 import {postMember} from "./register-api.js";
+import {RegisterExceptionHandler} from "./exception/register-exception-handler.js";
 
+const registerExceptionHandler = new RegisterExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -31,7 +33,7 @@ async function registerMember(){
             alert('가입이 완료되었습니다.') // 임시
         }
     } catch(error){
-        // TODO : handle register Exception
+        registerExceptionHandler.handle(error, {context :'registerMember'});
     }
 }
 
