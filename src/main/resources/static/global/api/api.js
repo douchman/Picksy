@@ -22,8 +22,8 @@ export async function apiRequest(endPoint, method, requestBody, hasFiles = false
     }
 
     if (!response.ok) {
-        if(isAuthException(status, jsonResponse.errorCode)){ // ⚠️ 인증 관련 오류 ⚠️
-            throw new UserAuthException(); // user auth exception
+        if(isAuthException(status)){ // ⚠️ 인증 관련 오류 ⚠️
+            throw new UserAuthException(jsonResponse.message, status, jsonResponse.errorCode); // user auth exception
         }
         throw new ApiResponseException(status, jsonResponse.errorCode, jsonResponse.message);
     }
@@ -68,6 +68,6 @@ function generateApiRequestConfig(method, requestBody, hasFiles){
 }
 
 // 인증 관련 오류 검증
-function isAuthException(status, errorCode){
-    return ((status === 401 && errorCode === 'UNAUTHORIZED') || status === 403);
+function isAuthException(status){
+    return (status === 401 || status === 403);
 }
