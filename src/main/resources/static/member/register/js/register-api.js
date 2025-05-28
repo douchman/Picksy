@@ -1,6 +1,6 @@
 import {apiRequest} from "../../../global/api/api.js";
 import {ApiMethod} from "../../../global/api/api-method.js";
 
-export async function postMember(requestBody){
+export async function registerMember(requestBody){
     return await apiRequest('member', ApiMethod.POST, requestBody, false);
 }
