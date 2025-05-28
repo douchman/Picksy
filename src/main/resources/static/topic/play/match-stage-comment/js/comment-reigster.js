@@ -1,4 +1,4 @@
-import {topic} from "../const.js";
+import {topic} from "../../js/const.js";
 import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
 import {
     authorValidationMessage,
@@ -6,9 +6,8 @@ import {
     validateAuthor,
     validateCommentContent
 } from "./comment-register-validation.js";
-import {CommentsExceptionHandler} from "../exception/comment-exception-handler.js";
+import {CommentsExceptionHandler} from "./exception/comment-exception-handler.js";
 import {createComment} from "./comment-api.js";
-import {RegisterCommentException} from "../exception/CommentException.js";
 
 const commentExceptionHandler = new CommentsExceptionHandler();
 // 댓글 작성 이벤트
@@ -28,17 +27,16 @@ async function registerComment(){
             content : document.querySelector('#comment-content').value,
         }
 
-        const commentCreateResult = await createComment(topic.getId(), registerRequestBody);
+        try {
+            const commentCreateResult = await createComment(topic.getId(), registerRequestBody);
 
-        if( commentCreateResult ){
             initCommentRegisterForm(); // 코멘트 form 초기화
             commentListScrollTop(); // 스크롤 최상단
             setTimeout(() => {
                 renderRegisteredComment(commentCreateResult.author, commentCreateResult.content, commentCreateResult.createdAt);
             }, 300); // 지연 후 랜더링
-
-        } else{
-            commentExceptionHandler.handle(new RegisterCommentException(commentCreateResult.message));
+        } catch (error) {
+            commentExceptionHandler.handle(error, {context : 'registerComment'});
         }
     }
 
