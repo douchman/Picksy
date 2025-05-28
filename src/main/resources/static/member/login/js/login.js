@@ -1,19 +1,20 @@
-import {apiPostRequest} from "../../../global/js/api.js";
+import {memberLogin} from "./login-api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-
 
     document.querySelector('#btn-login').addEventListener('click', async function(){
         const id = document.querySelector('#id').value;
         const password = document.querySelector('#password').value;
 
         if( validateLoginForm(id, password)){
-            const {status, data: loginResult } = await memberLogin({id, password});
-
-            if( status === 200 ) {
-                location.href = '/index';
-            } else {
-                showMessage(loginResult.message);
+            let loginResult;
+            try{
+                loginResult = await memberLogin({id, password});
+                if(loginResult){
+                    location.href = '/';
+                }
+            }catch(error){
+                // TODO : handle Login Exception
             }
         }
     });
@@ -31,10 +32,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
 });
-
-async function memberLogin(requestBody){
-    return await apiPostRequest('member/login', {}, requestBody);
-}
 
 function validateLoginForm(id, password){
     if( !id || id === ''){
