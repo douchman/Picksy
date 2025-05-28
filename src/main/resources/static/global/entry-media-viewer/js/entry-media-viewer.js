@@ -1,5 +1,5 @@
 import {extractYoutubeVideoIdFromUrl} from "../../js/youtube-iframe-api.js";
-import {showToastMessage} from "../../popup/js/common-toast-message.js";
+import {showToastMessage} from "../../toast-message/js/common-toast-message.js";
 import {toggleBodyScrollBlocked} from "../../js/layout-common.js";
 
 

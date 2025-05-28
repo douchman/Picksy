@@ -1,5 +1,5 @@
 import {GlobalExceptionHandler} from "../../exception/global-exception-handler.js";
-import {showToastMessage} from "../../popup/js/common-toast-message.js";
+import {showToastMessage} from "../../toast-message/js/common-toast-message.js";
 import {ApiResponseException} from "../../api/exception/ApiException.js";
 
 export class AuthExceptionHandler extends GlobalExceptionHandler{

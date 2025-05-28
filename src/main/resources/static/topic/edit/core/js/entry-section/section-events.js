@@ -6,7 +6,7 @@ import {
     addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia
 } from "../staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "../../youtube.js";
-import {showToastMessage} from "../../../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {initialEntryDataMap} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/js/const.js";
 

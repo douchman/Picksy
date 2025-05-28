@@ -1,5 +1,5 @@
 import {topic} from "../const.js";
-import {showToastMessage} from "../../../../global/popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../../global/toast-message/js/common-toast-message.js";
 import {
     authorValidationMessage,
     commentContentValidationMessage,

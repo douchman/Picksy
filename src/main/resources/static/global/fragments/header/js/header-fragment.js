@@ -1,6 +1,6 @@
 import {checkAuthMember, memberLogout} from "../../../auth/auth.js";
 import {AuthExceptionHandler} from "../../../auth/exception/auth-exception-handler.js";
-import {showToastMessage} from "../../../popup/js/common-toast-message.js";
+import {showToastMessage} from "../../../toast-message/js/common-toast-message.js";
 
 const authExceptionHandler = new AuthExceptionHandler();
 
