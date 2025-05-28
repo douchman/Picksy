@@ -8,7 +8,7 @@ import {
     isPasswordEqual, passwordMismatchMessage
 } from "./register-validation.js";
 
-export function buildValidatedRegisterForm(registerFormData){
+export function buildValidatedRegisterForm(){
     const registerId = document.querySelector('#register-id').value;
     const registerName = document.querySelector('#register-name').value;
     const password = document.querySelector('#password').value;
