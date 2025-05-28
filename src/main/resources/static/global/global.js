@@ -1,4 +1,4 @@
-import {checkAuthMember} from "../auth/auth.js";
+import {checkAuthMember} from "./auth/auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const requiresAuth = document.body.dataset.requireAuth === 'true';
