@@ -51,7 +51,7 @@ public class PageController {
     @GetMapping("statistics/topic/{id}")
     public String topicStatistics(@PathVariable Integer id){
         // 직관적인 URL 을 위해 PathVariable 사용
-        return "statistics/topic/topic-statistics";
+        return "statistics/topic-entry-stats/topic-statistics";
     }
 
     @GetMapping("statistics/versus/topic/{topicId}/entry/{entryId}")
