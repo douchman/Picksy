@@ -1,6 +1,7 @@
 import {registerMember} from "./register-api.js";
 import {RegisterExceptionHandler} from "./exception/register-exception-handler.js";
 import {buildValidatedRegisterForm} from "./register-form-data-builder.js";
+import {showToastMessage} from "../../../global/popup/js/common-toast-message";
 
 const registerExceptionHandler = new RegisterExceptionHandler();
 
@@ -27,8 +28,9 @@ async function signUp(){
 
     try {
         if( validationResult ){
-            await registerMember(requestBody);
-            alert('가입이 완료되었습니다.') // 임시
+            if(await registerMember(requestBody)){
+                registerSuccess();
+            }
         }
     } catch(error){
         registerExceptionHandler.handle(error, {context :'registerMember'});
@@ -37,4 +39,17 @@ async function signUp(){
 
 function moveToLoginPage(){
     location.href = '/login';
+}
+
+function registerSuccess(){
+    removeRegisterEvents();
+    showToastMessage('계정생성이 완료되었습니다.' , '', 3500);
+    setTimeout(() =>{
+        moveToLoginPage();
+    }, 3000);
+}
+
+function removeRegisterEvents() {
+    document.querySelector('#btn-register').removeEventListener('click', signUp);
+    document.querySelector('#btn-back-to-login').removeEventListener('click', moveToLoginPage);
 }
