@@ -1,17 +1,27 @@
-import {topic} from "./const.js";
-import {apiGetRequest} from "../../../global/js/api.js";
 import {PROGRESS_BAR_COLOR_CLASS, tableQuery} from "./entry-statistics-table-const.js"
 import {clearEntriesStatsTbody} from "./entry-statistics-table.js";
 import {updatePaginationSetting} from "./entry-statistics-table-pagination.js";
-import {handleRenderEntryStatsException} from "./topic-statistics-exception-handler.js";
+import {getEntryStatistics} from "../api/entry-statistics-api.js";
+import {topic} from "../const.js";
+import {EntryStatisticsExceptionHandler} from "./exception/entry-statistics-exception-handler.js";
+
+const entryStatisticsExceptionHandler = new EntryStatisticsExceptionHandler();
 
 export async function renderEntryStatistics(isClearBody = true, isUpdatePaginationUi = false){
 
     isClearBody && clearEntriesStatsTbody();
 
-    const { status, isAuthOrNetworkError, data : entryStatisticsResult  } = await getEntryStatistics();
+    const requestBody = {
+        keyword : tableQuery.keyword,
+        rankOrderType : tableQuery.rankOrder,
+        winRateOrderType : tableQuery.winRateOrder,
+        page : tableQuery.currentPage,
+        pageSize : tableQuery.pageSize
+    }
 
-    if( status === 200){
+    try {
+        const entryStatisticsResult = await getEntryStatistics(topic.getId(), requestBody);
+
         const lastUpdatedAt = entryStatisticsResult.lastUpdatedAt;
         const entriesStatistics = entryStatisticsResult.entriesStatistics;
         const pagination = entryStatisticsResult.pagination;
@@ -50,11 +60,12 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
         updateTableQueryPagination(pagination);
         isUpdatePaginationUi && updatePaginationSetting();
 
-        return true;
-    } else{
-        handleRenderEntryStatsException(isAuthOrNetworkError, entryStatisticsResult);
+    } catch(error) {
+        entryStatisticsExceptionHandler.handle(error, {context : 'entryStatistics'});
         return false;
     }
+
+    return true;
 }
 
 function renderLastUpdatedTime(lastUpdateAt){
@@ -126,16 +137,4 @@ function determineProgressBarColorByWinRate(winRate){
     }
 
     return PROGRESS_BAR_COLOR_CLASS[20]
-}
-
-async function getEntryStatistics(){
-    const requestBody = {
-        keyword : tableQuery.keyword,
-        rankOrderType : tableQuery.rankOrder,
-        winRateOrderType : tableQuery.winRateOrder,
-        page : tableQuery.currentPage,
-        pageSize : tableQuery.pageSize
-    }
-
-    return await apiGetRequest(`statistics/topics/${topic.getId()}/entries`, {}, requestBody);
 }

@@ -1,9 +1,10 @@
 import {topic} from "./const.js";
-import {apiGetRequest} from "../../../global/js/api.js";
-import {setupEntryStatisticsTable} from "./entry-statistics-table.js";
+import {setupEntryStatisticsTable} from "./entry-statistics-table/entry-statistics-table.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/js/youtube-iframe-api.js";
-import {handleRenderTopicStatsException} from "./topic-statistics-exception-handler.js";
+import {getTopicStatistics} from "./api/topic-statistics-api.js";
+import {TopicStatisticsExceptionHandler} from "./exception/topic-statistics-exception-handler.js";
 
+const topicStatisticsException = new TopicStatisticsExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -36,20 +37,20 @@ function saveTopicId(){
 
 // 대결 주제 통계 랜더링
 async function renderTopicStatistics(){
-    const { status, isAuthOrNetworkError, data : topicStatisticsResult } = await getTopicStatistics();
+    try {
+        const topicStatisticsResult = await getTopicStatistics(topic.getId());
 
-    if( status === 200){
-        const topic = topicStatisticsResult.topic;
+        const topicDetail = topicStatisticsResult.topic;
         const topicStatistics = topicStatisticsResult.topicStatistics;
-        renderTopicTitle(topic.title);
+
+        renderTopicTitle(topicDetail.title);
         renderTotalMatches(topicStatistics.totalMatches);
-    } else {
-        handleRenderTopicStatsException(isAuthOrNetworkError, topicStatisticsResult);
+    } catch(error){
+        topicStatisticsException.handle(error, {context : 'topicStatistics'});
         return false;
     }
 
     return true;
-
 }
 
 // 대결 제목 랜더링
@@ -60,9 +61,4 @@ function renderTopicTitle(topicTitle){
 // 진행된 총 대결 횟수 랜더링
 function renderTotalMatches(totalMatches){
     document.querySelector('#total-matches').innerHTML = `이 대결은 총<span>${totalMatches}번</span>플레이 되었어요!`;
-}
-
-// 대결 주제 통계 조회
-async function getTopicStatistics(){
-    return await apiGetRequest(`statistics/topics/${topic.getId()}`);
 }

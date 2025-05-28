@@ -4,9 +4,9 @@
       layout:decorate="~{global/layouts/topic-statistics-layout.html}">
 
 <head>
-    <link rel="stylesheet" href="/statistics/topic/css/tui-pagination.min.css" />
+    <link rel="stylesheet" href="/statistics/topic-entry-stats/css/tui-pagination.min.css" />
     <link rel="stylesheet" th:href="@{'/statistics/topic/css/topic-statistics.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
-    <script src="/statistics/topic/js/tui-pagination.min.js"></script>
+    <script src="/statistics/topic-entry-stats/js/entry-statistics-table/tui-pagination/tui-pagination.min.js"></script>
 </head>
 <th:block layout:fragment="Content">
     <body>

@@ -1,5 +1,5 @@
 import {tableQuery} from "./entry-statistics-table-const.js";
-import {renderEntryStatistics} from "./entry-statistics.js";
+import {renderEntryStatistics} from "./entry-statistics-table-renderer.js";
 
 let isSyncingPagination = false; // 상단&하단 페이지네이션 동기화 제어 변수
 let tableTopPagination;

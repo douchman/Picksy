@@ -1,6 +1,7 @@
-import {apiGetRequest} from "../../../global/js/api.js";
-import {topic} from "./const.js";
 import {addCommentRegisterEvent} from "./comment-register.js";
+import {getComments} from "./comment-api.js";
+import {topic} from "../const.js";
+import {CommentExceptionHandler} from "./exception/comment-exception-handler.js";
 
 let commentListScrollObserver; // 유저 코멘트 리스트 스크롤 옵저버
 let isFetchingComments = false; // 데이터 조회 플래그
@@ -15,6 +16,8 @@ let commentsPagination = { // 페이지네이션 전역변수
     currentPage : 1,
     totalPages : 0
 }
+
+const commentExceptionHandler = new CommentExceptionHandler();
 
 /* 유저 코멘트 셋업 */
 // 코멘트 무한 스크롤 설정
@@ -70,16 +73,21 @@ function stopCommentListScrollObserver(){
 
 // 코멘트 랜더링
 async function renderComments(){
-    const {status, data : {commentList, pagination}} = await getComments(commentsQuery);
 
-    if( status === 200 && commentList && commentList.length !== 0){
-        renderTotalCommentCount(pagination.totalItems);
-        removeCommentListEmpty(); // 비었음 스타일 제거
-        savePagination(pagination);
+    try {
+        const commentsResult = await getComments(topic.getId(), commentsQuery);
 
-        commentList.forEach((comment) =>{
-            const commentItem =
-                `<div class="comment">
+        const commentList = commentsResult.commentList;
+        const pagination = commentsResult.pagination;
+
+        if(commentList && commentList.length !== 0){
+            renderTotalCommentCount(pagination.totalItems);
+            removeCommentListEmpty(); // 비었음 스타일 제거
+            savePagination(pagination);
+
+            commentList.forEach((comment) =>{
+                const commentItem =
+                    `<div class="comment">
                     <div class="comment-header">
                         <p class="author">${comment.author}</p>
                         <span class="time-stamp">${comment.createdAt}</span>
@@ -88,8 +96,12 @@ async function renderComments(){
                     <p class="content">${comment.content}</p>
                 </div>`;
 
-            document.querySelector('#comment-list').insertAdjacentHTML('beforeend', commentItem);
-        });
+                document.querySelector('#comment-list').insertAdjacentHTML('beforeend', commentItem);
+            });
+        }
+
+    } catch (error) {
+        commentExceptionHandler.handle(error, {context : 'getComments'})
     }
 }
 
@@ -97,7 +109,6 @@ async function renderComments(){
 function renderTotalCommentCount(totalCommentCount){
     document.querySelector('#comment-count').innerHTML = totalCommentCount;
 }
-
 
 // 다음 페이지 여부 검증
 function hasNextCommentPage(){
@@ -115,9 +126,4 @@ function savePagination(pagination){
 // 댓글 비었음 스타일 해제
 function removeCommentListEmpty(){
     document.querySelector('#comment-list').classList.remove('empty');
-}
-
-// 댓글 조회
-async function getComments(requestParams){
-    return await apiGetRequest(`topics/${topic.getId()}/comments`, {} , requestParams);
 }
