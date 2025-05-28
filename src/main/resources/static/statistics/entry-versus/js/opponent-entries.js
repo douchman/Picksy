@@ -2,7 +2,7 @@ import {targetEntry, targetTopic} from "./const.js";
 import {MediaType} from "../../../global/js/const.js";
 import {setupEntryMediaViewer, showThumbViewer} from "../../../global/entry-media-viewer/js/entry-media-viewer.js";
 import {getEntryVersusStatistics} from "./versus-statistics-api.js";
-import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler";
+import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler.js";
 
 const entryVersusExceptionHandler = new EntryVersusExceptionHandler();
 

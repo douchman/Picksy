@@ -1,7 +1,7 @@
 import {targetTopic, targetEntry, TournamentStageName} from "./const.js"
 import {MediaType} from "../../../global/js/const.js";
 import {getTargetEntryStatistics} from "./versus-statistics-api.js";
-import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler";
+import {EntryVersusExceptionHandler} from "./exception/entry-versus-exception-handler.js";
 
 const entryVersusExceptionHandler = new EntryVersusExceptionHandler();
 
