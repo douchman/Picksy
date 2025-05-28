@@ -6,7 +6,7 @@ import {
     nameValidationMessage,
     passwordValidationMessage,
     isPasswordEqual, passwordMismatchMessage
-} from "../../login/js/validation.js";
+} from "./register-validation.js";
 import {postMember} from "./register-api.js";
 import {RegisterExceptionHandler} from "./exception/register-exception-handler.js";
 
