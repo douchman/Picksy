@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
 
-    <link rel="stylesheet" th:href="@{'/global/css/global-style.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <link rel="stylesheet" th:href="@{'/global/style/css/global-style.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
     <link rel="stylesheet" th:href="@{'/global/alert/css/common-alert-message.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
     <link rel="stylesheet" th:href="@{'/global/toast-message/css/common-toast-message.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
 
