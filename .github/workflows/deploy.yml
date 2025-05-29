@@ -72,7 +72,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/picksy
-            docker load -i /home/ubuntu/picksy/picksy-app.tar
+            docker load -i /home/ubuntu/app/picksy/picksy-app.tar
             docker stop picksy-app || true
             docker rm picksy-app || true
             docker run -d --name picksy-app -p 8080:8080 picksy-app
