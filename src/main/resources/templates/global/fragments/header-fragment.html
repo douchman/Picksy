@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko" th:fragment="headerFragment">
 
-<header>
-    <h1>Global Fragments :: header</h1>
-    <span>테스트 ㅋㅋ</span>
+<head>
+    <link rel="stylesheet" th:href="@{'/global/fragments/header/css/header-fragment.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <script type="module" th:src="@{'/global/fragments/header/js/header-fragment.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</head>
+
+<header id="main-header" class="main-header">
+    <span id="header-title" class="header-title">Picksy</span>
+    <div id="center-nav-group" class="center-nav-group">
+        <a class="nav" href="/">대결주제</a>
+        <a class="nav" href="/topic/create">대결주제 만들기</a>
+    </div>
+
+    <div id="right-nav-group" class="right-nav-group">
+        <a id="move-login-page" class="move-login-page" href="/login">로그인</a>
+    </div>
 </header>
 
 </html>

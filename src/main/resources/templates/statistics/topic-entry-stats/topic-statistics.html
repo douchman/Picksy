@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/topic-statistics-layout.html}">
+
+<head>
+    <link rel="stylesheet" href="/statistics/topic-entry-stats/css/tui-pagination.min.css" />
+    <link rel="stylesheet" th:href="@{'/statistics/topic-entry-stats/css/topic-statistics.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+    <script src="/statistics/topic-entry-stats/js/entry-statistics-table/tui-pagination/tui-pagination.min.js"></script>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="topic-statistics" class="topic-statistics">
+            <div class="topic-stats-group">
+                <p id="topic-title" class="topic-title"></p>
+                <p id="total-matches" class="total-matches"></p>
+            </div>
+
+            <div class="entries-stats-group">
+                <div class="entries-stats-filter">
+                    <div id="filter-item-count" class="filter-item-count">
+                        <button id="item-per-page" class="item-per-page" type="button" value="10">10개</button>
+                        <p class="page-count-index">씩 보기</p>
+                        <ul id="item-count-list" class="item-count-list">
+                            <li class="item-count" data-count="10">10개</li>
+                            <li class="item-count" data-count="20">20개</li>
+                            <li class="item-count" data-count="30">30개</li>
+                        </ul>
+                    </div>
+                    <div id="table-top-pagination" class="table-top-pagination tui-pagination"></div>
+                    <div id="filter-keyword" class="filter-keyword">
+                        <input id="search-keyword" type="text" placeholder="엔트리 명 검색">
+                    </div>
+                </div>
+                <div class="rank-notice">
+                    <p id="last-updated-time" class="last-updated-time"></p>
+                </div>
+                <table id="entries-stats-table" class="entries-stats-table">
+                    <thead id="entries-stats-thead">
+                        <tr>
+                            <th class="rank order up" data-ordertype="rankOrder">순위
+                                <p class="tool-tip">순위는 <b class="emphasis-c">랭크스코어</b>를 기준으로 책정되며,<br/>
+                                    <b class="emphasis-a">[승률]</b>, <b class="emphasis-a">[대결횟수]</b>, <b class="emphasis-a">[총 승리횟수]</b>에<br/>
+                                    <b class="emphasis-b">가중치</b>를 적용하여 계산됩니다.<br/>
+                                    해당 순위는 <b class="emphasis-d">30분마다 자동 갱신</b>됩니다.
+                                </p>
+                            </th>
+                            <th class="entry-thumb">썸네일</th>
+                            <th>엔트리 명</th>
+                            <th class="highest-tournament">최고<br>토너먼트</th>
+                            <th class="win-and-lose">승/패</th>
+                            <th class="win-rate order up" data-ordertype="winRateOrder">승률</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entries-stats-tbody" class="entries-stats-tbody"></tbody>
+                </table>
+                <div id="table-bottom-pagination" class="table-bottom-pagination tui-pagination"></div>
+            </div>
+        </div>
+        <div id="topic-comment" class="topic-comment">
+            <div class="comment-wrapper">
+                <p class="t-index">유저 코멘트<b id="comment-count" class="comment-count"></b></p>
+                <div id="comment-list-wrapper" class="comment-list-wrapper">
+                    <div id="comment-list" class="comment-list empty"></div>
+                </div>
+                <div class="comment-form">
+                    <p class="form-header">코멘트 남기기</p>
+                    <div class="form-item comment-author">
+                        <label for="author">닉네임</label>
+                        <input id="author" class="author" type="text" value="익명">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="comment-content">코멘트 내용</label>
+                        <textarea id="comment-content" class="comment-content"></textarea>
+                    </div>
+
+                    <button id="btn-register-comment" class="btn-register-comment" type="button">✍️ 코멘트 남기기</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="module" th:src="@{'/statistics/topic-entry-stats/js/topic-statistics.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</th:block>
+</html>

@@ -1,0 +1,98 @@
+.login{
+    max-width: 640px;
+    margin : 20px auto 0 auto;
+    width: 360px;
+    padding : 70px 14px 14px;
+    background-color: #FFF;
+    border-radius: 6px;
+}
+
+.login-icon{
+    width: 100%;
+    height: 80px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/person-check.svg");
+    background-size: 80px 80px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+}
+
+.login .desc{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap : 8px;
+    margin-bottom: 25px;
+}
+
+.login .desc p{
+    text-align: center;
+}
+
+.login .desc p.d-a{
+    color : #7D7D7D;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.login .desc p.d-b{
+    color : #838383;
+    font-size: 14px;
+}
+
+.member-login-form{
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+    margin-bottom: 5px;
+}
+
+.member-login-form input{
+    flex : 1;
+    border-radius: 4px;
+    border : 1px solid #A6AEBF;
+    font-size: 14px;
+    padding : 6px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.member-login-form input:focus{
+    border-color : #CDC1FF;
+}
+
+.message-box{
+    color: #FF8A8A;
+    font-size: 14px;
+    min-height: 20px;
+    visibility: hidden;
+    margin-bottom: 10px;
+}
+
+.message-box.show{
+    visibility: visible;
+}
+
+.btn-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 10px;
+}
+
+.btn-group button{
+    color : #FFF;
+    font-size: 16px;
+    background-color: var(--btn-color);
+    padding : 8px 14px;
+    border-radius: 4px;
+}
+
+.btn-group button.btn-login{
+    --btn-color : var(--signature-color);
+}
+
+.btn-group button.btn-register{
+    --btn-color: #B7B7B7;
+}

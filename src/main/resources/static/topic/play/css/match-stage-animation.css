@@ -1,0 +1,43 @@
+
+
+@keyframes entry-a-win {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(50%);
+    }
+}
+
+
+@keyframes entry-a-lose {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes entry-b-win {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes entry-b-lose {
+    0%{
+        transform: translateX(0);
+    }
+
+    100%{
+        transform: translateX(100%);
+    }
+}
+

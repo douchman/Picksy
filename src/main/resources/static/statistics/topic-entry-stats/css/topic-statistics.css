@@ -1,0 +1,46 @@
+@import "topic-stats-table.css";
+@import "../../../global/entry-media-viewer/css/entry-media-viewer.css";
+@import "comment.css";
+@import "wrapper.css";
+
+.topic-statistics{
+    padding : 20px 20px 20px 0;
+}
+
+.topic-stats-group{
+    position: relative;
+    padding-bottom : 20px;
+}
+
+.topic-stats-group:after{
+    content : '';
+    position: absolute;
+    bottom : 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #CECECE;
+}
+
+.topic-title{
+    color : #333;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+.total-matches{
+    color : #7D7D7D;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.total-matches span{
+    color : #9B7EBD;
+    font-weight: 600;
+    font-size: 20px;
+    padding : 0 6px;
+}
+
+.entries-stats-group{
+    padding : 20px 0;
+}

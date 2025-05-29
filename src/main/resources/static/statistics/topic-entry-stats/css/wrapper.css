@@ -1,0 +1,6 @@
+.wrapper{
+    padding : 0 var(--topic-comments-width) 0 20px;
+    --topic-comments-width : 420px;
+    box-sizing: border-box;
+
+}

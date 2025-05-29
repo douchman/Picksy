@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/member/login/css/login.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="login" class="login">
+            <div class="login-icon"></div>
+            <div class="desc">
+                <p class="d-a">안녕하세요. VsMatch 입니다.</p>
+                <p class="d-b"><b>대결주제를 생성하고 공유</b>하기 위해서는<br><b>로그인</b>이 필요해요</p>
+                <p class="d-b">아이디와 비밀번호로 <b>간편하게 가입</b>하고,<br>개성있는 대결주제를 만들어 보세요</p>
+            </div>
+            <div class="member-login-form">
+                <div class="form-item">
+                    <input id="id" placeholder="아이디" type="text"/>
+                </div>
+                <div class="form-item">
+                    <input id="password" placeholder="비밀번호" type="password"/>
+                </div>
+            </div>
+
+            <div id="message-box" class="message-box">
+                <p id="alert-message" class="alert-message"></p>
+            </div>
+
+            <div class="btn-group">
+                <button id="btn-login" class="btn-login" type="button" >로그인</button>
+                <button id="btn-register" class="btn-register" type="button" >계정생성</button>
+            </div>
+        </div>
+    </body>
+    <script type="module" th:src="@{'/member/login/js/login.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</th:block>
+</html>

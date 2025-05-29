@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/topic/my/css/my-topic.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body data-require-auth="true">
+        <div id="my-topic" class="my-topic">
+            <div class="top-header">
+                <p>내가 만든 대결주제</p>
+            </div>
+
+            <div class="topic-board">
+                <div class="topic-search-filter">
+                    <div id="filter-visibility" class="filter-item filter-radio-group">
+                        <div class="radio-item">
+                            <input id="visibility-all" class="search-visibility" type="radio" name="search-visibility" value="ALL" checked>
+                            <label for="visibility-all" class="lbl-radio">전체</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-public" class="search-visibility" type="radio" name="search-visibility" value="PUBLIC">
+                            <label for="visibility-public" class="lbl-radio">공개</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-private" class="search-visibility" type="radio" name="search-visibility" value="PRIVATE">
+                            <label for="visibility-private" class="lbl-radio">비공개</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="visibility-unlisted" class="search-visibility" type="radio" name="search-visibility" value="UNLISTED">
+                            <label for="visibility-unlisted" class="lbl-radio">링크</label>
+                        </div>
+                    </div>
+
+                    <div id="filter-order" class="filter-item filter-radio-group">
+                        <div class="radio-item">
+                            <input id="order-latest" class="search-order" type="radio" name="search-order" value="LATEST" checked>
+                            <label for="order-latest" class="lbl-radio">최신순</label>
+                        </div>
+                        <div class="radio-item">
+                            <input id="order-popular" class="search-order" type="radio" name="search-order" value="POPULAR">
+                            <label for="order-popular" class="lbl-radio">인기순</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-item filter-keyword">
+                        <input id="keyword-search" class="keyword-search" type="text" placeholder="대결 주제 검색">
+                        <button id="btn-search-topic" class="btn-search-topic" type="button">검색</button>
+                    </div>
+                </div>
+                <div id="topic-card-wrapper" class="topic-card-wrapper">
+                    <div id="topic-cards" class="topic-cards"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="module" th:src="@{'/topic/my/js/my-topic-main.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</th:block>
+</html>

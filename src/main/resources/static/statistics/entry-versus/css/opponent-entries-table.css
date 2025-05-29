@@ -1,0 +1,146 @@
+.opponent-entries-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.opponent-entries-table .opponent-entries-table-head th{
+    background-color: rgba(234, 234, 234, .7);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    border: 1px solid #CECECE;
+    padding : 4px 12px;
+}
+
+/* table row : opponent-entry */
+.opponent-entry{
+    cursor: pointer;
+}
+
+.opponent-entry td{
+    border : 1px solid rgba(234, 234, 234, 7);
+}
+
+.opponent-entry:hover td{
+    background-color: rgba(197, 211, 232, .4);
+}
+
+/* opp-entry-thumbnail */
+.opponent-entry .opp-entry-thumbnail{
+    width: 100px;
+    height: 100px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/cat-02.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* opp-entry-info */
+.opponent-entry .opp-entry-info .info-group{
+    padding : 10px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    gap : 5px;
+}
+
+.opponent-entry .opp-entry-info .info-group .opp-entry-name{
+    color : #333;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.opponent-entry .opp-entry-info .info-group .opp-entry-desc{
+    color : #7D7D7D;
+    font-size: 14px;
+}
+
+/* match-record */
+.opponent-entry .match-record .match-result{
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap : 5px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.opponent-entry .match-record .match-result .win,
+.opponent-entry .match-record .match-result .lose{
+    --font-size : 16px;
+    font-size: var(--font-size);
+    font-weight: 500;
+}
+
+.opponent-entry .match-record .match-result .win{
+    color : #AEDFF7;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.opponent-entry .match-record .match-result .win:after{
+    content : '승';
+    font-size: var(--font-size);
+}
+
+.opponent-entry .match-record .match-result .lose{
+    color : #FFB5A7;
+}
+
+.opponent-entry .match-record .match-result .lose:after{
+    content : '패';
+    font-size: var(--font-size);
+}
+
+.opponent-entry .match-record .match-result .vs-symbol{
+    color : #7D7D7D;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* versus-rate */
+.opponent-entry .versus-rate .versus-rate-bar{
+    width: 180px;
+    max-width: 180px;
+    height: 30px;
+    border-radius: 6px;
+    background-color: #C5CED3;
+    position: relative;
+    margin: 0 auto;
+}
+
+.opponent-entry .versus-rate .versus-rate-bar{
+    width: 200px;
+    max-width: 200px;
+    height: 30px;
+    border-radius: 6px;
+    background-color: #C5CED3;
+    position: relative;
+}
+
+.opponent-entry .versus-rate .versus-rate-bar:before{
+    content: var(--win-rate-text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFF;
+    z-index: 100;
+}
+
+
+.opponent-entry .versus-rate .versus-rate-bar:after{
+    content : '';
+    position: absolute;
+    top : 0;
+    left : 0;
+    background-color: #A77FF2;
+    height: 100%;
+    width: var(--win-rate);
+    border-radius: 6px;
+}
+

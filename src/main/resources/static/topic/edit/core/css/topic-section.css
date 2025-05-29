@@ -1,0 +1,128 @@
+.topic-section{
+    flex: 0.35;
+}
+
+.topic-group{
+    padding : 20px 0;
+}
+
+.topic-item:not(:last-child){
+    margin-bottom: 15px;
+}
+
+.topic-item .item-index{
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.topic-thumb .topic-thumbnail-preview{
+    display: inline-block;
+    width: 100%;
+    height: 360px;
+    max-height: 360px;
+    border : 3px dashed #7D7D7D;
+    border-radius: 12px;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.topic-thumb .topic-thumbnail-preview:not(.uploaded):before{
+    content : '클릭 또는 파일을 드래그 하여 업로드 해주세요';
+    color : #7D7D7D;
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap : 8px;
+
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/empty-image.svg");
+    background-position: 50% 40%; /* 살짝 위로 조정 */
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    padding-top: 45px; /* 이미지 위 공간 확보 */
+}
+
+.topic-thumb .topic-thumbnail-preview.drag-over{
+    border-color: #4CAF50; /* 녹색으로 강조 */
+    background-color: rgba(76, 175, 80, 0.1); /* 살짝 녹색 배경 */
+}
+
+.topic-desc-group .input-group{
+    display: flex;
+    align-items: center;
+    gap : 15px;
+}
+
+.topic-desc-group .input-group:not(:last-child){
+    margin-bottom: 10px;
+}
+
+.topic-desc-group .input-group label.desc-index{
+    width: 20%;
+    display: inline-block;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.topic-desc-group .input-group input[type="text"]{
+    flex : 1;
+    padding : 8px 12px;
+    border : 2px solid #DDD;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.topic-desc-group .input-group input[type="text"]:focus{
+    border : 2px solid var(--signature-color);
+}
+
+.visibility-group{
+    display: flex;
+    align-items: center;
+}
+
+.visibility-group input[type="radio"]{
+    display: none;
+}
+
+.visibility-group label{
+    display: inline-block;
+    padding : 4px 8px;
+    border : 1px solid #DDD;
+    margin : 0;
+    border-collapse: collapse;
+}
+
+.visibility-group label.private{
+    border-radius: 6px 0 0 6px;
+}
+
+.visibility-group label.public{
+    border-left: none;
+    border-right: none;
+}
+
+.visibility-group label.link{
+    border-radius: 0 6px 6px 0;
+}
+
+.visibility-group input[type="radio"]:checked + label{
+    color : #FFF;
+    background-color: var(--signature-color);
+}
+
+
+

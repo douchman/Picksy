@@ -1,0 +1,430 @@
+.entries-stats-table{
+    --thead-rank-width : 6%;
+    --thead-td-height : 120px;
+    --thead-entry-thumb-size : 120px;
+    --thead-highest-tournament-width : 8%;
+    --progress-bar-fill-color-20 :#F8C8DC;
+    --progress-bar-fill-color-40 :#FFD8A9;
+    --progress-bar-fill-color-60 :#FFF5BA;
+    --progress-bar-fill-color-80 :#CFF5E7;
+    --progress-bar-fill-color-100 :#A0E7E5;
+}
+
+/* entries-stats-filter */
+.entries-stats-filter{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* filter-item-count */
+.filter-item-count{
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap : 5px;
+}
+
+.filter-item-count .page-count-index{
+    color : #333;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filter-item-count .item-per-page{
+    position: relative;
+    border-radius: 6px;
+    border : 1px solid #838383;
+    padding : 6px 20px 6px 12px
+}
+
+.filter-item-count .item-per-page:after{
+    content : '';
+    position: absolute;
+    top : 50%;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    transform-origin: 50% 50%;
+    transform: translateY(-50%);
+    background-image: url(https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.filter-item-count .item-count-list{
+    display: none;
+    position: absolute;
+    bottom : 0;
+    left : 0;
+    transform: translateY(105%);
+    z-index: 100;
+    padding: 6px;
+    background-color: #FFF;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.filter-item-count .item-count-list .item-count{
+    width: max-content;
+    padding : 6px 12px;
+    background-color: #FFF;
+    border-radius: 6px;
+}
+
+.filter-item-count .item-count-list .item-count:hover{
+    color : #FFF;
+    background-color: var(--signature-color);
+}
+
+/* filter-item-count -> show */
+.filter-item-count.active .item-count-list{
+    display: block;
+}
+
+/* filter-keyword */
+.filter-keyword{
+    display: flex;
+    align-items: center;
+    gap : 5px;
+}
+
+.filter-keyword input[type="text"]{
+    padding : 6px 14px;
+    border-radius: 4px;
+    background-color: #FFF;
+    font-size: 14px;
+    border: 2px solid #7D7D7D;
+    transition: border-color .2s ease;
+}
+
+.filter-keyword input[type="text"]:focus{
+    border-color: var(--signature-color);
+}
+
+/* entries-stats-table */
+.entries-stats-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.entries-stats-table thead tr th{
+    padding : 8px 16px;
+    background-color: rgba(234, 234, 234, .7);
+    border : 1px solid #CECECE;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* tool-tip */
+.entries-stats-table thead tr th .tool-tip{
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top : 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .9);
+    padding : 12px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    font-size: 14px;
+    transition: opacity .3s ease;
+    color: #FFF;
+    width: max-content;
+}
+
+.entries-stats-table thead tr th .tool-tip .emphasis-a{
+    color : #4FC3F7;
+}
+
+.entries-stats-table thead tr th .tool-tip .emphasis-b{
+    color : #CDDC39;
+}
+.entries-stats-table thead tr th .tool-tip .emphasis-c{
+    color : #FFB74D;
+}
+.entries-stats-table thead tr th .tool-tip .emphasis-d{
+    color : #BA68C8;
+}
+
+.entries-stats-table thead tr th .tool-tip:after{
+    content : '';
+    position: absolute;
+    bottom : 2px;
+    left : 50%;
+    transform: translate(-50%, 100%);
+    border-top : 10px solid rgba(0, 0, 0, .9);
+    border-left : 5px solid transparent;
+    border-right : 5px solid transparent;
+}
+
+.entries-stats-table thead tr th:hover .tool-tip{
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.entries-stats-table thead tr th.order{
+    position: relative;
+    padding-right: 25px;
+    cursor: pointer;
+}
+
+.entries-stats-table thead tr th.order:after{
+    content : '';
+    position: absolute;
+    top :50%;
+    right: 10px;
+    width: 12px;
+    height: 12px;
+    transform-origin: center;
+    transform : translateY(-50%) rotate(180deg);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill-red.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.entries-stats-table thead tr th.down:after{
+    transform : translateY(-50%);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/caret-down-fill-blue.svg");
+}
+
+.entries-stats-table tbody tr{
+    cursor: pointer;
+}
+
+.entries-stats-table tbody tr td{
+    border : 1px solid rgba(234, 234, 234, 7);
+    text-align: center;
+    box-sizing: border-box;
+    height: var(--thead-td-height);
+    max-height: var(--thead-td-height);
+    transition: background-color .3s ease;
+}
+
+.entries-stats-table tbody tr:hover td{
+    background-color: rgba(197, 211, 232, .4);
+}
+
+/* td rank */
+.entries-stats-table thead tr .rank{
+    width: var(--thead-rank-width);
+}
+
+/* td rank -> tool-tip */
+.entries-stats-table thead tr .rank .tool-tip {
+    left : 0;
+    transform: translate(0 ,-120%);
+}
+
+.entries-stats-table thead tr th .tool-tip:after{
+    left : 20px;
+    transform: translate(50%, 100%);
+}
+
+
+/* td entry-thumb */
+.entries-stats-table tbody tr .entry-thumb{
+    width: var(--thead-entry-thumb-size);
+    height: var(--thead-entry-thumb-size);
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* td highest-tournament */
+.entries-stats-table tbody tr .highest-tournament{
+    width: var(--thead-highest-tournament-width);
+}
+
+/* td win-and-lose */
+.entries-stats-table tbody tr .win-and-lose{
+    position: relative;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar{
+    display: flex;
+    align-items: center;
+    height: 30px;
+    max-width: 75%;
+    margin : 0 auto;
+    border-radius: 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .win{
+    position: relative;
+    width: var(--win-ratio);
+    height: 100%;
+    background-color: #AEDFF7;
+    border-radius: 6px 0 0 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .win:before{
+    content: '승';
+    font-size: 15px;
+    font-weight: 600;
+    color : #AEDFF7;
+    position: absolute;
+    top : 50%;
+    left : 0;
+    transform: translate(-150% , -50%);
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .lose{
+    position: relative;
+    width: var(--lose-ratio);
+    height: 100%;
+    background-color: #FFB5A7;
+    border-radius: 0 6px 6px 0;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar .lose:before{
+    content: '패';
+    font-size: 15px;
+    font-weight: 600;
+    color : #FFB5A7;
+    position: absolute;
+    top : 50%;
+    right: 0;
+    transform: translate(150% , -50%);
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar.only .win,
+.entries-stats-table tbody tr .win-and-lose .win-lose-bar.only .lose{
+    border-radius: 6px;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon{
+    position: absolute;
+    top : 0;
+    left : 50%;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s ease;
+    transform: translate(-50% , -10%);
+    background-color: #FFF;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.3) 0 3px 7px -3px;
+    padding : 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 10px;
+    width: max-content;
+}
+
+.entries-stats-table tbody tr .win-and-lose:hover .win-lose-balloon{
+    opacity: 1;
+    visibility: visible;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon p{
+    color : #333;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon .t-win span{
+    font-weight: 600;
+    color : #AEDFF7;
+}
+
+.entries-stats-table tbody tr .win-and-lose .win-lose-balloon .t-lose span{
+    font-weight: 600;
+    color : #FFB5A7;
+}
+
+/* td entry-name */
+.entries-stats-table tbody tr .entry-name{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* td win-rate */
+.entries-stats-table tbody tr .win-rate{
+    padding : 15px;
+}
+
+.win-rate-bar{
+    position: relative;
+    width: 100%;
+    height: 30px;
+    border-radius: 6px;
+    background-color: #DEE2E6;
+}
+
+.win-rate-bar:before{
+    content : var(--win-rate-text);
+    position: absolute;
+    left : 50%;
+    top : 50%;
+    transform: translate(-50% , -50%);
+    color : #444444;
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 100;
+}
+
+.win-rate-bar:after{
+    content : '';
+    position: absolute;
+    left : 0;
+    top : 0;
+    height: 100%;
+    width: var(--win-rate);
+    border-radius: 6px;
+}
+
+.win-rate-bar.color-20:after{
+    background-color: var(--progress-bar-fill-color-20);
+}
+
+.win-rate-bar.color-40:after{
+    background-color: var(--progress-bar-fill-color-40);
+}
+
+.win-rate-bar.color-60:after{
+    background-color: var(--progress-bar-fill-color-60);
+}
+
+.win-rate-bar.color-80:after{
+    background-color: var(--progress-bar-fill-color-80);
+}
+
+.win-rate-bar.color-100:after{
+    background-color: var(--progress-bar-fill-color-100);
+}
+
+.rank-notice{
+    display: flex;
+    align-items: baseline;
+    gap : 10px;
+}
+
+
+.rank-notice .last-updated-time{
+    color : #7D7D7D;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.rank-notice .last-updated-time:before{
+    content :'🔄최근업데이트: ';
+    color : #7D7D7D;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 10px;
+}

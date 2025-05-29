@@ -1,0 +1,57 @@
+@import "match-stage.css";
+@import "../tounament-select-dialog/css/tournament-select-dialog.css";
+
+html, body{
+    height: 100%;
+}
+
+.layout-container{
+    height: 100%;
+}
+
+.wrapper{
+    height: 100%;
+}
+
+.topic-play{
+    --topic-header-height : 50px;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.topic-header{
+    height: var(--topic-header-height);
+    background-color: rgba(255, 255, 255, .15);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 10px;
+    padding : 0 65px;
+}
+
+.topic-header .btn-back{
+    position: absolute;
+    top : 50%;
+    left : 20px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/arrow-left.svg");
+}
+
+.topic-header .topic-title{
+    color : #FFF;
+    font-size: 24px;
+    letter-spacing: -2px;
+}
+
+.topic-header .current-tournament{
+    color : #FFF;
+    font-size: 24px;
+    letter-spacing: -2px;
+}

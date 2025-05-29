@@ -1,0 +1,144 @@
+.topic-contents-section.empty{
+    position: relative;
+    height: 700px;
+}
+
+.topic-contents-section.empty *{
+    display: none;
+}
+
+.topic-contents-section.empty:after{
+    content : '조회된 대결주제가 없어요 :(';
+    font-size: 30px;
+    font-weight: 500;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform :  translate(-50% , -50%);
+
+}
+
+.topic-content-cards{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding : 16px 0;
+    gap : 10px;
+}
+
+.topic-content-card{
+    padding : 16px 10px;
+    cursor: pointer;
+    background-color: #FFF;
+    border-radius: 4px;
+    transition: .2s ease all;
+}
+
+.topic-content-card:hover {
+    transform : scale(1.05);
+}
+
+.topic-thumb-group{
+    margin-bottom: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+}
+
+.topic-desc-group{
+    display: flex;
+    flex-direction: column;
+    gap : 5px;
+    margin-bottom: 10px;
+}
+
+.topic-desc-group p{
+    margin : 0;
+}
+
+.topic-desc-group p.topic-title{
+    color : #7D7D7D;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.topic-desc-group p.topic-subject{
+    color : #838383;
+    font-size: 14px;
+}
+
+.topic-desc-group p.topic-desc{
+    color : #B4B4B8;
+    font-size: 10px;
+}
+
+.topic-content-card .btn-group {
+    display: flex;
+    align-items: center;
+    gap : 8px;
+}
+
+.topic-content-card .btn-group button {
+    color : #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    display: flex;
+    align-items: center;
+    outline: 0;
+    padding : 4px 6px 4px 30px;
+    border-radius: 4px;
+    background: none;
+    border-width : 1px;
+    border-style: solid;
+    cursor: pointer;
+    transition: .3s ease all;
+}
+
+.topic-content-card .btn-group button.btn-topic-start{
+    --btn-text : '시작';
+    --btn-emoji : '➡️';
+    --text-color: #C6E7FF;
+    border-color : #C6E7FF;
+}
+
+.topic-content-card .btn-group button.btn-topic-stats{
+    --btn-text : '통계보기';
+    --btn-emoji : '📊';
+    --text-color: #E8C5E5;
+    border-color : #E8C5E5;
+}
+
+.topic-content-card .btn-group button.btn-topic-share{
+    --btn-text : '공유';
+    --btn-emoji : '🚀';
+    --text-color: #B0EBB4;
+    border-color : #B0EBB4;
+}
+
+.topic-content-card .btn-group button:before{
+    content : var(--btn-emoji);
+    position: absolute;
+    left : 6px;
+    top : 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+
+.topic-content-card .btn-group button:after{
+    content : var(--btn-text);
+    color : var(--text-color);
+    font-size: 16px;
+}
+
+.topic-content-card .btn-group button:hover{
+    color : #FFF;
+    background-color: var(--text-color);
+}
+.topic-content-card .btn-group button:hover:after{
+    color : #FFF;
+}
+
+.scroll-observer-target{
+    height: 15px;
+}

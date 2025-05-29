@@ -1,0 +1,6 @@
+@import './top-header.css';
+@import 'topic-board.css';
+
+.my-topic{
+    padding : 20px 16px;
+}

@@ -1,0 +1,49 @@
+:root{
+    --loading-mask-z-index : 6666;
+    --common-toast-z-index : 8888;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+}
+
+p{
+    margin : 0;
+    padding : 0;
+}
+
+ul {
+    margin : 0;
+    padding : 0;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+button:disabled{
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+label {
+    cursor: pointer
+}
+
+li{
+    list-style: none;
+}
+
+input{
+    outline: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:visited{
+    color : #000;
+}

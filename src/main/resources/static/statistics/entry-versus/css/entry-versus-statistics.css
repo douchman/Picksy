@@ -1,0 +1,37 @@
+@import "entry-detail-card.css";
+@import "opponent-entries-stats.css";
+@import "../../../global/entry-media-viewer/css/entry-media-viewer.css";
+
+.entry-versus-statistics{
+    position: relative;
+    padding : 20px 0;
+}
+
+.top-h{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.back-to-topic-stats{
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/arrow-left.svg");
+    margin-right: 20px;
+}
+
+.txt-h{
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.txt-e{
+    color : #7D7D7D;
+    font-size: 16px;
+    margin-bottom: 15px;
+}

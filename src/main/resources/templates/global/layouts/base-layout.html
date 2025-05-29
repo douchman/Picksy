@@ -5,15 +5,19 @@
 <head>
   <th:block th:replace="~{global/fragments/config-fragment :: configFragment}"></th:block>
   <link rel="stylesheet" th:href="@{'/global/layouts/css/base-layout.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
-  <title layout:title-pattern="$CONTENT_TITLE"></title>
+  <title>Picksy</title>
 </head>
 
 <body>
     <!--header fragment-->
     <th:block th:replace="~{global/fragments/header-fragment :: headerFragment}"></th:block>
 
-    <!--content-->
-    <th:block layout:fragment="Content"></th:block>
+    <div id="layout-container" class="layout-container">
+        <div class="wrapper">
+            <!--content-->
+            <th:block layout:fragment="Content"></th:block>
+        </div>
+    </div>
 </body>
 
 </html>
