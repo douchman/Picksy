@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # 작업 디렉토리 설정
-WORKDIR /app/picksy
+WORKDIR /app/picksy-app
 
 # 빌드된 JAR 파일을 컨테이너로 복사
 COPY build/libs/picksy.jar picksy-app.jar
