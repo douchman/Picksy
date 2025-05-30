@@ -1,7 +1,7 @@
 import {ApiMethod} from "./api-method.js";
-import {API_URL} from "../const/const.js";
 import {ApiResponseException, FetchNetworkException} from "./exception/ApiException.js";
 import {UserAuthException} from "../exception/GlobalException.js";
+import {API_URL} from "./config.js";
 
 export async function apiRequest(endPoint, method, requestBody, hasFiles = false){
 
