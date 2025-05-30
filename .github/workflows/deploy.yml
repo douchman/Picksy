@@ -15,6 +15,7 @@ jobs:
     - name : Checkout repository
       uses: actions/checkout@v4
       with:
+        gradle-version: 8.14.1
         fetch-depth : 1
         
     - name: Set up JDK 17
@@ -52,7 +53,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./VsApp/picksy-app.tar"
+          source: "picksy-app.tar"
           target: "/home/ubuntu/picksy"
 
   deploy:
