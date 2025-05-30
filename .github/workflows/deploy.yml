@@ -1,8 +1,7 @@
 name: Java CI with Gradle and Deploy to EC2
 
 on:
-  pull_request:
-    types : [ synchronize ]
+  push:
     branches: [ "main" ]
 
 jobs:
@@ -34,22 +33,18 @@ jobs:
       
     - name: Grant execute permission for Gradle Wrapper
       run: chmod +x ./gradlew 
-      working-directory: ./picksy
 
     - name: Build with Gradle Wrapper
       run: ./gradlew clean build
-      working-directory: ./picksy
 
     # Docker 빌드 
     - name: Build Docker Image
       run: |
           docker build -t picksy-app .
-      working-directory: ./picksy
 
     - name: Save Docker Image as tar
       run: |
           docker save picksy-app -o picksy-app.tar
-      working-directory: ./picksy
 
     - name: Upload Docker Image to EC2
       uses: appleboy/scp-action@v0.1.4
@@ -57,7 +52,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./picksy/picksy-app.tar"
+          source: "picksy-app.tar"
           target: "/home/ubuntu/picksy"
 
   deploy:
@@ -72,8 +67,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/picksy
-            docker load -i /home/ubuntu/app/picksy/picksy-app.tar
-            docker stop picksy-app || true
-            docker rm picksy-app || true
-            docker run -d --name picksy-app -p 8080:8080 picksy-app
-
+            docker load -i /home/ubuntu/picksy/picksy-app.tar          
+            docker stop picksy-app || true # 기존 컨테이너 중지
+            docker rm picksy-app || true # 기존 컨테이너 삭제
+            docker compose down || true  # 기존 컨테이너 중지
+            docker compose up -d --force-recreate  # 새 컨테이너 실행
