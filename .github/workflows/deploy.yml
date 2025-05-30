@@ -15,7 +15,6 @@ jobs:
     - name : Checkout repository
       uses: actions/checkout@v4
       with:
-        gradle-version: 8.14.1
         fetch-depth : 1
         
     - name: Set up JDK 17
@@ -68,8 +67,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/picksy
-            docker load -i /home/ubuntu/picksy/picksy-app.tar
-            docker stop picksy-app || true
-            docker rm picksy-app || true
-            docker run -d --name picksy-app -p 8080:8080 picksy-app
-
+            docker load -i /home/ubuntu/picksy/picksy-app.tar          
+            docker stop picksy-app || true # 기존 컨테이너 중지
+            docker rm picksy-app || true # 기존 컨테이너 삭제
+            docker compose down || true  # 기존 컨테이너 중지
+            docker compose up -d --force-recreate  # 새 컨테이너 실행
