@@ -40,7 +40,7 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
     }
 
     try {
-        const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
+        const submitResult = await submitMatchResult(playRecordStorage.loadId(), match.getId(), requestBody);
         const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
 
         // 처리 완료 시 -> 승리/패배 엔트리 애니메이션 시작
