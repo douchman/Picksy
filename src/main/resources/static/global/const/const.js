@@ -35,3 +35,11 @@ export const Visibility = {
         return Object.values(this).includes(visibility);
     }
 }
+
+/* 비속어 필터 상태 값 */
+export const ModerationStatus = { 
+    WAITING: 'WAITING',
+    PASSED : 'PASSED',
+    BLOCKED : 'BLOCKED',
+    ERROR : 'ERROR'
+}
