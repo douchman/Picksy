@@ -16,9 +16,8 @@ function renderTopicCards(topicList){
     const topicCards = document.querySelector('#topic-cards');
 
     topicList.forEach(topic => {
-        console.log('topic -> ', topic);
         const topicCard = /*html*/`
-                         <div id="${topic.id}" class="topic-card" data-action="play">
+                         <div id="${topic.id}" class="topic-card" data-action="play" ${appendModerationStatus(topic.moderationStatus)}>
                             <div class="card-labels">
                                 ${renderModerationLabel(topic.moderationStatus)}
                                 ${renderVisibilityLabel(topic.visibility)}
@@ -66,6 +65,11 @@ function renderModerationLabel(moderationStatus){
     return moderationStatus !== ModerationStatus.PASSED ?
          `<label class="moderation-label">🚫표현제한</label>`
          : '';
+}
+
+// 비속어 필터 상태 값 추가
+function appendModerationStatus(moderationStatus){
+    return `data-moderation=${moderationStatus}`;
 }
 
 // 공유버튼 랜더링
