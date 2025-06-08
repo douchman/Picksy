@@ -30,10 +30,16 @@
     cursor: pointer;
 }
 
-.topic-card .visibility-label{
+.card-labels{
     position: absolute;
-    top: 5px;
-    right : 5px;
+    top : 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    gap : 6px;
+}
+
+.topic-card .card-labels .visibility-label{
     border-radius: 4px;
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
     display: inline-block;
@@ -43,19 +49,30 @@
     font-weight: 600;
 }
 
-.topic-card .visibility-label.public{
+.topic-card .card-labels .visibility-label.public{
     color : #1565C0 ;
     background-color: #E3F2FD ;
 }
 
-.topic-card .visibility-label.private{
+.topic-card .card-labels .visibility-label.private{
     color : #C62828 ;
     background-color: #FFEBEE ;
 }
 
-.topic-card .visibility-label.unlisted{
+.topic-card .card-labels .visibility-label.unlisted{
     color : #2E7D32;
     background-color: #F1F8E9 ;
+}
+
+.topic-card .card-labels .moderation-label{
+    border-radius: 4px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color : #6A1B9A;
+    background-color: #F3E5F5;
 }
 
 .topic-card .topic-thumb{
