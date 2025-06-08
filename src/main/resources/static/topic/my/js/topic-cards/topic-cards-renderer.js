@@ -61,7 +61,7 @@ function renderVisibilityLabel(visibility){
     return `<label class="visibility-label ${visibilityClass}">${visibilityName}</label>`
 }
 
-// 공개범위 라벨 랜더
+// 비속어 필터 라벨 랜더
 function renderModerationLabel(moderationStatus){
     return moderationStatus !== ModerationStatus.PASSED ?
          `<label class="moderation-label">🚫표현제한</label>`
