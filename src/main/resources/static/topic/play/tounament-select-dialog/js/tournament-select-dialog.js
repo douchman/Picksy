@@ -4,6 +4,8 @@ import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exc
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {loadEntryMatchInfo} from "../../js/entry-match.js";
 import {playRecordStorage} from "../../js/const.js";
+import {showToastMessage} from "../../../../global/toast-message/js/common-toast-message.js";
+import {ModerationStatus} from "../../../../global/const/const.js";
 
 const tournamentSelectExceptionHandler = new TournamentSelectExceptionHandler();
 
@@ -88,13 +90,17 @@ export async function openTournamentSelectDialog(topicId){
         const tournamentList = topicDetailResult.tournamentList;
 
         clearDialogData(dialog);
-
-        dialog.querySelector('#topic-title').textContent= `${topic.title}`;
-        dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
-        setTournamentSelector(tournamentList);
-        dialog.classList.add('show');
-
         toggleBodyScrollBlocked(true);
+
+        if(isModerationPassed(tournamentList.moderationStatus)){ // 필터 통과여부에 따라 이용제한 처리
+            dialog.querySelector('#topic-title').textContent= `${topic.title}`;
+            dialog.querySelector('#topic-desc').textContent = `${topic.description}`;
+            setTournamentSelector(tournamentList);
+            dialog.classList.add('show');
+        } else{
+            handleRestrictedTopic();
+        }
+
     } catch(error){
         tournamentSelectExceptionHandler.handle(error, {context : 'topicDetail'});
     }
@@ -151,4 +157,17 @@ async function getPlayRecordIdAndStart(){
         playRecordStorage.saveId(playRecordResult.playRecordId);
         await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
     }
+}
+
+// 필터 통과 여부 검사
+function isModerationPassed(moderationStatus){
+    return ModerationStatus.PASSED === moderationStatus;
+}
+
+// 이용 제한 대결주제 핸들
+function handleRestrictedTopic(){
+    showToastMessage('제한된 표현이 포함되어있어 이용할 수 없는 대결주제입니다. 잠시 후 메인페이지로 돌아갑니다', 'error', 3500);
+    setTimeout(() => {
+        location.href = '/';
+    }, 3000);
 }
