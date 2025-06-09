@@ -16,24 +16,21 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
             }
         }
     }
-    handleSaveTopicInfoException(error){
-        console.error('[Save TopicInfo Exception]' , error);
+    handleSaveTopicInfoException(){
         showToastMessage('대결주제 정보를 확인할 수 없어요:(' , 'error', 3500);
         setTimeout(()=> {
             location.href = '/';
         }, 2500);
     }
 
-    handleCurrentEntryMatchException(error){
-        console.error('[Current EntryMatch Exception]' , error);
+    handleCurrentEntryMatchException(){
         showToastMessage('진행할 대결 정보 조회를 확인할 수 없습니다.' , 'error', 3500);
         setTimeout(() => {
            location.href = '/';
         }, 2500);
     }
 
-    handleSubmitEntryMatchResultException(error){
-        console.error('[Submit EntryMatch Result Exception]' , error);
+    handleSubmitEntryMatchResultException(){
         showToastMessage('대결 결과 제출 중 문제가 발생했어요. 잠시후 다시 시도해주세요.', 'error', 3500);
     }
 }
