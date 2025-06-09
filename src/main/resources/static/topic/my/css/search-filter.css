@@ -27,6 +27,10 @@
     background-color: #FFF;
 }
 
+.radio-item:first-child label.lbl-radio{
+    border-left: 1px solid var(--signature-color);
+}
+
 .radio-item:last-child label.lbl-radio {
     border-radius: 0 6px 6px 0;
 }
@@ -35,9 +39,6 @@
     border-radius: 6px 0 0 6px;
 }
 
-.radio-item:last-child label.lbl-radio {
-    border-radius: 0 6px 6px 0;
-}
 
 .radio-item input[type="radio"]:checked + label.lbl-radio {
     color: #FFF;
