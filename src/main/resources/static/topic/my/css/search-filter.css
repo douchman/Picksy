@@ -19,10 +19,16 @@
 .radio-item label.lbl-radio{
     display: inline-block;
     padding: 8px 14px;
-    border: 1px solid var(--signature-color);
+    border-top: 1px solid var(--signature-color);
+    border-bottom: 1px solid var(--signature-color);
+    border-right: 1px solid var(--signature-color);
     font-weight: 500;
     cursor: pointer;
     background-color: #FFF;
+}
+
+.radio-item:last-child label.lbl-radio {
+    border-radius: 0 6px 6px 0;
 }
 
 .radio-item:first-child label.lbl-radio {
