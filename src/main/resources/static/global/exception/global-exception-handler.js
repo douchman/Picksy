@@ -28,13 +28,15 @@ export class GlobalExceptionHandler {
         }
     }
 
-    handleUnknownException(error) {
-        console.error('[UnKnown Exception]', error);
-        renderCommonAlertMessage('오류 발생', '알 수 없는 오류가 발생했습니다.');
+    handleUnknownException() {
+        renderCommonAlertMessage('오류 발생', '알 수 없는 오류가 발생했습니다.', backToMainPage);
     }
 
-    handleApiNetworkException(error){
-        console.error('[Api Fetch Error]', error );
-        renderCommonAlertMessage('네트워크 연결 오류' , `네트워크 연결이 원활하지 않습니다.<br>잠시 후 다시 시도해 주세요.`);
+    handleApiNetworkException(){
+        renderCommonAlertMessage('네트워크 연결 오류' , `네트워크 연결이 원활하지 않습니다.<br>잠시 후 다시 시도해 주세요.`, backToMainPage);
     }
+}
+
+function backToMainPage(){
+    location.href = '/';
 }

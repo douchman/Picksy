@@ -16,13 +16,11 @@ export class EntryVersusExceptionHandler extends GlobalExceptionHandler{
     }
 
 
-    handleTargetEntryStatisticsException(error){
-        console.error('[Target Entry Stats Exception]', error);
+    handleTargetEntryStatisticsException(){
         showToastMessage('엔트리 통계 조회 중 문제가 발생했어요. 새로고침 또는 다시 진입후 이용해주세요.' , 'error', 3500);
     }
 
-    handleEntryVersusStatisticsException(error){
-        console.error('[Versus Stats Exception]', error);
+    handleEntryVersusStatisticsException(){
         showToastMessage('엔트리 상성 통계 조회 중 문제가 발생했어요. 새로고침 또는 다시 진입후 이용해주세요.' , 'error', 3500);
     }
 }
