@@ -14,7 +14,7 @@
 
 .common-toast .toast-message{
     display: inline-block;
-    position: relative;
+    position: fixed;
     color : var(--toast-message-color);
     font-size: 16px;
     font-weight: 500;
