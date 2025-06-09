@@ -12,7 +12,6 @@ export class HomeExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleApiResponseException(error){
-        console.error('[Topic Search Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 3000);
     }
 }
