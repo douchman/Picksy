@@ -13,7 +13,6 @@ export class MyTopicExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleGetMyTopicException(error){
-        console.error('[Get MyTopics Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 }

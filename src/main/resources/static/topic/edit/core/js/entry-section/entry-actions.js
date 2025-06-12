@@ -14,7 +14,7 @@ export async function registerEntries(){
     try {
         await createEntries(createdTopic.getId(), entryFormData);
     } catch (error) {
-        entryEditExceptionHandler.handle(error, {context : 'entryCrate'});
+        entryEditExceptionHandler.handle(error, {context : 'entryCreate'});
         return false;
     }
 

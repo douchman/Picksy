@@ -21,25 +21,21 @@ export class TopicEditExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleTopicCreateException(error){
-        console.error('[Topic Create Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 
     handleTopicUpdateException(error){
-        console.error('[Topic Update Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 
     handleTopicDetailException(error){
-        console.error('[Topic Detail Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
         setTimeout(() => {
             location.href = '/';
         }, 3000)
     }
 
-    handleTopicIdSaveException(error){
-        console.error('[TopicId Save Exception]' , error);
+    handleTopicIdSaveException(){
         showToastMessage('대결주제 정보 확인 중 문제가 발생했어요. 이전 메뉴에서 다시 확인해주세요.', 'alert', 3000);
 
         setTimeout(() => {

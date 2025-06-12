@@ -17,17 +17,14 @@ export class EntryEditExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleEntryCreateException(error){
-        console.error('[Entry Create Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 
     handleEntryUpdateException(error){
-        console.error('[Entry Update Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 
     handleEntryListError(error){
-        console.error('[Entry List Exception]' , error);
         showToastMessage(`${error.message}`, 'error', 2500);
     }
 

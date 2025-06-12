@@ -15,12 +15,21 @@ input[type="file"] {
 }
 
 .topic-edit .modify-header{
+    display: flex;
+    align-items: baseline;
+    gap : 10px;
     padding : 10px;
 }
 
 .topic-edit .modify-header p{
     font-size : 25px;
     font-weight: 600;
+}
+
+.topic-edit .modify-header .filter-notice{
+    font-size: 13px;
+    color : #FF5722;
+    font-style: normal;
 }
 
 .topic-edit .sections{

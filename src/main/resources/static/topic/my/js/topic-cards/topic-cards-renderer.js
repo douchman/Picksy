@@ -1,4 +1,4 @@
-import {Visibility} from "../../../../global/const/const.js";
+import {ModerationStatus, Visibility} from "../../../../global/const/const.js";
 
 export function renderMyTopics(topicList){
     renderTopicCards(topicList);
@@ -17,8 +17,11 @@ function renderTopicCards(topicList){
 
     topicList.forEach(topic => {
         const topicCard = /*html*/`
-                         <div id="${topic.id}" class="topic-card" data-action="play">
-                            ${renderVisibilityLabel(topic.visibility)}
+                         <div id="${topic.id}" class="topic-card" data-action="play" ${appendModerationStatus(topic.moderationStatus)}>
+                            <div class="card-labels">
+                                ${renderModerationLabel(topic.moderationStatus)}
+                                ${renderVisibilityLabel(topic.visibility)}
+                            </div>
                             <div class="topic-thumb" style="background-image: url('${topic.thumbnail}')"></div>
                             <div class="topic-meta">
                                 <p class="title">${topic.title}</p>
@@ -55,6 +58,18 @@ function renderVisibilityLabel(visibility){
     const visibilityName = Visibility.getVisibilityName(visibility);
 
     return `<label class="visibility-label ${visibilityClass}">${visibilityName}</label>`
+}
+
+// 비속어 필터 라벨 랜더
+function renderModerationLabel(moderationStatus){
+    return moderationStatus !== ModerationStatus.PASSED ?
+         `<label class="moderation-label">🚫표현제한</label>`
+         : '';
+}
+
+// 비속어 필터 상태 값 추가
+function appendModerationStatus(moderationStatus){
+    return `data-moderation=${moderationStatus}`;
 }
 
 // 공유버튼 랜더링
