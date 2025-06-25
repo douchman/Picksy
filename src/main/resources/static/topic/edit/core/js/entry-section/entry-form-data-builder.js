@@ -124,7 +124,7 @@ function validatedEntryRegisterForm(){
     const entryForm = document.querySelector('#entry-form');
     const entryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
 
-    for ( const [entryItem] of Array.from(entryItems).entries()){
+    for ( const [, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;
         /*const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;*/
