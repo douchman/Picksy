@@ -12,6 +12,8 @@ export class TopicEditExceptionHandler extends GlobalExceptionHandler{
                 this.handleTopicUpdateException(error);
             else if( context === 'topicDetail')
                 this.handleTopicDetailException(error);
+            else if( context === 'topicThumbUpload')
+                this.handleTopicThumbUploadException();
         }
         else if ( error instanceof TopicIdSaveException ) {
             this.handleTopicIdSaveException(error);
@@ -33,6 +35,9 @@ export class TopicEditExceptionHandler extends GlobalExceptionHandler{
         setTimeout(() => {
             location.href = '/';
         }, 3000)
+    }
+    handleTopicThumbUploadException(){
+        showToastMessage(`대결주제 대표이미지 업로드 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.`, 'error', 2500);
     }
 
     handleTopicIdSaveException(){

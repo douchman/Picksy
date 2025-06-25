@@ -11,6 +11,8 @@ export class EntryEditExceptionHandler extends GlobalExceptionHandler{
                 this.handleEntryUpdateException(error);
             else if(context === 'entryList')
                 this.handleEntryListError(error);
+            else if(context === 'entryMediaUpload')
+                this.handleEntryMediaUploadException(error);
         }else{
             super.handle(error);
         }
@@ -26,6 +28,10 @@ export class EntryEditExceptionHandler extends GlobalExceptionHandler{
 
     handleEntryListError(error){
         showToastMessage(`${error.message}`, 'error', 2500);
+    }
+
+    handleEntryMediaUploadException(){
+        showToastMessage(`엔트리 이미지 업로드 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.`, 'error', 2500);
     }
 
 }
