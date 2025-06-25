@@ -7,7 +7,7 @@ import {setInitialTopic} from "../const/initial-topic.js";
 const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
 export async function registerTopic(){
-    const {validationResult , formData : topicRegisterFromData} = buildValidatedTopicRegisterFormData();
+    const {validationResult , formData : topicRegisterFromData} = await buildValidatedTopicRegisterFormData();
 
     if( !validationResult || !topicRegisterFromData ) return false;
 
@@ -25,7 +25,7 @@ export async function registerTopic(){
 }
 
 export async function modifyTopic(){
-    const {validationResult , formData : topicModifyFormData } = buildValidatedTopicUpdateFormData();
+    const {validationResult , formData : topicModifyFormData } = await buildValidatedTopicUpdateFormData();
 
     if( !validationResult) return false;
     if( !topicModifyFormData ) return true;

@@ -8,7 +8,7 @@ export async function createTopic(requestBody){
 
 // 생성되어있는 대결주제 업데이트
 export async function updateTopic(topicId, requestBody){
-    return apiRequest(`topics/${topicId}`, ApiMethod.PATCH, requestBody, true);
+    return apiRequest(`topics/${topicId}`, ApiMethod.POST, requestBody, true);
 }
 
 // 대결주제 상세 정보 조회

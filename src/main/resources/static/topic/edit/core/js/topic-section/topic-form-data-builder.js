@@ -1,7 +1,8 @@
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {isModifiedTopic} from "../const/initial-topic.js";
+import {uploadTopicThumbnail} from "./topic-thumb-uploader.js";
 
-export function buildValidatedTopicRegisterFormData(){
+export async function buildValidatedTopicRegisterFormData(){
 
     const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
 
@@ -29,13 +30,21 @@ export function buildValidatedTopicRegisterFormData(){
     topicRegisterFormData.append('title', title)
     topicRegisterFormData.append('subject', subject)
     topicRegisterFormData.append('description', description)
-    topicRegisterFormData.append('thumbnail', thumbnail)
     topicRegisterFormData.append('visibility', visibility)
 
+    const { result : isUploadSuccess, thumbnailUrl} = await uploadTopicThumbnail(thumbnail);
+
+    if( !isUploadSuccess ){
+        return { validationResult : false, formData:  {} };
+    }
+
+    topicRegisterFormData.append('thumbnail', thumbnailUrl)
+
     return { validationResult : true, formData:  topicRegisterFormData };
+
 }
 
-export function buildValidatedTopicUpdateFormData(){
+export async function buildValidatedTopicUpdateFormData(){
 
     const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
 
@@ -66,8 +75,15 @@ export function buildValidatedTopicUpdateFormData(){
     topicModifyFormData.append('title', title)
     topicModifyFormData.append('subject', subject)
     topicModifyFormData.append('description', description)
-    thumbnail && topicModifyFormData.append('thumbnail', thumbnail)
     topicModifyFormData.append('visibility', visibility)
+
+    if(thumbnail){ // 새로 업로드 할 대표 이미지 존재 시
+        const { result : isUploadSuccess, thumbnailUrl} = await uploadTopicThumbnail(thumbnail);
+        if( !isUploadSuccess ){
+            return { validationResult : false, formData:  {} };
+        }
+        topicModifyFormData.append('thumbnail', thumbnailUrl)
+    }
 
     return { validationResult : true, formData:  topicModifyFormData };
 }
