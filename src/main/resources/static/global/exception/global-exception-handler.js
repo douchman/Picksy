@@ -9,8 +9,9 @@ export class GlobalExceptionHandler {
             this.handleUserAuthException(error);
         } else if( error instanceof FetchNetworkException ){
             this.handleApiNetworkException(error);
+        } else {
+            this.handleUnknownException(error);
         }
-        this.handleUnknownException(error);
     }
 
     handleUserAuthException(error){
