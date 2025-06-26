@@ -1,4 +1,4 @@
-import {buildValidatedTopicRegisterFormData, buildValidatedTopicUpdateFormData} from "./topic-form-data-builder.js";
+import {buildValidatedTopicRegisterPayload, buildValidatedTopicUpdatePayload} from "./topic-form-data-builder.js";
 import {createTopic, getTopicDetail, updateTopic} from "../api/topic-edit-api.js";
 import {createdTopic} from "../const/const.js";
 import {TopicEditExceptionHandler} from "../exception/topic-edit-exception-handler.js";
@@ -7,12 +7,12 @@ import {setInitialTopic} from "../const/initial-topic.js";
 const topicEditExceptionHandler = new TopicEditExceptionHandler();
 
 export async function registerTopic(){
-    const {validationResult , formData : topicRegisterFromData} = await buildValidatedTopicRegisterFormData();
+    const {validationResult , topicRegisterPayload} = await buildValidatedTopicRegisterPayload();
 
-    if( !validationResult || !topicRegisterFromData ) return false;
+    if( !validationResult || !topicRegisterPayload ) return false;
 
     try {
-        const topicCreateResult = await createTopic(topicRegisterFromData);
+        const topicCreateResult = await createTopic(topicRegisterPayload);
 
         setCreatedTopicId(topicCreateResult);
         saveRegisteredTopicData(topicCreateResult);
@@ -25,13 +25,13 @@ export async function registerTopic(){
 }
 
 export async function modifyTopic(){
-    const {validationResult , formData : topicModifyFormData } = await buildValidatedTopicUpdateFormData();
+    const {validationResult , topicUpdatePayload } = await buildValidatedTopicUpdatePayload();
 
     if( !validationResult) return false;
-    if( !topicModifyFormData ) return true;
+    if( !topicUpdatePayload ) return true;
 
     try {
-        await updateTopic(createdTopic.getId(), topicModifyFormData);
+        await updateTopic(createdTopic.getId(), topicUpdatePayload);
     } catch (error){
         topicEditExceptionHandler.handle(error, {context : 'topicModify'});
         return false;
