@@ -147,7 +147,7 @@ function validateEntryModifyPayload(modifyEntryItems){
     for( const modifyEntry of modifyEntryItems ){
         if(modifyEntry.classList.contains('removed')) continue; // 삭제 대상 엔트리일 경우 검증 제외
 
-        const entryItemId = modifyEntry.id;
+        const entryItemId = Number(modifyEntry.id);
         const entryName = modifyEntry.querySelector('.entry-name').value;
         const entryDescription = modifyEntry.querySelector('.entry-description').value;
         const isMediaChange = initialEntryDataMap.get(entryItemId).isMediaChanged;
