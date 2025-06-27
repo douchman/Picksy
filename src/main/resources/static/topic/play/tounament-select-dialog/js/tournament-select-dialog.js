@@ -161,7 +161,6 @@ async function getPlayRecordIdAndStart(){
 
 // 필터 통과 여부 검사
 function isModerationPassed(moderationStatus){
-    console.log('moderationStatus -> ' , moderationStatus);
     return ModerationStatus.PASSED === moderationStatus;
 }
 

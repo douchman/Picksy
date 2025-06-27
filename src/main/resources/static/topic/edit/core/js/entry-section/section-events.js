@@ -3,7 +3,7 @@ import {renderEntryItem} from "./entry-renderer.js";
 import {
     addEmptyStagedEntryMedia, addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
-    addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia, stagedEntryMedia
+    addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia
 } from "../staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "../../youtube.js";
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
@@ -133,7 +133,6 @@ function removeEntryItem(target){
             const entryId = entryItem.id;
             entryItem.remove();
             entryId && removeStagedEntryMedia(entryId);
-            console.log(stagedEntryMedia);
         }
 
     }
