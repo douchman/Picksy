@@ -117,7 +117,9 @@ function updateEntryThumb(entryThumbUpload){
     const entryItem = entryThumbUpload.closest('.entry-item');
     const entryId = entryItem.id;
     const file = entryThumbUpload.files[0];
-    addStagedEntryMediaWithUpdateEntryItemThumb('file', file, entryId);
+    if(file){
+        addStagedEntryMediaWithUpdateEntryItemThumb('file', file, entryId);
+    }
 }
 
 // 생성한 엔트리 등록 슬롯 제거 -> stagedThumb 도 함께 삭제
