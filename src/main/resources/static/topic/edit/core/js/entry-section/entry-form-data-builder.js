@@ -9,7 +9,6 @@ import {
     validateEntryDescription,
     validateEntryName
 } from "./entry-form-validator.js";
-import {createdTopic as modifyEntryItem} from "../const/const";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
 export async function buildValidatedEntryRegisterPayload(){
