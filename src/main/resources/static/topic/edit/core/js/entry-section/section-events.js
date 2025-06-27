@@ -3,7 +3,7 @@ import {renderEntryItem} from "./entry-renderer.js";
 import {
     addEmptyStagedEntryMedia, addStagedEntryMediaForYoutube,
     addStagedEntryMediaWithRenderEntryItem,
-    addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia
+    addStagedEntryMediaWithUpdateEntryItemThumb, removeStagedEntryMedia, stagedEntryMedia
 } from "../staged-entry-media.js";
 import {getYouTubeInfoFromUrl} from "../../youtube.js";
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
@@ -130,9 +130,10 @@ function removeEntryItem(target){
         if( isModifyEntry ) { // 수정 대상 엔트리 삭제
             entryItem.classList.add('removed');
         } else { // 신규 추가 대상 엔트리의 삭제
-            const thumbId = entryItem.querySelector('.entry-thumb').id;
+            const entryId = entryItem.id;
             entryItem.remove();
-            thumbId && removeStagedEntryMedia(thumbId)
+            entryId && removeStagedEntryMedia(entryId);
+            console.log(stagedEntryMedia);
         }
 
     }
