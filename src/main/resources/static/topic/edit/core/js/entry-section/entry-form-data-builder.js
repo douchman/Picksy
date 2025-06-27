@@ -20,7 +20,7 @@ export async function buildValidatedEntryRegisterPayload(){
     if(isRegisterEntryItemsEmpty(registerEntryItems)) return { validationResult : true, entryRegisterPayload : null };
 
     // 입력 값 검사
-    if(!validatedEntryRegisterForm()) return { validationResult : false, entryRegisterPayload : null };
+    if(!validatedEntryRegisterPayload()) return { validationResult : false, entryRegisterPayload : null };
 
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
@@ -113,7 +113,7 @@ export async function buildValidatedEntryModifyPayload(){
     return { validationResult : true, entryModifyPayload };
 }
 
-function validatedEntryRegisterForm(){
+function validatedEntryRegisterPayload(){
     const entryForm = document.querySelector('#entry-form');
     const entryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
 
