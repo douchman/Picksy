@@ -12,7 +12,7 @@ export async function registerEntries(){
     if( !entryRegisterPayload ){ return true;}
 
     try {
-        await createEntries(createdTopic.getId(), {entries : entryRegisterPayload});
+        await createEntries(createdTopic.getId(), {entriesToCreate : entryRegisterPayload});
     } catch (error) {
         entryEditExceptionHandler.handle(error, {context : 'entryCreate'});
         return false;
