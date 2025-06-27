@@ -21,7 +21,7 @@ export async function buildValidatedEntryRegisterPayload(){
     if(isRegisterEntryItemsEmpty(registerEntryItems)) return { validationResult : true, entryRegisterPayload : null };
 
     // 입력 값 검사
-    if(!validatedEntryRegisterPayload()) return { validationResult : false, entryRegisterPayload : null };
+    if(!validatedEntryRegisterPayload(registerEntryItems)) return { validationResult : false, entryRegisterPayload : null };
 
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
@@ -118,14 +118,11 @@ export async function buildValidatedEntryModifyPayload(){
     return { validationResult : true, entryModifyPayload };
 }
 
-function validatedEntryRegisterPayload(){
-    const entryForm = document.querySelector('#entry-form');
-    const entryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
-
-    for ( const [, entryItem] of Array.from(entryItems).entries()){
-        const entryItemId = entryItem.id;
-        const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDescription = entryItem.querySelector('.entry-description').value;
+function validatedEntryRegisterPayload(registerEntryItems){
+    for( const registerEntry of registerEntryItems ) {
+        const entryItemId = registerEntry.id;
+        const entryName = registerEntry.querySelector('.entry-name').value;
+        const entryDescription = registerEntry.querySelector('.entry-description').value;
         const entryMedia = stagedEntryMedia[entryItemId].media;
 
         if(!validateEntryName(entryName)){
