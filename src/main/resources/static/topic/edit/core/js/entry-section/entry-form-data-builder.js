@@ -8,7 +8,7 @@ import {
     entryNameValidationMessage, isValidEntryMedia,
     validateEntryDescription,
     validateEntryName
-} from "./entry-form-validator";
+} from "./entry-form-validator.js";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
 export async function buildValidatedEntryRegisterPayload(){
