@@ -60,17 +60,17 @@ export async function buildValidatedEntryRegisterPayload(){
 export async function buildValidatedEntryModifyPayload(){
     const entryModifyPayload = [];
     const entryForm = document.querySelector('#entry-form');
-    const entryModifyItems = entryForm.querySelectorAll('.entry-item.modify-entry');
+    const modifyEntryItems = entryForm.querySelectorAll('.entry-item.modify-entry');
 
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
     // 수정 요청 payload 검사
-    if(validateEntryModifyPayload(entryModifyItems)) return { validationResult : false, entryRegisterPayload : null };
+    if(validateEntryModifyPayload(modifyEntryItems)) return { validationResult : false, entryRegisterPayload : null };
 
     // 업로드 결과 확인
     if(!uploadSuccess) return { validationResult : false, entryModifyPayload : null };
 
-    for( const entryItem of entryModifyItems) {
+    for( const entryItem of modifyEntryItems) {
         const entryItemId = Number(entryItem.id);
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
@@ -144,8 +144,8 @@ function validatedEntryRegisterPayload(registerEntryItems){
     return true;
 }
 
-function validateEntryModifyPayload(entryModifyItems){
-    for( const modifyEntry of entryModifyItems ){
+function validateEntryModifyPayload(modifyEntryItems){
+    for( const modifyEntry of modifyEntryItems ){
         const entryItemId = modifyEntry.id;
         const entryName = modifyEntry.querySelector('.entry-name').value;
         const entryDescription = modifyEntry.querySelector('.entry-description').value;
