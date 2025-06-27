@@ -1,57 +1,65 @@
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {isModifiedTopic} from "../const/initial-topic.js";
+import {uploadTopicThumbnail} from "./topic-thumb-uploader.js";
 
-export function buildValidatedTopicRegisterFormData(){
+export async function buildValidatedTopicRegisterPayload(){
 
     const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(!subject || subject === ''){
         showToastMessage('주요개념을 입력해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(!description || description === ''){
         showToastMessage('대결 설명을 입력해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicRegisterPayload : nulll}
     }
 
     if(!thumbnail){
         showToastMessage('대표이미지를 등록해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicRegisterPayload : null}
     }
 
-    const topicRegisterFormData = new FormData();
-    topicRegisterFormData.append('title', title)
-    topicRegisterFormData.append('subject', subject)
-    topicRegisterFormData.append('description', description)
-    topicRegisterFormData.append('thumbnail', thumbnail)
-    topicRegisterFormData.append('visibility', visibility)
+    const { result : isUploadSuccess, thumbnailUrl} = await uploadTopicThumbnail(thumbnail);
+    if( !isUploadSuccess ){
+        return { validationResult : false, topicRegisterPayload:  null };
+    }
 
-    return { validationResult : true, formData:  topicRegisterFormData };
+    const topicRegisterPayload = {
+        title : subject,
+        subject : subject,
+        description : description,
+        visibility : visibility,
+        thumbnail : thumbnailUrl
+    };
+
+    return { validationResult : true, topicRegisterPayload };
+
 }
 
-export function buildValidatedTopicUpdateFormData(){
+export async function buildValidatedTopicUpdatePayload(){
 
     const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicUpdatePayload : null}
     }
 
     if(!subject || subject === ''){
         showToastMessage('주요개념을 입력해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicUpdatePayload : null}
     }
 
     if(!description || description === ''){
         showToastMessage('대결 설명을 입력해주세요', 'alert');
-        return {validationResult : false, formData : {}}
+        return {validationResult : false, topicUpdatePayload : null}
     }
 
     const currentData = {
@@ -60,16 +68,24 @@ export function buildValidatedTopicUpdateFormData(){
         description,
     }
 
-    if( !isModifiedTopic(currentData) ){ return { validationResult : true, formData : null} }
+    if( !isModifiedTopic(currentData) ){ return { validationResult : true, topicUpdatePayload : null} }
 
-    const topicModifyFormData = new FormData();
-    topicModifyFormData.append('title', title)
-    topicModifyFormData.append('subject', subject)
-    topicModifyFormData.append('description', description)
-    thumbnail && topicModifyFormData.append('thumbnail', thumbnail)
-    topicModifyFormData.append('visibility', visibility)
+    const topicUpdatePayload = {
+        title : title,
+        subject : subject,
+        description : description,
+        visibility : visibility
+    };
 
-    return { validationResult : true, formData:  topicModifyFormData };
+    if(thumbnail){ // 새로 업로드 할 대표 이미지 존재 시
+        const { result : isUploadSuccess, thumbnailUrl} = await uploadTopicThumbnail(thumbnail);
+        if( !isUploadSuccess ){
+            return { validationResult : false, formData:  {} };
+        }
+        topicUpdatePayload.thumbnail = thumbnailUrl;
+    }
+
+    return { validationResult : true, topicUpdatePayload };
 }
 
 function getTopicInputValues(){

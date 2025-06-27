@@ -1,105 +1,177 @@
 import {stagedEntryMedia} from "../staged-entry-media.js";
-import {createdTopic} from "../const/const.js";
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {initialEntryDataMap, isModifiedEntry} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/const/const.js";
+import {uploadEntriesMedia} from "./entry-media-uploader.js";
+import {
+    entryDescValidationMessage, entryMediaValidationMessage,
+    entryNameValidationMessage, isValidEntryMedia,
+    validateEntryDescription,
+    validateEntryName
+} from "./entry-form-validator.js";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
-export function buildValidatedEntryRegisterFormData(){
-    const entryFormData = new FormData();
+export async function buildValidatedEntryRegisterPayload(){
+    const entryRegisterPayload = [];
     const entryForm = document.querySelector('#entry-form');
-    const entryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
+    const registerEntryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
 
-    for ( const [index, entryItem] of Array.from(entryItems).entries()){
+    // 등록 대상 존재 확인
+    if(isRegisterEntryItemsEmpty(registerEntryItems)) return { validationResult : true, entryRegisterPayload : null };
+
+    // 입력 값 검사
+    if(!validatedEntryRegisterPayload(registerEntryItems)) return { validationResult : false, entryRegisterPayload : null };
+
+    const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
+
+    // 업로드 결과 확인
+    if( !uploadSuccess) return { validationResult : false, entryRegisterPayload : null };
+
+    for(const entryItem of registerEntryItems){
         const entryItemId = entryItem.id;
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
-        const entryMediaType = stagedEntryMedia[entryItemId].type;
-        const entryMedia = stagedEntryMedia[entryItemId].media;
-        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
+        const entryMediaType = groupedEntryMedia[entryItemId].mediaType;
 
-        if(!entryMedia) {
-            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
-            return { validationResult : false, formData : {}};
+        const updateEntry = {
+            entryName : entryName,
+            description : entryDescription,
+            mediaType : entryMediaType
         }
 
-        entryFormData.append(`entries[${index}].entryName`, entryName);
-        entryFormData.append(`entries[${index}].description`, entryDescription);
-
-        if ( MediaType.YOUTUBE === entryMediaType  ) { // 파일 업로드 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaUrl`, entryMedia)
-        } else { // 유튜브 링크 방식 엔트리
-            entryFormData.append(`entries[${index}].mediaFile`, entryMedia)
+        if( entryMediaType === MediaType.IMAGE){
+            updateEntry.mediaUrl = groupedEntryMedia[entryItemId].image.objectKey;
+        } else if( entryMediaType === MediaType.VIDEO){
+            updateEntry.mediaUrl = groupedEntryMedia[entryItemId].video.objectKey;
+            updateEntry.thumbnail = groupedEntryMedia[entryItemId].thumbnail.objectKey;
+        } else if( entryMediaType === MediaType.YOUTUBE){
+            updateEntry.mediaUrl = groupedEntryMedia[entryItemId].youtubeUrl;
+            updateEntry.thumbnail = groupedEntryMedia[entryItemId].thumbnail.objectKey;
         }
 
-        if( entryThumbnail ){
-            entryFormData.append(`entries[${index}].thumbnailFile`, entryThumbnail)
-        }
+        entryRegisterPayload.push(updateEntry);
     }
 
-    const isFormDataEmpty = entryFormData.entries().next().done;
-
-    if( isFormDataEmpty ) {
-        return { validationResult : true, formData : null };
-    }
-
-    entryFormData.append('topicId', createdTopic.getId());
-
-    return { validationResult : true, formData : entryFormData };
+    return { validationResult : true, entryRegisterPayload };
 }
 
 // 업데이트 엔트리 form 데이터 검사 및 생성
-export function buildValidatedEntryModifyFormData(){
-    const entryModifyFormData = new FormData();
+export async function buildValidatedEntryModifyPayload(){
+    const entryModifyPayload = [];
     const entryForm = document.querySelector('#entry-form');
-    const entryModifyItems = entryForm.querySelectorAll('.entry-item.modify-entry');
+    const modifyEntryItems = entryForm.querySelectorAll('.entry-item.modify-entry');
 
-    for ( const [index, entryItem] of Array.from(entryModifyItems).entries()){
-        const entryItemId = entryItem.id;
+    const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
+
+    // 수정 요청 payload 검사
+    if(!validateEntryModifyPayload(modifyEntryItems)) return { validationResult : false, entryModifyPayload : null };
+
+    // 업로드 결과 확인
+    if(!uploadSuccess) return { validationResult : false, entryModifyPayload : null };
+
+    for( const entryItem of modifyEntryItems) {
+        const entryItemId = Number(entryItem.id);
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
         const entryMediaType = stagedEntryMedia[entryItemId].type;
-        const entryMedia = stagedEntryMedia[entryItemId].media;
-        const entryThumbnail = stagedEntryMedia[entryItemId].thumbnail;
+        const isMediaChanged = initialEntryDataMap.get(entryItemId).isMediaChanged; // 미디어 변경 여부
+        const isRemovedEntry = entryItem.classList.contains('removed');
 
         const currentData = {
             entryName : entryName,
             description : entryDescription
         }
 
-        const isRemoveTargetEntry = entryItem.classList.contains('removed');
-        if( isRemoveTargetEntry ) {
-            entryModifyFormData.append(`entriesToUpdate[${index}].id`, entryItemId);
-            entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "true");
+        const modifyEntry = {
+            id : entryItemId,
+            delete : isRemovedEntry
+        }
 
-        } else if( isModifiedEntry(entryItemId, currentData)){
-            entryModifyFormData.append(`entriesToUpdate[${index}].id`, entryItemId);
-            entryModifyFormData.append(`entriesToUpdate[${index}].entryName`, entryName);
-            entryModifyFormData.append(`entriesToUpdate[${index}].description`, entryDescription);
-            entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "false");
+        if( !isRemovedEntry && isModifiedEntry(entryItemId, currentData)) {
+            modifyEntry.entryName = entryName;
+            modifyEntry.description = entryDescription;
 
-            const isMediaChanged = initialEntryDataMap[entryItemId].isMediaChanged; // 미디어 변경 여부
-
-            if( isMediaChanged ) { // 변경된 경우만 처리
-                if(MediaType.YOUTUBE === entryMediaType) { // 유튜브 링크가 등록되었을 경우
-                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, entryMedia);
-                } else {
-                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaFile`, entryMedia);
+            if( uploadSuccess && isMediaChanged){
+                if( entryMediaType === MediaType.IMAGE){
+                    modifyEntry.mediaUrl = groupedEntryMedia[entryItemId].image.objectKey;
+                } else if( entryMediaType === MediaType.VIDEO){
+                    modifyEntry.mediaUrl = groupedEntryMedia[entryItemId].video.objectKey
+                    modifyEntry.thumbnail = groupedEntryMedia[entryItemId].thumbnail.objectKey
+                } else if( entryMediaType === MediaType.YOUTUBE){
+                    modifyEntry.mediaUrl = groupedEntryMedia[entryItemId].youtubeUrl;
+                    modifyEntry.thumbnail = groupedEntryMedia[entryItemId].thumbnail.objectKey;
                 }
+                modifyEntry.mediaType = entryMediaType;
             }
 
-            if( entryThumbnail ){ // 새로 업로드 된 썸네일 파일 존재 시
-                entryModifyFormData.append(`entriesToUpdate[${index}].thumbnailFile`, entryThumbnail)
-            }
+        }
+        entryModifyPayload.push(modifyEntry);
+    }
+
+    const isEntryModifyPayloadEmpty = entryModifyPayload.length === 0;
+
+    if( isEntryModifyPayloadEmpty ) {
+        return { validationResult : true, entryModifyPayload : null };
+    }
+
+    return { validationResult : true, entryModifyPayload };
+}
+
+function validatedEntryRegisterPayload(registerEntryItems){
+    for( const registerEntry of registerEntryItems ) {
+        const entryItemId = registerEntry.id;
+        const entryName = registerEntry.querySelector('.entry-name').value;
+        const entryDescription = registerEntry.querySelector('.entry-description').value;
+        const entryMedia = stagedEntryMedia[entryItemId].media;
+
+        if(!validateEntryName(entryName)){
+            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!validateEntryDescription(entryDescription)){
+            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!isValidEntryMedia(entryMedia)) {
+            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
+            return false;
         }
     }
 
+    return true;
+}
 
-    const isFormDataEmpty = entryModifyFormData.entries().next().done;
+function validateEntryModifyPayload(modifyEntryItems){
+    for( const modifyEntry of modifyEntryItems ){
+        if(modifyEntry.classList.contains('removed')) continue; // 삭제 대상 엔트리일 경우 검증 제외
 
-    if( isFormDataEmpty ) {
-        return { validationResult : true, formData : null };
+        const entryItemId = Number(modifyEntry.id);
+        const entryName = modifyEntry.querySelector('.entry-name').value;
+        const entryDescription = modifyEntry.querySelector('.entry-description').value;
+        const isMediaChange = initialEntryDataMap.get(entryItemId).isMediaChanged;
+
+        if(!validateEntryName(entryName)){
+            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!validateEntryDescription(entryDescription)){
+            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(isMediaChange && !isValidEntryMedia(stagedEntryMedia[entryItemId].media)){
+            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
+            return false;
+        }
     }
 
-    return { validationResult : true, formData : entryModifyFormData };
+    return true;
+}
+
+// 등록 대상 엔트리 항목 존재 여부 검사
+function isRegisterEntryItemsEmpty(registerEntryItems){
+    return registerEntryItems.length === 0;
 }

@@ -117,7 +117,9 @@ function updateEntryThumb(entryThumbUpload){
     const entryItem = entryThumbUpload.closest('.entry-item');
     const entryId = entryItem.id;
     const file = entryThumbUpload.files[0];
-    addStagedEntryMediaWithUpdateEntryItemThumb('file', file, entryId);
+    if(file){
+        addStagedEntryMediaWithUpdateEntryItemThumb('file', file, entryId);
+    }
 }
 
 // 생성한 엔트리 등록 슬롯 제거 -> stagedThumb 도 함께 삭제
@@ -128,9 +130,9 @@ function removeEntryItem(target){
         if( isModifyEntry ) { // 수정 대상 엔트리 삭제
             entryItem.classList.add('removed');
         } else { // 신규 추가 대상 엔트리의 삭제
-            const thumbId = entryItem.querySelector('.entry-thumb').id;
+            const entryId = entryItem.id;
             entryItem.remove();
-            thumbId && removeStagedEntryMedia(thumbId)
+            entryId && removeStagedEntryMedia(entryId);
         }
 
     }

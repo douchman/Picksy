@@ -1,4 +1,6 @@
 // 이미지 유형 미리보기
+import {generateRandomId} from "./random-id-generator.js";
+
 export function generateFilePreviewURL(file, callback){
     if(!file) {
        return;
@@ -67,8 +69,12 @@ export function getThumbFileFromVideoUrl(videoUrl) {
 
 // blob -> file 변환
 export function blobToFile(blob){
-    return new File([blob], "thumbnail.jpg", {
+    return new File([blob], `${generateRandomThumbnailImageName()}.jpg`, {
         type: blob.type,
         lastModified: Date.now(),
     });
+}
+
+function generateRandomThumbnailImageName(){
+    return generateRandomId();
 }

@@ -3,12 +3,12 @@ import {ApiMethod} from "../../../../../global/api/api-method.js";
 
 // 대결주제 신규 생성
 export async function createTopic(requestBody){
-    return apiRequest('topics', ApiMethod.POST, requestBody, true);
+    return apiRequest('topics', ApiMethod.POST, requestBody, false);
 }
 
 // 생성되어있는 대결주제 업데이트
 export async function updateTopic(topicId, requestBody){
-    return apiRequest(`topics/${topicId}`, ApiMethod.PATCH, requestBody, true);
+    return apiRequest(`topics/${topicId}`, ApiMethod.PATCH, requestBody, false);
 }
 
 // 대결주제 상세 정보 조회
