@@ -3,6 +3,12 @@ import {showToastMessage} from "../../../../../global/toast-message/js/common-to
 import {initialEntryDataMap, isModifiedEntry} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/const/const.js";
 import {uploadEntriesMedia} from "./entry-media-uploader.js";
+import {
+    entryDescValidationMessage, entryMediaValidationMessage,
+    entryNameValidationMessage, isValidEntryMedia,
+    validateEntryDescription,
+    validateEntryName
+} from "./entry-form-validator.js";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
 export async function buildValidatedEntryRegisterPayload(){
@@ -14,7 +20,7 @@ export async function buildValidatedEntryRegisterPayload(){
     if(isRegisterEntryItemsEmpty(registerEntryItems)) return { validationResult : true, entryRegisterPayload : null };
 
     // 입력 값 검사
-    if(!validatedEntryRegisterForm()) return { validationResult : false, entryRegisterPayload : null };
+    if(!validatedEntryRegisterPayload(registerEntryItems)) return { validationResult : false, entryRegisterPayload : null };
 
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
@@ -53,13 +59,17 @@ export async function buildValidatedEntryRegisterPayload(){
 export async function buildValidatedEntryModifyPayload(){
     const entryModifyPayload = [];
     const entryForm = document.querySelector('#entry-form');
-    const entryModifyItems = entryForm.querySelectorAll('.entry-item.modify-entry');
+    const modifyEntryItems = entryForm.querySelectorAll('.entry-item.modify-entry');
 
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
+    // 수정 요청 payload 검사
+    if(validateEntryModifyPayload(modifyEntryItems)) return { validationResult : false, entryRegisterPayload : null };
+
+    // 업로드 결과 확인
     if(!uploadSuccess) return { validationResult : false, entryModifyPayload : null };
 
-    for( const entryItem of entryModifyItems) {
+    for( const entryItem of modifyEntryItems) {
         const entryItemId = Number(entryItem.id);
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
@@ -107,21 +117,57 @@ export async function buildValidatedEntryModifyPayload(){
     return { validationResult : true, entryModifyPayload };
 }
 
-function validatedEntryRegisterForm(){
-    const entryForm = document.querySelector('#entry-form');
-    const entryItems = entryForm.querySelectorAll('.entry-item:not(.modify-entry)');
-
-    for ( const [, entryItem] of Array.from(entryItems).entries()){
-        const entryItemId = entryItem.id;
-        /*const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDescription = entryItem.querySelector('.entry-description').value;*/
+function validatedEntryRegisterPayload(registerEntryItems){
+    for( const registerEntry of registerEntryItems ) {
+        const entryItemId = registerEntry.id;
+        const entryName = registerEntry.querySelector('.entry-name').value;
+        const entryDescription = registerEntry.querySelector('.entry-description').value;
         const entryMedia = stagedEntryMedia[entryItemId].media;
 
-        if(!entryMedia) {
-            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
+        if(!validateEntryName(entryName)){
+            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!validateEntryDescription(entryDescription)){
+            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!isValidEntryMedia(entryMedia)) {
+            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
             return false;
         }
     }
+
+    return true;
+}
+
+function validateEntryModifyPayload(modifyEntryItems){
+    for( const modifyEntry of modifyEntryItems ){
+        if(modifyEntry.classList.contains('removed')) continue; // 삭제 대상 엔트리일 경우 검증 제외
+
+        const entryItemId = modifyEntry.id;
+        const entryName = modifyEntry.querySelector('.entry-name').value;
+        const entryDescription = modifyEntry.querySelector('.entry-description').value;
+        const isMediaChange = initialEntryDataMap.get(entryItemId).isMediaChanged;
+
+        if(!validateEntryName(entryName)){
+            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!validateEntryDescription(entryDescription)){
+            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(isMediaChange && !isValidEntryMedia(stagedEntryMedia[entryItemId].media)){
+            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
+            return false;
+        }
+    }
+
     return true;
 }
 
