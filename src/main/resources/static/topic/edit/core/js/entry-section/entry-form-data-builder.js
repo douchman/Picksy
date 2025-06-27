@@ -1,5 +1,4 @@
 import {stagedEntryMedia} from "../staged-entry-media.js";
-import {createdTopic} from "../const/const.js";
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {initialEntryDataMap, isModifiedEntry} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/const/const.js";
