@@ -1,4 +1,4 @@
-import {buildValidatedEntryModifyFormData, buildValidatedEntryRegisterFormData} from "./entry-form-data-builder.js";
+import {buildValidatedEntryModifyPayload, buildValidatedEntryRegisterPayload} from "./entry-form-data-builder.js";
 import {createEntries, getEntryList, modifyEntries} from "../api/entry-edit-api.js";
 import {createdTopic} from "../const/const.js";
 import {EntryEditExceptionHandler} from "../exception/entry-edit-exception-handler.js";
@@ -6,13 +6,13 @@ import {EntryEditExceptionHandler} from "../exception/entry-edit-exception-handl
 const entryEditExceptionHandler = new EntryEditExceptionHandler();
 
 export async function registerEntries(){
-    const {validationResult, formData : entryFormData } = await buildValidatedEntryRegisterFormData();
+    const {validationResult,  entryRegisterPayload } = await buildValidatedEntryRegisterPayload();
 
     if( !validationResult ){ return false;}
-    if( !entryFormData ){ return true;}
+    if( !entryRegisterPayload ){ return true;}
 
     try {
-        await createEntries(createdTopic.getId(), entryFormData);
+        await createEntries(createdTopic.getId(), {entriesToCreate : entryRegisterPayload});
     } catch (error) {
         entryEditExceptionHandler.handle(error, {context : 'entryCreate'});
         return false;
@@ -22,13 +22,13 @@ export async function registerEntries(){
 }
 
 export async function updateEntries(){
-    const {validationResult, formData : entryFormData} = await buildValidatedEntryModifyFormData();
+    const {validationResult, entryModifyPayload} = await buildValidatedEntryModifyPayload();
 
     if( !validationResult ){ return false;}
-    if( !entryFormData) { return true;}
+    if( !entryModifyPayload) { return true;}
 
     try{
-        await modifyEntries(createdTopic.getId(), entryFormData);
+        await modifyEntries(createdTopic.getId(), {entriesToUpdate : entryModifyPayload});
     } catch (error) {
         entryEditExceptionHandler.handle(error, {context : 'entryModify'});
         return false;

@@ -71,7 +71,7 @@ export async function buildValidatedTopicUpdatePayload(){
     if( !isModifiedTopic(currentData) ){ return { validationResult : true, topicUpdatePayload : null} }
 
     const topicUpdatePayload = {
-        title : subject,
+        title : title,
         subject : subject,
         description : description,
         visibility : visibility
