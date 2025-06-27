@@ -51,67 +51,61 @@ export async function buildValidatedEntryRegisterPayload(){
 }
 
 // 업데이트 엔트리 form 데이터 검사 및 생성
-export async function buildValidatedEntryModifyFormData(){
-    const entryModifyFormData = new FormData();
+export async function buildValidatedEntryModifyPayload(){
+    const entryModifyPayload = [];
     const entryForm = document.querySelector('#entry-form');
     const entryModifyItems = entryForm.querySelectorAll('.entry-item.modify-entry');
 
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
-    if(!uploadSuccess) return { validationResult : false, formData : null };
+    if(!uploadSuccess) return { validationResult : false, entryModifyPayload : null };
 
-    for ( const [index, entryItem] of Array.from(entryModifyItems).entries()){
+    for( const entryItem of entryModifyItems) {
         const entryItemId = Number(entryItem.id);
         const entryName = entryItem.querySelector('.entry-name').value;
         const entryDescription = entryItem.querySelector('.entry-description').value;
         const entryMediaType = stagedEntryMedia[entryItemId].type;
         const isMediaChanged = initialEntryDataMap.get(entryItemId).isMediaChanged; // 미디어 변경 여부
+        const isRemovedEntry = entryItem.classList.contains('removed');
 
         const currentData = {
             entryName : entryName,
             description : entryDescription
         }
 
-        const isRemoveTargetEntry = entryItem.classList.contains('removed');
-        if( isRemoveTargetEntry ) {
-            entryModifyFormData.append(`entriesToUpdate[${index}].id`, entryItemId);
-            entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "true");
+        const modifyEntry = {
+            id : entryItemId,
+            delete : isRemovedEntry
+        }
 
-        } else if( isModifiedEntry(entryItemId, currentData)){
-            entryModifyFormData.append(`entriesToUpdate[${index}].id`, entryItemId);
-            entryModifyFormData.append(`entriesToUpdate[${index}].entryName`, entryName);
-            entryModifyFormData.append(`entriesToUpdate[${index}].description`, entryDescription);
-            entryModifyFormData.append(`entriesToUpdate[${index}].delete`, "false");
+        if( !isRemovedEntry && isModifiedEntry(entryItemId, currentData)) {
+            modifyEntry.entryName = entryName;
+            modifyEntry.description = entryDescription;
 
             if( uploadSuccess && isMediaChanged){
                 if( entryMediaType === MediaType.IMAGE){
-                    const imageUrl = groupedEntryMedia[entryItemId].image.objectKey;
-                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, imageUrl);
+                    modifyEntry.mediaUrl = groupedEntryMedia[entryItemId].image.objectKey;
                 } else if( entryMediaType === MediaType.VIDEO){
-                    const thumbnailUrl = groupedEntryMedia[entryItemId].thumbnail.objectKey;
-                    const videoUrl = groupedEntryMedia[entryItemId].video.objectKey;
-                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, videoUrl);
-                    entryModifyFormData.append(`entriesToUpdate[${index}].thumbnail`, thumbnailUrl);
+                    modifyEntry.mediaUrl = groupedEntryMedia[entryItemId].video.objectKey
+                    modifyEntry.thumbnail = groupedEntryMedia[entryItemId].thumbnail.objectKey
                 } else if( entryMediaType === MediaType.YOUTUBE){
-                    const thumbnailUrl = groupedEntryMedia[entryItemId].thumbnail.objectKey;
-                    const youtubeUrl = groupedEntryMedia[entryItemId].youtubeUrl;
-                    entryModifyFormData.append(`entriesToUpdate[${index}].mediaUrl`, youtubeUrl);
-                    entryModifyFormData.append(`entriesToUpdate[${index}].thumbnail`, thumbnailUrl);
+                    modifyEntry.mediaUrl = groupedEntryMedia[entryItemId].youtubeUrl;
+                    modifyEntry.thumbnail = groupedEntryMedia[entryItemId].thumbnail.objectKey;
                 }
-
-                entryModifyFormData.append(`entriesToUpdate[${index}].mediaType`, entryMediaType);
+                modifyEntry.mediaType = entryMediaType;
             }
 
         }
+        entryModifyPayload.push(modifyEntry);
     }
 
-    const isFormDataEmpty = entryModifyFormData.entries().next().done;
+    const isEntryModifyPayloadEmpty = entryModifyPayload.length === 0;
 
-    if( isFormDataEmpty ) {
-        return { validationResult : true, formData : null };
+    if( isEntryModifyPayloadEmpty ) {
+        return { validationResult : true, entryModifyPayload : null };
     }
 
-    return { validationResult : true, formData : entryModifyFormData };
+    return { validationResult : true, entryModifyPayload };
 }
 
 function validatedEntryRegisterForm(){
@@ -136,4 +130,3 @@ function validatedEntryRegisterForm(){
 function isRegisterEntryItemsEmpty(registerEntryItems){
     return registerEntryItems.length === 0;
 }
-
