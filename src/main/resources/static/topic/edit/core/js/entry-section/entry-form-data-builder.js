@@ -3,6 +3,12 @@ import {showToastMessage} from "../../../../../global/toast-message/js/common-to
 import {initialEntryDataMap, isModifiedEntry} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/const/const.js";
 import {uploadEntriesMedia} from "./entry-media-uploader.js";
+import {
+    entryDescValidationMessage, entryMediaValidationMessage,
+    entryNameValidationMessage, isValidEntryMedia,
+    validateEntryDescription,
+    validateEntryName
+} from "./entry-form-validator";
 
 // 신규 등록 엔트리 form 데이터 검사 및 생성
 export async function buildValidatedEntryRegisterPayload(){
@@ -113,15 +119,26 @@ function validatedEntryRegisterForm(){
 
     for ( const [, entryItem] of Array.from(entryItems).entries()){
         const entryItemId = entryItem.id;
-        /*const entryName = entryItem.querySelector('.entry-name').value;
-        const entryDescription = entryItem.querySelector('.entry-description').value;*/
+        const entryName = entryItem.querySelector('.entry-name').value;
+        const entryDescription = entryItem.querySelector('.entry-description').value;
         const entryMedia = stagedEntryMedia[entryItemId].media;
 
-        if(!entryMedia) {
-            showToastMessage('이미지 또는 링크가 등록되지 않은 엔트리가 있어요', 'alert', 3000);
+        if(!validateEntryName(entryName)){
+            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!validateEntryDescription(entryDescription)){
+            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            return false;
+        }
+
+        if(!isValidEntryMedia(entryMedia)) {
+            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
             return false;
         }
     }
+
     return true;
 }
 
