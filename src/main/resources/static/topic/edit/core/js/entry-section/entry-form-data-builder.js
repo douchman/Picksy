@@ -64,7 +64,7 @@ export async function buildValidatedEntryModifyPayload(){
     const {uploadSuccess, groupedEntryMedia } = await uploadEntriesMedia();
 
     // 수정 요청 payload 검사
-    if(validateEntryModifyPayload(modifyEntryItems)) return { validationResult : false, entryRegisterPayload : null };
+    if(!validateEntryModifyPayload(modifyEntryItems)) return { validationResult : false, entryRegisterPayload : null };
 
     // 업로드 결과 확인
     if(!uploadSuccess) return { validationResult : false, entryModifyPayload : null };
