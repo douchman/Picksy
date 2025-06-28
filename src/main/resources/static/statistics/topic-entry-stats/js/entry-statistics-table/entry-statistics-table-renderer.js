@@ -32,7 +32,6 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
 
             const entriesStatsTbody = document.querySelector('#entries-stats-tbody');
             entriesStatistics.forEach( entryStats =>{
-                console.log('entryStats -> ' , entryStats);
                 const entry = entryStats.entry;
                 const statistics = entryStats.statistics;
                 const mediaType = entry.mediaType;
