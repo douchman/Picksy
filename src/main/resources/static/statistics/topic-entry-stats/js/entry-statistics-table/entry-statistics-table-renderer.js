@@ -97,7 +97,7 @@ function renderWinLose(totalMatches, win, lose){
 
         winAndLose = winLoseBar + winLoseBalloon
     } else {
-        winAndLose = ``
+        winAndLose = `대결 기록 없음`
     }
 
     return winAndLose;
