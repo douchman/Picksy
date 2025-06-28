@@ -18,9 +18,7 @@ export async function setupOpponentEntries() {
         const entryVersusStatisticsResult = await getEntryVersusStatistics(targetTopic.id, targetEntry.id);
         const matchUpRecord = entryVersusStatisticsResult.matchUpRecords;
 
-        if( isMatchUpRecordExist(matchUpRecord)){
-            renderMatchUpRecords(matchUpRecord);
-        }
+        renderMatchUpRecords(matchUpRecord);
         addOpponentEntriesEvents();
 
     } catch(error){
@@ -51,9 +49,15 @@ function addOpponentEntriesEvents(){
 }
 
 function renderMatchUpRecords(matchUpRecord){
-    const oppEntriesTableBody = document.querySelector('#opponent-entries-table-body');
+    if(isMatchUpRecordEmpty(matchUpRecord)){
+        const oppEntriesTable= document.querySelector('#opponent-entries-table');
+        oppEntriesTable.classList.add('no-records');
+        return;
+    }
 
+    const oppEntriesTableBody = document.querySelector('#opponent-entries-table-body');
     matchUpRecord.forEach(matchUpRecord => {
+
         const entryInfo = matchUpRecord.opponentEntry;
         const matchRecord = matchUpRecord.matchRecord;
 
@@ -96,6 +100,6 @@ function renderMatchResult(matchRecord){
             </div>`;
 }
 
-function isMatchUpRecordExist( matchUpRecords ){
-    return (matchUpRecords && matchUpRecords.length !== 0);
+function isMatchUpRecordEmpty( matchUpRecord ){
+    return (!matchUpRecord || matchUpRecord.length === 0);
 }
