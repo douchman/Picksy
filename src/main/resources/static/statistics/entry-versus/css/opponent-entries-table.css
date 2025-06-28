@@ -13,6 +13,22 @@
     padding : 4px 12px;
 }
 
+.opponent-entries-table.no-records{
+    position: relative;
+    height: 300px;
+}
+
+.opponent-entries-table.no-records:after{
+    content : '🧐 상대한 엔트리 기록이 없어요';
+    color : #7D7D7D;
+    font-size: 20px;
+    font-weight: 600;
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%,-50%);
+}
+
 /* table row : opponent-entry */
 .opponent-entry{
     cursor: pointer;
