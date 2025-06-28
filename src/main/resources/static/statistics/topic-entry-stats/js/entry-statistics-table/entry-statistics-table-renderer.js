@@ -45,7 +45,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
                             <input class="media-url" type="hidden" value="${entry.mediaUrl}">
                         </td>
                         <td class="entry-name">${entry.entryName}</td>
-                        <td class="highest-tournament">${statistics.highestTournament}강</td>
+                        <td class="highest-tournament">${renderHighestTournament(statistics.highestTournament)}</td>
                         <td class="win-and-lose">
                             ${renderWinLose(statistics.totalMatches, statistics.totalWins, statistics.totalLosses)}
                         </td>
@@ -82,7 +82,6 @@ function renderWinLose(totalMatches, win, lose){
 
         const onlyWinOrLose = Math.abs(winRatio - loseRatio) === 100 ? 'only' : '';
 
-
         winLoseBar =
             `<div class="win-lose-bar ${onlyWinOrLose}" style="--win-ratio: ${winRatio}%; --lose-ratio: ${loseRatio}%" >
                 <div class="win"></div>
@@ -103,6 +102,11 @@ function renderWinLose(totalMatches, win, lose){
     return winAndLose;
 }
 
+function renderHighestTournament(highestTournament){
+    return highestTournament === 0 ?
+        '-'
+        : `${highestTournament}강`;
+}
 
 // 테이블 쿼리 페이지네이션 최신화
 function updateTableQueryPagination(pagination){
