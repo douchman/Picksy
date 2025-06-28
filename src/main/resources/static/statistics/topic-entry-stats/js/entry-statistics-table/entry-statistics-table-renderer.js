@@ -32,6 +32,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
 
             const entriesStatsTbody = document.querySelector('#entries-stats-tbody');
             entriesStatistics.forEach( entryStats =>{
+                console.log('entryStats -> ' , entryStats);
                 const entry = entryStats.entry;
                 const statistics = entryStats.statistics;
                 const mediaType = entry.mediaType;
@@ -40,7 +41,7 @@ export async function renderEntryStatistics(isClearBody = true, isUpdatePaginati
                 const winRateBarColorClass = determineProgressBarColorByWinRate(roundedWinRate);
                 const entryStatsRow =
                     `<tr class="entry-row" style="--win-rate : ${roundedWinRate}%; --win-rate-text : '${roundedWinRate}%'" data-id="${entry.id}">
-                        <td class="rank">${statistics.rank ? statistics.rank : '-'}</td>
+                        <td class="rank">${statistics.entryRank ? statistics.entryRank : '-'}</td>
                         <td class="entry-thumb" data-mediatype="${mediaType}" style="background-image: url('${entryThumb}')">
                             <input class="media-url" type="hidden" value="${entry.mediaUrl}">
                         </td>
