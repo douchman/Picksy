@@ -32,7 +32,7 @@ export async function buildValidatedTopicRegisterPayload(){
     }
 
     const topicRegisterPayload = {
-        title : subject,
+        title : title,
         subject : subject,
         description : description,
         visibility : visibility,
