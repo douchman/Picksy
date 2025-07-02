@@ -69,9 +69,9 @@
 .entry-counts{
     color : #7D7D7D;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     --index-color : #316B83;
-    --index-font-size : 20px;
+    --index-font-size : 18px;
     --index-font-weight : 600;
 }
 
