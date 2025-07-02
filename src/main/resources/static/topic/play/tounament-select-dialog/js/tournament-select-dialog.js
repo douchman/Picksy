@@ -47,7 +47,7 @@ function renderDialog(){
 
 // 비밀번호 입력 UI 랜더링
 function renderPasswordInput(){
-    const tournamentDesc  = document.querySelector('#tournament-desc');
+    const tournamentSelect  = document.querySelector('#tournament-select');
 
     const passwordInputGroup =
         `<div class="password-input-group">
@@ -55,7 +55,7 @@ function renderPasswordInput(){
             <i class="txt-i">공개가 제한된 대결로 비밀번호를 입력이 필요합니다.</i>
         </div>`;
 
-    tournamentDesc.insertAdjacentHTML('afterend', passwordInputGroup);
+    tournamentSelect.insertAdjacentHTML('afterend', passwordInputGroup);
 
 }
 
