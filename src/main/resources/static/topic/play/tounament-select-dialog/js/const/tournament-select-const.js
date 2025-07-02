@@ -1,3 +1,7 @@
+export const topicInfo = {
+    id : 0
+}
+
 export const TOURNAMENT_DESC = {
     2 : '총 2개의 엔트리가 무작위로 선택되어 겨룹니다.',
     4 : '총 4개의 엔트리가 무작위로 선택되어 겨룹니다.',
