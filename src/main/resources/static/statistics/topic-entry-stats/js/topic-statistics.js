@@ -44,7 +44,6 @@ async function renderTopicStatistics(){
         const topicStatistics = topicStatisticsResult.topicStatistics;
         const tournamentStatistics = topicStatisticsResult.tournamentStatistics;
 
-        console.log('topicStatistics -> ' , topicStatistics);
         renderTopicDetail(topicDetail);
         renderTopicStats(topicStatistics);
         renderTournamentStats(tournamentStatistics);
@@ -68,8 +67,8 @@ function renderTopicDetail(topicDetail){
 // 대결주제 통계 정보 랜더링
 function renderTopicStats(topicStatistics){
     if(topicStatistics){
-        document.querySelector('#total-matches').innerHTML = `${topicStatistics.totalMatches} 회`;
-
+        document.querySelector('#total-matches').innerHTML = `${topicStatistics.totalMatches} 회`; // 총 진행 횟수
+        document.querySelector('#entry-counts').innerHTML = `${topicStatistics.entryCount} 개`; // 후보 엔트리 수
     }
 }
 
