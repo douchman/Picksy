@@ -44,10 +44,8 @@ async function renderTopicStatistics(){
         const topicStatistics = topicStatisticsResult.topicStatistics;
         const tournamentStatistics = topicStatisticsResult.tournamentStatistics;
 
-        renderTopicThumbnail(topicDetail.thumbnail);
-        renderTopicTitle(topicDetail.title);
-        renderTopicDescription(topicDetail.description);
-        renderTotalMatches(topicStatistics.totalMatches);
+        renderTopicDetail(topicDetail);
+        renderTopicStats(topicStatistics);
         renderTournamentStats(tournamentStatistics);
     } catch(error){
         topicStatisticsException.handle(error, {context : 'topicStatistics'});
@@ -57,25 +55,21 @@ async function renderTopicStatistics(){
     return true;
 }
 
-// 대결 주제 이미지 랜더링
-function renderTopicThumbnail(thumbnail){
-    document.querySelector('#topic-thumbnail').style.backgroundImage = `url('${thumbnail}')`;
+// 대결 주제 상세 정보 랜더링
+function renderTopicDetail(topicDetail){
+    if(topicDetail){
+        document.querySelector('#topic-title').innerHTML = `${topicDetail.title}`;
+        document.querySelector('#topic-description').innerHTML = `${topicDetail.description}`;
+        document.querySelector('#topic-thumbnail').style.backgroundImage = `url('${topicDetail.thumbnail}')`;
+    }
 }
 
-
-// 대결 제목 랜더링
-function renderTopicTitle(topicTitle){
-    document.querySelector('#topic-title').innerHTML = `${topicTitle}`;
-}
-
-// 대결 설명 랜더링
-function renderTopicDescription(topicDescription){
-    document.querySelector('#topic-description').innerHTML = `${topicDescription}`;
-}
-
-// 진행된 총 대결 횟수 랜더링
-function renderTotalMatches(totalMatches){
-    document.querySelector('#total-matches').innerHTML = `${totalMatches} 회`;
+// 대결주제 통계 정보 랜더링
+function renderTopicStats(topicStatistics){
+    if(topicStatistics){
+        document.querySelector('#total-matches').innerHTML = `${topicStatistics.totalMatches} 회`; // 총 진행 횟수
+        document.querySelector('#entry-counts').innerHTML = `${topicStatistics.entryCount} 개`; // 후보 엔트리 수
+    }
 }
 
 // 가장 많이 선택 된 너먼트 랜더링

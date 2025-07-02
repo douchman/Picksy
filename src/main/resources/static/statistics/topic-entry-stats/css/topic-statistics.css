@@ -65,12 +65,13 @@
 }
 
 .total-matches,
-.most-popular-tournament{
+.most-popular-tournament,
+.entry-counts{
     color : #7D7D7D;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     --index-color : #316B83;
-    --index-font-size : 20px;
+    --index-font-size : 18px;
     --index-font-weight : 600;
 }
 
@@ -83,6 +84,13 @@
 
 .most-popular-tournament:before{
     content : '🏆 가장 많이 진행된 토너먼트 : ';
+    color : var(--index-color);
+    font-size: var(--index-font-size);
+    font-weight: var(--index-font-weight);
+}
+
+.entry-counts:before{
+    content : '📦 후보 엔트리 수 : ';
     color : var(--index-color);
     font-size: var(--index-font-size);
     font-weight: var(--index-font-weight);
