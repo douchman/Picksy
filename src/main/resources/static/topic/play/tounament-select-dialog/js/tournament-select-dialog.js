@@ -1,4 +1,4 @@
-import {TOURNAMENT_DESC} from "./const/tournament-select-const.js";
+import {topicInfo, TOURNAMENT_DESC} from "./const/tournament-select-const.js";
 import {toggleBodyScrollBlocked} from "../../../../global/layouts/js/layout-common.js";
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
@@ -37,6 +37,7 @@ function renderDialog(){
                 <p id="tournament-desc" class="tournament-desc">선택된 토너먼트 설명</p>
                 <div class="btn-group">
                     <button id="btn-start-match" class="btn-start-match" type="button" disabled></button>
+                    <button id="btn-topic-stats" class="btn-topic-stats" type="button"></button>
                     <button id="btn-cancel-dialog" class="btn-cancel-dialog" type="button"></button>
                 </div>
             </div>
@@ -92,6 +93,11 @@ function addDialogEvents() {
     document.querySelector('#btn-start-match').addEventListener('click', async () =>{
         await getPlayRecordIdAndStart();
     });
+
+    // dialog 내부 통계 버튼
+    document.querySelector('#btn-topic-stats').addEventListener('click', async () =>{
+        location.href = `/statistics/topic/${topicInfo.id}`;
+    });
 }
 
 export async function openTournamentSelectDialog(topicId){
@@ -103,6 +109,7 @@ export async function openTournamentSelectDialog(topicId){
         const topic = topicDetailResult.topic;
         const tournamentList = topicDetailResult.tournamentList;
 
+        saveTopicId(topic.id); // 대결주제 id 저장
         clearDialogData(dialog);
         toggleBodyScrollBlocked(true);
 
@@ -214,4 +221,8 @@ function handleRestrictedTopic(){
     setTimeout(() => {
         location.href = '/';
     }, 3000);
+}
+
+function saveTopicId(topicId){
+    topicInfo.id = topicId;
 }
