@@ -50,8 +50,8 @@ function renderVisibilityLabel(visibility){
         case Visibility.PRIVATE:
             visibilityClass = 'private';
             break;
-        case Visibility.UNLISTED:
-            visibilityClass = 'unlisted';
+        case Visibility.PASSWORD:
+            visibilityClass = 'password';
             break;
     }
 
