@@ -196,7 +196,7 @@
 }
 
 .dialog-body .btn-group button.btn-cancel-dialog{
-    --btn-text : '취소';
+    --btn-text : '나가기';
     --btn-color : rgb(201, 104, 104);
 }
 
