@@ -129,7 +129,7 @@
 
 .dialog-body .tournament-desc{
     visibility: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .dialog-body .tournament-desc.show{
@@ -140,6 +140,30 @@
     content : '✅';
     font-size: 14px;
     margin-right: 4px;
+}
+
+.dialog-body .password-input-group{
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    gap : 10px;
+}
+
+.dialog-body .password-input-group .txt-i{
+    color : #295F98;
+    font-size: 12px;
+    font-style: normal;
+}
+
+.dialog-body .password-input-group .topic-password{
+    padding : 8px 12px;
+    border-radius: 4px;
+    border : 1px solid #838383;
+    outline: 0;
+}
+
+.dialog-body .password-input-group .topic-password:focus{
+    border-color: var(--signature-color);
 }
 
 .dialog-body .btn-group{
@@ -166,8 +190,13 @@
     --btn-color : rgb(172, 225, 175);
 }
 
+.dialog-body .btn-group button.btn-topic-stats{
+    --btn-text : '통계';
+    --btn-color : rgb(232 197 229);
+}
+
 .dialog-body .btn-group button.btn-cancel-dialog{
-    --btn-text : '취소';
+    --btn-text : '나가기';
     --btn-color : rgb(201, 104, 104);
 }
 

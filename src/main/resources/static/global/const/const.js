@@ -15,7 +15,7 @@ export const MediaType = {
 export const Visibility = {
     PUBLIC : 'PUBLIC',
     PRIVATE : 'PRIVATE',
-    UNLISTED : 'UNLISTED',
+    PASSWORD : 'PASSWORD',
 
     getVisibilityName(visibility){
         if( this.PUBLIC === visibility ) {
@@ -26,8 +26,8 @@ export const Visibility = {
             return '🔒 비공개';
         }
 
-        if( this.UNLISTED === visibility ) {
-            return '🔗링크'
+        if( this.PASSWORD === visibility ) {
+            return '🔑 제한된 공개'
         }
     },
 
