@@ -5,7 +5,7 @@ import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.
 import {loadEntryMatchInfo} from "../../js/entry-match.js";
 import {playRecordStorage} from "../../js/const.js";
 import {showToastMessage} from "../../../../global/toast-message/js/common-toast-message.js";
-import {ModerationStatus} from "../../../../global/const/const.js";
+import {ModerationStatus, Visibility} from "../../../../global/const/const.js";
 
 const tournamentSelectExceptionHandler = new TournamentSelectExceptionHandler();
 
@@ -43,6 +43,20 @@ function renderDialog(){
         </div>`;
 
     documentBody.insertAdjacentHTML('beforeend', tournamentSelectDialog);
+}
+
+// 비밀번호 입력 UI 랜더링
+function renderPasswordInput(){
+    const tournamentDesc  = document.querySelector('#tournament-desc');
+
+    const passwordInputGroup =
+        `<div class="password-input-group">
+            <input id="topic-password" class="topic-password" type="text" placeholder="비밀번호 입력">
+            <i class="txt-i">공개가 제한된 대결로 비밀번호를 입력이 필요합니다.</i>
+        </div>`;
+
+    tournamentDesc.insertAdjacentHTML('afterend', passwordInputGroup);
+
 }
 
 function addDialogEvents() {
@@ -91,6 +105,10 @@ export async function openTournamentSelectDialog(topicId){
 
         clearDialogData(dialog);
         toggleBodyScrollBlocked(true);
+
+        if(Visibility.PASSWORD === topic.visibility ) {
+            renderPasswordInput();
+        }
 
         if(isModerationPassed(topic.moderationStatus)){ // 필터 통과여부에 따라 이용제한 처리
             dialog.querySelector('#topic-title').textContent= `${topic.title}`;
@@ -142,23 +160,49 @@ function toggleTournamentSelect(isOpen){
 async function getPlayRecordIdAndStart(){
     const dialog = document.querySelector('#tournament-select-dialog');
     const tournamentStage = dialog.querySelector('#selected-tournament').dataset.tournamentStage;
+    const topicPasswordInputEl = dialog.querySelector('#topic-password');
     const topicId = dialog.getAttribute('data-topic-id');
 
-    let playRecordResult;
+    const topicPassword = getValidTopicPassword(topicPasswordInputEl);
+
+    if( topicPassword === null) return;
 
     try {
-        playRecordResult = await getTopicPlayRecordId(topicId, tournamentStage);
+        const playRecordRequestPayload = {
+            tournamentStage  : tournamentStage,
+            accessCode  : topicPassword,
+        }
+        const playRecordResult = await getTopicPlayRecordId(topicId, playRecordRequestPayload);
+
+        if(playRecordResult){
+            closeTournamentSelectDialog();
+            playRecordStorage.saveId(playRecordResult.playRecordId);
+            await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
+        }
     } catch(error){
         tournamentSelectExceptionHandler.handle(error , {context : 'playRecordId'});
     }
-    closeTournamentSelectDialog();
-
-    if(playRecordResult){
-        playRecordStorage.saveId(playRecordResult.playRecordId);
-        await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
-    }
 }
 
+// 입력된 비밀번호 추출
+function getValidTopicPassword(topicPasswordEl){
+    if(!topicPasswordEl) return '';
+    const topicPassword = topicPasswordEl.value;
+
+    if(!validateTopicPassword(topicPassword)) return null;
+    return topicPassword
+}
+
+// 입력 비밀번호 검사
+function validateTopicPassword(topicPassword){
+
+    if( !topicPassword || topicPassword.length < 1) {
+        showToastMessage('비밀번호를 입력해 주세요.', 'alert', 2500);
+        return false;
+    }
+
+    return true;
+}
 // 필터 통과 여부 검사
 function isModerationPassed(moderationStatus){
     return ModerationStatus.PASSED === moderationStatus;
