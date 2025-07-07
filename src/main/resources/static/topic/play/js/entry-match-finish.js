@@ -23,12 +23,12 @@ function setupWinnerEntry(){
     winnerEntry.classList.remove('winner');
     winnerEntry.classList.add('winner-entry');
     winnerEntry.querySelector('.btn-select-entry').remove();
-
-    renderWinnerEntryIndex(winnerEntry);
+    renderWinnerEntryIndex();
 }
 
 // 승리 엔트리 인덱스 랜더링
-function renderWinnerEntryIndex(winnerEntry){
+function renderWinnerEntryIndex(){
+    const winnerEntry = document.querySelector('.entry-slot.winner-entry');
     const winnerEntryIndex =
         `<p class="winner-entry-index">&lt;우승 엔트리&gt;</p>`;
 
