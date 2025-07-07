@@ -23,6 +23,13 @@ export function renderEntriesAndAddEvents(entryMatch){
     addEntrySlotClickEvents(entryTargetB);
 }
 
+export function renderWinnerEntryForCompletedMatch(winnerEntry){
+    clearMatchStage();
+    const entrySlot = createEntrySlot('entry-a', 'entry-slot');
+    entrySlot.classList.add('winner-entry');
+    determineRenderingHandler(entrySlot, winnerEntry);
+}
+
 function createEntrySlot(id, ...classNames){
     const entrySlot = document.createElement('div');
     entrySlot.id = id;
