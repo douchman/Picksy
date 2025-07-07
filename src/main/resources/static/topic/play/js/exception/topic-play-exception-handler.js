@@ -23,8 +23,8 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
         }, 2500);
     }
 
-    handleCurrentEntryMatchException(){
-        showToastMessage('진행할 대결 정보 조회를 확인할 수 없습니다.' , 'error', 3500);
+    handleCurrentEntryMatchException(error){
+        showToastMessage(`${error.message}`, 'error', 3500);
         setTimeout(() => {
            location.href = '/';
         }, 2500);
