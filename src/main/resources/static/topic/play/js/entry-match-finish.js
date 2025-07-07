@@ -1,5 +1,6 @@
 import {setupMatchStageComment} from "../match-stage-comment/js/match-stage-comment.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../../global/global.js";
+import {renderWinnerEntryForCompletedMatch} from "./entry-render.js";
 
 // 매치 종료
 export function finishEntryMatch(){
@@ -11,6 +12,15 @@ export function finishEntryMatch(){
     }, 2000);
 
 }
+
+// 이미 종료된 매치 셋업
+export function setupCompletedEntryMatch(winnerEntryId, entryMatch){
+    const winnerEntry = Object.values(entryMatch).find(entry => entry.id === winnerEntryId);
+    renderWinnerEntryForCompletedMatch(winnerEntry);
+    renderWinnerEntryIndex();
+    setupMatchStageComment();
+}
+
 
 /**
  * 승리한 엔트리 셋업
