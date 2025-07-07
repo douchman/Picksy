@@ -42,9 +42,11 @@ async function renderTopicStatistics(){
 
         const topicDetail = topicStatisticsResult.topic;
         const topicStatistics = topicStatisticsResult.topicStatistics;
+        const tournamentStatistics = topicStatisticsResult.tournamentStatistics;
 
-        renderTopicTitle(topicDetail.title);
-        renderTotalMatches(topicStatistics.totalMatches);
+        renderTopicDetail(topicDetail);
+        renderTopicStats(topicStatistics);
+        renderTournamentStats(tournamentStatistics);
     } catch(error){
         topicStatisticsException.handle(error, {context : 'topicStatistics'});
         return false;
@@ -53,12 +55,31 @@ async function renderTopicStatistics(){
     return true;
 }
 
-// 대결 제목 랜더링
-function renderTopicTitle(topicTitle){
-    document.querySelector('#topic-title').innerHTML = `${topicTitle}`;
+// 대결 주제 상세 정보 랜더링
+function renderTopicDetail(topicDetail){
+    if(topicDetail){
+        document.querySelector('#topic-title').innerHTML = `${topicDetail.title}`;
+        document.querySelector('#topic-description').innerHTML = `${topicDetail.description}`;
+        document.querySelector('#topic-thumbnail').style.backgroundImage = `url('${topicDetail.thumbnail}')`;
+    }
 }
 
-// 진행된 총 대결 횟수 랜더링
-function renderTotalMatches(totalMatches){
-    document.querySelector('#total-matches').innerHTML = `이 대결은 총<span>${totalMatches}번</span>플레이 되었어요!`;
+// 대결주제 통계 정보 랜더링
+function renderTopicStats(topicStatistics){
+    if(topicStatistics){
+        document.querySelector('#total-matches').innerHTML = `${topicStatistics.totalMatches} 회`; // 총 진행 횟수
+        document.querySelector('#entry-counts').innerHTML = `${topicStatistics.entryCount} 개`; // 후보 엔트리 수
+    }
+}
+
+// 가장 많이 선택 된 너먼트 랜더링
+function renderTournamentStats(tournamentStatistics){
+    if(tournamentStatistics && tournamentStatistics.length > 0){
+        const mostPopularTournament = tournamentStatistics.reduce((max, current) => {
+           return current.stageMatches > max.stageMatches ? current : max;
+        });
+
+        document.querySelector('#most-popular-tournament').innerHTML = `${mostPopularTournament.tournamentName}`;
+    }
+
 }

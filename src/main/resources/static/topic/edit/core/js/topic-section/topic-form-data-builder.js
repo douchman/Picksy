@@ -18,7 +18,7 @@ export async function buildValidatedTopicRegisterPayload(){
 
     if(!description || description === ''){
         showToastMessage('대결 설명을 입력해주세요', 'alert');
-        return {validationResult : false, topicRegisterPayload : nulll}
+        return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(!thumbnail){
@@ -32,7 +32,7 @@ export async function buildValidatedTopicRegisterPayload(){
     }
 
     const topicRegisterPayload = {
-        title : subject,
+        title : title,
         subject : subject,
         description : description,
         visibility : visibility,

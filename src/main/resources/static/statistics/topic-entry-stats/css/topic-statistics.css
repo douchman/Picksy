@@ -7,40 +7,91 @@
     padding : 20px 20px 20px 0;
 }
 
-.topic-stats-group{
-    position: relative;
-    padding-bottom : 20px;
+.top-header-group{
+    margin-bottom: 15px;
 }
 
-.topic-stats-group:after{
-    content : '';
-    position: absolute;
-    bottom : 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #CECECE;
+.top-header-group p{
+    color : #333;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.topic-stats-group{
+    display: flex;
+    position: relative;
+    gap : 25px;
+    padding : 12px 12px 20px 12px;
+    border-radius: 6px;
+    background-color: #FFF;
+}
+
+.topic-info{
+    display: flex;
+    gap : 25px;
+}
+
+.topic-thumbnail{
+    width: 150px;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-self: center;
 }
 
 .topic-title{
+    display: inline-block;
     color : #333;
     font-weight: 600;
     font-size: 30px;
-}
-
-.total-matches{
-    color : #7D7D7D;
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.total-matches span{
-    color : #9B7EBD;
-    font-weight: 600;
-    font-size: 20px;
-    padding : 0 6px;
+    margin-bottom: 5px;
 }
 
 .entries-stats-group{
     padding : 20px 0;
+}
+
+.topic-stats{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap : 8px;
+}
+
+.topic-description{
+    color : #7D7D7D;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.total-matches,
+.most-popular-tournament,
+.entry-counts{
+    color : #7D7D7D;
+    font-weight: 600;
+    font-size: 18px;
+    --index-color : #316B83;
+    --index-font-size : 18px;
+    --index-font-weight : 600;
+}
+
+.total-matches:before{
+    content : '🏁 총 진행 횟수 : ';
+    color : var(--index-color);
+    font-size: var(--index-font-size);
+    font-weight: var(--index-font-weight);
+}
+
+.most-popular-tournament:before{
+    content : '🏆 가장 많이 진행된 토너먼트 : ';
+    color : var(--index-color);
+    font-size: var(--index-font-size);
+    font-weight: var(--index-font-weight);
+}
+
+.entry-counts:before{
+    content : '📦 후보 엔트리 수 : ';
+    color : var(--index-color);
+    font-size: var(--index-font-size);
+    font-weight: var(--index-font-weight);
 }

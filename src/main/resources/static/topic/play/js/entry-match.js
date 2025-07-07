@@ -1,8 +1,9 @@
 import {match, playRecordStorage} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
-import {finishEntryMatch} from "./entry-match-finish.js";
+import {finishEntryMatch, setupCompletedEntryMatch} from "./entry-match-finish.js";
 import {getCurrentEntryMatch, submitMatchResult} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
+import {PlayStatus} from "../../../global/const/PlayStatus.js";
 
 const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 
@@ -13,12 +14,20 @@ export async function loadEntryMatchInfo() {
         const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
 
         const matchId = currentEntryMatchResult.matchId;
+        const playStatus = currentEntryMatchResult.playStatus;
         const currentTournament = currentEntryMatchResult.currentTournament;
         const entryMatch = currentEntryMatchResult.entryMatch;
 
         match.setId(matchId);
         displayCurrentTournament(currentTournament);
-        renderEntriesAndAddEvents(entryMatch);
+        if( PlayStatus.IN_PROGRESS === playStatus){ // 진행중인 대결
+            renderEntriesAndAddEvents(entryMatch);
+        } else { // 완료된 대결
+            const winnerEntryId = currentEntryMatchResult.winnerEntryId;
+            toggleMatchStageStatus(true);
+            setupCompletedEntryMatch(winnerEntryId, entryMatch);
+        }
+
     } catch(error) {
         topicPlayExceptionHandler.handle(error, {context: 'currentEntryMatch'})
         // TODO : retry submit

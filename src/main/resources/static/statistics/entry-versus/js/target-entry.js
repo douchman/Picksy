@@ -52,10 +52,19 @@ function renderTargetEntryStatistics(entryStats){
     targetEntryWinRateBar.style.setProperty('--win-rate' , roundedTargetEntryWinRate + '%');
     targetEntryWinRateBar.style.setProperty('--win-rate-text' , `'${roundedTargetEntryWinRate}%'`);
 
-    // 가장 높이 올라간 토너먼트
-    document.querySelector('#target-entry-highest-tournament').textContent = TournamentStageName.getTournamentStageNameByTournament(entryStats.highestTournament);
+    renderHighestTournament(); // 최고 토너먼트 랜더링
 }
 
+// 최고 토너먼트 랜더링
+function renderHighestTournament(highestTournament){
+    let renderTournament = '-';
+    const targetEntryHighestTournament = document.querySelector('#target-entry-highest-tournament');
+    if(highestTournament && highestTournament > 0){
+        renderTournament = TournamentStageName.getTournamentStageNameByTournament(highestTournament);
+    }
+
+    targetEntryHighestTournament.textContent = renderTournament;
+}
 // 소수 점 줄이기
 function roundToNDecimal(value, n){
     if( value ){

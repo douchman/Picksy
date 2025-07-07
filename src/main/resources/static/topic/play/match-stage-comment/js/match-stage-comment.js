@@ -50,7 +50,10 @@ function renderTopicComment(){
                         <textarea id="comment-content" class="comment-content"></textarea>
                     </div>
 
-                    <button id="btn-register-comment" class="btn-register-comment" type="button">✍️ 코멘트 남기기</button>
+                    <div class="bottom-btn-group">
+                        <a class="move-to-topic-stats" href="/statistics/topic/${topic.getId()}">📊 통계</a>
+                        <button id="btn-register-comment" class="btn-register-comment" type="button">✍️ 코멘트 남기기</button>
+                    </div>
                 </div>
             </div>
         </div>`;

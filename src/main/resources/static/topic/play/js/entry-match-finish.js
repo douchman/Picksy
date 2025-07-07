@@ -1,5 +1,6 @@
 import {setupMatchStageComment} from "../match-stage-comment/js/match-stage-comment.js";
 import {flushPlayRecordIdsFromLocalStorage} from "../../../global/global.js";
+import {renderWinnerEntryForCompletedMatch} from "./entry-render.js";
 
 // 매치 종료
 export function finishEntryMatch(){
@@ -12,6 +13,15 @@ export function finishEntryMatch(){
 
 }
 
+// 이미 종료된 매치 셋업
+export function setupCompletedEntryMatch(winnerEntryId, entryMatch){
+    const winnerEntry = Object.values(entryMatch).find(entry => entry.id === winnerEntryId);
+    renderWinnerEntryForCompletedMatch(winnerEntry);
+    renderWinnerEntryIndex();
+    setupMatchStageComment();
+}
+
+
 /**
  * 승리한 엔트리 셋업
  * - winner class 제거 -> 스타일 조정
@@ -23,12 +33,12 @@ function setupWinnerEntry(){
     winnerEntry.classList.remove('winner');
     winnerEntry.classList.add('winner-entry');
     winnerEntry.querySelector('.btn-select-entry').remove();
-
-    renderWinnerEntryIndex(winnerEntry);
+    renderWinnerEntryIndex();
 }
 
 // 승리 엔트리 인덱스 랜더링
-function renderWinnerEntryIndex(winnerEntry){
+function renderWinnerEntryIndex(){
+    const winnerEntry = document.querySelector('.entry-slot.winner-entry');
     const winnerEntryIndex =
         `<p class="winner-entry-index">&lt;우승 엔트리&gt;</p>`;
 

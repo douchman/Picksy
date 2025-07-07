@@ -7,6 +7,6 @@ export async function getTopicDetail(topicId){
 }
 
 // 대결주제 시작 -> 서버에 알림 & playRecordId 식별자 반환
-export async function getTopicPlayRecordId(topicId, tournamentStage){
-    return await apiRequest(`topics/${topicId}/play-records`, ApiMethod.POST, {tournamentStage});
+export async function getTopicPlayRecordId(topicId, requestBody){
+    return await apiRequest(`topics/${topicId}/play-records`, ApiMethod.POST, requestBody);
 }

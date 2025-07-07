@@ -11,9 +11,23 @@
 <th:block layout:fragment="Content">
     <body>
         <div id="topic-statistics" class="topic-statistics">
+            <div class="top-header-group">
+                <p>📊 대결 통계</p>
+            </div>
             <div class="topic-stats-group">
-                <p id="topic-title" class="topic-title"></p>
-                <p id="total-matches" class="total-matches"></p>
+                <div class="group-item topic-info">
+                    <div id="topic-thumbnail" class="topic-thumbnail"></div>
+                    <div class="inner-group">
+                        <p id="topic-title" class="topic-title"></p>
+                        <p id="topic-description" class="topic-description"></p>
+                    </div>
+                </div>
+
+                <div class="group-item topic-stats">
+                    <p id="total-matches" class="total-matches"></p>
+                    <p id="most-popular-tournament" class="most-popular-tournament"></p>
+                    <p id="entry-counts" class="entry-counts"></p>
+                </div>
             </div>
 
             <div class="entries-stats-group">
