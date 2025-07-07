@@ -23,7 +23,8 @@ export async function loadEntryMatchInfo() {
         if( PlayStatus.IN_PROGRESS === playStatus){ // 진행중인 대결
             renderEntriesAndAddEvents(entryMatch);
         } else { // 완료된 대결
-            const winnerEntryId = currentEntryMatchResult.winnerEntryId
+            const winnerEntryId = currentEntryMatchResult.winnerEntryId;
+            toggleMatchStageStatus(true);
             setupCompletedEntryMatch(winnerEntryId, entryMatch);
         }
 
