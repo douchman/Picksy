@@ -103,6 +103,10 @@
     transition: opacity .2s ease;
 }
 
+.entry-slot.winner-entry .btn-select-entry{
+    display: none;
+}
+
 .entry-slot .btn-select-entry:before{
     content : '선택';
     font-weight: 600;
