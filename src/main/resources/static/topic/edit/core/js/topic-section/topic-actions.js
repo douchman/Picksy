@@ -11,7 +11,7 @@ export async function registerTopic(){
 
     if( !validationResult || !topicRegisterPayload ) return false;
 
-    /*try {
+    try {
         const topicCreateResult = await createTopic(topicRegisterPayload);
 
         setCreatedTopicId(topicCreateResult);
@@ -19,9 +19,9 @@ export async function registerTopic(){
     } catch (error){
         topicEditExceptionHandler.handle(error, {context : 'topicCreate'});
         return false;
-    }*/
+    }
 
-    return false;
+    return true;
 }
 
 export async function modifyTopic(){
