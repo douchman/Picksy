@@ -1,5 +1,6 @@
 import {generateFilePreviewURL} from "../../../../../global/util/file.js";
 import {initialTopic} from "../const/initial-topic.js";
+import {toggleAccessCodeGroupByVisibility} from "./topic-password-group.js";
 
 export function addTopicSectionEvents(){
 
@@ -50,6 +51,12 @@ export function addTopicSectionEvents(){
             changeInitialTopicVisibility(e.target);
         }
     });
+
+    document.querySelectorAll('input[name="visibility"]').forEach(function(visibilityRadio){
+        visibilityRadio.addEventListener('change', function(){
+            toggleAccessCodeGroupByVisibility(this.value);
+        });
+    });
 }
 
 function changeInitialTopicVisibility(visibilityRadio){
@@ -59,3 +66,4 @@ function changeInitialTopicVisibility(visibilityRadio){
 function markTopicThumbnailAsChanged(){
     initialTopic.isThumbnailChanged = true;
 }
+
