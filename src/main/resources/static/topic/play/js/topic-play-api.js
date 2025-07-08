@@ -3,7 +3,7 @@ import {ApiMethod} from "../../../global/api/api-method.js";
 
 // 대결주제 상세정보 조회
 export async function getTopicDetail(topicId){
-    return await apiRequest(`topics/${topicId}`, ApiMethod.GET, {}, false);
+    return await apiRequest(`topics/${topicId}/tournaments`, ApiMethod.GET, {}, false);
 }
 
 // 진행 할 대결 정보 조회
