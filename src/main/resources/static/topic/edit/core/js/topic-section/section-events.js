@@ -1,6 +1,6 @@
 import {generateFilePreviewURL} from "../../../../../global/util/file.js";
 import {initialTopic} from "../const/initial-topic.js";
-import {toggleTopicPasswordGroupByVisibility} from "./topic-password-group.js";
+import {toggleAccessCodeGroupByVisibility} from "./topic-password-group.js";
 
 export function addTopicSectionEvents(){
 
@@ -54,7 +54,7 @@ export function addTopicSectionEvents(){
 
     document.querySelectorAll('input[name="visibility"]').forEach(function(visibilityRadio){
         visibilityRadio.addEventListener('change', function(){
-            toggleTopicPasswordGroupByVisibility(this.value);
+            toggleAccessCodeGroupByVisibility(this.value);
         });
     });
 }

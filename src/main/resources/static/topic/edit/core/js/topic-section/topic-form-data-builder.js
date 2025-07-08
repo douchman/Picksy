@@ -5,7 +5,7 @@ import {Visibility} from "../../../../../global/const/const.js";
 
 export async function buildValidatedTopicRegisterPayload(){
 
-    const { title, subject, description, thumbnail, visibility, topicPassword}  = getTopicInputValues();
+    const { title, subject, description, thumbnail, visibility, accessCode}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
@@ -27,7 +27,7 @@ export async function buildValidatedTopicRegisterPayload(){
         return {validationResult : false, topicRegisterPayload : null}
     }
 
-    if(Visibility.PASSWORD === visibility && !validateTopicPassword(topicPassword)){
+    if(Visibility.PASSWORD === visibility && !validateAccessCode(accessCode)){
         showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
         return {validationResult : false, topicRegisterPayload : null}
     }
@@ -51,7 +51,7 @@ export async function buildValidatedTopicRegisterPayload(){
 
 export async function buildValidatedTopicUpdatePayload(){
 
-    const { title, subject, description, thumbnail, visibility, topicPassword}  = getTopicInputValues();
+    const { title, subject, description, thumbnail, visibility, accessCode}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
@@ -68,7 +68,7 @@ export async function buildValidatedTopicUpdatePayload(){
         return {validationResult : false, topicUpdatePayload : null}
     }
 
-    if(Visibility.PASSWORD === visibility && !validateTopicPassword(topicPassword)){
+    if(Visibility.PASSWORD === visibility && !validateAccessCode(accessCode)){
         showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
         return {validationResult : false, topicRegisterPayload : null}
     }
@@ -105,7 +105,7 @@ function getTopicInputValues(){
     const description = document.querySelector('#topic-desc').value;
     const thumbnail = document.querySelector('#topic-thumbnail').files[0];
     const visibility = document.querySelector('input[name="visibility"]:checked')?.value;
-    const topicPassword = document.querySelector('#topic-password').value;
+    const accessCode = document.querySelector('#access-code').value;
 
     return {
         title,
@@ -113,11 +113,11 @@ function getTopicInputValues(){
         description,
         thumbnail,
         visibility,
-        topicPassword
+        accessCode
     };
 }
 
-function validateTopicPassword(topicPassword){
+function validateAccessCode(topicPassword){
     const regex = /^[ㄱ-ㅎ가-힣ㅏ-ㅣa-zA-Z0-9]{1,255}$/;
     return regex.test(topicPassword);
 }
