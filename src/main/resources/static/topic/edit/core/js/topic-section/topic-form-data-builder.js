@@ -78,6 +78,8 @@ export async function buildValidatedTopicUpdatePayload(){
         title,
         subject,
         description,
+        visibility,
+        ...(Visibility.PASSWORD === visibility ? {accessCode} : {})
     }
 
     if( !isModifiedTopic(currentData) ){ return { validationResult : true, topicUpdatePayload : null} }
@@ -87,7 +89,7 @@ export async function buildValidatedTopicUpdatePayload(){
         subject : subject,
         description : description,
         visibility : visibility,
-        accessCode : accessCode
+        ...(Visibility.PASSWORD === visibility ? {accessCode} : {})
     };
 
     if(thumbnail){ // 새로 업로드 할 대표 이미지 존재 시

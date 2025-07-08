@@ -1,3 +1,5 @@
+import {Visibility} from "../../../../../global/const/const.js";
+
 export function renderTopicDetail(topicDetailResult){
     const topicDetail = topicDetailResult.topic;
 
@@ -11,13 +13,19 @@ export function renderTopicDetail(topicDetailResult){
     document.querySelector('#topic-subject').value = topicDetail.subject;
     document.querySelector('#topic-desc').value = topicDetail.description;
 
-    renderTopicVisibility(topicDetail.visibility);
+    renderTopicVisibility(topicDetail.visibility, topicDetail.accessCode);
 }
 
 // 대결주제 공개범위 랜더링
-function renderTopicVisibility(visibility){
+function renderTopicVisibility(visibility, accessCode){
     const visibilityRadio = document.querySelector(`input[name="visibility"][value="${visibility}"]`);
+
     if( visibilityRadio ) {
         visibilityRadio.checked = true;
+    }
+
+    if( Visibility.PASSWORD === visibility){
+        document.querySelector('#access-code-group').classList.add('show');
+        document.querySelector('#access-code').value = accessCode;
     }
 }
