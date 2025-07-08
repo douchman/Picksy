@@ -42,7 +42,8 @@ export async function buildValidatedTopicRegisterPayload(){
         subject : subject,
         description : description,
         visibility : visibility,
-        thumbnail : thumbnailUrl
+        thumbnail : thumbnailUrl,
+        accessCode : accessCode
     };
 
     return { validationResult : true, topicRegisterPayload };
@@ -85,7 +86,8 @@ export async function buildValidatedTopicUpdatePayload(){
         title : title,
         subject : subject,
         description : description,
-        visibility : visibility
+        visibility : visibility,
+        accessCode : accessCode
     };
 
     if(thumbnail){ // 새로 업로드 할 대표 이미지 존재 시
