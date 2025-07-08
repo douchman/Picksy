@@ -3,7 +3,7 @@
 }
 
 .topic-group{
-    padding : 20px 0;
+    padding : 10px 0;
 }
 
 .topic-item:not(:last-child){
@@ -67,7 +67,7 @@
 }
 
 .topic-desc-group .input-group:not(:last-child){
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .topic-desc-group .input-group label.desc-index{
