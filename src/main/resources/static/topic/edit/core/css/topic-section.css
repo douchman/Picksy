@@ -7,7 +7,7 @@
 }
 
 .topic-item:not(:last-child){
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .topic-item .item-index{
