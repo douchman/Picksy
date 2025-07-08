@@ -1,10 +1,11 @@
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {isModifiedTopic} from "../const/initial-topic.js";
 import {uploadTopicThumbnail} from "./topic-thumb-uploader.js";
+import {Visibility} from "../../../../../global/const/const.js";
 
 export async function buildValidatedTopicRegisterPayload(){
 
-    const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
+    const { title, subject, description, thumbnail, visibility, topicPassword}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
@@ -23,6 +24,11 @@ export async function buildValidatedTopicRegisterPayload(){
 
     if(!thumbnail){
         showToastMessage('대표이미지를 등록해주세요', 'alert');
+        return {validationResult : false, topicRegisterPayload : null}
+    }
+
+    if(Visibility.PASSWORD === visibility && !validateTopicPassword(topicPassword)){
+        showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
         return {validationResult : false, topicRegisterPayload : null}
     }
 
@@ -45,7 +51,7 @@ export async function buildValidatedTopicRegisterPayload(){
 
 export async function buildValidatedTopicUpdatePayload(){
 
-    const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
+    const { title, subject, description, thumbnail, visibility, topicPassword}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
@@ -60,6 +66,11 @@ export async function buildValidatedTopicUpdatePayload(){
     if(!description || description === ''){
         showToastMessage('대결 설명을 입력해주세요', 'alert');
         return {validationResult : false, topicUpdatePayload : null}
+    }
+
+    if(Visibility.PASSWORD === visibility && !validateTopicPassword(topicPassword)){
+        showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
+        return {validationResult : false, topicRegisterPayload : null}
     }
 
     const currentData = {
@@ -94,12 +105,19 @@ function getTopicInputValues(){
     const description = document.querySelector('#topic-desc').value;
     const thumbnail = document.querySelector('#topic-thumbnail').files[0];
     const visibility = document.querySelector('input[name="visibility"]:checked')?.value;
+    const topicPassword = document.querySelector('#topic-password').value;
 
     return {
         title,
         subject,
         description,
         thumbnail,
-        visibility
+        visibility,
+        topicPassword
     };
+}
+
+function validateTopicPassword(topicPassword){
+    const regex = /^[ㄱ-ㅎ가-힣ㅏ-ㅣa-zA-Z0-9]{1,255}$/;
+    return regex.test(topicPassword);
 }
