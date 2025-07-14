@@ -6,8 +6,15 @@ const authExceptionHandler = new AuthExceptionHandler();
 
 document.addEventListener("DOMContentLoaded", async () => {
     const isAuth = await checkMemberAuthState();
+    addHeaderTitleEvent();
     renderHeaderForAuthState(isAuth);
 });
+
+function addHeaderTitleEvent(){
+    document.querySelector('#header-title').addEventListener('click', function(){
+        location.href = '/';
+    });
+}
 
 function renderHeaderForAuthState(isAuth) {
     if ( isAuth ){
