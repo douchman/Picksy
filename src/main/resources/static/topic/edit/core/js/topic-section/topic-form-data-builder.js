@@ -1,10 +1,11 @@
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {isModifiedTopic} from "../const/initial-topic.js";
 import {uploadTopicThumbnail} from "./topic-thumb-uploader.js";
+import {Visibility} from "../../../../../global/const/const.js";
 
 export async function buildValidatedTopicRegisterPayload(){
 
-    const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
+    const { title, subject, description, thumbnail, visibility, accessCode}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
@@ -26,6 +27,11 @@ export async function buildValidatedTopicRegisterPayload(){
         return {validationResult : false, topicRegisterPayload : null}
     }
 
+    if(Visibility.PASSWORD === visibility && !validateAccessCode(accessCode)){
+        showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
+        return {validationResult : false, topicRegisterPayload : null}
+    }
+
     const { result : isUploadSuccess, thumbnailUrl} = await uploadTopicThumbnail(thumbnail);
     if( !isUploadSuccess ){
         return { validationResult : false, topicRegisterPayload:  null };
@@ -36,7 +42,8 @@ export async function buildValidatedTopicRegisterPayload(){
         subject : subject,
         description : description,
         visibility : visibility,
-        thumbnail : thumbnailUrl
+        thumbnail : thumbnailUrl,
+        accessCode : accessCode
     };
 
     return { validationResult : true, topicRegisterPayload };
@@ -45,7 +52,7 @@ export async function buildValidatedTopicRegisterPayload(){
 
 export async function buildValidatedTopicUpdatePayload(){
 
-    const { title, subject, description, thumbnail, visibility}  = getTopicInputValues();
+    const { title, subject, description, thumbnail, visibility, accessCode}  = getTopicInputValues();
 
     if(!title || title === ''){
         showToastMessage('대결 제목을 입력해주세요', 'alert');
@@ -62,10 +69,17 @@ export async function buildValidatedTopicUpdatePayload(){
         return {validationResult : false, topicUpdatePayload : null}
     }
 
+    if(Visibility.PASSWORD === visibility && !validateAccessCode(accessCode)){
+        showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
+        return {validationResult : false, topicRegisterPayload : null}
+    }
+
     const currentData = {
         title,
         subject,
         description,
+        visibility,
+        ...(Visibility.PASSWORD === visibility ? {accessCode} : {})
     }
 
     if( !isModifiedTopic(currentData) ){ return { validationResult : true, topicUpdatePayload : null} }
@@ -74,7 +88,8 @@ export async function buildValidatedTopicUpdatePayload(){
         title : title,
         subject : subject,
         description : description,
-        visibility : visibility
+        visibility : visibility,
+        ...(Visibility.PASSWORD === visibility ? {accessCode} : {})
     };
 
     if(thumbnail){ // 새로 업로드 할 대표 이미지 존재 시
@@ -94,12 +109,19 @@ function getTopicInputValues(){
     const description = document.querySelector('#topic-desc').value;
     const thumbnail = document.querySelector('#topic-thumbnail').files[0];
     const visibility = document.querySelector('input[name="visibility"]:checked')?.value;
+    const accessCode = document.querySelector('#access-code').value;
 
     return {
         title,
         subject,
         description,
         thumbnail,
-        visibility
+        visibility,
+        accessCode
     };
+}
+
+function validateAccessCode(topicPassword){
+    const regex = /^[ㄱ-ㅎ가-힣ㅏ-ㅣa-zA-Z0-9]{1,255}$/;
+    return regex.test(topicPassword);
 }

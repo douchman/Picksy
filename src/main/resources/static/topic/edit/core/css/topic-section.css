@@ -3,11 +3,11 @@
 }
 
 .topic-group{
-    padding : 20px 0;
+    padding : 10px 0;
 }
 
 .topic-item:not(:last-child){
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .topic-item .item-index{
@@ -67,7 +67,7 @@
 }
 
 .topic-desc-group .input-group:not(:last-child){
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .topic-desc-group .input-group label.desc-index{
@@ -124,5 +124,30 @@
     background-color: var(--signature-color);
 }
 
+.access-code-group{
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: opacity .3s ease;
+}
 
+.access-code-group.show{
+    visibility: visible;
+    opacity: 1;
+}
+
+.access-code-group label{
+    color : #92C7CF;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.access-code-group .access-code{
+    padding: 6px 12px;
+    border: 2px solid #92C7CF;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
 

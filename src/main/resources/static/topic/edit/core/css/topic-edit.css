@@ -44,7 +44,7 @@ input[type="file"] {
 .separate-section{
     max-height: 100%;
     overflow-y: auto;
-    padding : 20px 15px;
+    padding : 10px 15px;
     border-radius: 6px;
     background-color: #FFF;
 }
