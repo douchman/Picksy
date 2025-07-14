@@ -1,7 +1,7 @@
 import {
     addEmptyStagedEntryMedia,
 } from "../../core/js/staged-entry-media.js";
-import {renderExistingEntries} from "../../core/js/entry-section/entry-renderer.js";
+import {renderExistingEntries, setupEntryGroupVerticalScroll} from "../../core/js/entry-section/entry-renderer.js";
 import {appendToInitialEntryDataMap} from "../../core/js/const/initial-entry-map.js";
 import {addEntryFormEvents, addEntryZoneEvents} from "../../core/js/entry-section/section-events.js";
 import {getExistEntries} from "../../core/js/entry-section/entry-actions.js";
@@ -12,6 +12,7 @@ export async function setupEntrySection(){
         renderExistingEntries(existEntries);
         cacheInitialEntriesData(existEntries);
     }
+    setupEntryGroupVerticalScroll();
     addEntrySectionEvents();
 }
 

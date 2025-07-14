@@ -2,10 +2,12 @@ import {
     addEntryFormEvents,
     addEntryZoneEvents
 } from "../../core/js/entry-section/section-events.js";
+import {setupEntryGroupVerticalScroll} from "../../core/js/entry-section/entry-renderer.js";
 
 
 export function setupEntrySection(){
     addEntrySectionEvents();
+    setupEntryGroupVerticalScroll();
 }
 
 function addEntrySectionEvents(){

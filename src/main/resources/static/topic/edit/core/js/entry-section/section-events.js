@@ -9,6 +9,7 @@ import {getYouTubeInfoFromUrl} from "../../youtube.js";
 import {showToastMessage} from "../../../../../global/toast-message/js/common-toast-message.js";
 import {initialEntryDataMap} from "../const/initial-entry-map.js";
 import {MediaType} from "../../../../../global/const/const.js";
+import {defaultEntryIndex} from "../const/default-entry-index.js";
 
 let youtubeLinkDebounceTimer = null; // 유튜브 링크 디바운스 타이머
 
@@ -30,7 +31,8 @@ function addEntryZoneDragAndDropEvent(){
     // 클릭 -> 빈 엔트리 슬롯
     document.querySelector('#entry-add-zone').addEventListener('click', function(){
         const entryId = generateRandomEntryId();
-        renderEntryItem(null, entryId);
+        const defaultEntryText = `엔트리 ${defaultEntryIndex.getIndex()}`;
+        renderEntryItem(null, entryId, defaultEntryText, defaultEntryText);
         addEmptyStagedEntryMedia(entryId)
     });
 

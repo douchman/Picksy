@@ -60,12 +60,13 @@
 .entry-form .entry-item{
     display: flex;
     gap : 15px;
-    height: 150px;
-    max-height: 150px;
+    height: 120px;
+    max-height: 120px;
     padding : 10px 55px 10px 10px;
     border-radius: 6px;
     position: relative;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .entry-form .entry-item:nth-child(odd){
@@ -85,8 +86,8 @@
 }
 
 .entry-item .entry-thumb{
-    width: 150px;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -131,7 +132,7 @@
 }
 
 .entry-desc .entry-desc-input-group:not(:last-child){
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .entry-desc .entry-desc-input-group .input-index{
@@ -143,7 +144,7 @@
 
 .entry-desc .entry-desc-input-group input[type="text"]{
     flex : 1;
-    padding : 8px 12px;
+    padding : 6px 8px;
     border-radius: 6px;
     border : 2px solid #DDD;
     box-sizing: border-box;
