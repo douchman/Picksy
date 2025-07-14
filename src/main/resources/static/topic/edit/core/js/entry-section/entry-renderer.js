@@ -28,7 +28,7 @@ export function setupEntryGroupVerticalScroll(){
     entryGroup.style.overflowY = 'auto';
 }
 
-export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
+export function renderEntryItem(thumbnail, entryId = generateRandomEntryId(), name = '', description = '') {
     const entryForm = document.querySelector('#entry-form');
     const entryItem =
         `<div class="entry-item" id="${entryId}">
@@ -37,11 +37,11 @@ export function renderEntryItem(thumbnail, entryId = generateRandomEntryId()){
                 <div class="entry-desc">
                     <div class="entry-desc-input-group">
                         <span class="input-index">엔트리 명</span>
-                        <input class="entry-name" type="text" maxlength="30">
+                        <input class="entry-name" type="text" maxlength="30" value="${name}">
                     </div>
                     <div class="entry-desc-input-group">
                          <span class="input-index">엔트리 설명</span>
-                         <input class="entry-description" type="text" maxlength="200">
+                         <input class="entry-description" type="text" maxlength="200" value="${description}">
                     </div>
                     <div class="entry-desc-input-group">
                          <span class="input-index">유튜브 링크</span>
