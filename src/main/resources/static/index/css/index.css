@@ -1,0 +1,148 @@
+body {
+    height: auto;
+    background-color: #FFF;
+}
+
+section {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+img.picksy-slogan{
+    width: 300px;
+    height: auto;
+}
+
+.pick{
+    color : #898AC4;
+    font-size: 16px;
+}
+
+.sy{
+    color : #F0A04B;
+    font-size: 16px;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+/* about */
+.about .about-a{
+    margin : 0 auto 12px;
+}
+
+.about .about-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap : 2px;
+    margin-bottom: 15px;
+}
+
+.about .about-list .list-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap : 5px;
+}
+
+.about .desc p{
+    font-size: 18px;
+    line-height: 22px;
+}
+
+
+/* terms */
+.terms .term-items .term-item:not(:last-child){
+    margin-bottom: 15px;
+}
+
+.terms .term-items .term-item strong{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.terms .term-items .term-item p{
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.terms .term-items .term-item i{
+    color : #7D7D7D;
+    font-size: 12px;
+}
+
+/* feature items */
+.feature-items .feature-item:not(:last-child){
+    margin-bottom: 15px;
+}
+
+.feature-item > p{
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.feature-item strong{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.feature-item i{
+    font-style: normal;
+}
+
+img.youtube-icon{
+    width: 18px;
+    height: 12px;
+}
+
+/* how-it-works */
+.how-it-works .steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap : 5px;
+}
+
+.how-it-works .steps .step{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap : 5px;
+}
+
+.how-it-works .steps .step .index{
+    width: 120px;
+    text-align: left;
+}
+.how-it-works .steps .step p{
+    width: 255px;
+    font-size: 15px;
+    text-align: left;
+}
+
+
+button.click-to-action {
+    display: inline-block;
+    background-color: var(--signature-color);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+}
