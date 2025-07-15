@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function addHeaderTitleEvent(){
     document.querySelector('#header-title').addEventListener('click', function(){
-        location.href = '/';
+        location.href = '/index';
     });
 }
 
