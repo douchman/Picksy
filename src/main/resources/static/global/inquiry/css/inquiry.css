@@ -1,0 +1,143 @@
+.inquiry{
+    position: fixed;
+    top : 0;
+    left : 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+
+.inquiry .bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.inquiry .inquiry-body{
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    padding : 45px 35px 45px 20px;
+    border-radius: 8px;
+    background-color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    box-sizing: border-box;
+    width: 400px;
+    max-width: 400px;
+    opacity: 0;
+    animation: .3s ease inquiry-body-fade-in forwards;
+}
+
+.inquiry .inquiry-body .close-inquiry{
+    position: absolute;
+    top : 12px;
+    right: 12px;
+    background-repeat: no-repeat;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/x-lg.svg");
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    background-size: 100% 100%;
+
+}
+
+.inquiry-body .body-title{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.inquiry-body .inquiry-form{
+    padding-top : 25px;
+    margin-bottom: 20px;
+}
+
+.inquiry-form .form-item:not(:last-child){
+    margin-bottom: 10px;
+}
+
+.inquiry-form .form-item input[type="text"],
+.inquiry-form .form-item input[type="email"]{
+    padding : 6px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 2px solid #CCC;
+    box-sizing: border-box;
+}
+
+.inquiry-form .form-item input[type="text"]:focus,
+.inquiry-form .form-item input[type="email"]:focus{
+    border-color: var(--signature-color);
+}
+
+
+.inquiry-form .form-item .inquiry-type{
+    padding : 4px 6px 6px 6px;
+}
+
+.inquiry-form .form-item input.inquiry-author{
+    width: 120px;
+}
+
+.inquiry-form .form-item input.inquiry-title{
+
+}
+
+.inquiry-form .form-item .inquiry-content{
+    width: 100%;
+    height: 160px;
+    padding: 4px 6px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 2px solid #CCC;
+    box-sizing: border-box;
+    resize: vertical;
+    outline: none;
+}
+
+.inquiry-form .form-item .inquiry-content:focus{
+    border-color: var(--signature-color);
+}
+
+/* btn-group */
+.inquiry-body .btn-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 15px;
+}
+
+.inquiry-body .btn-group button{
+    color : #FFF;
+    font-size: 15px;
+    padding : 8px 12px;
+    border-radius: 4px;
+}
+
+.inquiry-body .btn-group .btn-register-inquiry{
+    background-color: #A3DC9A;
+}
+
+.inquiry-body .btn-group .btn-close-inquiry{
+    background-color: #CD5656;
+}
+
+.in-progress .inquiry-body .btn-group .btn-register-inquiry,
+.in-progress .inquiry-body .btn-group .btn-close-inquiry{
+    cursor: progress !important;
+    opacity: .5;
+}
+
+@keyframes inquiry-body-fade-in {
+    0%{
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
