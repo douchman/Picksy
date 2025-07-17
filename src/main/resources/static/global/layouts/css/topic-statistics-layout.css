@@ -23,3 +23,34 @@ html, body{
 .scroll-block{
     overflow: hidden;
 }
+
+/* help-section */
+.help-section{
+    position: fixed;
+    bottom : 50px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap : 10px;
+}
+
+.help-section button{
+    text-align: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    background-position: center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    padding : 0;
+    margin : 0;
+}
+
+.help-section .btn-inquiry{
+    background-color: rgba(192, 201, 238, .9);
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/ico-inquiry.svg");
+
+}
