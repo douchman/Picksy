@@ -5,6 +5,7 @@
 <head>
   <th:block th:replace="~{global/fragments/config-fragment :: configFragment}"></th:block>
   <link rel="stylesheet" th:href="@{'/global/layouts/css/topic-statistics-layout.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+  <link rel="stylesheet" th:href="@{'/global/inquiry/css/inquiry.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
   <title>Picksy</title>
 </head>
 
@@ -24,4 +25,5 @@
     </div>
 </body>
 
+<script type="module" th:src="@{'/global/inquiry/js/inquiry.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </html>
