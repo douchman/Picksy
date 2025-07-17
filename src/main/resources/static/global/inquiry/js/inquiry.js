@@ -85,8 +85,9 @@ async function registerInquiry(){
         if(validationResult && inquiryPayload){
             await createInquiry(inquiryPayload); // 문의 등록
             showToastMessage('소중한 의견 감사합니다. 빠른시일내로 답변드리겠습니다 :)', 3500);
-            setInquiryProgressState(false);
             closeInquiry();
+        } else {
+            setInquiryProgressState(false);
         }
     } catch(error){
         setInquiryProgressState(false);
