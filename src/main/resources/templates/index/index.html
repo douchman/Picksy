@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/index/css/index.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="index" class="index">
+            <section id="hero" class="hero">
+                <img id="picksy-slogan" class="picksy-slogan" src="https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/picksy-slogan.png" alt="picksy-slogan">
+            </section>
+
+            <section id="about" class="about">
+                <h1>Picksy 가 무엇인가요?</h1>
+                <p class="about-a"><strong><b class="pick">Pick</b> + <b class="sy">-sy</b></strong>: 선택을 더 친근하게, 재미있게!</p>
+                <div class="about-list">
+                    <div class="list-item"><b class="pick">Pick:</b><p>선택하다, 고르다</p></div>
+                    <div class="list-item"><b class="sy">-sy:</b><p>Bitsy, Tipsy처럼 부드럽고 캐주얼한 느낌</p></div>
+                </div>
+                <div class="desc">
+                    <p>Picksy는 사용자가 만든 <strong>대결주제</strong>에 대해<br>
+                        다양한 <strong>엔트리</strong>(항목)들을 1:1로 비교하며 선택해 나가는<br>
+                        <strong class="underline">취향 기반 토너먼트 플랫폼</strong>입니다.</p>
+                </div>
+            </section>
+
+            <section id="terms" class="terms">
+                <h1>Picksy 용어사전 📚</h1>
+                <div class="term-items">
+                    <div class="term-item">
+                        <strong>🧩 대결주제</strong>
+                        <p>사람들이 선택을 진행할 중심 주제에요.</p>
+                        <i>예: "25년 최고의 간식은 ?", "가장 귀여운 고양이는?"</i>
+                    </div>
+                    <div class="term-item">
+                        <strong>🎯 엔트리</strong>
+                        <p>각 주제를 구성하는 항목이에요. 경기의 후보들이죠.</p>
+                        <i>예: "치킨", "떡볶이", "하품하는 고양이"</i>
+                    </div>
+                    <div class="term-item">
+                        <strong>📊 통계</strong>
+                        <p>선택한 결과들이 집계되어 실시간 랭크와 데이터로 확인돼요.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="why-picksy" class="why-picksy">
+                <h1>왜 Picksy 일까요?</h1>
+                <div class="feature-items">
+                    <div class="feature-item">
+                        <strong>🎨 다양한 미디어 지원</strong><br>
+                        <p><i>🖼️</i>이미지, <i>🎬</i> 영상, <img class="youtube-icon" alt="youtube-icon" src="https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/youtube-logo.png">&nbsp;유튜브 링크까지 자유롭게 섞어<br>
+                        여러분만의 대결 항목을 만들 수 있어요!</p>
+                    </div>
+                    <div class="feature-item">
+                        <strong>⚛ AI와 함께, 더 스마트하게</strong><br>
+                        <p>앞으로는 주제에 딱 맞는 이미지도<br>
+                        AI가 자동으로 생성해 드릴 거예요.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <strong>🏆 세부 통계 제공</strong><br>
+                        <p>누가 더 많이 이겼을까요?<br>
+                        엔트리 간 상성, 선택률, 승률을 한눈에 확인!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-it-works" class="how-it-works">
+                <h1>Picksy는 이렇게 시작해요</h1>
+                <div class="steps">
+                    <div class="step"><b class="index">1️⃣ Pick it</b><p>대결 엔트리중 중 여러분의 선택을 고르세요</p></div>
+                    <div class="step"><b class="index">2️⃣ Rank it</b><p>모두의 선택이 랭크로 집계돼요</p></div>
+                    <div class="step"><b class="index">3️⃣ Play it</b><p>다양한 주제로 즐기세요</p></div>
+                </div>
+            </section>
+
+            <section id="cta" class="cta">
+                <h1>지금 여러분의 취향을 선택해보세요</h1>
+                <button id="click-to-action" class="click-to-action">👉 대결 시작하기</button>
+            </section>
+        </div>
+    </body>
+
+    <script type="module" th:src="@{'/index/js/index.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
+</th:block>
+</html>
