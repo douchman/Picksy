@@ -130,6 +130,7 @@ button.btn-back-to-login.in-progress{
     background-repeat: no-repeat;
     background-size: 30px 30px;
     background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/loading-spinner-wh.svg");
+    pointer-events: none;
 }
 
 button.btn-register.in-progress:before,
