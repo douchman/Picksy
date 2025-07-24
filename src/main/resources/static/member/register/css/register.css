@@ -91,6 +91,12 @@
     width: 100%;
 }
 
+.btn-group button.btn-register:before{
+    content : '계정생성';
+    color : #FFF;
+    font-size: 16px;
+}
+
 .for-member {
     display: flex;
     align-items: center;
@@ -105,11 +111,63 @@
 }
 
 .for-member button.btn-back-to-login{
-    color : #FFF;
-    font-size: 16px;
     background-color: #B7B1F2;
     padding : 8px 14px;
     border-radius: 4px;
     flex : 1;
     width: 100%;
+}
+
+.for-member button.btn-back-to-login:before{
+    content : '로그인';
+    color : #FFF;
+    font-size: 16px;
+}
+
+button.btn-register.in-progress,
+button.btn-back-to-login.in-progress{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/loading-spinner-wh.svg");
+    pointer-events: none;
+}
+
+button.btn-register.in-progress:before,
+button.btn-back-to-login.in-progress:before{
+    visibility: hidden;
+}
+
+.inner-register-box.hide {
+    display: none;
+}
+
+/* result-box */
+.result-box .result-img{
+    width: 100%;
+    height: 160px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/ico-check-gr.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 120px 120px;
+    margin-bottom: 20px;
+}
+
+.result-box .result-msg{
+    color : #7D7D7D;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.result-box .move-to-login{
+    display: inline-block;
+    color : #FFF;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #B7B1F2;
+    padding : 12px 0;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
 }
