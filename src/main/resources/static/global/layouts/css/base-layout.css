@@ -50,7 +50,7 @@ html, body{
 }
 
 .help-section .btn-inquiry{
-    background-color: rgba(192, 201, 238, .9);
+    background-color: #898AC4;
     background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/ico-inquiry.svg");
 
 }
