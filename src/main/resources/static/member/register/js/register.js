@@ -1,7 +1,6 @@
 import {registerMember} from "./register-api.js";
 import {RegisterExceptionHandler} from "./exception/register-exception-handler.js";
 import {buildValidatedRegisterForm} from "./register-form-data-builder.js";
-import {showToastMessage} from "../../../global/toast-message/js/common-toast-message.js";
 
 const registerExceptionHandler = new RegisterExceptionHandler();
 
@@ -22,18 +21,22 @@ function addRegisterEvents(){
     document.querySelector('#btn-back-to-login').addEventListener('click', moveToLoginPage);
 }
 
+// 계정 생성
 async function signUp(){
-
+    setRegisterStatusInProgress();
     const { validationResult , form : requestBody } = buildValidatedRegisterForm();
 
+    if(!validationResult){
+        setRegisterStatusInProgress(false);
+        return;
+    }
+
     try {
-        if( validationResult ){
-            if(await registerMember(requestBody)){
-                registerSuccess();
-            }
-        }
+        await registerMember(requestBody);
+        registerSuccess();
     } catch(error){
         registerExceptionHandler.handle(error, {context :'registerMember'});
+        setRegisterStatusInProgress(false);
     }
 }
 
@@ -41,15 +44,20 @@ function moveToLoginPage(){
     location.href = '/login';
 }
 
+// 계성 생성 성공 후 처리
 function registerSuccess(){
-    removeRegisterEvents();
-    showToastMessage('계정생성이 완료되었습니다.' , '', 3500);
     setTimeout(() =>{
-        moveToLoginPage();
-    }, 3000);
+        document.querySelector('#form-box').remove(); // 계정 생성 form box 제거
+        document.querySelector('#result-box').classList.remove('hide'); // 생성 완료 box 보임
+    }, 1500);
 }
 
-function removeRegisterEvents() {
-    document.querySelector('#btn-register').removeEventListener('click', signUp);
-    document.querySelector('#btn-back-to-login').removeEventListener('click', moveToLoginPage);
+// 계정 생성 처리 중 UI 변경
+function setRegisterStatusInProgress(isInProgress = true){
+    const btnRegister = document.querySelector('#btn-register');
+    const btnBackToLogin = document.querySelector('#btn-back-to-login');
+
+    [btnRegister, btnBackToLogin].forEach((btn) => {
+        btn.classList.toggle('in-progress', isInProgress);
+    })
 }
