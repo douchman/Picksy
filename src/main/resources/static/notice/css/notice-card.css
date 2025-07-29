@@ -1,0 +1,52 @@
+@import "notice-label.css";
+
+.notice-cards{
+    max-height: calc(100% - 80px);
+    overflow-y: auto;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.notice-cards .notice-card{
+    padding : 16px;
+    background-color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.notice-cards::-webkit-scrollbar{
+    width: 8px;
+}
+
+.notice-cards::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.notice-cards .notice-card:not(:last-child){
+    margin-bottom: 10px;
+}
+
+.notice-card .card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.notice-card .card-header .timestamp{
+    color : #7D7D7D;
+    font-size: 14px;
+}
+
+.notice-card .card-body .notice-title{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.notice-card .card-body .summary{
+    color: #7D7D7D;
+    font-size: 14px;
+    font-weight: 500;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global/layouts/base-layout.html}">
+
+<head>
+    <link rel="stylesheet" th:href="@{'/notice/css/notice.css?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"/>
+</head>
+<th:block layout:fragment="Content">
+    <body>
+        <div id="notice" class="notice">
+            <div class="notice-top">
+                <i class="txt-i">📢 피드</i>
+            </div>
+
+            <div class="notice-cards">
+                <div class="notice-card event">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">이벤트</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🎉공제 제목!!</p>
+                        <p class="summary">이벤트가 시작되었습니다.</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+                <div class="notice-card alert">
+                    <div class="card-header">
+                        <label class="lbl-notice-type">경보</label>
+                        <p class="timestamp">2025.07.29</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="notice-title">🚨무더위 주의보!!</p>
+                        <p class="summary">증맬루 덥습니다</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</th:block>
+</html>
