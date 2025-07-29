@@ -45,8 +45,20 @@
     font-weight: 700;
     margin-bottom: 5px;
 }
+
 .notice-card .card-body .summary{
     color: #7D7D7D;
     font-size: 14px;
     font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.notice-card.open .card-body .summary{
+    margin-bottom: 15px;
+}
+
+.notice-card .card-body .content{
+    max-height: 0;
+    overflow-y: hidden;
+    transition: max-height .3s ease;
 }
