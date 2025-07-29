@@ -147,5 +147,7 @@
             </div>
         </div>
     </body>
+
+    <script type="module" th:src="@{'/notice/js/notice.js?version=' + ${#calendars.format(#calendars.createNow(), 'yyyyMMddHHss')}}"></script>
 </th:block>
 </html>
