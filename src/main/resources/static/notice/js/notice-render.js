@@ -10,9 +10,11 @@ export async function renderNotice(){
 
     // 공지 리스트가 비었음
     if(isNoticeListEmpty(noticeList)){
+        toggleNoticeCardsEmpty(true);
         return { hasMore : false};
     }
 
+    toggleNoticeCardsEmpty(true);
     noticeList.forEach(({id, noticeType, title, createdAt}) => {
         const noticeCard = `
             <div class="notice-card ${NoticeType.getNoticeClassByType(noticeType)}" data-id="${id}">
@@ -45,6 +47,11 @@ function isNoticeListEmpty(noticeList){
 
 function hasNextPage(currentPage = 1 , totalPages = 1 ){
     return currentPage < totalPages;
+}
+
+function toggleNoticeCardsEmpty(isEmpty){
+    const noticeCards = document.querySelector('#notice-cards');
+    noticeCards.classList.toggle('empty', isEmpty);
 }
 
 /**
