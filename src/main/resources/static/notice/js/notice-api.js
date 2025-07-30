@@ -4,3 +4,7 @@ import {ApiMethod} from "../../global/api/api-method.js";
 export async function getNotice(requestParams){
     return await apiRequest('notices', ApiMethod.GET, requestParams);
 }
+
+export async function getNoticeDetail(noticeId){{
+    return await apiRequest(`notices/${noticeId}`, ApiMethod.GET, {});
+}}
