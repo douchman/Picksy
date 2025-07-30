@@ -14,7 +14,7 @@ export async function renderNotice(){
         return { hasMore : false};
     }
 
-    toggleNoticeCardsEmpty(true);
+    toggleNoticeCardsEmpty(false);
     noticeList.forEach(({id, noticeType, title, createdAt}) => {
         const noticeCard = `
             <div class="notice-card ${NoticeType.getNoticeClassByType(noticeType)}" data-id="${id}">
