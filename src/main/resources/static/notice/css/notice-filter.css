@@ -1,6 +1,7 @@
 .notice-filter{
     margin-bottom : 10px;
     display: flex;
+    gap : 10px;
 }
 
 .notice-filter .filter-item{
@@ -19,6 +20,8 @@
     padding : 6px 24px 6px 14px;
     border-radius: 6px;
     background-color: #FFF;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
 }
 
 .notice-type-select .selected-notice-type:after{
@@ -70,4 +73,14 @@
 .notice-type-select .notice-type-select-items .notice-type-select-item:hover{
     background-color: var(--signature-color);
     color :#FFF;
+}
+
+/* notice-keyword */
+.notice-keyword{
+    font-size: 14px;
+    padding : 6px 14px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+    min-width: 120px;
+    border: none;
 }
