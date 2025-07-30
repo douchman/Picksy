@@ -15,7 +15,7 @@ export async function renderNotice(){
     }
 
     toggleNoticeCardsEmpty(false);
-    noticeList.forEach(({id, noticeType, title, createdAt}) => {
+    noticeList.forEach(({id, noticeType, title, summary, createdAt}) => {
         const noticeCard = `
             <div class="notice-card ${NoticeType.getNoticeClassByType(noticeType)}" data-id="${id}">
                 <div class="card-header">
@@ -24,12 +24,10 @@ export async function renderNotice(){
                 </div>
                 <div class="card-body">
                     <p class="notice-title">${title}</p>
-                    <p class="summary">요약 내용</p> 
+                    <p class="summary">${summary}</p> 
                     <p class="content"></p>
                 </div>
             </div>`;
-
-        // TODO : API 요약 내용 업데이트 되면 추가 할 것
         noticeCards.insertAdjacentHTML('beforeend', noticeCard);
     });
 
