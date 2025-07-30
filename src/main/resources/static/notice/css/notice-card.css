@@ -62,3 +62,7 @@
     overflow-y: hidden;
     transition: max-height .3s ease;
 }
+
+.scroll-observer{
+    height: 15px;
+}
