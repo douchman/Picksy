@@ -1,7 +1,7 @@
 @import "notice-label.css";
 
 .notice-cards{
-    max-height: calc(100% - 80px);
+    max-height: calc(100% - 110px);
     overflow-y: auto;
     padding-right: 10px;
     box-sizing: border-box;
