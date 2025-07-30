@@ -9,6 +9,7 @@ export function setupNoticeFilter(){
     setupNoticeKeywordFilter();
 }
 
+// 피드 유형 선택 이벤트 처리
 function setupNoticeTypeSelectFilter(){
 
     // 필터 선택 open
@@ -40,6 +41,7 @@ function toggleNoticeTypeFilterActive(isActive){
     document.querySelector('#notice-type-select').classList.toggle('active', isActive);
 }
 
+// 검색어 필터 이벤트 처리
 function setupNoticeKeywordFilter(){
     document.querySelector('#notice-keyword').addEventListener('input', function(){
         if(noticeKeywordDebounce) clearTimeout(noticeKeywordDebounce);
