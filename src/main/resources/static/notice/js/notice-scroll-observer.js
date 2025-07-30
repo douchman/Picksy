@@ -1,4 +1,5 @@
 import {renderNotice} from "./notice-render.js";
+import {noticeSearchParams} from "./notice-const";
 
 let scrollObserver;
 
@@ -11,7 +12,12 @@ export function setupNoticeCardsObserver(){
         scrollObserver = new IntersectionObserver(async ([entry]) => {
             if(entry.isIntersecting) {
                 const {hasMore} =  renderNotice();
-                if( !hasMore ) stopScrollObserver(); // 표시 컨텐츠 없을 경우 옵저버 중지
+                if( !hasMore ) {
+                    stopScrollObserver();
+                    return ;
+                } // 표시 컨텐츠 없을 경우 옵저버 중지
+                
+                noticeSearchParams.increasePage(); // 다음 페이지
             }
         },{
                 root : null,

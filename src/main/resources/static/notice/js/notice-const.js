@@ -21,6 +21,14 @@ export const noticeSearchParams = {
     page : 1,
     size : 16,
 
+    increasePage(){
+        this.page++;
+    },
+
+    initPage(){
+        this.page = 1;
+    },
+
     sanitizeParams(){ // 비어있는 params 제거
         return Object.entries({
             noticeType : this.noticeType,
