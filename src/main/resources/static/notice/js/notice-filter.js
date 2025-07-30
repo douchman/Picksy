@@ -32,7 +32,7 @@ function noticeTypeItemSelected(selectedItem){
     selectedNoticeTypeEle.innerText = noticeTypeName;
 
     noticeSearchParams.noticeType = noticeType;
-    resetNoticeSearchParams();
+    resetNoticeSearchParamsAndRender();
 
     toggleNoticeTypeFilterActive(false);
 }
@@ -49,12 +49,12 @@ function setupNoticeKeywordFilter(){
         const keyword = this.value;
         noticeKeywordDebounce = setTimeout(() => {
             noticeSearchParams.keyword = keyword;
-            resetNoticeSearchParams();
+            resetNoticeSearchParamsAndRender();
         }, 500);
     });
 }
 
-function resetNoticeSearchParams(){
+function resetNoticeSearchParamsAndRender(){
     noticeSearchParams.initPage(); // 현재 페이지 값 리셋
     removeAllNoticeCards(); // 랜더링 된 공지사항 카드 모두 제거
     startScrollObserver(); // 옵저버 재시작
