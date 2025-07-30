@@ -5,11 +5,11 @@ import {startScrollObserver} from "./notice-scroll-observer.js";
 let noticeKeywordDebounce;
 
 export function setupNoticeFilter(){
-    setupNoticeTypeSelect();
+    setupNoticeTypeSelectFilter();
     setupNoticeKeywordFilter();
 }
 
-function setupNoticeTypeSelect(){
+function setupNoticeTypeSelectFilter(){
 
     // 필터 선택 open
     window.addEventListener('click', function(e){
