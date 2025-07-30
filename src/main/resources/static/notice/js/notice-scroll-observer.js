@@ -1,5 +1,5 @@
 import {renderNotice} from "./notice-render.js";
-import {noticeSearchParams} from "./notice-const";
+import {noticeSearchParams} from "./notice-const.js";
 
 let scrollObserver;
 
