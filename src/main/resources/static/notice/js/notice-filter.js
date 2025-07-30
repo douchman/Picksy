@@ -2,8 +2,11 @@ import {noticeSearchParams} from "./notice-const.js";
 import {removeAllNoticeCards} from "./notice-render.js";
 import {startScrollObserver} from "./notice-scroll-observer.js";
 
+let noticeKeywordDebounce;
+
 export function setupNoticeFilter(){
     setupNoticeTypeSelect();
+    setupNoticeKeywordFilter();
 }
 
 function setupNoticeTypeSelect(){
@@ -27,14 +30,30 @@ function noticeTypeItemSelected(selectedItem){
 
     selectedNoticeTypeEle.innerText = noticeTypeName;
 
-    noticeSearchParams.initPage(); // 현재 페이지 값 리셋
     noticeSearchParams.noticeType = noticeType;
-    removeAllNoticeCards(); // 랜더링 된 공지사항 카드 모두 제거
-    startScrollObserver(); // 옵저버 재시작
+    resetNoticeSearchParams();
 
     toggleNoticeTypeFilterActive(false);
 }
 
 function toggleNoticeTypeFilterActive(isActive){
     document.querySelector('#notice-type-select').classList.toggle('active', isActive);
+}
+
+function setupNoticeKeywordFilter(){
+    document.querySelector('#notice-keyword').addEventListener('input', function(){
+        if(noticeKeywordDebounce) clearTimeout(noticeKeywordDebounce);
+
+        const keyword = this.value;
+        noticeKeywordDebounce = setTimeout(() => {
+            noticeSearchParams.keyword = keyword;
+            resetNoticeSearchParams();
+        }, 500);
+    });
+}
+
+function resetNoticeSearchParams(){
+    noticeSearchParams.initPage(); // 현재 페이지 값 리셋
+    removeAllNoticeCards(); // 랜더링 된 공지사항 카드 모두 제거
+    startScrollObserver(); // 옵저버 재시작
 }
