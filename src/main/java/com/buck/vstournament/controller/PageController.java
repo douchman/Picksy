@@ -15,6 +15,9 @@ public class PageController {
         return "home/home";
     }
 
+    @GetMapping("notice")
+    public String notice(){return "notice/notice";}
+
     @GetMapping("login")
     public String login(){
         return "member/login/login";
