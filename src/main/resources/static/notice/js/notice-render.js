@@ -23,6 +23,7 @@ export async function renderNotice(){
                 <div class="card-body">
                     <p class="notice-title">${title}</p>
                     <p class="summary">요약 내용</p>
+                    <p class="content"></p>
                 </div>
             </div>`;
 
@@ -31,6 +32,12 @@ export async function renderNotice(){
 
     return { hasMore : hasNextPage(currentPage, totalPages)};
 }
+
+export function renderNoticeDetailContent(noticeCard, noticeDetails){
+    const {noticeDetail : {content}} = noticeDetails;
+    noticeCard.querySelector('.content').innerHTML = content;
+}
+
 
 function isNoticeListEmpty(noticeList){
     return !noticeList || noticeList.length < 1;
