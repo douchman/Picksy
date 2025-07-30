@@ -41,6 +41,9 @@ export function renderNoticeDetailContent(noticeCard, noticeDetails){
     noticeCard.querySelector('.content').innerHTML = content;
 }
 
+export function removeAllNoticeCards(){ // 랜더링 된 피드 카드 모두 제거
+    document.querySelectorAll('#notice-cards .notice-card').forEach( card => card.remove());
+}
 
 function isNoticeListEmpty(noticeList){
     return !noticeList || noticeList.length < 1;

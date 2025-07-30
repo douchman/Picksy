@@ -13,6 +13,26 @@
                 <i class="txt-i">📢 피드</i>
             </div>
 
+            <div id="notice-filter" class="notice-filter">
+                <div class="filter-item">
+                    <div id="notice-type-select" class="notice-type-select">
+                        <label id="selected-notice-type" class="selected-notice-type">전체</label>
+                        <div id="notice-type-select-items" class="notice-type-select-items">
+                            <button class="notice-type-select-item" type="button" value="">전체</button>
+                            <button class="notice-type-select-item" type="button" value="DEFAULT">공지</button>
+                            <button class="notice-type-select-item" type="button" value="UPDATE">업데이트</button>
+                            <button class="notice-type-select-item" type="button" value="EVENT">이벤트</button>
+                            <button class="notice-type-select-item" type="button" value="ALERT">긴급안내</button>
+                            <button class="notice-type-select-item" type="button" value="MAINTENANCE">점검안내</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-item">
+                    <label for="notice-keyword" style="display: none"></label>
+                    <input id="notice-keyword" class="notice-keyword" type="text" placeholder="제목 검색">
+                </div>
+            </div>
+
             <div id="notice-cards" class="notice-cards">
             </div>
         </div>
