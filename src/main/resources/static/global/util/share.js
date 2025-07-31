@@ -25,9 +25,15 @@ function copyURLToClipboard(url) {
         textarea.select();
         try {
             document.execCommand("copy");
-            showToastMessage(COPY_SUCCESS_MESSAGE);
+            showToastMessage({
+                title : '대결 공유',
+                content : COPY_SUCCESS_MESSAGE
+            });
         } catch (err) {
-            showToastMessage(COPY_FAIL_MESSAGE);
+            showToastMessage({
+                title : '대결 공유 실패',
+                content : COPY_FAIL_MESSAGE
+            });
         }
         document.body.removeChild(textarea);
         return;
@@ -35,6 +41,12 @@ function copyURLToClipboard(url) {
 
     // 최신 브라우저
     navigator.clipboard.writeText(url)
-        .then(() => showToastMessage(COPY_SUCCESS_MESSAGE))
-        .catch(() => showToastMessage(COPY_FAIL_MESSAGE));
+        .then(() => showToastMessage({
+            title : '대결 공유',
+            content : COPY_SUCCESS_MESSAGE
+        }))
+        .catch(() => showToastMessage({
+            title : '대결 공유 실패',
+            content : COPY_FAIL_MESSAGE
+        }));
 }
