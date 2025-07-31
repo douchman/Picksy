@@ -1,25 +1,105 @@
-export function showToastMessage(message, toastType = '', delay = 2000){
-    renderToastMessage(message, toastType, delay);
+const MAX_TOAST_MESSAGE_COUNT = 3;
+
+/**
+ *
+ * @param {{
+ *     toastType? : '' | 'alert' | 'error',
+ *     title?: string,
+ *     content?: string,
+ *     delay?: number
+ * }} param
+ */
+export function showToastMessage(
+    {
+        toastType = '',
+        title = '',
+        content = '',
+        delay = 3000
+    } = {}){
+    renderToastMessageWrapper();
+    renderToastMessage(toastType, title, content, delay);
 }
 
-function renderToastMessage(message, toastType, delay){
-    if( message && message !== ''){
-        removeToastMessage();
-        const commonToast = document.createElement('div');
-        commonToast.classList.add('common-toast');
-        toastType && commonToast.classList.add(toastType);
+function renderToastMessage(toastType, title, content, delay){
+    const toastMessage = createToastMessage(toastType, title, content);
+    attachToastButtons(toastMessage);
+    appendToastMessageToWrapper(toastMessage)
 
-        commonToast.innerHTML =
-            `<p class="toast-message">${message}</p>`;
+    setTimeout( () =>{
+        removeToastMessage(toastMessage);
+    }, delay);
+}
 
-        document.body.appendChild(commonToast);
+// 토스트 메시지 생성
+function createToastMessage(toastType, title, content){
+    const toastMessage = document.createElement('div');
+    toastMessage.classList.add('toast-message');
+    toastType && toastMessage.classList.add(toastType);
 
-        setTimeout( () =>{
-            commonToast.remove();
-        }, delay);
+    const textBox = document.createElement('div');
+    textBox.classList.add('text-box');
+    toastMessage.appendChild(textBox); // 토스트 <- 텍스트 box 추가
+
+    const toastTitle = document.createElement('p');
+    toastTitle.classList.add('title');
+    toastTitle.innerText = title;
+    textBox.appendChild(toastTitle); // 텍스트 box <- 제목 추가
+
+    const message = document.createElement('p');
+    message.classList.add('content');
+    message.innerText = content;
+    textBox.appendChild(message); // 텍스트 box <- 메시지 추가
+
+    return toastMessage
+}
+
+// 버튼 그룹 랜더
+function attachToastButtons(toastMessage){
+    const buttonBox = document.createElement('div');
+    buttonBox.classList.add('btn-group');
+    toastMessage.appendChild(buttonBox); // 토스트 <- 버튼 그룹 추가
+
+    const buttonConfirm = document.createElement('button');
+    buttonConfirm.classList.add('btn-confirm');
+    buttonConfirm.innerText = '확인';
+    buttonConfirm.addEventListener('click', () => {
+        removeToastMessage(toastMessage);
+    });
+    buttonBox.appendChild(buttonConfirm); // 버튼 그룹 <- 버튼 추가
+
+
+    const buttonExpand = document.createElement('button');
+    buttonExpand.classList.add('btn-expand');
+    buttonExpand.addEventListener('click', () => {
+        toastMessage.classList.toggle('expand');
+    });
+    buttonBox.appendChild(buttonExpand); // 버튼 그룹 <- 버튼 추가
+}
+
+function appendToastMessageToWrapper(toastMessage){
+    const toastMessageWrapper = document.querySelector('#toast-message-wrapper');
+
+    toastMessageWrapper.appendChild(toastMessage);
+
+    if(toastMessageWrapper.children.length > MAX_TOAST_MESSAGE_COUNT){
+        removeToastMessage(toastMessageWrapper.children[0]);
     }
 }
+function renderToastMessageWrapper(){
+    const isToastMessageWrapperExist = document.querySelector('#toast-message-wrapper');
 
-function removeToastMessage(){
-    document.querySelectorAll('.common-toast').forEach(toast => toast.remove());
+    if(isToastMessageWrapperExist){ return; }
+
+    const toastMessageWrapper = document.createElement('div');
+    toastMessageWrapper.id = 'toast-message-wrapper';
+    toastMessageWrapper.classList.add('toast-message-wrapper');
+
+    document.body.appendChild(toastMessageWrapper);
+}
+
+function removeToastMessage(toastMessage){ // 토스트 메시지 제거
+    toastMessage.classList.add('remove');
+    setTimeout(() => {
+        toastMessage.remove();
+    },250);
 }
