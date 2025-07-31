@@ -14,7 +14,7 @@ export function showToastMessage(
         toastType = '',
         title = '',
         content = '',
-        delay = 3000
+        delay = 7000
     } = {}){
     renderToastMessageWrapper();
     renderToastMessage(toastType, title, content, delay);
