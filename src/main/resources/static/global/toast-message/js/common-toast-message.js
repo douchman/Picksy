@@ -21,7 +21,7 @@ export function showToastMessage(
 }
 
 function renderToastMessage(toastType, title, content, delay){
-    const toastMessage = createToastMessage(toastType, title, content);
+    const toastMessage = createToastMessage(toastType, title, content, delay);
     attachToastButtons(toastMessage);
     appendToastMessageToWrapper(toastMessage)
 
@@ -31,9 +31,10 @@ function renderToastMessage(toastType, title, content, delay){
 }
 
 // 토스트 메시지 생성
-function createToastMessage(toastType, title, content){
+function createToastMessage(toastType, title, content, delay){
     const toastMessage = document.createElement('div');
     toastMessage.classList.add('toast-message');
+    toastMessage.style.setProperty('--timer-duration', `${delay}ms`)
     toastType && toastMessage.classList.add(toastType);
 
     const textBox = document.createElement('div');
@@ -50,7 +51,11 @@ function createToastMessage(toastType, title, content){
     message.innerText = content;
     textBox.appendChild(message); // 텍스트 box <- 메시지 추가
 
-    return toastMessage
+    const timerBar = document.createElement('div');
+    timerBar.classList.add('timer-bar');
+    toastMessage.appendChild(timerBar); // 토스트 <- 타이머 추가
+
+    return toastMessage;
 }
 
 // 버튼 그룹 랜더
