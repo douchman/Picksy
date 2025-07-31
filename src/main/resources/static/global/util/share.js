@@ -31,6 +31,7 @@ function copyURLToClipboard(url) {
             });
         } catch (err) {
             showToastMessage({
+                toastType : 'error',
                 title : '대결 공유 실패',
                 content : COPY_FAIL_MESSAGE
             });
@@ -46,6 +47,7 @@ function copyURLToClipboard(url) {
             content : COPY_SUCCESS_MESSAGE
         }))
         .catch(() => showToastMessage({
+            toastType : 'error',
             title : '대결 공유 실패',
             content : COPY_FAIL_MESSAGE
         }));
