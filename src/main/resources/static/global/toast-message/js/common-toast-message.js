@@ -1,3 +1,4 @@
+const toastTimers = new WeakMap();
 const MAX_TOAST_MESSAGE_COUNT = 3;
 
 /**
@@ -25,9 +26,11 @@ function renderToastMessage(toastType, title, content, delay){
     attachToastButtons(toastMessage);
     appendToastMessageToWrapper(toastMessage)
 
-    setTimeout( () =>{
+    const timeoutId = setTimeout( () =>{
         removeToastMessage(toastMessage);
     }, delay);
+
+    toastTimers.set(toastMessage, timeoutId);
 }
 
 // 토스트 메시지 생성
@@ -102,7 +105,12 @@ function renderToastMessageWrapper(){
     document.body.appendChild(toastMessageWrapper);
 }
 
-function removeToastMessage(toastMessage){ // 토스트 메시지 제거
+function removeToastMessage(toastMessage){ // 토스트 메시지 직접 제거
+    const timeoutId = toastTimers.get(toastMessage);
+    if(timeoutId){
+        clearTimeout(timeoutId);
+        toastTimers.delete(toastMessage);
+    }
     toastMessage.classList.add('remove');
     setTimeout(() => {
         toastMessage.remove();
