@@ -92,7 +92,10 @@ async function logout(){
     try {
         await memberLogout();
         applyNotAuthenticatedHeaderUI();
-        showToastMessage('로그아웃 되었습니다 :)', 3000);
+        showToastMessage({
+            title : '로그아웃',
+            content : '로그아웃 되었습니다 :)'
+        });
     } catch(error){
         authExceptionHandler.handle(error, {context : 'logout'});
     }
