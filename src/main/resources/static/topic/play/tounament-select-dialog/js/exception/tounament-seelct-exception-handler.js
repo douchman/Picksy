@@ -15,10 +15,18 @@ export class TournamentSelectExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleTopicDetailException(){
-        showToastMessage('대결주제 상세정보 조회 중 문제가 발생했어요. 잠시 후 다시 입장해주세요.', 'error', 3000);
+        showToastMessage({
+            toastType: 'error',
+            title : '대결주제 상세정보',
+            content : '대결주제 상세정보 조회 중 문제가 발생했어요. 잠시 후 다시 입장해주세요'
+        });
     }
 
     handlePlayRecordIdException(error){
-        showToastMessage(`${error.message}`, 'error', 3000);
+        showToastMessage({
+            toastType: 'error',
+            title : '대결 기록 정보',
+            content : error.message
+        });
     }
 }
