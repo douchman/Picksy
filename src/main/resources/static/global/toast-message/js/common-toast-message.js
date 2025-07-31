@@ -1,4 +1,5 @@
 export function showToastMessage(message, toastType = '', delay = 2000){
+    renderToastMessageWrapper();
     renderToastMessage(message, toastType, delay);
 }
 
@@ -18,6 +19,19 @@ function renderToastMessage(message, toastType, delay){
             commonToast.remove();
         }, delay);
     }
+}
+
+function renderToastMessageWrapper(){
+    const isToastMessageWrapperExist = document.querySelector('#toast-message-wrapper');
+
+    if(isToastMessageWrapperExist){ return; }
+
+    const toastMessageWrapper = document.createElement('div');
+    toastMessageWrapper.id = 'toast-message-wrapper';
+    toastMessageWrapper.classList.add('toast-message-wrapper');
+
+    document.body.appendChild(toastMessageWrapper);
+
 }
 
 function removeToastMessage(){

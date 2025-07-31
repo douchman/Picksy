@@ -1,3 +1,12 @@
+.toast-message-wrapper{
+    position: fixed;
+    top : 70px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
+}
+
 .common-toast{
     position: fixed;
     top : 40px;
