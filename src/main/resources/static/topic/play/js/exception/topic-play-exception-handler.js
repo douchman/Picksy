@@ -17,20 +17,32 @@ export class TopicPlayExceptionHandler extends GlobalExceptionHandler {
         }
     }
     handleSaveTopicInfoException(){
-        showToastMessage('대결주제 정보를 확인할 수 없어요:(' , 'error', 3500);
+        showToastMessage({
+            toastType: 'error',
+            title : '대결주제 확인 불가',
+            content : '대결주제 정보를 확인할 수 없어요:('
+        });
         setTimeout(()=> {
             location.href = '/';
         }, 2500);
     }
 
     handleCurrentEntryMatchException(error){
-        showToastMessage(`${error.message}`, 'error', 3500);
+        showToastMessage({
+            toastType: 'error',
+            title : '엔트리 매치 정보',
+            content : error.message
+        });
         setTimeout(() => {
            location.href = '/';
         }, 2500);
     }
 
     handleSubmitEntryMatchResultException(){
-        showToastMessage('대결 결과 제출 중 문제가 발생했어요. 잠시후 다시 시도해주세요.', 'error', 3500);
+        showToastMessage({
+            toastType: 'error',
+            title : '대결 결과',
+            content : '대결 결과 반영 중 문제가 발생했어요. 잠시후 다시 시도해주세요'
+        });
     }
 }
