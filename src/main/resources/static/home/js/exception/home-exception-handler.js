@@ -12,6 +12,10 @@ export class HomeExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleApiResponseException(error){
-        showToastMessage(`${error.message}`, 'error', 3000);
+        showToastMessage({
+            toastType: 'error',
+            title : '대결주제 조회 오류',
+            content : error.message
+        });
     }
 }
