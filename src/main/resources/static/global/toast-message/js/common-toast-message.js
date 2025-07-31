@@ -1,6 +1,21 @@
 const MAX_TOAST_MESSAGE_COUNT = 3;
 
-export function showToastMessage(toastType, title = '', content = '', delay = 3000){
+/**
+ *
+ * @param {{
+ *     toastType? : '' | 'alert' | 'error',
+ *     title?: string,
+ *     content?: string,
+ *     delay?: number
+ * }} param
+ */
+export function showToastMessage(
+    {
+        toastType = '',
+        title = '',
+        content = '',
+        delay = 3000
+    } = {}){
     renderToastMessageWrapper();
     renderToastMessage(toastType, title, content, delay);
 }
