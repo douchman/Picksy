@@ -13,6 +13,10 @@ export class MyTopicExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleGetMyTopicException(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '내 대결주제',
+            content : error.message
+        });
     }
 }

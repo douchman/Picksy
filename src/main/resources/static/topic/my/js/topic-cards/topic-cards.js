@@ -62,7 +62,11 @@ function validateTopicModerationStatus(moderationStatus){
     const isModerationPassed = ModerationStatus.PASSED === moderationStatus;
 
     if( !isModerationPassed ) {
-        showToastMessage('제한된 표현이 포함된 대결이에요. 내용을 수정하고 이용해주세요.','alert', 3000);
+        showToastMessage({
+            toastType: 'alert',
+            title : '제한된 표현이 포함된 대결',
+            content : '제한된 표현이 포함된 대결이에요. 내용을 수정하고 이용해주세요'
+        });
     }
     return isModerationPassed;
 }

@@ -14,6 +14,10 @@ export class RegisterExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleMemberRegisterException(error){
-        showToastMessage(`${error.message}`, 'error', 3500);
+        showToastMessage({
+            toastType: 'error',
+            title : '회원 등록 실패',
+            content : error.message
+        });
     }
 }

@@ -19,19 +19,35 @@ export class EntryEditExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleEntryCreateException(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '엔트리 생성 실패',
+            content : error.message
+        });
     }
 
     handleEntryUpdateException(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '엔트리 업데이트 실패',
+            content : error.message
+        });
     }
 
     handleEntryListError(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '엔트리 조회 실패',
+            content : error.message
+        });
     }
 
     handleEntryMediaUploadException(){
-        showToastMessage(`엔트리 이미지 업로드 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '엔트리 미디어 업로드',
+            content : '엔트리 이미지 업로드 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.'
+        });
     }
 
 }

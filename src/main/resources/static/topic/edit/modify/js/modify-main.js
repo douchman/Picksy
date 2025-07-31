@@ -48,7 +48,10 @@ function addBottomBtnGroupEvents(){
         const entryUpdateSuccess = topicRegisterSuccess && await updateEntries();
 
         if( topicRegisterSuccess && entryRegisterSuccess && entryUpdateSuccess ){
-            showToastMessage('성공적으로 저장되었습니다. :)');
+            showToastMessage({
+                title : '대결주제',
+                content : '대결주제 수정이 완료되었습니다'
+            });
             setTimeout(() =>{
                 location.href = '/';
             }, 2000);
