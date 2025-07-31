@@ -84,15 +84,21 @@ async function registerInquiry(){
 
         if(validationResult && inquiryPayload){
             await createInquiry(inquiryPayload); // 문의 등록
-            showToastMessage('소중한 의견 감사합니다. 빠른시일내로 답변드리겠습니다 :)', 3500);
+            showToastMessage({
+                title : '문의 등록 완료',
+                content : '소중한 의견 감사합니다. 빠른시일내로 답변드리겠습니다 :)'
+            });
             closeInquiry();
         } else {
             setInquiryProgressState(false);
         }
     } catch(error){
         setInquiryProgressState(false);
-        showToastMessage(error.message, 'error' , 3500);
-
+        showToastMessage({
+            toastType: 'error',
+            title : '문의 등록 오류',
+            content : error.message
+        });
     }
 }
 
