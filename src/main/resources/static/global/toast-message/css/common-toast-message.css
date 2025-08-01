@@ -1,54 +1,176 @@
-.common-toast{
+.toast-message-wrapper{
     position: fixed;
-    top : 40px;
-    left : 50% ;
-    border-radius: 6px;
-    background-color: #EDF4FF;
-    animation: toast-slide-down .4s ease forwards;
-    --close-btn-text : #1E40AF;
-    --toast-message-color : #1D4ED8;
-    --toast-icon : '👉';
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
-    z-index: var(--common-toast-z-index);
+    top : 70px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap : 10px;
 }
 
-.common-toast .toast-message{
-    display: inline-block;
-    color : var(--toast-message-color);
-    font-size: 16px;
-    font-weight: 500;
-    padding: 12px 16px 12px 45px;
+.toast-message{
+    position: relative;
+    border-radius: 8px;
+    background-color: #FFF;
+    box-sizing: border-box;
+    animation: toast-message-appear .4s ease forwards;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    z-index: var(--common-toast-z-index);
+    display: flex;
+    align-items: stretch;
+    padding-left: 65px;
+    padding-bottom : 5px;
+    overflow: hidden;
+    --default-color : #34C759;
+    --alert-color : #FF9500;
+    --error-color : #FF3B30;
+    --timer-duration : 0s;
+}
+
+.toast-message.remove{
+    animation: toast-message-disappear .2s ease forwards;
+}
+
+.toast-message:before{
+    content : '';
+    position: absolute;
+    top : 0;
+    left : 5px;
+    width: 60px;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35px 35px;
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/ico-check-circle.svg");
+}
+
+.toast-message:after{
+    content : '';
+    position: absolute;
+    top : 0;
+    left : 0;
+    width: 5px;
+    height: 100%;
+    background-color: var(--default-color);
+    border-radius: 8px 0 0 8px;
+}
+
+.toast-message.alert:after{
+    background-color: var(--alert-color);
+}
+
+.toast-message.error:after{
+    background-color: var(--error-color);
+}
+
+.toast-message.alert:before{
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/ico-alert-tirangle.svg");
+}
+
+.toast-message.error:before{
+    background-image: url("https://vsplay-pub.s3.ap-northeast-2.amazonaws.com/ico-x-circle.svg");
+}
+
+.toast-message .text-box{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap : 2px;
+    padding : 16px 5px;
+    min-width: 0;
+    max-width: 250px;
     box-sizing: border-box;
 }
 
-.common-toast .toast-message:before{
-    content : var(--toast-icon);
+.toast-message .text-box p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+.toast-message.expand .text-box p{
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+.toast-message .text-box .title{
+    color : #333;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.toast-message .text-box .content{
+    color : #7D7D7D;
+    font-size: 12px;
+}
+
+.toast-message .btn-group{
+    border-left : 1px solid rgba(180, 180, 184, .4);
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+}
+
+.toast-message .btn-group button{
+    flex : 1;
+    color : #7D7D7D;
+    padding : 6px 0;
+}
+
+.toast-message .btn-group button.btn-expand:before{
+    content : '펼치기';
+    color : #7D7D7D;
+}
+
+.toast-message.expand .btn-group button.btn-expand:before{
+    content : '접기';
+}
+
+.toast-message .btn-group button:not(:last-child){
+    border-bottom : 1px solid rgba(180, 180, 184, .4);
+}
+
+.toast-message .timer-bar{
     position: absolute;
-    top : 50%;
-    left : 12px;
-    transform: translateY(-50%);
+    bottom : 0;
+    left : 0;
+    width: 0;
+    height: 2px;
+    margin-left: 5px;
+    border-radius: 0 8px 8px 0;
+    background-color: rgba(183, 183, 183, .7);
+    animation: toast-message-timer var(--timer-duration) linear forwards;
 }
 
-.common-toast.alert{
-    --close-btn-text: #A05A0D;
-    --toast-icon : '😵';
-    --toast-message-color: #D97706;
-    background-color: #FFF7ED ;
-}
-
-.common-toast.error{
-    --close-btn-text: #7F1D1D;
-    --toast-message-color: rgba(153, 27, 27, 0.85);
-    --toast-icon : '🚫️';
-    background-color: #FFEBE6;
-}
-
-@keyframes toast-slide-down {
-    from{
-        transform: translate(-50%, -100%);
+@keyframes toast-message-appear {
+    from {
+        transform: translateX(100%);
     }
 
-    to {
-        transform: translate(-50%, 0);
+    to{
+        transform: translateX(0);
+    }
+}
+
+@keyframes toast-message-disappear {
+    from {
+        transform: translateX(0);
+    }
+
+    to{
+        transform: translateX(115%);
+    }
+}
+
+@keyframes toast-message-timer {
+    from{
+        width: 0;
+    }
+
+    to{
+        width: 100%;
     }
 }

@@ -203,7 +203,11 @@ function getThumbnailFromYoutubeLink(youtubeLinkInput){
             entryThumb.classList.remove('empty');
             await addStagedEntryMediaForYoutube(url, entryId, thumbNail );
         } else {
-            showToastMessage(`${message}`, 'error', 2500);
+            showToastMessage({
+                toastType: 'error',
+                title : '유튜브 미디어',
+                content : message
+            });
             entryThumb.style.backgroundImage = '';
             entryThumb.classList.add('empty');
             entryThumb.classList.remove('youtube');

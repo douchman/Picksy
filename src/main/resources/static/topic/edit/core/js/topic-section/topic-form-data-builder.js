@@ -8,27 +8,47 @@ export async function buildValidatedTopicRegisterPayload(){
     const { title, subject, description, thumbnail, visibility, accessCode}  = getTopicInputValues();
 
     if(!title || title === ''){
-        showToastMessage('대결 제목을 입력해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대결 제목',
+            content : '대결 제목을 입력해주세요'
+        });
         return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(!subject || subject === ''){
-        showToastMessage('주요개념을 입력해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '주요 개념',
+            content : '주요 개념을 입력해주세요'
+        });
         return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(!description || description === ''){
-        showToastMessage('대결 설명을 입력해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대결 설명',
+            content : '대결 설명을 입력해주세요'
+        });
         return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(!thumbnail){
-        showToastMessage('대표이미지를 등록해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대표이미지',
+            content : '대표이미지를 등록해주세요'
+        });
         return {validationResult : false, topicRegisterPayload : null}
     }
 
     if(Visibility.PASSWORD === visibility && !validateAccessCode(accessCode)){
-        showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대결주제 비밀번호',
+            content : '대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)'
+        });
         return {validationResult : false, topicRegisterPayload : null}
     }
 
@@ -55,22 +75,38 @@ export async function buildValidatedTopicUpdatePayload(){
     const { title, subject, description, thumbnail, visibility, accessCode}  = getTopicInputValues();
 
     if(!title || title === ''){
-        showToastMessage('대결 제목을 입력해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대결 제목',
+            content : '대결 제목을 입력해주세요'
+        });
         return {validationResult : false, topicUpdatePayload : null}
     }
 
     if(!subject || subject === ''){
-        showToastMessage('주요개념을 입력해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '주요 개념',
+            content : '주요 개념을 입력해주세요'
+        });
         return {validationResult : false, topicUpdatePayload : null}
     }
 
     if(!description || description === ''){
-        showToastMessage('대결 설명을 입력해주세요', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대결 설명',
+            content : '대결 설명을 입력해주세요'
+        });
         return {validationResult : false, topicUpdatePayload : null}
     }
 
     if(Visibility.PASSWORD === visibility && !validateAccessCode(accessCode)){
-        showToastMessage('대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)', 'alert');
+        showToastMessage({
+            toastType: 'alert',
+            title : '대결주제 비밀번호',
+            content : '대결 주제 비밀번호를 확인해주세요(한글, 영어, 숫자 1~255 자)'
+        });
         return {validationResult : false, topicRegisterPayload : null}
     }
 

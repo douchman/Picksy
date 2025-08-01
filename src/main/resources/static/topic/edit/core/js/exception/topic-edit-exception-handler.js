@@ -23,25 +23,46 @@ export class TopicEditExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleTopicCreateException(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '주제 등록 실패',
+            content : error.message
+        });
     }
 
     handleTopicUpdateException(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '주제 업데이트 실패',
+            content : error.message
+        });
     }
 
     handleTopicDetailException(error){
-        showToastMessage(`${error.message}`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '주제 상세정보 조회 실패',
+            content : error.message
+        });
         setTimeout(() => {
             location.href = '/';
         }, 3000)
     }
     handleTopicThumbUploadException(){
-        showToastMessage(`대결주제 대표이미지 업로드 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.`, 'error', 2500);
+        showToastMessage({
+            toastType: 'error',
+            title : '대결주제 이미지',
+            content : '대결주제 대표이미지 업로드 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요'
+        });
     }
 
     handleTopicIdSaveException(){
-        showToastMessage('대결주제 정보 확인 중 문제가 발생했어요. 이전 메뉴에서 다시 확인해주세요.', 'alert', 3000);
+
+        showToastMessage({
+            toastType: 'error',
+            title : '대결주제 오류',
+            content : '대결주제 정보 확인 중 문제가 발생했어요. 이전 메뉴에서 다시 확인해주세요'
+        });
 
         setTimeout(() => {
             location.href = '/topic/my';

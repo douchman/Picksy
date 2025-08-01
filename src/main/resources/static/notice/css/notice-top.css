@@ -1,0 +1,10 @@
+.notice-top{
+    margin-bottom: 15px;
+}
+
+.notice-top .txt-i{
+    color : #333;
+    font-size: 24px;
+    font-weight: 800;
+    font-style: normal;
+}

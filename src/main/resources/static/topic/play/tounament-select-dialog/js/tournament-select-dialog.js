@@ -204,7 +204,11 @@ function getValidTopicPassword(topicPasswordEl){
 function validateTopicPassword(topicPassword){
 
     if( !topicPassword || topicPassword.length < 1) {
-        showToastMessage('비밀번호를 입력해 주세요.', 'alert', 2500);
+        showToastMessage({
+            toastType: 'alert',
+            title : '비밀번호',
+            content : '비밀번호를 입력해 주세요'
+        });
         return false;
     }
 
@@ -217,10 +221,15 @@ function isModerationPassed(moderationStatus){
 
 // 이용 제한 대결주제 핸들
 function handleRestrictedTopic(){
-    showToastMessage('제한된 표현이 포함되어있어 이용할 수 없는 대결주제입니다. 잠시 후 메인페이지로 돌아갑니다', 'error', 3500);
+    showToastMessage({
+        toastType: 'error',
+        title : '제한된 표현이 포함된 대결',
+        content : '제한된 표현이 포함되어있어 이용할 수 없는 대결주제입니다. 잠시 후 메인페이지로 돌아갑니다',
+        delay : 5000
+    });
     setTimeout(() => {
         location.href = '/';
-    }, 3000);
+    }, 4500);
 }
 
 function saveTopicId(topicId){

@@ -1,0 +1,23 @@
+@import "notice-top.css";
+@import "notice-filter.css";
+@import "notice-card.css";
+
+.layout-container{
+    height: calc(100% - var(--main-header-height));
+    box-sizing: border-box;
+}
+
+.wrapper{
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.notice{
+    max-width: 720px;
+    margin: 0 auto;
+    height: 100%;
+    padding : 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+

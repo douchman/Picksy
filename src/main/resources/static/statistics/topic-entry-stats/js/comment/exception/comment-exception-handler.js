@@ -15,10 +15,20 @@ export class CommentExceptionHandler extends GlobalExceptionHandler{
     }
 
     handleGetCommentsException(){
-        showToastMessage('댓글 조회 중 문제가 발생했어요. 새로고침 후 이용해주세요.', 'error', 3000);
+        showToastMessage({
+            toastType: 'error',
+            title : '댓글 조회 실패',
+            content : '댓글 조회 중 문제가 발생했어요. 새로고침 후 이용해주세요.'
+        });
     }
 
     handleRegisterCommentsException(){
-        showToastMessage('댓글 작성 중 문제가 발생했어요. 잠시 후 다시 시도해주세요.', 'error', 3000);
+        showToastMessage({
+            toastType: 'error',
+            title : '댓글 작성 실패',
+            content : '댓글 작성 중 문제가 발생했어요. 잠시 후 다시 시도해주세요.'
+        });
+
+
     }
 }

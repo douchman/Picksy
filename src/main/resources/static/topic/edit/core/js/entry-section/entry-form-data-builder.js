@@ -125,17 +125,29 @@ function validatedEntryRegisterPayload(registerEntryItems){
         const entryMedia = stagedEntryMedia[entryItemId].media;
 
         if(!validateEntryName(entryName)){
-            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            showToastMessage({
+                toastType: 'alert',
+                title : '엔트리 명',
+                content : entryNameValidationMessage
+            });
             return false;
         }
 
         if(!validateEntryDescription(entryDescription)){
-            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            showToastMessage({
+                toastType: 'alert',
+                title : '엔트리 설명',
+                content : entryDescValidationMessage
+            });
             return false;
         }
 
         if(!isValidEntryMedia(entryMedia)) {
-            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
+            showToastMessage({
+                toastType: 'alert',
+                title : '엔트리 미디어',
+                content : entryMediaValidationMessage
+            });
             return false;
         }
     }
@@ -153,17 +165,29 @@ function validateEntryModifyPayload(modifyEntryItems){
         const isMediaChange = initialEntryDataMap.get(entryItemId).isMediaChanged;
 
         if(!validateEntryName(entryName)){
-            showToastMessage(entryNameValidationMessage, 'alert', 2500);
+            showToastMessage({
+                toastType: 'alert',
+                title : '엔트리 명',
+                content : entryNameValidationMessage
+            });
             return false;
         }
 
         if(!validateEntryDescription(entryDescription)){
-            showToastMessage(entryDescValidationMessage, 'alert', 2500);
+            showToastMessage({
+                toastType: 'alert',
+                title : '엔트리 설명',
+                content : entryDescValidationMessage
+            });
             return false;
         }
 
         if(isMediaChange && !isValidEntryMedia(stagedEntryMedia[entryItemId].media)){
-            showToastMessage(entryMediaValidationMessage, 'alert', 2500);
+            showToastMessage({
+                toastType: 'alert',
+                title : '엔트리 미디어',
+                content : entryMediaValidationMessage
+            });
             return false;
         }
     }

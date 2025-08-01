@@ -88,12 +88,20 @@ function validateCommentForm(){
     const commentContent = document.querySelector('#comment-content').value;
 
     if(!validateAuthor(author)){
-        showToastMessage(authorValidationMessage, 'alert', 3500);
+        showToastMessage({
+            toastType: 'alert',
+            title : '작성자 명 확인',
+            content : authorValidationMessage
+        });
         return false;
     }
 
     else if(!validateCommentContent(commentContent)){
-        showToastMessage(commentContentValidationMessage, 'alert', 3500);
+        showToastMessage({
+            toastType: 'alert',
+            title : '댓글 내용 확인',
+            content : commentContentValidationMessage
+        });
         return false;
     }
 

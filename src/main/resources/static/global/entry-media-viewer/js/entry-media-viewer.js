@@ -99,7 +99,11 @@ function renderVideoPreviewWithEvents(videoUrl){
 
     video.addEventListener('error', (e) => {
         console.error('video view error :' ,e );
-        showToastMessage('비디오를 불러오지 못했습니다.', 'error', 2500);
+        showToastMessage({
+            toastType : 'error',
+            title : '비디오 오류',
+            content : '비디오를 불러오지 못했습니다'
+        });
     });
 
 }
@@ -156,7 +160,11 @@ function handleYoutubeError(event){
             break;
     }
 
-    showToastMessage(message,'error' , 2500);
+    showToastMessage({
+        toastType : 'error',
+        title : 'Youtube 미디어 오류',
+        content : message
+    });
 }
 
 // 미디어 뷰어 로딩 상태 제어

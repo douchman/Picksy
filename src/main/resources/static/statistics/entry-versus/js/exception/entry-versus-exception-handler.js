@@ -17,10 +17,18 @@ export class EntryVersusExceptionHandler extends GlobalExceptionHandler{
 
 
     handleTargetEntryStatisticsException(){
-        showToastMessage('엔트리 통계 조회 중 문제가 발생했어요. 새로고침 또는 다시 진입후 이용해주세요.' , 'error', 3500);
+        showToastMessage({
+            toastType : 'error',
+            title : '통계 조회 실패',
+            content : '엔트리 통계 조회 중 문제가 발생했어요. 새로고침 또는 다시 진입후 이용해주세요.'
+        });
     }
 
     handleEntryVersusStatisticsException(){
-        showToastMessage('엔트리 상성 통계 조회 중 문제가 발생했어요. 새로고침 또는 다시 진입후 이용해주세요.' , 'error', 3500);
+        showToastMessage({
+            toastType : 'error',
+            title : '상성 통계 조회 실패',
+            content : '엔트리 상성 통계 조회 중 문제가 발생했어요. 새로고침 또는 다시 진입후 이용해주세요.'
+        });
     }
 }

@@ -14,6 +14,10 @@ export class EntryStatisticsExceptionHandler extends GlobalExceptionHandler {
     }
 
     handleGetEntryStatisticsException() {
-        showToastMessage('엔트리 통계정보를 조회할 수 없어요. 새로고침 또는 탭을 닫고 다시 시도해 주세요', 'error', 3000);
+        showToastMessage({
+            toastType: 'error',
+            title : '통계 정보 조회 실패',
+            content : '엔트리 통계정보를 조회할 수 없어요. 새로고침 또는 탭을 닫고 다시 시도해 주세요'
+        });
     }
 }
