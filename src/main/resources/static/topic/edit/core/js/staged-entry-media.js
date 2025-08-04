@@ -10,7 +10,6 @@ export const stagedEntryMedia = new Proxy({} , {
     set(target, key, value) {
         target[key] = value;
         checkTotalUploadSize();
-        console.log('stagedEntryMedia -> ' ,stagedEntryMedia);
         return true;
     }
 });
