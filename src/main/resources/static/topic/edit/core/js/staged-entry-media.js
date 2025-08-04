@@ -4,9 +4,16 @@ import {renderEntryItem} from "./entry-section/entry-renderer.js";
 import {getThumbNailFileFromYoutubeUrl} from "../youtube.js";
 import {MediaType} from "../../../../global/const/const.js";
 import {initialEntryDataMap} from "./const/initial-entry-map.js";
-import {validateUploadFile} from "./entry-section/entry-media-validate.js";
+import {checkTotalUploadSize, validateUploadFile} from "./entry-section/entry-media-validate.js";
 
-export const stagedEntryMedia = {};
+export const stagedEntryMedia = new Proxy({} , {
+    set(target, key, value) {
+        target[key] = value;
+        checkTotalUploadSize();
+        console.log('stagedEntryMedia -> ' ,stagedEntryMedia);
+        return true;
+    }
+});
 
 // 유튜브 링크 용 파일 스테이징
 export async function addStagedEntryMediaForYoutube(media, entryId, imageUrl ){
@@ -41,7 +48,6 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
 
 // 엔트리 아이템 업데이트와 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId){
-
 
     const entryItem = document.getElementById(entryId);
     const entryThumb = entryItem.querySelector('.entry-thumb');
