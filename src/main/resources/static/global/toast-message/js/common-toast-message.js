@@ -51,7 +51,7 @@ function createToastMessage(toastType, title, content, delay){
 
     const message = document.createElement('p');
     message.classList.add('content');
-    message.innerText = content;
+    message.innerHTML = content;
     textBox.appendChild(message); // 텍스트 box <- 메시지 추가
 
     const timerBar = document.createElement('div');
