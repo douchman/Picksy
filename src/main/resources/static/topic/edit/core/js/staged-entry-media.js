@@ -4,8 +4,15 @@ import {renderEntryItem} from "./entry-section/entry-renderer.js";
 import {getThumbNailFileFromYoutubeUrl} from "../youtube.js";
 import {MediaType} from "../../../../global/const/const.js";
 import {initialEntryDataMap} from "./const/initial-entry-map.js";
+import {checkTotalUploadSize, validateUploadFile} from "./entry-section/entry-media-validate.js";
 
-export const stagedEntryMedia = {};
+export const stagedEntryMedia = new Proxy({} , {
+    set(target, key, value) {
+        target[key] = value;
+        checkTotalUploadSize();
+        return true;
+    }
+});
 
 // 유튜브 링크 용 파일 스테이징
 export async function addStagedEntryMediaForYoutube(media, entryId, imageUrl ){
@@ -20,9 +27,10 @@ export function  addEmptyStagedEntryMedia(entryId){
 
 // 엔트리 아이템 랜더링과 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = generateRandomEntryId()){
+    const mediaType = getMediaMimeTypeFromUploadFile(media); // 추출된 mimeType 으로 분기
 
+    if( !validateUploadFile(mediaType, media) ){ return; }
 
-    const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
     stagedEntryMedia[entryId] = {type : mediaType, media : media};
     if ( mediaType === MediaType.IMAGE){ // 이미지 업로드
         generateFilePreviewURL(media, (url) =>{
@@ -40,12 +48,13 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
 // 엔트리 아이템 업데이트와 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId){
 
-
     const entryItem = document.getElementById(entryId);
     const entryThumb = entryItem.querySelector('.entry-thumb');
     const youtubeLink = entryItem.querySelector('.youtube-link');
 
-    const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
+    const mediaType = getMediaMimeTypeFromUploadFile(media); // 추출된 mimeType 으로 분기
+
+    if( !validateUploadFile(mediaType, media) ){ return; }
 
     stagedEntryMedia[entryId] = {type : mediaType, media : media};
 
@@ -70,7 +79,7 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
 }
 
 // 업로드 된 파일로부터 mime type 확인
-function getMediaMimeTypeFromFromUploadFile(file){
+function getMediaMimeTypeFromUploadFile(file){
     if( file ){
         if (file.type.startsWith('image/')){
             return MediaType.IMAGE;
@@ -89,3 +98,4 @@ function markInitialEntryDataAsChanged(entryId){ // 수정을 위한 값이 존�
         initialEntryDataMap.get(Number(entryId)).isMediaChanged = true;
     }
 }
+
