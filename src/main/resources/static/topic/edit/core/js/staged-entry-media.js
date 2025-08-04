@@ -4,6 +4,13 @@ import {renderEntryItem} from "./entry-section/entry-renderer.js";
 import {getThumbNailFileFromYoutubeUrl} from "../youtube.js";
 import {MediaType} from "../../../../global/const/const.js";
 import {initialEntryDataMap} from "./const/initial-entry-map.js";
+import {showToastMessage} from "../../../../global/toast-message/js/common-toast-message.js";
+
+const MAX_IMAGE_SIZE_MB = 2; // 업로드 가능 비디오 용량 2MB
+const MAX_VIDEO_SIZE_MB = 3; // 업로드 가능 비디오 용량 4MB
+const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+const MAX_VIDEO_SIZE_BYTES = MAX_VIDEO_SIZE_MB * 1024 * 1024;
+
 
 export const stagedEntryMedia = {};
 
@@ -20,9 +27,10 @@ export function  addEmptyStagedEntryMedia(entryId){
 
 // 엔트리 아이템 랜더링과 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = generateRandomEntryId()){
-
-
     const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
+
+    if( !validateUploadFile(mediaType, media) ){ return; }
+
     stagedEntryMedia[entryId] = {type : mediaType, media : media};
     if ( mediaType === MediaType.IMAGE){ // 이미지 업로드
         generateFilePreviewURL(media, (url) =>{
@@ -46,6 +54,8 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
     const youtubeLink = entryItem.querySelector('.youtube-link');
 
     const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
+
+    if( !validateUploadFile(mediaType, media) ){ return; }
 
     stagedEntryMedia[entryId] = {type : mediaType, media : media};
 
@@ -88,4 +98,33 @@ function markInitialEntryDataAsChanged(entryId){ // 수정을 위한 값이 존�
     if( initialEntryDataMap.has(Number(entryId)) ){
         initialEntryDataMap.get(Number(entryId)).isMediaChanged = true;
     }
+}
+
+// 업로드 대상 파일 검사
+function validateUploadFile(mediaType, uploadFile){
+    const fileName = uploadFile.name;
+    if(mediaType === MediaType.IMAGE){
+        if(uploadFile.size > MAX_IMAGE_SIZE_BYTES){
+            showToastMessage({
+                toastType : 'alert',
+                title : '이미지 용량 초과',
+                content : `이미지 <b>${fileName}</b> 파일은 ${MAX_IMAGE_SIZE_MB}MB 를 초과하여 업로드 할 수 없어요</br>이미지 크기를 줄여 다시 시도해 주세요.`,
+                delay : 10000
+            });
+            return false;
+        }
+    }
+
+    else if(mediaType === MediaType.VIDEO){
+        if(uploadFile.size > MAX_VIDEO_SIZE_BYTES){
+            showToastMessage({
+                toastType : 'alert',
+                title : '비디오 용량 초과',
+                content : `비디오 <b>${fileName}</b> 파일은 ${MAX_VIDEO_SIZE_MB}MB 를 초과하여 업로드 할 수 없어요</br>비디오 길이나 화질을 줄여 다시 시도해 주세요.`,
+                delay : 10000
+            });
+            return false;
+        }
+    }
+    return true;
 }
