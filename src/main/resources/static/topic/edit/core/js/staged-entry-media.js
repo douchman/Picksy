@@ -27,7 +27,7 @@ export function  addEmptyStagedEntryMedia(entryId){
 
 // 엔트리 아이템 랜더링과 함께 업로드 대기 파일 목록에 저장
 export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = generateRandomEntryId()){
-    const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
+    const mediaType = getMediaMimeTypeFromUploadFile(media); // 추출된 mimeType 으로 분기
 
     if( !validateUploadFile(mediaType, media) ){ return; }
 
@@ -53,7 +53,7 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
     const entryThumb = entryItem.querySelector('.entry-thumb');
     const youtubeLink = entryItem.querySelector('.youtube-link');
 
-    const mediaType = getMediaMimeTypeFromFromUploadFile(media); // 추출된 mimeType 으로 분기
+    const mediaType = getMediaMimeTypeFromUploadFile(media); // 추출된 mimeType 으로 분기
 
     if( !validateUploadFile(mediaType, media) ){ return; }
 
@@ -80,7 +80,7 @@ export function addStagedEntryMediaWithUpdateEntryItemThumb(type, media, entryId
 }
 
 // 업로드 된 파일로부터 mime type 확인
-function getMediaMimeTypeFromFromUploadFile(file){
+function getMediaMimeTypeFromUploadFile(file){
     if( file ){
         if (file.type.startsWith('image/')){
             return MediaType.IMAGE;
