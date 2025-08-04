@@ -19,7 +19,7 @@ export function validateUploadFile(mediaType, uploadFile){
 
     if(uploadFile.size > limitBytes){
         showToastMessage({
-            toastType : 'alert',
+            toastType : 'error',
             title : `${label} 용량 초과`,
             content : `${label} <b>${fileName}</b> 파일은 ${limitMb}MB 를 초과하여 업로드 할 수 없어요</br>${reason} 다시 시도해 주세요.`,
             delay : 12000
