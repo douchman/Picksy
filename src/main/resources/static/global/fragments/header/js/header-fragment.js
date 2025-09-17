@@ -1,6 +1,5 @@
 import {checkAuthMember, memberLogout} from "../../../auth/auth.js";
 import {AuthExceptionHandler} from "../../../auth/exception/auth-exception-handler.js";
-import {showToastMessage} from "../../../toast-message/js/common-toast-message.js";
 
 const authExceptionHandler = new AuthExceptionHandler();
 
@@ -92,10 +91,7 @@ async function logout(){
     try {
         await memberLogout();
         applyNotAuthenticatedHeaderUI();
-        showToastMessage({
-            title : '로그아웃',
-            content : '로그아웃 되었습니다 :)'
-        });
+        location.href = '/?logout=Y';
     } catch(error){
         authExceptionHandler.handle(error, {context : 'logout'});
     }
