@@ -3,6 +3,7 @@ import { HomeExceptionHandler} from "./exception/home-exception-handler.js";
 import {topicSearchParams} from "./const.js";
 import {searchTopics} from "./home-api.js";
 import {shareTopic} from "../../global/util/share.js";
+import {showToastMessage} from "../../global/toast-message/js/common-toast-message.js";
 
 let scrollObserver;
 let isLoading = false;
@@ -11,8 +12,8 @@ const homeExceptionHandler = new HomeExceptionHandler();
 
 document.addEventListener('DOMContentLoaded', async () => {
     flushPlayRecordIdsFromLocalStorage();
+    handleLogoutAfter()
     setupHome();
-
 });
 
 function setupHome(){
@@ -180,4 +181,19 @@ function clearTopicContentCards(){
     const topicContentCards = document.querySelector('#topic-content-cards');
     topicContentCards.replaceChildren();
     isLoading = false;
+}
+
+function handleLogoutAfter(){
+    const url = new URL(window.location.href);
+    const isLogout = url.searchParams.get('logout');
+
+    if(isLogout === 'Y'){
+        showToastMessage({
+            title : '로그아웃',
+            content : '로그아웃 되었습니다 :)'
+        });
+
+        url.searchParams.delete('logout');
+        window.history.replaceState({}, document.title, url.pathname);
+    }
 }
