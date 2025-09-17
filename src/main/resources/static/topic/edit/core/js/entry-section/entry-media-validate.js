@@ -6,7 +6,7 @@ let hasShownUploadSizeWarning = false;
 
 const MAX_IMAGE_SIZE_MB = 2; // 업로드 가능 비디오 용량 2MB
 const MAX_VIDEO_SIZE_MB = 8; // 업로드 가능 비디오 용량 3MB
-const ALERT_TOTAL_UPLOAD_MB = 40; // 업로드 경고 요량 기준 40MB
+const ALERT_TOTAL_UPLOAD_MB = 50; // 업로드 경고 요량 기준 40MB
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 const MAX_VIDEO_SIZE_BYTES = MAX_VIDEO_SIZE_MB * 1024 * 1024;
 const ALERT_TOTAL_UPLOAD_BYTES = ALERT_TOTAL_UPLOAD_MB * 1024 * 1024;
