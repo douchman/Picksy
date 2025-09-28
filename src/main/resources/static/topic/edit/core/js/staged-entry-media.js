@@ -99,3 +99,17 @@ function markInitialEntryDataAsChanged(entryId){ // 수정을 위한 값이 존�
     }
 }
 
+// 원본 파일명 확장자 제거 후 반환 : 엔트리 등록 시 자동 기입
+function extractFileNameWithoutExtension(media){
+    if(!media) return "";
+
+    const fileName = media.name.split(/[/\\]/).pop(); // 혹시 모를 포함된 경로 제거
+    const lastDotIdx = fileName.lastIndexOf('.');
+
+    if( lastDotIdx === -1) return fileName; // 확장자 없음 -> 그대로 반환
+
+    if(lastDotIdx === 0) return fileName; // 숨김 파일 -> 그대로 반환
+
+    return fileName.substring(0, lastDotIdx);
+}
+
