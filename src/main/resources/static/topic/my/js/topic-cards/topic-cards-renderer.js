@@ -25,8 +25,8 @@ function renderTopicCards(topicList){
                             <div class="topic-thumb" style="background-image: url('${topic.thumbnail}')"></div>
                             <div class="topic-meta">
                                 <p class="title">${topic.title}</p>
-                                <p class="subject">${topic.subject}</p>
                                 <p class="description">${topic.description}</p>
+                                <p class="subject">${topic.subject}</p>                          
                             </div>
                             <div class="btn-group">
                                 <button class="btn-modify" data-action="modify" type="button"></button>

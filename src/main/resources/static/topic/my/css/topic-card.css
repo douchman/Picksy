@@ -98,13 +98,13 @@
 }
 
 .topic-card .topic-meta .subject{
-    color: #838383;
-    font-size: 14px;
+    color: #B4B4B8;
+    font-size: 10px;
 }
 
 .topic-card .topic-meta .description{
-    color: #B4B4B8;
-    font-size: 10px;
+    color: #838383;
+    font-size: 14px;
 }
 
 .topic-card .btn-group{
