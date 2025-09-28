@@ -32,14 +32,16 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
     if( !validateUploadFile(mediaType, media) ){ return; }
 
     stagedEntryMedia[entryId] = {type : mediaType, media : media};
+
+    const tempEntryName = extractFileNameWithoutExtension(media);
     if ( mediaType === MediaType.IMAGE){ // 이미지 업로드
         generateFilePreviewURL(media, (url) =>{
-            renderEntryItem(url, entryId, media.name, media.name);
+            renderEntryItem(url, entryId, tempEntryName, tempEntryName);
             delete stagedEntryMedia[entryId].thumbnail; // 이미지는 thumbnail 필요 없음
         });
     } else { // 비디오 업로드
         generateVideoPreviewRL(media, (url) =>{
-            renderEntryItem(url, entryId, media.name, media.name);
+            renderEntryItem(url, entryId, tempEntryName, tempEntryName);
             stagedEntryMedia[entryId].thumbnail = getThumbFileFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
         });
     }
