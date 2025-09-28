@@ -32,14 +32,16 @@ export function addStagedEntryMediaWithRenderEntryItem(type, media, entryId = ge
     if( !validateUploadFile(mediaType, media) ){ return; }
 
     stagedEntryMedia[entryId] = {type : mediaType, media : media};
+
+    const tempEntryName = extractFileNameWithoutExtension(media);
     if ( mediaType === MediaType.IMAGE){ // 이미지 업로드
         generateFilePreviewURL(media, (url) =>{
-            renderEntryItem(url, entryId, media.name, media.name);
+            renderEntryItem(url, entryId, tempEntryName, tempEntryName);
             delete stagedEntryMedia[entryId].thumbnail; // 이미지는 thumbnail 필요 없음
         });
     } else { // 비디오 업로드
         generateVideoPreviewRL(media, (url) =>{
-            renderEntryItem(url, entryId, media.name, media.name);
+            renderEntryItem(url, entryId, tempEntryName, tempEntryName);
             stagedEntryMedia[entryId].thumbnail = getThumbFileFromVideoUrl(url); // 미리보기 이미지를 thumbNail 파일로 등록
         });
     }
@@ -97,5 +99,19 @@ function markInitialEntryDataAsChanged(entryId){ // 수정을 위한 값이 존�
     if( initialEntryDataMap.has(Number(entryId)) ){
         initialEntryDataMap.get(Number(entryId)).isMediaChanged = true;
     }
+}
+
+// 원본 파일명 확장자 제거 후 반환 : 엔트리 등록 시 자동 기입
+function extractFileNameWithoutExtension(media){
+    if(!media) return "";
+
+    const fileName = media.name.split(/[/\\]/).pop(); // 혹시 모를 포함된 경로 제거
+    const lastDotIdx = fileName.lastIndexOf('.');
+
+    if( lastDotIdx === -1) return fileName; // 확장자 없음 -> 그대로 반환
+
+    if(lastDotIdx === 0) return fileName; // 숨김 파일 -> 그대로 반환
+
+    return fileName.substring(0, lastDotIdx);
 }
 
