@@ -100,8 +100,8 @@ async function renderTopics(){
                         <div class="topic-thumb-group" style="background-image: url('${topic.thumbnail}')"></div>
                         <div class="topic-desc-group">
                             <p class="topic-title">${topic.title}</p>
-                            <p class="topic-subject">${topic.subject}</p>
                             <p class="topic-desc">${topic.description}</p>
+                            <p class="topic-subject">${topic.subject}</p>                          
                         </div>
                         <div class="btn-group">
                             <button class="btn-topic-stats" type="button"></button>
