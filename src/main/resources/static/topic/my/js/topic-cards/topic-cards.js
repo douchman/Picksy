@@ -43,7 +43,7 @@ async function moveToTopicPlay(topicId, topicCard){
 }
 
 function moveToTopicModifyPage(topicId){
-    window.open(`/topic/modify/${topicId}`, '_blank'); // 새 탭으로 수정페이지 열기
+    location.href =  `/topic/modify/${topicId}`;
 }
 
 function shareMyTopic(topicId, topicCard){
@@ -54,7 +54,7 @@ function shareMyTopic(topicId, topicCard){
 
 function moveToTopicStatsPage(topicId, topicCard){
     if(validateTopicModerationStatus(topicCard.dataset.moderation)){
-        window.open(`/statistics/topic/${topicId}`, '_blank'); // 새 탭으로 수정페이지 열기
+        location.href =  `/statistics/topic/${topicId}`;
     }
 }
 
