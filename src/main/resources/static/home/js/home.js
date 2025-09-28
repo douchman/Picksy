@@ -58,7 +58,7 @@ function addTopicCardEvents(){
         const btnTopicShare = event.target.closest('.btn-topic-share');
         if (btnTopicStats) {
             const topicId = topicCard.dataset.id;
-            window.open(`/statistics/topic/${topicId}`, '_blank'); // 통계페이지 이동(새 탭 열기)
+            location.href = `/statistics/topic/${topicId}`;
         } else if (btnTopicShare) {
             const topicId = topicCard.dataset.id;
             shareTopic(topicId);
