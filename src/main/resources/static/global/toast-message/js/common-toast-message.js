@@ -1,5 +1,5 @@
 const toastTimers = new WeakMap();
-const MAX_TOAST_MESSAGE_COUNT = 3;
+const MAX_TOAST_MESSAGE_COUNT = 5;
 
 /**
  *
