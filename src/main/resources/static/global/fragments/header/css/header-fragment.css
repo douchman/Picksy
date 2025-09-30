@@ -45,15 +45,16 @@
 .center-nav-group{
     display: flex;
     align-items: center;
-    gap : 15px;
     width: fit-content;
     height: 100%;
 }
 
 .center-nav-group .nav{
     color : #333;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
+    padding : 8px 12px;
+    border-radius: 4px;
 }
 
 .right-nav-group{
