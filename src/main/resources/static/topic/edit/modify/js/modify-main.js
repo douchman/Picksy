@@ -53,7 +53,7 @@ function addBottomBtnGroupEvents(){
                 content : '대결주제 수정이 완료되었습니다'
             });
             setTimeout(() =>{
-                location.href = '/';
+                location.href = '/topic/my';
             }, 2000);
         } else{
             toggleBtnSaveBlock(false);
