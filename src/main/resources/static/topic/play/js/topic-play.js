@@ -1,4 +1,4 @@
-import {playRecordStorage, topic} from "./const.js";
+import {playRecord, topic} from "./const.js";
 import {loadYoutubeIframeAPI, onYouTubeIframeApiReady} from "../../../global/youtube/youtube-iframe-api.js";
 import {getTopicDetail} from "./topic-play-api.js";
 import {TopicPlayExceptionHandler} from "./exception/topic-play-exception-handler.js";
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 유튜브 API 로드 후 호출되는 전역 함수
     onYouTubeIframeApiReady(async () =>{
         addTopicPlayEvents();
-        if(!playRecordStorage.exists()){ // 저장된 식별자 존재여부 확인
+        if(playRecord.getId() == null){ // 저장된 식별자 존재여부 확인
             await openTournamentSelectDialog(topic.getId());
         } else{ // 이미 저장된 식별자 존재 시 바로 매치업 조회
             await loadEntryMatchInfo();
