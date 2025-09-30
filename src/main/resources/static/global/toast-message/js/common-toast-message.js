@@ -116,3 +116,12 @@ function removeToastMessage(toastMessage){ // 토스트 메시지 직접 제거
         toastMessage.remove();
     },250);
 }
+
+function removeToastMessageDirectly(toastMessage){
+    const timeoutId = toastTimers.get(toastMessage);
+    if(timeoutId){
+        clearTimeout(timeoutId);
+        toastTimers.delete(toastMessage);
+    }
+    toastMessage.remove();
+}
