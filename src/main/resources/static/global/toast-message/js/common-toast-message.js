@@ -88,9 +88,8 @@ function appendToastMessageToWrapper(toastMessage){
     const toastMessageWrapper = document.querySelector('#toast-message-wrapper');
 
     toastMessageWrapper.appendChild(toastMessage);
-
     if(toastMessageWrapper.children.length > MAX_TOAST_MESSAGE_COUNT){
-        removeToastMessage(toastMessageWrapper.children[0]);
+        removeToastMessageDirectly(toastMessageWrapper.children[0]);
     }
 }
 function renderToastMessageWrapper(){
