@@ -97,13 +97,13 @@
 
 .toast-message .text-box .title{
     color : #333;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
 }
 
 .toast-message .text-box .content{
     color : #7D7D7D;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .toast-message .btn-group{
@@ -116,6 +116,8 @@
 .toast-message .btn-group button{
     flex : 1;
     color : #7D7D7D;
+    font-size: 14px;
+    font-weight: 600;
     padding : 6px 0;
 }
 

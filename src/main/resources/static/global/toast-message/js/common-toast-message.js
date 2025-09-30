@@ -1,5 +1,5 @@
 const toastTimers = new WeakMap();
-const MAX_TOAST_MESSAGE_COUNT = 3;
+const MAX_TOAST_MESSAGE_COUNT = 5;
 
 /**
  *
@@ -88,9 +88,8 @@ function appendToastMessageToWrapper(toastMessage){
     const toastMessageWrapper = document.querySelector('#toast-message-wrapper');
 
     toastMessageWrapper.appendChild(toastMessage);
-
     if(toastMessageWrapper.children.length > MAX_TOAST_MESSAGE_COUNT){
-        removeToastMessage(toastMessageWrapper.children[0]);
+        removeToastMessageDirectly(toastMessageWrapper.children[0]);
     }
 }
 function renderToastMessageWrapper(){
@@ -115,4 +114,13 @@ function removeToastMessage(toastMessage){ // 토스트 메시지 직접 제거
     setTimeout(() => {
         toastMessage.remove();
     },250);
+}
+
+function removeToastMessageDirectly(toastMessage){
+    const timeoutId = toastTimers.get(toastMessage);
+    if(timeoutId){
+        clearTimeout(timeoutId);
+        toastTimers.delete(toastMessage);
+    }
+    toastMessage.remove();
 }
