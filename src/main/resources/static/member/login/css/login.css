@@ -74,14 +74,14 @@
     visibility: visible;
 }
 
-.btn-group{
+.login .btn-group{
     display: flex;
     align-items: center;
     justify-content: center;
     gap : 10px;
 }
 
-.btn-group button{
+.login .btn-group button{
     color : #FFF;
     font-size: 16px;
     background-color: var(--btn-color);
@@ -89,10 +89,10 @@
     border-radius: 4px;
 }
 
-.btn-group button.btn-login{
+.login .btn-group button.btn-login{
     --btn-color : var(--signature-color);
 }
 
-.btn-group button.btn-register{
+.login .btn-group button.btn-register{
     --btn-color: #B7B7B7;
 }
