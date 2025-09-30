@@ -19,18 +19,15 @@ export const topic = {
     }
 }
 
-export const playRecordStorage = {
-    key : 'playRecordId',
+export const playRecord = {
+    id : null,
 
-    saveId(id){
-        sessionStorage.setItem(this.key, String(id));
+    setId(id){
+        this.id = id;
     },
-    loadId(){
-        const playRecordId = sessionStorage.getItem(this.key);
-        return playRecordId ? Number(playRecordId) : null;
-    },
-    exists(){
-        return !!sessionStorage.getItem(this.key);
+
+    getId() {
+        return this.id;
     }
 }
 
