@@ -1,4 +1,4 @@
-import {match, playRecordStorage} from "./const.js";
+import {match, playRecord} from "./const.js";
 import {renderEntriesAndAddEvents} from "./entry-render.js";
 import {finishEntryMatch, setupCompletedEntryMatch} from "./entry-match-finish.js";
 import {getCurrentEntryMatch, submitMatchResult} from "./topic-play-api.js";
@@ -11,7 +11,7 @@ const topicPlayExceptionHandler = new TopicPlayExceptionHandler();
 export async function loadEntryMatchInfo() {
 
     try {
-        const currentEntryMatchResult = await getCurrentEntryMatch(playRecordStorage.loadId());
+        const currentEntryMatchResult = await getCurrentEntryMatch(playRecord.getId());
 
         const matchId = currentEntryMatchResult.matchId;
         const playStatus = currentEntryMatchResult.playStatus;
@@ -49,7 +49,7 @@ export async function submitEntryMatchResult(winnerEntry, loserEntry){
     }
 
     try {
-        const submitResult = await submitMatchResult(playRecordStorage.loadId(), match.getId(), requestBody);
+        const submitResult = await submitMatchResult(playRecord.getId(), match.getId(), requestBody);
         const isAllMatchedCompleted = submitResult.allMatchedCompleted; // 모든 매치 완료 여부 ( boolean )
 
         // 처리 완료 시 -> 승리/패배 엔트리 애니메이션 시작

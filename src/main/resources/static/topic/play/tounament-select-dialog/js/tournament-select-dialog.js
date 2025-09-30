@@ -3,7 +3,7 @@ import {toggleBodyScrollBlocked} from "../../../../global/layouts/js/layout-comm
 import {TournamentSelectExceptionHandler} from "./exception/tounament-seelct-exception-handler.js";
 import {getTopicDetail, getTopicPlayRecordId} from "./api/tournament-select-api.js";
 import {loadEntryMatchInfo} from "../../js/entry-match.js";
-import {playRecordStorage} from "../../js/const.js";
+import {playRecord} from "../../js/const.js";
 import {showToastMessage} from "../../../../global/toast-message/js/common-toast-message.js";
 import {ModerationStatus, Visibility} from "../../../../global/const/const.js";
 
@@ -183,7 +183,7 @@ async function getPlayRecordIdAndStart(){
 
         if(playRecordResult){
             closeTournamentSelectDialog();
-            playRecordStorage.saveId(playRecordResult.playRecordId);
+            playRecord.setId(playRecordResult.playRecordId);
             await loadEntryMatchInfo(); // 선택 및 진행 식별값 반환이 완료되면 매치업 조회
         }
     } catch(error){
