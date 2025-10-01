@@ -17,7 +17,7 @@ Picksy는 사용자가 직접 주제를 만들고 엔트리를 등록해 토너�
   - 드래그&드롭 엔트리 등록  
 - **결과 통계 제공**: 엔트리별 승률/상성, 최종 우승, 랭킹
 
-### 🛠️ 기술 스택
+### 🛠️ 스택
 - **Frontend**: VanillaJS, HTML5, Pure CSS  
 - **API **: REST API (Spring Boot Backend 연동)  
 - **외부 연동**: YouTube Iframe API  
